@@ -1,0 +1,36 @@
+{
+  "name": "discord-bot",
+  "description": "This is my bot to help run nwod games through discord.",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@nwod-angel/nwod-roller": "^1.0.6",
+    "@types/node": "^18.7.15",
+    "axios": "^0.27.2",
+    "discord.js": "^14.3.0",
+    "dotenv": "^16.0.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.2"
+  },
+  "scripts": {
+    "startnot": "node --loader ts-node/esm --experimental-specifier-resolution=node src/Bot.ts",
+    "start": "tsc && node dist/Bot.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nwod-angel/discord-bot.git"
+  },
+  "keywords": [
+    "nwod",
+    "wod",
+    "discord",
+    "bot"
+  ],
+  "author": "NWoD Angel <nwod.angel@gmail.com>",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/nwod-angel/discord-bot/issues"
+  },
+  "homepage": "https://github.com/nwod-angel/discord-bot#readme"
+}
