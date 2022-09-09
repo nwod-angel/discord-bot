@@ -2,6 +2,7 @@ import { Client, ClientOptions } from "discord.js";
 // import discord = require("discord.js")
 import ready from "./listeners/ready.js";
 import interactionCreate from "./listeners/interactionCreate.js";
+import unhandledRejection from "./listeners/unhandledRejection.js";
 import * as dotenv from 'dotenv'
 dotenv.config(); //initialize dotenv
 
@@ -15,6 +16,7 @@ const client = new Client({
 
 ready(client);
 interactionCreate(client);
+unhandledRejection(client);
 
 client.login(token);
 
