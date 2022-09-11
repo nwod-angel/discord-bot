@@ -19,12 +19,12 @@ export const Roll: Command = {
         },
         {
             "name": "name",
-            "description": "The name of the entity rolling",
+            "description": "The name of the entity rolling [optional]",
             "type": 3 // String
         },
         {
             "name": "description",
-            "description": "The description of the roll",
+            "description": "The description of the roll [optional]",
             "type": 3 // String
         },
         {
@@ -44,7 +44,7 @@ export const Roll: Command = {
         },
         {
             "name": "target",
-            "description": "Some extended rolls have a target number of successes",
+            "description": "If defined an extended roll will stop after this many successes [optional]",
             "type": 4 // Integer
         },
         {
