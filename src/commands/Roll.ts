@@ -154,7 +154,7 @@ export const Roll: Command = {
             }
         )
 	    .setFooter({ 
-            text: 'Some footer text here', 
+            text: interaction.id, 
             // iconURL: 'https://i.imgur.com/AfFp7pu.png'
         });
 
