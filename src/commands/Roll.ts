@@ -1,8 +1,9 @@
-import { EmbedBuilder, Interaction, Client, ApplicationCommandType, ApplicationCommandOptionType, CommandInteraction, ApplicationCommand, ChatInputCommandInteraction, ColorResolvable } from "discord.js";
+import { EmbedBuilder, Client, ApplicationCommandType, CommandInteraction, ColorResolvable } from "discord.js";
 import { Command } from "../Command";
 import { InstantRoll } from "@nwod-angel/nwod-roller";
 import { ExtendedRoll } from "@nwod-angel/nwod-roller";
 import { RollResult } from "@nwod-angel/nwod-roller";
+import DiscordChannelLogger from "../DiscordChannelLogger";
 
 export const Roll: Command = {
     name: "roll",
@@ -52,6 +53,9 @@ export const Roll: Command = {
         }
     ],
     run: async (client: Client, interaction: CommandInteraction) => {
+
+        DiscordChannelLogger.setClient(client).logBaggage({interaction: interaction, options: interaction.options})
+        
         let dicePool = Number(interaction.options.get('dice-pool')!.value)
 
         let name = interaction.member?.user.username
@@ -148,5 +152,6 @@ export const Roll: Command = {
             ephemeral: true,
             embeds: [embed]
         });
+        DiscordChannelLogger.setClient(client).logBaggage({interaction: interaction, embed: embed})
     }
 };
