@@ -28,6 +28,16 @@ export const Roll: Command = {
             "type": 3 // String
         },
         {
+            "name": "success-threshold",
+            "description": "The lowest number on the die representing a success (default: 8)",
+            "type": 4 // Integer
+        },
+        {
+            "name": "reroll-threshold",
+            "description": "The lowest number on the die representing a reroll (default: 10)",
+            "type": 4 // Integer
+        },
+        {
             "name": "extended-rolls",
             "description": "If defined the roll will be extended and rolled this many times",
             "type": 4 // Integer
@@ -39,7 +49,7 @@ export const Roll: Command = {
         },
         {
             "name": "rote",
-            "description": "Rote actions re-roll failures once",
+            "description": "Rote actions re-roll failures once (default: false)",
             "type": 5 // Boolean
         }
     ],
@@ -57,6 +67,16 @@ export const Roll: Command = {
         var description = ''
         if(interaction.options.get('description')){
             description = `*${interaction.options.get('description')!.value?.toString()!}*`
+        }
+
+        var successThreshold = undefined
+        if(interaction.options.get('success-threshold')){
+            successThreshold = Number(interaction.options.get('success-threshold')!.value)
+        }
+
+        var rerollThreshold = undefined
+        if(interaction.options.get('reroll-threshold')){
+            rerollThreshold = Number(interaction.options.get('reroll-threshold')!.value)
         }
 
         var extendedRolls = undefined
@@ -85,13 +105,13 @@ export const Roll: Command = {
 
         switch (action) {
             case 'instant':
-                var instantRoll = new InstantRoll({dicePool: dicePool, rote: rote})
+                var instantRoll = new InstantRoll({dicePool: dicePool, rote: rote, successThreshold: successThreshold, rerollThreshold: rerollThreshold})
                 rollDescription = instantRoll.toString()
                 successes = instantRoll.numberOfSuccesses()
                 result = instantRoll.result()
                 break
             case 'extended':
-                var extendedRoll = new ExtendedRoll({dicePool: dicePool, rote: rote, extendedRolls: extendedRolls, target: target})
+                var extendedRoll = new ExtendedRoll({dicePool: dicePool, rote: rote, successThreshold: successThreshold, rerollThreshold: rerollThreshold, extendedRolls: extendedRolls, target: target})
                 rollDescription = extendedRoll.toString()
                 successes = extendedRoll.numberOfSuccesses()
                 result = extendedRoll.result()
