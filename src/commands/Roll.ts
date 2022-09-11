@@ -28,17 +28,8 @@ export const Roll: Command = {
             "type": 3 // String
         },
         {
-            "name": "action",
-            "description": "'Instant' actions are rolled once, 'Extended' actions involve multiple rolls",
-            "type": 3,  // String
-            "choices": [
-                { "name" : "Instant", "value" : "instant" },
-                { "name" : "Extended", "value" : "extended" }
-            ]
-        },
-        {
             "name": "extended-rolls",
-            "description": "Extended rolls will be roll this many times",
+            "description": "If defined the roll will be extended and rolled this many times",
             "type": 4 // Integer
         },
         {
@@ -68,11 +59,6 @@ export const Roll: Command = {
             description = `*${interaction.options.get('description')!.value?.toString()!}*`
         }
 
-        var action = 'instant'
-        if(interaction.options.get('action')){
-            action = interaction.options.get('action')!.value?.toString()!
-        }
-
         var extendedRolls = undefined
         if(interaction.options.get('extended-rolls')){
             extendedRolls = Number(interaction.options.get('extended-rolls')!.value)
@@ -81,6 +67,11 @@ export const Roll: Command = {
         var target = undefined
         if(interaction.options.get('target')){
             target = Number(interaction.options.get('target')!.value)
+        }
+
+        var action = 'instant'
+        if(extendedRolls !== undefined){
+            action = 'extended'
         }
 
         var rote = false

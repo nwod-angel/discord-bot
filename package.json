@@ -13,7 +13,8 @@
     "typescript": "^4.8.2"
   },
   "scripts": {
-    "start": "node --loader ts-node/esm --experimental-specifier-resolution=node src/Bot.ts",
+    "start": "npm run startExperimental",
+    "startExperimental": "node --loader ts-node/esm --experimental-specifier-resolution=node src/Bot.ts",
     "startnot": "tsc && node dist/Bot.js",
     "test": "jest"
   },
