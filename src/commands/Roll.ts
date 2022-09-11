@@ -111,7 +111,7 @@ export const Roll: Command = {
                 result = instantRoll.result()
                 break
             case 'extended':
-                var extendedRoll = new ExtendedRoll({dicePool: dicePool, rote: rote, successThreshold: successThreshold, rerollThreshold: rerollThreshold, extendedRolls: extendedRolls, target: target})
+                var extendedRoll = new ExtendedRoll({dicePool: dicePool, rote: rote, successThreshold: successThreshold, extendedRolls: extendedRolls, target: target})
                 rollDescription = extendedRoll.toString()
                 successes = extendedRoll.numberOfSuccesses()
                 result = extendedRoll.result()
