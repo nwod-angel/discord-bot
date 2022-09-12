@@ -6,6 +6,9 @@ export default (client: Client): void => {
         if (interaction.isCommand() || interaction.isContextMenuCommand()) {
             await handleSlashCommand(client, interaction);
         }
+        if (interaction.isCommand() || interaction.isAutocomplete()) {
+            await handleAutoCompleteCommand(client, interaction);
+        }
     });
 };
 
