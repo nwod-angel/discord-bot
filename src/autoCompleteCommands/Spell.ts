@@ -11,9 +11,12 @@ export const Spell: AutoCompleteCommand = {
         let value = interaction.options.get(option.name)!.value?.toString() || ''
 
         return spells
-            .map(s => s.name)
-            .filter(s => s.toLowerCase().includes(value.toLowerCase()))
+            .filter(s => s.name.toLowerCase().includes(value.toLowerCase()))
             .slice(0, this.maxResponses)
-            .map(s => ({ name: s, value: s })) as unknown as ApplicationCommandOptionChoiceData<string | string>[];
+            .map(s => 
+                ({
+                    name: `${s.name} (${s.primaryArcana} ${'•'.repeat(parseInt(s.requirements.filter(r => r.name.toLowerCase() === s.primaryArcana.toLowerCase())[0].dots!))})`,
+                    value: s.name
+                })) as unknown as ApplicationCommandOptionChoiceData<string | string>[];
     }
 }
