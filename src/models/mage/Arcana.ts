@@ -10,4 +10,4 @@ export enum Arcana {
   Spirit,
   Time,
 }
-export type ArcanaType = keyof typeof Arcana;
+export type ArcanaType = keyof typeof Arcana

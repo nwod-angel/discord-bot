@@ -8,12 +8,17 @@ import { Practice, PracticeType } from "../models/mage/Practice";
 export default class SpellProvider {
     static spells: Array<Spell>
 
-    static getSpell(name: string) : Spell {
-        return this.spells.filter(s => s.name === name)[0]
+    static getSpells(name?: string, arcana?: Arcana, practice?: Practice, dots?: number) : Array<Spell> {
+        console.log(dots)
+        return this.spells.filter(s => 
+            (name === undefined || s.name === name) &&
+            (arcana === undefined || s.primaryArcana === arcana) &&
+            (practice === undefined || s.practice === practice)&&
+            (dots === undefined || s.dots() === dots)
+        )
     }
 
     private static _initialize = (() => {
-
         SpellProvider.spells = 
         spells.map(spell => new Spell(
                         spell.name,
@@ -28,5 +33,6 @@ export default class SpellProvider {
                         spell.sources.map(s => new Source(s.sourceBook, parseInt(s.sourcePage))
                         ))
         )
+        console.log('Max desc length: ' + Math.max(...SpellProvider.spells.map(s => s.description.length)))
     })();
 }

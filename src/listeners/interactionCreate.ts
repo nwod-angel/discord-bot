@@ -5,13 +5,17 @@ import { UpdateStatus } from "./UpdateStatus";
 
 export default (client: Client): void => {
     client.on("interactionCreate", async (interaction: Interaction) => {
-        UpdateStatus.startThinking(client)
-        if (interaction.isCommand() || interaction.isContextMenuCommand()) {
-            await handleSlashCommand(client, interaction);
-        } else if (interaction.isCommand() || interaction.isAutocomplete()) {
-            await handleAutoCompleteCommand(client, interaction as AutocompleteInteraction);
+        try{
+            UpdateStatus.startThinking(client)
+            if (interaction.isCommand() || interaction.isContextMenuCommand()) {
+                await handleSlashCommand(client, interaction);
+            } else if (interaction.isCommand() || interaction.isAutocomplete()) {
+                await handleAutoCompleteCommand(client, interaction as AutocompleteInteraction);
+            }
+            UpdateStatus.doSomethingRandom(client)
+        } catch {
+            console.log('errored')
         }
-        UpdateStatus.doSomethingRandom(client)
     });
 };
 

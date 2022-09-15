@@ -38,12 +38,28 @@ export default class Spell extends Rule {
         this.cost = cost
         this.sources = sources
     }
-
-    titleString() {
-        return `${this.name} (${this.primaryArcana} ${'•'.repeat(this.requirements.filter(r => r.name.toLowerCase() === this.primaryArcana.toString().toLowerCase())[0].dots!)})`
+    practiceString(): string {
+        return Practice[this.practice].toString()
     }
 
-    requirementsString() {
+    primaryArcanaRequirement(): Requirement {
+        return this.requirements
+            .filter(r => r.name.toLowerCase() === Arcana[this.primaryArcana].toString().toLowerCase())[0]
+    }
+
+    dots(): number | undefined {
+        return this.primaryArcanaRequirement().dots
+    }
+
+    primaryArcanaRequirementString(): string {
+        return this.primaryArcanaRequirement().toString()
+    }
+
+    titleString(): string {
+        return `${this.name} (${this.primaryArcanaRequirementString()})`
+    }
+
+    requirementsString(): string {
         return this.requirements.map(r => `${r.name} ${'•'.repeat(r.dots!)}`).join('\n')
     }
 }
