@@ -29,6 +29,5 @@ export default class SpellProvider {
                         spell.sources.map(s => new Source(s.sourceBook, parseInt(s.sourcePage))
                         ))
         )
-        console.log('Max desc length: ' + Math.max(...SpellProvider.spells.map(s => s.description.length)))
     })();
 }

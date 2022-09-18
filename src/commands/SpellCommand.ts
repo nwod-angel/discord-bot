@@ -43,32 +43,35 @@ export const SpellCommand: Command = {
     run: async (client: Client, interaction: CommandInteraction) => {
         DiscordChannelLogger.setClient(client).logBaggage({interaction: interaction, options: interaction.options})
 
-        let name = undefined
+        let name: string | undefined = undefined
         if(interaction.options.get('name')){
             name = interaction.options.get('name')!.value?.toString()
         }
 
-        let description = undefined
+        let description: string | undefined = undefined
         if(interaction.options.get('description')){
             description = interaction.options.get('description')!.value?.toString()
         }
 
-        let arcana = undefined
+        let arcana: Arcana | undefined = undefined
         if(interaction.options.get('arcana')){
             arcana = Arcana[interaction.options.get('arcana')!.value?.toString() as ArcanaType]
         }
 
-        let practice = undefined
+        let practice: Practice | undefined = undefined
         if(interaction.options.get('practice')){
             practice = Practice[interaction.options.get('practice')!.value?.toString() as PracticeType]
         }
 
-        let dots = undefined
+        let dots: number | undefined = undefined
         if(interaction.options.get('dots')){
             dots = Number(interaction.options.get('dots')?.value)
         }
 
         let spells = SpellProvider.getSpells(name, description, arcana, practice, dots)
+        if(spells.filter(spell => spell.name.toLowerCase() === name!.toLowerCase()).length === 1) {
+            spells = spells.filter(spell => spell.name.toLowerCase() === name!.toLowerCase())
+        }
 
         let embed = new EmbedBuilder()
             .setFooter({ 
