@@ -4,9 +4,10 @@ import spells from "./spells";
 export default class SpellProvider {
     static spells: Array<Spell>
 
-    static getSpells(name?: string, arcana?: Arcana, practice?: Practice, dots?: number) : Array<Spell> {
+    static getSpells(name?: string, description?: string, arcana?: Arcana, practice?: Practice, dots?: number) : Array<Spell> {
         return this.spells.filter(s => 
-            (name === undefined || s.name === name) &&
+            (name === undefined || s.name.toLowerCase().includes(name.toLowerCase())) &&
+            (description === undefined || s.description.toLowerCase().includes(description.toLowerCase())) &&
             (arcana === undefined || s.primaryArcana === arcana) &&
             (practice === undefined || s.practice === practice)&&
             (dots === undefined || s.dots() === dots)

@@ -16,6 +16,11 @@ export const SpellCommand: Command = {
             "autocomplete" : true
         },
         {
+            "name": "description",
+            "description": "Search in the description of the spell",
+            "type": 3, // String
+        },
+        {
             "name": "arcana",
             "description": "The arcana of the spell",
             "type": 3, // String,
@@ -43,6 +48,11 @@ export const SpellCommand: Command = {
             name = interaction.options.get('name')!.value?.toString()
         }
 
+        let description = undefined
+        if(interaction.options.get('description')){
+            description = interaction.options.get('description')!.value?.toString()
+        }
+
         let arcana = undefined
         if(interaction.options.get('arcana')){
             arcana = Arcana[interaction.options.get('arcana')!.value?.toString() as ArcanaType]
@@ -58,7 +68,7 @@ export const SpellCommand: Command = {
             dots = Number(interaction.options.get('dots')?.value)
         }
 
-        let spells = SpellProvider.getSpells(name, arcana, practice, dots)
+        let spells = SpellProvider.getSpells(name, description, arcana, practice, dots)
 
         let embed = new EmbedBuilder()
             .setFooter({ 
