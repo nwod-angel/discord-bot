@@ -2,8 +2,7 @@ import { Interaction, Client, ApplicationCommandType, CommandInteraction, EmbedB
 import { Command } from "../Command.js";
 import DiscordChannelLogger from "../DiscordChannelLogger.js";
 import SpellProvider from "../data/SpellProvider.js";
-import { Arcana, ArcanaType } from "../models/mage/Arcana.js";
-import { Practice, PracticeType } from "../models/mage/Practice.js";
+import { Arcana, ArcanaType, Practice, PracticeType } from "@nwod-angel/nwod-core";
 
 export const SpellCommand: Command = {
     name: "spell",
@@ -86,7 +85,7 @@ export const SpellCommand: Command = {
                 // { name: 'Effect', value: spell.description, inline: false },
             )
             let descriptionChunks = spell.description.match(/.{1,1000}/g) || []
-            descriptionChunks.forEach((chunk, index) => {
+            descriptionChunks.forEach((chunk: string, index: number) => {
                 embed.addFields({ name: `Effect (${index + 1}/${descriptionChunks.length})`, value: chunk, inline: false })
             })
             embed.addFields({ name: 'Sources', value: spell.sourcesString(), inline: false })

@@ -1,15 +1,10 @@
-import Requirement from "../models/Requirement";
-import Source from "../models/Source";
-import Spell from "../models/mage/Spell";
+import { Arcana, ArcanaType, Practice, PracticeType, Requirement, Source, Spell } from "@nwod-angel/nwod-core"
 import spells from "./spells";
-import { Arcana, ArcanaType } from "../models/mage/Arcana"
-import { Practice, PracticeType } from "../models/mage/Practice";
 
 export default class SpellProvider {
     static spells: Array<Spell>
 
     static getSpells(name?: string, arcana?: Arcana, practice?: Practice, dots?: number) : Array<Spell> {
-        console.log(dots)
         return this.spells.filter(s => 
             (name === undefined || s.name === name) &&
             (arcana === undefined || s.primaryArcana === arcana) &&
