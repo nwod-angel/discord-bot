@@ -97,9 +97,9 @@ export const MeritCommand: Command = {
         await interaction.followUp({
             ephemeral: true,
             embeds: [embed],
-            // components: [feedbackRow]
+            components: [feedbackRow]
         });
-		await interaction.reply({ content: 'Was this helpful?', ephemeral: true, components: [feedbackRow] });
+		// await interaction.reply({ content: 'Was this helpful?', ephemeral: true, components: [feedbackRow] });
 
     }
 };
