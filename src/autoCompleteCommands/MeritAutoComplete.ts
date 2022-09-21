@@ -1,7 +1,7 @@
 import { Client, AutocompleteInteraction, ApplicationCommandOptionChoiceData } from "discord.js";
 import MeritProvider from "../data/MeritProvider.js";
 import { AutoCompleteCommand } from "../AutoCompleteCommand.js";
-import { MeritCommand } from "src/commands/MeritCommand.js";
+import { MeritCommand } from "../commands/MeritCommand.js";
 
 export const MeritAutocomplete: AutoCompleteCommand = {
     name: MeritCommand.name,
