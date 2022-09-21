@@ -123,9 +123,7 @@ export default [
                 description: "The Storyteller can make a reflexive Wits + Composure roll once per chapter for your character if he is about to embark on a disastrous course of action, or if you find yourself at a point in the story where you’re completely stumped for ideas. If the roll succeeds, the Storyteller may point out the risks of a particular course, or suggest possible actions that your character can take that might get events back on track. Note: While you’re free to ask the Storyteller for a Common Sense roll when you’re out of ideas, he is under no obligation to comply. It’s an aid, not a crutch."
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Crafter's Sense",
@@ -192,9 +190,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Direction Sense",
@@ -212,9 +208,7 @@ export default [
                 description: "●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Eidetic Memory",
@@ -279,9 +273,7 @@ export default [
                 description: "You can make an Intelligence + Wits roll any time your character is confronted with a situation or phenomenon outside his normal realm of experience. If the roll is successful, he may recall a “factoid” that he’s heard at some point that may shed light on matters."
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Entheogenic Synesthesia",
@@ -299,9 +291,7 @@ export default [
                 description: "●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Eye for the Strange",
@@ -418,9 +408,7 @@ export default [
                 description: "(●●●) *pre Medicine ● or Occult ●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Informative",
@@ -490,9 +478,7 @@ export default [
                 description: "Three dots indicate that he can speak the language like a native and is well-read in it."
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Lucid Dreamer",
@@ -510,9 +496,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Lucid Dreaming",
@@ -530,9 +514,7 @@ export default [
                 description: "(●●) *pre: non-changeling, Resolve ●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Make Do",
@@ -597,9 +579,7 @@ export default [
                 description: "(● to ●●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Murder Expert",
@@ -617,9 +597,7 @@ export default [
                 description: "(●●●) *pre:Intelligence ●●, Stealth ●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Mythologist",
@@ -637,9 +615,7 @@ export default [
                 description: "(●●●) *pre: Occult ●● with specialty in Underworld lore or similar"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Psychic Resistance",
@@ -657,9 +633,7 @@ export default [
                 description: "(● to ●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Rational Explanation",
@@ -717,9 +691,7 @@ export default [
                 description: "(● to ●●●●●) *mult, choose focus each time taken"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Telltale Murder",
@@ -737,9 +709,7 @@ export default [
                 description: "(●● or ●●●) *pre: Intelligence ●●●●, Medicine ●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Tolerance for Biology",
@@ -757,9 +727,7 @@ export default [
                 description: "(●) *pre: Resolve, Stamina or Composure ●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Trained Memory",
@@ -797,9 +765,7 @@ export default [
                 description: "(● or ●●●) *pre: Wits ●●● or Composure ●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Tunnel Rat",
@@ -817,9 +783,7 @@ export default [
                 description: "(● to ●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Vision",
@@ -857,9 +821,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Whispers",
@@ -877,9 +839,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Ambidextrous",
@@ -941,9 +901,7 @@ export default [
                 description: "(●) *pre: Dexterity ●● and Athletics ●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Brawling Dodge",
@@ -982,9 +940,7 @@ export default [
                 description: "(● to ●●) *pre: Strength ●●● or Intelligence ●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Disarm",
@@ -1022,9 +978,7 @@ export default [
                 description: "Your character has an innate sense of direction that instinctively allows him to remain oriented. He can enter unfamiliar territory and always retrace his steps back to his starting point, and can orient himself to any of the compass points (i.e., face north, face south) without references."
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Entering Strike",
@@ -1162,9 +1116,7 @@ export default [
                 description: "+3 Speed"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Fresh Start",
@@ -1350,9 +1302,7 @@ export default [
                 description: "(●●) *pre: Survival ●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Perfect Stillness",
@@ -1370,9 +1320,7 @@ export default [
                 description: "(●) *pre: Stealth ●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Quick Draw",
@@ -1430,9 +1378,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Steady Driver",
@@ -1450,9 +1396,7 @@ export default [
                 description: "(●) *pre: Drive ●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Strong Back",
@@ -1550,9 +1494,7 @@ export default [
                 description: "(●●●) *pre: Dexterity ●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "The Weapon at Hand",
@@ -1650,9 +1592,7 @@ export default [
                 description: "(●●) *pre: Dexterity ●●, Drive ●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Allies",
@@ -1692,9 +1632,7 @@ export default [
                 description: "Five dots allow for dangerous and even overtly criminal favors, such as a stock being sabotaged on Wall Street or the answers to an exam being shared by a university professor."
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Animal Companion",
@@ -1712,9 +1650,7 @@ export default [
                 description: "(● to ●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Anonymity",
@@ -1760,9 +1696,7 @@ export default [
                 description: "(● to ●●●●●) (SH) *pre: Resources ●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Barfly",
@@ -1780,9 +1714,7 @@ export default [
                 description: "No matter what town or city your character is in, he can find his way into the best nightspots with a few quick words and a timely bribe. There isn’t a velvet rope made that can keep him out of a restaurant or club."
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Bureaucratic Navigator",
@@ -1800,9 +1732,7 @@ export default [
                 description: "(●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Contacts",
@@ -1836,9 +1766,7 @@ export default [
                 description: "Your character has five arenas, circles or webs of connections from which he may draw information."
             },
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Decorated",
@@ -1856,9 +1784,7 @@ export default [
                 description: "(● to ●●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Deep Rapport",
@@ -1876,9 +1802,7 @@ export default [
                 description: "(● to ●●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Fame",
@@ -1904,9 +1828,7 @@ export default [
                 description: "+3 modifier to your character’s Socialize (or Persuasion, where applicable) rolls among those who are impressed by his celebrity status."
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Fence",
@@ -1942,9 +1864,7 @@ export default [
                 description: "(● to ●●●●●) {Power, Trust}"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Ingratiating Wanderer",
@@ -1962,9 +1882,7 @@ export default [
                 description: "(●●) *pre: Manipulation ●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Inspiring",
@@ -2043,9 +1961,7 @@ export default [
                 description: "Five dots indicate a mentor with towering influence and power in your character’s field of interest. A five-dot patron watches over your character and influences her life in ways both obvious and subtle, and likely has an agenda in which your character is pivotal."
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "New Identity",
@@ -2063,9 +1979,7 @@ export default [
                 description: "(●, ●● or ●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Resources",
@@ -2101,9 +2015,7 @@ export default [
                 description: "Five dots suggest significant wealth: $50,000 a month and as much as $5,000,000 worth of assets."
 						}
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Retainer",
@@ -2140,9 +2052,7 @@ export default [
                 description: "Five dots indicate an extraordinary follower. He is exceptional in many ways (five dots in a couple traits, and four in many others) or he may be capable of supernatural feats."
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Shadow Cult Initiation",
@@ -2160,9 +2070,7 @@ export default [
                 description: "(● to ●●●●●) (mult)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Small Unit Tactics",
@@ -2180,9 +2088,7 @@ export default [
                 description: "(●●●) *pre: Manipulation ●●● and Persuasion ●●● with Leadership Specialty"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Staff",
@@ -2200,9 +2106,7 @@ export default [
                 description: "(● to ●●●●●) *pre: Resources >= dots"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Status",
@@ -2240,9 +2144,7 @@ export default [
                 description: ""
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Striking Looks",
@@ -2264,9 +2166,7 @@ export default [
                 description: "Your character’s looks are angelic; she gets a +2 modifier to all Presence or Manipulation rolls when she attempts to use her looks to entertain, persuade, distract or deceive others."
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Sworn Officer",
@@ -2284,9 +2184,7 @@ export default [
                 description: "(● to ●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Trip Sitter",
@@ -2304,9 +2202,7 @@ export default [
                 description: "(●●●) *pre: Composure ●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Unobtrusive",
@@ -2324,9 +2220,7 @@ export default [
                 description: "(●●●) *pre: Stealth ●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Cursed Item",
@@ -2344,9 +2238,7 @@ export default [
                 description: "(● to ●●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Difficult to Ride",
@@ -2385,9 +2277,7 @@ export default [
                 description: "(● to ●●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Pleasing Aura",
@@ -2405,9 +2295,7 @@ export default [
                 description: "(●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Relic Creator",
@@ -2425,9 +2313,7 @@ export default [
                 description: "(●●●●) *pre: Occult ●●, Crafts ●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Relic",
@@ -2445,9 +2331,7 @@ export default [
                 description: "(● to ●●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Relic Analyst",
@@ -2465,9 +2349,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Saintly",
@@ -2485,9 +2367,7 @@ export default [
                 description: "(●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Seventh Son of a Seventh Son",
@@ -2505,9 +2385,7 @@ export default [
                 description: "(●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Shadow Contacts",
@@ -2525,9 +2403,7 @@ export default [
                 description: "(●●● to ●●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Shadowless Chambers",
@@ -2545,9 +2421,7 @@ export default [
                 description: "(● to ●●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Additional Familiars",
@@ -2583,9 +2457,7 @@ export default [
                 description: "(●●●●) *pre: Virtue of Charity or Hope (CO)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Artifact",
@@ -2617,9 +2489,7 @@ export default [
 				"Base Cost: 2 + highest Arcanum dots +1 dot per additional power"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Atlantean Hesychia",
@@ -2637,9 +2507,7 @@ export default [
                 description: "(●) *pre: High Speech"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Cartomancer",
@@ -2657,9 +2525,7 @@ export default [
                 description: "(● to ●●●) *pre: Occult Specialty of Tarot, Wits ●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Daimon",
@@ -2722,9 +2588,7 @@ export default [
                 description: "One or more clues (one per Dream dot)."
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Enhanced Item",
@@ -2753,9 +2617,7 @@ export default [
 				"Special property 1 dot per Arcanum dot needed to achieve the property\n"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Enhanced Item: Armor",
@@ -2773,9 +2635,7 @@ export default [
                 description: ""
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Enhanced Item: Bulletproof",
@@ -2793,9 +2653,7 @@ export default [
                 description: ""
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Decreased Size (Enhanced Item)",
@@ -2813,9 +2671,7 @@ export default [
                 description: "Decreasing the Size of an Enhanced Item costs one Merit dot per –2 Size."
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Extemporaneous Affinity",
@@ -2833,9 +2689,7 @@ export default [
                 description: "(●, ●●● or ●●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Familiar",
@@ -2901,9 +2755,7 @@ export default [
                 description: "When rolling Animal Ken, the character’s player adds three extra dice to the dice pool being rolled."
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Geomancer",
@@ -2929,9 +2781,7 @@ export default [
                 description: "(●) *pre: Occult Specialty of Geomancy"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Gesture Lore",
@@ -2969,9 +2819,7 @@ export default [
                 description: "(●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Glyph Lore",
@@ -3010,9 +2858,7 @@ export default [
                 description: "(●●●● or ●●●●●) *pre: have cast \" Goetic Manifestation \""
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Guise of Death",
@@ -3030,9 +2876,7 @@ export default [
                 description: "(●●●●●) *pre: Gnosis ●●●●●, Stamina ●●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "High Speech",
@@ -3088,9 +2932,7 @@ export default [
                 description: "Base Cost: 1 dot + highest Arcanum dots + 1 dot per additional power."
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Law of Embodiment",
@@ -3200,9 +3042,7 @@ export default [
                 description: "(●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Occultation (Mage)",
@@ -3268,9 +3108,7 @@ export default [
                 description: "(●●●●) *pre: Gnosis ●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Potent Familiar",
@@ -3324,9 +3162,7 @@ export default [
                 description: "(● to ●●●) *pre: not a full member of any Order"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Ritual Synergy",
@@ -3368,9 +3204,7 @@ export default [
                 description: "(●●●) *pre: Occult 4, Brawl 4 or Weaponry 4"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Sleepwalker Retainer",
@@ -3388,9 +3222,7 @@ export default [
                 description: "(● to ●●●●●) (mult)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Spirit Status",
@@ -3416,9 +3248,7 @@ export default [
                 description: "Negates –3 modifier from the Spiritual Hierarchy table (see Mage: The Awakening, p. 317) when casting magic that affects spirits."
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Status (Consilium)",
@@ -3453,9 +3283,7 @@ export default [
                 description: "“Benefactor of the Awakened”; Hierarch or Councilor"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Status (Order)",
@@ -3492,9 +3320,7 @@ export default [
                 description: "The character’s name and face are synonymous with her order; her exploits are taught to new members of the order."
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Status (Seers of the Throne)",
@@ -3512,9 +3338,7 @@ export default [
                 description: "(● to ●●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Summoner's Soul",
@@ -3532,9 +3356,7 @@ export default [
                 description: "(●●●) (CO)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Supernal Anchor",
@@ -3552,9 +3374,7 @@ export default [
                 description: "(●●●●●) *pre: Gnosis ●●●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Supernal Companion",
@@ -3572,9 +3392,7 @@ export default [
                 description: "(●●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Thrall",
@@ -3592,9 +3410,7 @@ export default [
                 description: "Possession of a soul stone gives your mage an Intimate sympathetic connection to its owner and allows him to tap the owner’s Mana without casting a Prime spell. Roll Gnosis + Presence – the soul stone creator’s Resolve and take one Mana per success. Such theft can be done only once per day, and is considered one favor toward the three allowed."
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Void Scourged",
@@ -3612,9 +3428,7 @@ export default [
                 description: "(●● (at character creation) or ●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Ancient Signs",
@@ -3652,9 +3466,7 @@ export default [
                 description: "(● to ●●●●●) *pre: Status (Mysterium) ●, Sanctum ●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Graduate of Otranto",
@@ -3672,9 +3484,7 @@ export default [
                 description: "(●●●) *pre: Acanthus, Status (Mysterium) ●, graduate of Scuola di Otranto"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Masque",
@@ -3712,9 +3522,7 @@ export default [
                 description: "(● to ●●●●●) *pre: Status (Mysterium) >= dots"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Oathbound",
@@ -3732,9 +3540,7 @@ export default [
                 description: "(● to ●●●●●) *pre: Adamantine Arrow"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Celestial Name",
@@ -3833,9 +3639,7 @@ export default [
                 description: "(●●●) *pre: Magical Tradition (Taoism)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Magical Tradition",
@@ -3853,9 +3657,7 @@ export default [
                 description: "(●●) *pre: Occult ●●, Academics or Occult Specialty in Tradition"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Lu",
@@ -3873,9 +3675,7 @@ export default [
                 description: "(● to ●●●●●) *pre: Magical Tradition (Taoism)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Pawns",
@@ -3893,9 +3693,7 @@ export default [
                 description: "(● to ●●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Bastion",
@@ -3913,9 +3711,7 @@ export default [
                 description: "(● to ●●●●●) {Size, Amenities, Battlements} (SH)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Den",
@@ -3937,9 +3733,7 @@ export default [
                 description: "(●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Haunt",
@@ -3957,9 +3751,7 @@ export default [
                 description: "(● to ●●●●●) {Fluidity, Residue, Utility} (SH)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Haven",
@@ -3977,9 +3769,7 @@ export default [
                 description: "(● to ●●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Hollow",
@@ -4000,9 +3790,7 @@ export default [
                 description: "(● to ●●●●●) {Size, Amenities, Doors, Wards} (SH)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Lair",
@@ -4020,9 +3808,7 @@ export default [
                 description: "(● to ●●●) (SH)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Safehouse",
@@ -4040,9 +3826,7 @@ export default [
                 description: "(● to ●●●●●) {Cache, Secrecy, Size, Traps}"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Sanctum",
@@ -4077,9 +3861,7 @@ export default [
                 description: "A sprawling estate or vast network of tunnels; countless rooms or chambers"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Temple",
@@ -4097,9 +3879,7 @@ export default [
                 description: "(● to ●●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Archive",
@@ -4117,9 +3897,7 @@ export default [
                 description: "(● to ●●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Sanctum Materials",
@@ -4137,9 +3915,7 @@ export default [
                 description: "(● to ●●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Portable",
@@ -4157,9 +3933,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Geomantic Nexus",
@@ -4177,9 +3951,7 @@ export default [
                 description: "(● to ●●●●●) Size and (● to ●●●) +1 attribute per dot"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Guardian Retainer",
@@ -4197,9 +3969,7 @@ export default [
                 description: "(● to ●●●●●) (mult)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Library",
@@ -4258,9 +4028,7 @@ export default [
                 description: "(● to ●●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Size",
@@ -4282,9 +4050,7 @@ export default [
                 description: "(● to ●●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Location",
@@ -4302,9 +4068,7 @@ export default [
                 description: "(● to ●●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Occultation (Vampire)",
@@ -4322,9 +4086,7 @@ export default [
                 description: "(● to ●●●●●) *pre: Haven Size ●●● or less"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Temple Library",
@@ -4342,9 +4104,7 @@ export default [
                 description: "(● to ●●●●●) *pre: Temple"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Alchemical Lab",
@@ -4382,9 +4142,7 @@ export default [
                 description: "(●● to ●●●●●) (mult)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
 	{
 		name: "Ractain Strain",
@@ -4519,9 +4277,7 @@ export default [
                 description: "(● to ●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Scriptorium",
@@ -4539,9 +4295,7 @@ export default [
                 description: "(●● to ●●●●●) (SH)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Summoning Circle",
@@ -4559,9 +4313,7 @@ export default [
                 description: "(● to ●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Amenities (Hollow)",
@@ -4579,9 +4331,7 @@ export default [
                 description: "(● to ●●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Doors",
@@ -4599,9 +4349,7 @@ export default [
                 description: "(● to ●●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Hob Kin",
@@ -4619,9 +4367,7 @@ export default [
                 description: "(●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Ritual Doorway",
@@ -4639,9 +4385,7 @@ export default [
                 description: "(●●●) *pre: Doors ●●●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Wards",
@@ -4659,9 +4403,7 @@ export default [
                 description: "(● to ●●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Workshop",
@@ -4715,9 +4457,7 @@ export default [
                 description: "(● to ●●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Amenities (Bastion)",
@@ -4735,9 +4475,7 @@ export default [
                 description: "(● to ●●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Battlements",
@@ -4755,9 +4493,7 @@ export default [
                 description: "(● to ●●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Arsenal",
@@ -4775,9 +4511,7 @@ export default [
                 description: "● to ●●●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "No Twilight",
@@ -4795,9 +4529,7 @@ export default [
                 description: "●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Self-Destruct",
@@ -4815,9 +4547,7 @@ export default [
                 description: "●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Cover-Linked",
@@ -4835,9 +4565,7 @@ export default [
                 description: "●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Trap Door",
@@ -4855,9 +4583,7 @@ export default [
                 description: "●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Easy Access",
@@ -4875,9 +4601,7 @@ export default [
                 description: "●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Ambush Site",
@@ -4895,9 +4619,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Apartment Building",
@@ -4915,9 +4637,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Arcane",
@@ -4935,9 +4655,7 @@ export default [
                 description: "(+●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Artic",
@@ -4955,9 +4673,7 @@ export default [
                 description: "-"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Barren",
@@ -4975,9 +4691,7 @@ export default [
                 description: "-"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Big Box Store",
@@ -4995,9 +4709,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Catalyst",
@@ -5015,9 +4727,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Caverns/Tunnels",
@@ -5035,9 +4745,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Cemetary",
@@ -5055,9 +4763,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Church",
@@ -5075,9 +4781,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Cliff/Ridge",
@@ -5095,9 +4799,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Club or Bar",
@@ -5115,9 +4817,7 @@ export default [
                 description: "(●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Contested",
@@ -5135,9 +4835,7 @@ export default [
                 description: "(-●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Criminal District",
@@ -5155,9 +4853,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Desert",
@@ -5175,9 +4871,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Dry",
@@ -5195,9 +4889,7 @@ export default [
                 description: "-"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Empty Building",
@@ -5215,9 +4907,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Essence Current/Ley Line",
@@ -5235,9 +4925,7 @@ export default [
                 description: "(+●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Fallow Prairie",
@@ -5255,9 +4943,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Factory",
@@ -5275,9 +4961,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Factory Farm",
@@ -5295,9 +4979,7 @@ export default [
                 description: "-"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Farm",
@@ -5315,9 +4997,7 @@ export default [
                 description: "(● or ●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Glade",
@@ -5335,9 +5015,7 @@ export default [
                 description: "(●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Haunted",
@@ -5355,9 +5033,7 @@ export default [
                 description: "(+●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "High",
@@ -5375,9 +5051,7 @@ export default [
                 description: "-"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Highway",
@@ -5395,9 +5069,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Houses/Housing",
@@ -5415,9 +5087,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Hospital",
@@ -5435,9 +5105,7 @@ export default [
                 description: "(●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Landfill or Garbage Dump",
@@ -5455,9 +5123,7 @@ export default [
                 description: "(●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Locus",
@@ -5475,9 +5141,7 @@ export default [
                 description: "(● to ●●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Mall/Strip Mall",
@@ -5495,9 +5159,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Media Center",
@@ -5515,9 +5177,7 @@ export default [
                 description: "(+●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Military Base",
@@ -5535,9 +5195,7 @@ export default [
                 description: "(●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Mountain",
@@ -5555,9 +5213,7 @@ export default [
                 description: "(●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Museum/Library",
@@ -5575,9 +5231,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Neutral Ground",
@@ -5595,9 +5249,7 @@ export default [
                 description: "-"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Notorious",
@@ -5615,9 +5267,7 @@ export default [
                 description: "-"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Ocean/Sea/Great Lake",
@@ -5635,9 +5285,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Office Building/Skyscraper",
@@ -5655,9 +5303,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Park",
@@ -5675,9 +5321,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Pond/Lake/Lakefront",
@@ -5695,9 +5339,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Poor",
@@ -5715,9 +5357,7 @@ export default [
                 description: "(+●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Pure",
@@ -5735,9 +5375,7 @@ export default [
                 description: "(-●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Rich",
@@ -5755,9 +5393,7 @@ export default [
                 description: "(+●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "River/Riverside",
@@ -5775,9 +5411,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Sanguine",
@@ -5795,9 +5429,7 @@ export default [
                 description: "(+●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Shoal",
@@ -5815,9 +5447,7 @@ export default [
                 description: "-"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Shop or Restaurant",
@@ -5835,9 +5465,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Spring",
@@ -5855,9 +5483,7 @@ export default [
                 description: "(●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Stadium or Arena",
@@ -5875,9 +5501,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Stream",
@@ -5895,9 +5519,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Swamp/Marsh/Wetland",
@@ -5915,9 +5537,7 @@ export default [
                 description: "(●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Theater/Opera House",
@@ -5935,9 +5555,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Tropical",
@@ -5955,9 +5573,7 @@ export default [
                 description: "-"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "University or Postsecondary School",
@@ -5975,9 +5591,7 @@ export default [
                 description: "(●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Utilities",
@@ -5995,9 +5609,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Verge",
@@ -6015,9 +5627,7 @@ export default [
                 description: "-"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Virgin",
@@ -6035,9 +5645,7 @@ export default [
                 description: "(+●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Wet",
@@ -6055,9 +5663,7 @@ export default [
                 description: "-"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Window",
@@ -6075,9 +5681,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Woods/Forest",
@@ -6095,9 +5699,7 @@ export default [
                 description: "(●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Wound",
@@ -6115,9 +5717,7 @@ export default [
                 description: "-"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Cant Fluency",
@@ -6135,9 +5735,7 @@ export default [
                 description: "(·) *Pre: Politics · or Occult · or Streetwise ·"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Cant Savvy",
@@ -6155,9 +5753,7 @@ export default [
                 description: "(··) Pre: Intelligence ·· and Politics · or Occult · or Streetwise ·"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Connections",
@@ -6175,9 +5771,7 @@ export default [
                 description: "(· to ·····) Pre: Presence ·· and Politics ·· or Streetwise ···"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Domain",
@@ -6195,9 +5789,7 @@ export default [
                 description: "(· to ·····) Pre: Fealty Flaw"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Feeding Ground",
@@ -6215,9 +5807,7 @@ export default [
                 description: "(· to ·····) Pre: Fealty Flaw (for ···· and ····· only)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Site",
@@ -6235,9 +5825,7 @@ export default [
                 description: "(· to ·····)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Tenant",
@@ -6255,9 +5843,7 @@ export default [
                 description: "(· to ·····) Pre: Domain Size per merit, Fealty Flaw"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Vassal",
@@ -6275,9 +5861,7 @@ export default [
                 description: "(· to ·····) Pre: Domain Size per merit, Fealty Flaw"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Acute Senses",
@@ -6295,9 +5879,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Altar",
@@ -6319,9 +5901,7 @@ export default [
                 description: "(●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Annointed",
@@ -6339,9 +5919,7 @@ export default [
                 description: "(●●) *pre: Lancea Sanctum Status"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Atrocious",
@@ -6359,9 +5937,7 @@ export default [
                 description: "(●) *pre: Cannot have Cutthroat or Enticing."
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Attache",
@@ -6379,9 +5955,7 @@ export default [
                 description: "(●) *pre: Invictus Status"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Bad Breeding",
@@ -6399,9 +5973,7 @@ export default [
                 description: "(● to ●●●) *pre: Does not have Good Breeding"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Bloodhound",
@@ -6419,9 +5991,7 @@ export default [
                 description: "(●●●) *pre: Wits"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Cacophony Listener",
@@ -6439,9 +6009,7 @@ export default [
                 description: "(●●● to ●●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Cacophony Saavy",
@@ -6459,9 +6027,7 @@ export default [
                 description: "(● to ●●●) *pre: City Status"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Carthian Pull",
@@ -6479,9 +6045,7 @@ export default [
                 description: "(●) *pre: Carthian Status"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Claws of the Unholy",
@@ -6499,9 +6063,7 @@ export default [
                 description: "(●) *pre: Protean ●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Close Family",
@@ -6523,9 +6085,7 @@ export default [
                 description: ""
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Cutthroat",
@@ -6543,9 +6103,7 @@ export default [
                 description: "(●) *pre: Cannot have Atrocious or Enticing."
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Distant Sympathy",
@@ -6563,9 +6121,7 @@ export default [
                 description: "(●●) *pre: Blood Potency 6"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Distinguished Palate",
@@ -6583,9 +6139,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Doll Face",
@@ -6603,9 +6157,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Dream Visions",
@@ -6623,9 +6175,7 @@ export default [
                 description: "(●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Dynastic Membership",
@@ -6643,9 +6193,7 @@ export default [
                 description: "(● to ●●●) *pre: Clan Status"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Enticing",
@@ -6663,9 +6211,7 @@ export default [
                 description: "(●) *pre: Cannot have Atrocious or Cutthroat."
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Feeding Grounds",
@@ -6683,9 +6229,7 @@ export default [
                 description: "(● to ●●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Friends in High Places",
@@ -6703,9 +6247,7 @@ export default [
                 description: "(●) *pre:"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Ghost Eater",
@@ -6723,9 +6265,7 @@ export default [
                 description: "(●●●) *pre: Has learned to feed on ghosts in the Underworld"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Good Breeding",
@@ -6743,9 +6283,7 @@ export default [
                 description: "(● to ●●●) *pre: Does not have Bad Breeding"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Haunted Channel",
@@ -6763,9 +6301,7 @@ export default [
                 description: "(● to ●●●●●) *pre:Nosferatu"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Haunted Hand",
@@ -6783,9 +6319,7 @@ export default [
                 description: "(● to ●●●●●) *pre:Nosferatu"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Herd",
@@ -6803,9 +6337,7 @@ export default [
                 description: "(● to ●●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Honey Trap",
@@ -6823,9 +6355,7 @@ export default [
                 description: "()"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Inherited Ghoul",
@@ -6843,9 +6373,7 @@ export default [
                 description: "(●●) *pre: Ghoul (CO only)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Inherited Resistance",
@@ -6863,9 +6391,7 @@ export default [
                 description: "(●● or ●●●●) *pre: Ventrue, Animalism ● or Domination ●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Inhuman Resistance",
@@ -6883,9 +6409,7 @@ export default [
                 description: "(●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Invested",
@@ -6903,9 +6427,7 @@ export default [
                 description: "(●) Invictus Status ●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Kindred Medium",
@@ -6923,9 +6445,7 @@ export default [
                 description: "(●● or ●●●●) *pre: Wits ●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Lordly Palette",
@@ -6943,9 +6463,7 @@ export default [
                 description: "(● to ●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Noble Heritage",
@@ -6963,9 +6481,7 @@ export default [
                 description: "(●● or ●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Occultation",
@@ -6983,9 +6499,7 @@ export default [
                 description: "(● to ●●●) *pre: No Fame merit"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Of Rose and Thorn",
@@ -7003,9 +6517,7 @@ export default [
                 description: "(●●●●) *pre: Blood Potency ●●, Animalism ●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Regnant",
@@ -7023,9 +6535,7 @@ export default [
                 description: "(● to ●●●●●) *pre: Ghoul"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Remnant of Clarity",
@@ -7043,9 +6553,7 @@ export default [
                 description: "("
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Pack Blooded",
@@ -7063,9 +6571,7 @@ export default [
                 description: "(●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Requiem Diary",
@@ -7083,9 +6589,7 @@ export default [
                 description: "("
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Patron",
@@ -7103,9 +6607,7 @@ export default [
                 description: "(● to ●●●●●) *pre: Status (Camarilla) or Status (Wing) ●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Savage Kenning",
@@ -7123,9 +6625,7 @@ export default [
                 description: "(●●●) *pre: Gangrel, Animalism ● or Animal Ken ● (CO only)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Social Chameleon",
@@ -7143,9 +6643,7 @@ export default [
                 description: "(● to ●●●) *pre: Fame <= ●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Swarm Mind",
@@ -7163,9 +6661,7 @@ export default [
                 description: "(●●) *pre: Protean ●●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Taste of the Strange",
@@ -7183,9 +6679,7 @@ export default [
                 description: "(●) *pre: Blood Potency"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Tenacious Consciousness",
@@ -7203,9 +6697,7 @@ export default [
                 description: "("
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Tomb",
@@ -7223,9 +6715,7 @@ export default [
                 description: "("
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "True Worm",
@@ -7243,9 +6733,7 @@ export default [
                 description: "(●●●) *pre:Nosferatu"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Undead Menses",
@@ -7263,9 +6751,7 @@ export default [
                 description: "(●●●) *pre: Female"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Unliving Anchor",
@@ -7283,9 +6769,7 @@ export default [
                 description: "(● to ●●●●●) *pre:Nosferatu"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Unyeilding Mask",
@@ -7303,9 +6787,7 @@ export default [
                 description: "("
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Vice over Virtue",
@@ -7323,9 +6805,7 @@ export default [
                 description: "(●●) *pre: Blood Potency"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Vitae Connoisseur",
@@ -7343,9 +6823,7 @@ export default [
                 description: "(●) *pre: Blood Potency"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Voyeur",
@@ -7363,9 +6841,7 @@ export default [
                 description: "(●●● or ●●●●●) *pre: Daeva"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Zeal",
@@ -7383,9 +6859,7 @@ export default [
                 description: "(●●) *Pre: Resolve"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Carthian Lawyer",
@@ -7403,9 +6877,7 @@ export default [
                 description: "(●●) *pre: Status (Carthians), Academics ●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Carthian Pull",
@@ -7423,9 +6895,7 @@ export default [
                 description: "(● to ●●●●●) *pre: Status (Carthians) >= Dots"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Coder Clique",
@@ -7443,9 +6913,7 @@ export default [
                 description: "(●) *pre: Status (Carthians) ●, Computer ●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Current Events Circle",
@@ -7463,9 +6931,7 @@ export default [
                 description: "(●) *pre: Status (Carthians) ●, Politics ●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Debate Club",
@@ -7483,9 +6949,7 @@ export default [
                 description: "(●) *pre: Status (Carthians) ●, Persuasion ●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Encounter Group",
@@ -7503,9 +6967,7 @@ export default [
                 description: "(●) *pre: Status (Carthians) ●, Empathy ●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Lab Section",
@@ -7523,9 +6985,7 @@ export default [
                 description: "(●) *pre: Status (Carthians) ●, Medicine ●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Night Doctor Surgery",
@@ -7543,9 +7003,7 @@ export default [
                 description: "(●●●) *pre: Status (Carthians) ●●●, Medicine ●●●, Night Doctor clique"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Study Group",
@@ -7563,9 +7021,7 @@ export default [
                 description: "(●) *pre: Status (Carthians) ●, Academics ●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Theater Society",
@@ -7583,9 +7039,7 @@ export default [
                 description: "(●) *pre: Status (Carthians) ●, Expression ●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "The Right Bar",
@@ -7603,9 +7057,7 @@ export default [
                 description: "(●) *pre: Status (Carthians) ●, Streetwise ●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "House Membership",
@@ -7623,9 +7075,7 @@ export default [
                 description: "(● or ●●●) *pre: Vampire or Ghoul"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Speaker for the Eclipsed",
@@ -7643,9 +7093,7 @@ export default [
                 description: "(● to ●●●●●) *pre: Torpor Connection ●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Tap of the Torpid Mind",
@@ -7663,9 +7111,7 @@ export default [
                 description: "(● to ●●●●●) *pre: Vampire, House Membership ●●●, Speaker for the Eclipsed ●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Torpor Connection",
@@ -7683,9 +7129,7 @@ export default [
                 description: "(● to ●●●●●) *pre: Vampire, Presence ●●, House Membership ●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Virtue's Twin",
@@ -7703,9 +7147,7 @@ export default [
                 description: "(●●●) *pre: Vampire, House Membership ●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Will of the Dynasty",
@@ -7723,9 +7165,7 @@ export default [
                 description: "(●●●) *pre: Vampire, House Membership ●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Crucible Ritual",
@@ -7743,9 +7183,7 @@ export default [
                 description: "(●●●) *pre: Resolve ●● and Coils ●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Fontal Ritual",
@@ -7763,9 +7201,7 @@ export default [
                 description: "(●●) *pre: Academics ● and Occult ●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Geomantic Nexus",
@@ -7783,9 +7219,7 @@ export default [
                 description: "(● to ●●●●● and ● to ●●●; special) *pre: Occult ●●● and Wits ●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Mind of the Devouring Worm",
@@ -7803,9 +7237,7 @@ export default [
                 description: "(●●●) *pre: Intelligence ●●●, Kindred Only"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Mind of the Unblinking Serpent",
@@ -7823,9 +7255,7 @@ export default [
                 description: "(●●) *pre: Mind of the Devouring Worm"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Mind of the Inscrutable Hydra",
@@ -7843,9 +7273,7 @@ export default [
                 description: "(●●) *pre: Mind of the Unblinking Serpent"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Ancestral Vessel",
@@ -7863,9 +7291,7 @@ export default [
                 description: "(● to ●●●●●) *pre: Lodge of Voices"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Animal Magnetism",
@@ -7883,9 +7309,7 @@ export default [
                 description: "(●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Auspice Blessing",
@@ -7903,9 +7327,7 @@ export default [
                 description: "(●) *pre: One Auspice Affinity skill at ●● (CO)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Beginner's Luck",
@@ -7923,9 +7345,7 @@ export default [
                 description: "(●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Chain Breaker",
@@ -7943,9 +7363,7 @@ export default [
                 description: "(●●●●) *pre: Lodge of Ashes"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Ephemeral Reckoning",
@@ -7963,9 +7381,7 @@ export default [
                 description: "(●● or ●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Eyrie",
@@ -7983,9 +7399,7 @@ export default [
                 description: "(●●●) Pre: Uratha"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Far-Runner's Intuition",
@@ -8003,9 +7417,7 @@ export default [
                 description: "(●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Fetish",
@@ -8042,9 +7454,7 @@ export default [
                 description: "(●●) Pre: Uratha"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Mercy of Luna",
@@ -8062,9 +7472,7 @@ export default [
                 description: "(●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Metabolic Control",
@@ -8082,9 +7490,7 @@ export default [
                 description: "(●●) *pre: Stamina ●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Moon Centered",
@@ -8102,9 +7508,7 @@ export default [
                 description: "(●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Naturally Deceptive",
@@ -8122,9 +7526,7 @@ export default [
                 description: "(●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Nimble Defender",
@@ -8142,9 +7544,7 @@ export default [
                 description: "(●●●●) Pre: Uratha."
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Pathfinder's Blessing",
@@ -8162,9 +7562,7 @@ export default [
                 description: "(●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Predator’s Gaze",
@@ -8182,9 +7580,7 @@ export default [
                 description: "(●●) *pre: Presence ●●, Intimidation ●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Prophet's Voice",
@@ -8202,9 +7598,7 @@ export default [
                 description: "(●●●) *pre: Resolve ●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Scout",
@@ -8222,9 +7616,7 @@ export default [
                 description: "(●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Secret Paths",
@@ -8242,9 +7634,7 @@ export default [
                 description: "(●●) Pre: Uratha"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Short Cuts",
@@ -8262,9 +7652,7 @@ export default [
                 description: "(●) Pre: Uratha"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Staunch Defender",
@@ -8282,9 +7670,7 @@ export default [
                 description: "(●●●) Pre: Uratha"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Strong Bloodline",
@@ -8302,9 +7688,7 @@ export default [
                 description: "(●) *pre: Ivory Claw"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Trained Senses",
@@ -8322,9 +7706,7 @@ export default [
                 description: "("
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Territorial Familiarity",
@@ -8342,9 +7724,7 @@ export default [
                 description: "(● to ●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Vicious Attacker",
@@ -8362,9 +7742,7 @@ export default [
                 description: "(●●●) Pre: Uratha"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Acid Stomach",
@@ -8382,9 +7760,7 @@ export default [
                 description: "●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Azothic Object",
@@ -8402,9 +7778,7 @@ export default [
                 description: "● to ●●●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Companion",
@@ -8462,9 +7836,7 @@ export default [
                 description: "● to ●●●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Famous Face",
@@ -8482,9 +7854,7 @@ export default [
                 description: "● to ●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Fresh Corpse",
@@ -8502,9 +7872,7 @@ export default [
                 description: "●● (CO)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Good Brain",
@@ -8522,9 +7890,7 @@ export default [
                 description: "●●● (CO)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Hideous Anyway",
@@ -8542,9 +7908,7 @@ export default [
                 description: "●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Incorruptible",
@@ -8622,9 +7986,7 @@ export default [
                 description: "● to ●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Residual Memory",
@@ -8642,9 +8004,7 @@ export default [
                 description: "● to ●●●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Shabti",
@@ -8702,9 +8062,7 @@ export default [
                 description: "●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Weatherproof",
@@ -8722,9 +8080,7 @@ export default [
                 description: "● (CO)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Endowments",
@@ -8762,9 +8118,7 @@ export default [
                 description: "●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Indomitable",
@@ -8802,9 +8156,7 @@ export default [
                 description: "●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Language: ConLang",
@@ -8822,9 +8174,7 @@ export default [
                 description: "●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Natural Medium",
@@ -8862,9 +8212,7 @@ export default [
                 description: "●●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Professional Training",
@@ -8882,9 +8230,7 @@ export default [
                 description: "● to ●●●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Status, Compact or Conspiracy",
@@ -8902,9 +8248,7 @@ export default [
                 description: "● to ●●●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Torture Suite",
@@ -8922,9 +8266,7 @@ export default [
                 description: "● to ●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Unbondable",
@@ -8962,9 +8304,7 @@ export default [
                 description: "(●+)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Death-Touched",
@@ -8982,9 +8322,7 @@ export default [
                 description: "●● to ●●●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Memento",
@@ -9002,9 +8340,7 @@ export default [
                 description: "(●+)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Encylopedic Knowledge*",
@@ -9022,9 +8358,7 @@ export default [
                 description: "●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Language*",
@@ -9042,9 +8376,7 @@ export default [
                 description: "●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Cult",
@@ -9062,9 +8394,7 @@ export default [
                 description: "*"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Benefit",
@@ -9082,9 +8412,7 @@ export default [
                 description: "● to ●●●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Grasp",
@@ -9102,9 +8430,7 @@ export default [
                 description: "● to ●●●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Reach",
@@ -9122,9 +8448,7 @@ export default [
                 description: "● to ●●●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Enigma",
@@ -9142,9 +8466,7 @@ export default [
                 description: "● to ●●●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Guild Status",
@@ -9162,9 +8484,7 @@ export default [
                 description: "● to ●●●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Relic",
@@ -9182,9 +8502,7 @@ export default [
                 description: "● to ●●●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Tomb",
@@ -9202,9 +8520,7 @@ export default [
                 description: "*"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Drawbacks",
@@ -9222,9 +8538,7 @@ export default [
                 description: "● to ●●●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Endowments",
@@ -9242,9 +8556,7 @@ export default [
                 description: "● to ●●●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Geometry",
@@ -9262,9 +8574,7 @@ export default [
                 description: "● to ●●●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Peril",
@@ -9282,9 +8592,7 @@ export default [
                 description: "● to ●●●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Vestige",
@@ -9302,9 +8610,7 @@ export default [
                 description: "● to ●●●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Witness",
@@ -9322,9 +8628,7 @@ export default [
                 description: "●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Advance Form",
@@ -9342,9 +8646,7 @@ export default [
                 description: "Have one less Modification or Technology, but one more Propulsion or Process."
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Bolthole",
@@ -9362,9 +8664,7 @@ export default [
                 description: "● to ●●●●●+"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Consummate Professional (Agenda)",
@@ -9382,9 +8682,7 @@ export default [
                 description: "●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Cultists",
@@ -9402,9 +8700,7 @@ export default [
                 description: "●● to ●●●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Efficient Dealer",
@@ -9422,9 +8718,7 @@ export default [
                 description: "●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Electromagnetic Linguistics",
@@ -9442,9 +8736,7 @@ export default [
                 description: "●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "High Tolerance",
@@ -9462,9 +8754,7 @@ export default [
                 description: "● or ●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Living the Lie",
@@ -9522,9 +8812,7 @@ export default [
                 description: "●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Resonance Aware",
@@ -9582,9 +8870,7 @@ export default [
                 description: "● to ●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Subsumed Gadget",
@@ -9642,9 +8928,7 @@ export default [
                 description: "●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Terrible Form (Style)",
@@ -9662,9 +8946,7 @@ export default [
                 description: "● to ●●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Technological Advancement",
@@ -9682,9 +8964,7 @@ export default [
                 description: ""
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Jet Propulsion",
@@ -9702,9 +8982,7 @@ export default [
                 description: ""
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Dual Processors",
@@ -9722,9 +9000,7 @@ export default [
                 description: "DtD 122"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Versatile Transformation",
@@ -9742,9 +9018,7 @@ export default [
                 description: "●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Age Reversal",
@@ -10834,9 +10108,7 @@ export default [
                 description: "(●●●●) *pre: Sap the Vital Spark Blessing"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Subtle Liquer",
@@ -10854,9 +10126,7 @@ export default [
                 description: "(●) *pre: Inebriating Elixir Blessing"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Outsider Fetish",
@@ -10874,9 +10144,7 @@ export default [
                 description: "(● to ●●●) *pre: The Lord Sages of the Unknown Reaches"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Bloodied Ground",
@@ -10894,9 +10162,7 @@ export default [
                 description: ""
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Broken Mirror",
@@ -10914,9 +10180,7 @@ export default [
                 description: ""
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Cuckoo's Egg",
@@ -10934,9 +10198,7 @@ export default [
                 description: ""
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "False Heart",
@@ -10954,9 +10216,7 @@ export default [
                 description: ""
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Fetchbane",
@@ -10974,9 +10234,7 @@ export default [
                 description: ""
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Shared Guilt",
@@ -10994,9 +10252,7 @@ export default [
                 description: ""
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Bean Buyer",
@@ -11014,9 +10270,7 @@ export default [
                 description: "Streetwise ●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Cloistered Spinne",
@@ -11034,9 +10288,7 @@ export default [
                 description: "Crafts ●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Cowherd and Weaver",
@@ -11054,9 +10306,7 @@ export default [
                 description: "Resolve ●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Evil Stepsister",
@@ -11074,9 +10324,7 @@ export default [
                 description: "Manipulation ●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Fair Prince",
@@ -11094,9 +10342,7 @@ export default [
                 description: "Court Mantle ●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Fisher King",
@@ -11114,9 +10360,7 @@ export default [
                 description: "Court Mantle ●●●●● Court Crown"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Mobled Queen",
@@ -11134,9 +10378,7 @@ export default [
                 description: "Court Mantle ●●●●● Court Crown"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Monkey Heart",
@@ -11154,9 +10396,7 @@ export default [
                 description: "Wits ●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Mortal Enemy",
@@ -11174,9 +10414,7 @@ export default [
                 description: "Resolve ●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Star-Crossed Lover",
@@ -11194,9 +10432,7 @@ export default [
                 description: "Presence●●●"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Enchanted Mortal",
@@ -11214,9 +10450,7 @@ export default [
                 description: "(●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "No Seeming",
@@ -11234,9 +10468,7 @@ export default [
                 description: "(●●) *pre: Changelings Only Character Creation Only"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Seeming",
@@ -11254,9 +10486,7 @@ export default [
                 description: "(●●●) *pre: Fey-Touched Only Character Creation Only"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Fae Pet",
@@ -11274,9 +10504,7 @@ export default [
                 description: "(●● or ●●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "Fair Haven",
@@ -11294,9 +10522,7 @@ export default [
                 description: "(●●●)"
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
     {
         name: "EOD",
@@ -12387,9 +11613,7 @@ export default [
                 description: "Through constant practice and competition, your character had made one throw into a specialty. It’s not easy to apply it every time, but when the opportunity appears, few people can resist her technique. If her opponent scores zero successes to establish a hold, escape one or use an overpowering maneuver and the character secures a hold herself, she creates an opening for the technique.See Throwing/AkidoIf you score even one success on one of the nage-waza based overpowering actions (render an opponent prone while standing, or render both combatants prone while inflicting damage), add the character’s Athletics Skill as extra successes."
             }
         ],
-        requirements: [
-            ""
-        ]
+        requirements: []
     },
 		{
         name: "Muay Thai",
