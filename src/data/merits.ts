@@ -4160,9 +4160,7 @@ export default [
                 description: "This Merit mimics the effects of the Eidetic Memory, Meditative Mind and Direction Sense Merits.  In addition, bearers are unusual-looking to the point that most people consider them slightly unattractive. These characters gain a –1 die penalty to all Presence and Manipulation rolls involving attempts to use their looks to entertain, persuade, distract or deceive others. Purchasing the Striking Looks •• Merit cancels this penalty, and purchasing the Striking Looks •••• provides the same benefits that the Striking Looks •• Merit provides to most characters."
             }
 		],
-        requirements: [
-			""
-        ]	
+        requirements: []	
 	},
 	{
 		name: "Blood of the Oath of Ruin",
@@ -4180,9 +4178,7 @@ export default [
                 description: "This Merit allows the character to sense the presence of Abyssal phenomena (including, but not limited to, intruders of any sort, Paradox, Scelesti, everything save other “pure-blooded” Harpers) out to a distance of 100 feet or so. This sense typically manifests in some unpleasant way: nosebleeds, burning hives, intense stomach cramps and the like. Regardless of the pain or discomfort inherent in the character’s perception, he gains a +1 bonus to all rolls involving Physical Skills made while in the presence of Abyssal phenomena.\nIn exchange for this dubious gift, the character must take a permanent derangement, as well as a Physical Flaw or else one of the following Social Flaws: Deformity or Speech Impediment. (See the World of Darkness Rulebook, p. 218, for explanations of the various Flaws.)"
             }
 		],
-        requirements: [
-			""
-        ]	
+        requirements: []	
 	},
     {
         name: "Guardian Spirit",
