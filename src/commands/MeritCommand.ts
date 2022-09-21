@@ -93,12 +93,12 @@ export const MeritCommand: Command = {
                 .setStyle(ButtonStyle.Primary),
         );
 
+        DiscordChannelLogger.setClient(client).logBaggage({interaction: interaction, embed: embed})
         await interaction.followUp({
             ephemeral: true,
             embeds: [embed],
             // components: [feedbackRow]
         });
-        DiscordChannelLogger.setClient(client).logBaggage({interaction: interaction, embed: embed})
 
     }
 };
