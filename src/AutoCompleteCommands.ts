@@ -1,8 +1,8 @@
 import { AutoCompleteCommand } from "./AutoCompleteCommand.js";
 import { MeritAutocomplete } from "./autoCompleteCommands/MeritAutoComplete.js";
-import { Spell } from "./autoCompleteCommands/Spell.js";
+import { SpellAutocomplete } from "./autoCompleteCommands/SpellAutocomplete.js";
 
 export const AutoCompleteCommands: AutoCompleteCommand[] = [
-    Spell,
+    SpellAutocomplete,
     MeritAutocomplete
 ];

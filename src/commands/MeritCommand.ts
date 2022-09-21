@@ -1,4 +1,4 @@
-import { Interaction, Client, ApplicationCommandType, CommandInteraction, EmbedBuilder } from "discord.js";
+import { Interaction, Client, ApplicationCommandType, CommandInteraction, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
 import { Command } from "../Command.js";
 import DiscordChannelLogger from "../DiscordChannelLogger.js";
 import MeritProvider from "../data/MeritProvider.js";
@@ -80,9 +80,23 @@ export const MeritCommand: Command = {
 
         }
         
+        // Get feedback
+		const feedbackRow = new ActionRowBuilder<ButtonBuilder>()
+        .addComponents(
+            new ButtonBuilder()
+                .setCustomId('helpful')
+                .setLabel('Helpful')
+                .setStyle(ButtonStyle.Primary),
+            new ButtonBuilder()
+                .setCustomId('unhelpful')
+                .setLabel('Unhelpful')
+                .setStyle(ButtonStyle.Primary),
+        );
+
         await interaction.followUp({
             ephemeral: true,
-            embeds: [embed]
+            embeds: [embed],
+            // components: [feedbackRow]
         });
         DiscordChannelLogger.setClient(client).logBaggage({interaction: interaction, embed: embed})
 

@@ -1,9 +1,10 @@
 import { Client, AutocompleteInteraction, ApplicationCommandOptionChoiceData } from "discord.js";
 import MeritProvider from "../data/MeritProvider.js";
 import { AutoCompleteCommand } from "../AutoCompleteCommand.js";
+import { MeritCommand } from "src/commands/MeritCommand.js";
 
 export const MeritAutocomplete: AutoCompleteCommand = {
-    name: "merit",
+    name: MeritCommand.name,
     maxResponses: 25,
     autocomplete: function (client: Client<boolean>, interaction: AutocompleteInteraction): ApplicationCommandOptionChoiceData<string | string>[] {
         let option = interaction.options.data.filter(d => d.focused)[0]

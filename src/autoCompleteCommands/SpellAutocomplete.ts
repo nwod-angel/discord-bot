@@ -1,9 +1,10 @@
 import { Client, AutocompleteInteraction, ApplicationCommandOptionChoiceData } from "discord.js";
+import { SpellCommand } from "../commands/SpellCommand.js";
 import { AutoCompleteCommand } from "../AutoCompleteCommand.js";
 import spells from "../data/spells";
 
-export const Spell: AutoCompleteCommand = {
-    name: "spell",
+export const SpellAutocomplete: AutoCompleteCommand = {
+    name: SpellCommand.name,
     maxResponses: 25,
     autocomplete: function (client: Client<boolean>, interaction: AutocompleteInteraction): ApplicationCommandOptionChoiceData<string | string>[] {
         let option = interaction.options.data.filter(d => d.focused)[0]
