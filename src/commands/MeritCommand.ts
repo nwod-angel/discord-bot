@@ -21,7 +21,7 @@ export const MeritCommand: Command = {
         }
     ],
     run: async (client: Client, interaction: CommandInteraction) => {
-        DiscordChannelLogger.setClient(client).logBaggage({interaction: interaction, options: interaction.options})
+        await DiscordChannelLogger.setClient(client).logBaggage({interaction: interaction, options: interaction.options})
 
         let name: string | undefined = undefined
         if(interaction.options.get('name')){
@@ -93,7 +93,7 @@ export const MeritCommand: Command = {
                 .setStyle(ButtonStyle.Primary),
         );
 
-        DiscordChannelLogger.setClient(client).logBaggage({interaction: interaction, embed: embed})
+        await DiscordChannelLogger.setClient(client).logBaggage({interaction: interaction, embed: embed})
         await interaction.followUp({
             ephemeral: true,
             embeds: [embed],
