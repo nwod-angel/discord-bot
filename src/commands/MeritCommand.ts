@@ -61,7 +61,7 @@ export const MeritCommand: Command = {
 
             let descriptionChunks = merit.description.match(/.{1,1000}/g) || []
             descriptionChunks.forEach((chunk: string, index: number) => {
-                embed.addFields({ name: `Effect (${index + 1}/${descriptionChunks.length})`, value: chunk, inline: false })
+                embed.addFields({ name: `Effect ${index > 0 ? ' (continued)' : ''}`, value: chunk, inline: false })
             })
             try {
                 merit.levels.forEach(level => {
