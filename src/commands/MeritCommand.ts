@@ -1,7 +1,9 @@
-import { Interaction, Client, ApplicationCommandType, CommandInteraction, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
-import { Command } from "../Command.js";
-import DiscordChannelLogger from "../DiscordChannelLogger.js";
-import MeritProvider from "../data/MeritProvider.js";
+import { Interaction, Client, ApplicationCommandType, CommandInteraction, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js"
+import { Command } from "../Command.js"
+import DiscordChannelLogger from "../DiscordChannelLogger.js"
+import MeritProvider from "../data/MeritProvider.js"
+import { SymbolLibrary } from "../SymbolLibrary.js"
+const DOT = SymbolLibrary.DotLargeWhite
 
 export const MeritCommand: Command = {
     name: "merit",
@@ -61,10 +63,18 @@ export const MeritCommand: Command = {
             descriptionChunks.forEach((chunk: string, index: number) => {
                 embed.addFields({ name: `Effect (${index + 1}/${descriptionChunks.length})`, value: chunk, inline: false })
             })
-
-            merit.levels.forEach(level => {
-                embed.addFields({ name: `${level.name || merit.name} ${'•'.repeat(level.level)}`, value: level.description, inline: false })
-            })
+            try {
+                merit.levels.forEach(level => {
+                    let levelDescriptionChunks = level.description.match(/.{1,1000}/g) || []
+                    levelDescriptionChunks.forEach((descriptionChunk: string, index: number) => {
+                        embed.addFields({ name: `${level.name || merit.name} ${DOT.repeat(level.level)} ${index > 0 ? ' (continued)' : ''}`, value: descriptionChunk, inline: false })
+                    })
+                })
+            } catch (error) {
+                console.error('An error occurred while adding fields to the embed:', error)
+                console.log("Merit:")
+                console.log(merit)
+            }
 
             embed.addFields({ name: 'Sources', value: merit.sourcesString(), inline: false })
         } else {
@@ -86,11 +96,11 @@ export const MeritCommand: Command = {
             new ButtonBuilder()
                 .setCustomId('helpful')
                 .setLabel('Helpful')
-                .setStyle(ButtonStyle.Primary),
+                .setStyle(ButtonStyle.Success),
             new ButtonBuilder()
                 .setCustomId('unhelpful')
                 .setLabel('Unhelpful')
-                .setStyle(ButtonStyle.Primary),
+                .setStyle(ButtonStyle.Danger),
         );
 
         await DiscordChannelLogger.setClient(client).logBaggage({interaction: interaction, embed: embed})

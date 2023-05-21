@@ -1,7 +1,9 @@
 import { Client, AutocompleteInteraction, ApplicationCommandOptionChoiceData } from "discord.js";
 import { SpellCommand } from "../commands/SpellCommand.js";
 import { AutoCompleteCommand } from "../AutoCompleteCommand.js";
-import spells from "../data/spells";
+import spells from "../data/spells.js";
+import { SymbolLibrary } from "../SymbolLibrary.js"
+const DOT = SymbolLibrary.DotLargeWhite
 
 export const SpellAutocomplete: AutoCompleteCommand = {
     name: SpellCommand.name,
@@ -16,7 +18,7 @@ export const SpellAutocomplete: AutoCompleteCommand = {
             .slice(0, this.maxResponses)
             .map(s => 
                 ({
-                    name: `${s.name} (${s.primaryArcana} ${'•'.repeat(parseInt(s.requirements.filter(r => r.name.toLowerCase() === s.primaryArcana.toLowerCase())[0].dots!))})`,
+                    name: `${s.name} (${s.primaryArcana} ${DOT.repeat(parseInt(s.requirements.filter(r => r.name.toLowerCase() === s.primaryArcana.toLowerCase())[0].dots!))})`,
                     value: s.name
                 })) as unknown as ApplicationCommandOptionChoiceData<string | string>[];
     }
