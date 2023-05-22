@@ -9,6 +9,17 @@ dotenv.config(); //initialize dotenv
 const token = process.env['DISCORD_TOKEN']; // add your token here
 
 console.log("Bot is starting...");
+const splash = [
+    '                             ______  ____  ______',
+    '    ____ _      ______  ____/ / __ )/ __ \/_  __/',
+    '   / __ \ | /| / / __ \/ __  / __  / / / / / /   ',
+    '  / / / / |/ |/ / /_/ / /_/ / /_/ / /_/ / / /    ',
+    ' /_/ /_/|__/|__/\____/\__,_/_____/\____/ /_/     ',
+    '                                                 '
+]
+splash.forEach(line => {
+    console.log(line)
+});
 
 const client = new Client({
     intents: []
