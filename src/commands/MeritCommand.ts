@@ -2,8 +2,7 @@ import { Interaction, Client, ApplicationCommandType, CommandInteraction, EmbedB
 import { Command } from "../Command.js"
 import DiscordChannelLogger from "../DiscordChannelLogger.js"
 import MeritProvider from "../data/MeritProvider.js"
-import { SymbolLibrary } from "../SymbolLibrary.js"
-const DOT = SymbolLibrary.DotLargeWhite
+import { NwodSymbols } from "@nwod-angel/nwod-core"
 
 export const MeritCommand: Command = {
     name: "merit",
@@ -24,6 +23,8 @@ export const MeritCommand: Command = {
     ],
     run: async (client: Client, interaction: CommandInteraction) => {
         await DiscordChannelLogger.setClient(client).logBaggage({interaction: interaction, options: interaction.options})
+
+        const symbols = new NwodSymbols()
 
         let name: string | undefined = undefined
         if(interaction.options.get('name')){
@@ -67,7 +68,7 @@ export const MeritCommand: Command = {
                 merit.levels.forEach(level => {
                     let levelDescriptionChunks = level.description.match(/.{1,1000}/g) || []
                     levelDescriptionChunks.forEach((descriptionChunk: string, index: number) => {
-                        embed.addFields({ name: `${level.name || merit.name} ${DOT.repeat(level.level)} ${index > 0 ? ' (continued)' : ''}`, value: descriptionChunk, inline: false })
+                        embed.addFields({ name: `${level.name || merit.name} ${symbols.MeritDot.repeat(level.level)} ${index > 0 ? ' (continued)' : ''}`, value: descriptionChunk, inline: false })
                     })
                 })
             } catch (error) {
