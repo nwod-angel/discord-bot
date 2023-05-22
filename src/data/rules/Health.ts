@@ -1,4 +1,4 @@
-import { RuleParagraph } from "../RuleProvider";
+import { RuleParagraph } from "../RuleParagraph";
 
 export default {
     name: "Health",

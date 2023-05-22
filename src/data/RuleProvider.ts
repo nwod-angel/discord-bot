@@ -1,37 +1,8 @@
-import { Requirement, Source, Rule } from "@nwod-angel/nwod-core"
+import { Requirement, Source } from "@nwod-angel/nwod-core"
 import { stringify } from "querystring";
 import rules from "./rules";
-
-export class RuleParagraph {
-    prefix?: string
-    text: string
-    example: boolean
-
-    constructor(
-        {prefix, text, example}:
-        {text: string,
-        prefix?: string,
-        example?: boolean}
-    ) {
-        this.text = text
-        this.prefix = prefix
-        this.example = example || false
-    }
-}
-
-class RuleDefinition extends Rule {
-    name: string
-    paragraphs: Array<RuleParagraph>
-
-    constructor(
-        name: string,
-        paragraphs: Array<RuleParagraph>,
-        sources?: Array<Source>) {
-        super(sources)
-        this.name = name
-        this.paragraphs = paragraphs
-    }
-}
+import { RuleParagraph } from "./RuleParagraph";
+import { RuleDefinition } from "./RuleDefinition";
 
 export default class RuleProvider {
     static rules: Array<RuleDefinition>
