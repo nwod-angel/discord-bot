@@ -3,7 +3,7 @@ import { Command } from "../Command.js"
 import DiscordChannelLogger from "../DiscordChannelLogger.js"
 import RuleProvider from "../data/RuleProvider"
 import { NwodSymbols } from "@nwod-angel/nwod-core"
-import { Table } from "embed-table"
+import AsciiTable from 'ascii-table'
 
 export const RuleCommand: Command = {
     name: "rule",
@@ -64,19 +64,14 @@ export const RuleCommand: Command = {
                 } else if (paragraph.prefix) {
                     embed.addFields({ name: paragraph.prefix, value: paragraph.text, inline: false })
                 } else if (paragraph.table) {
-
-                    const table = new Table({
-                        titles: paragraph.table.headers,
-                        titleIndexes: [0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80].slice(0, paragraph.table.headers.length),
-                        columnIndexes: [0, 6, 14, 22, 30, 38, 46, 54, 62, 70, 78].slice(0, paragraph.table.headers.length),
-                        start: '`',
-                        end: '`',
-                        padEnd: 0
-                    })
+                    let table = new AsciiTable()
+                    table.removeBorder()
+                    table.setHeading(paragraph.table.headers)
                     paragraph.table.rows.forEach(row => {
                         table.addRow(row);
                     })
-                    embed.addFields(table.toField())
+                    embed.addFields({ name: '\u200b', value: `\`\`\`\n${table.toString()}\n\`\`\``, inline: false })
+
                 } else if (paragraph.text) {
                     embed.addFields({ name: '\u200b', value: paragraph.text, inline: false })
                 }
