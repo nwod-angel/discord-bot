@@ -55,9 +55,16 @@ export const RuleCommand: Command = {
         } else if(rules.length === 1){
             let rule = rules[0]
             embed.setTitle(rule.name)
+            let description = ""
 
             rule.paragraphs.forEach(paragraph => {
-                embed.addFields({ name: '\u200b', value: paragraph.text, inline: false })
+                if(paragraph.example) {
+                    embed.addFields({ name: 'Example', value: `*${paragraph.text}*`, inline: false })
+                } else if(paragraph.prefix) {
+                    embed.addFields({ name: paragraph.prefix, value: paragraph.text, inline: false })
+                } else {
+                    embed.addFields({ name: '\u200b', value: paragraph.text, inline: false })
+                }
             })
 
             // let descriptionChunks = rule.description.match(/.{1,1000}/g) || []
