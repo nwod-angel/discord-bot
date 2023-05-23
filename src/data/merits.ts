@@ -55,8 +55,8 @@ export default [
         description: "Use higher of Wits or Dexterity for Defense",
         levels: [
             {
-                level: 0,
-                description: "●"
+                level: 1,
+                description: "Use higher of Wits or Dexterity for Defense"
             }
         ],
         requirements: [
@@ -75,8 +75,8 @@ export default [
         description: "Can safely gauge how far Old Law limits can be pushed",
         levels: [
             {
-                level: 0,
-                description: "●●●●"
+                level: 4,
+                description: "Can safely gauge how far Old Law limits can be pushed"
             }
         ],
         requirements: [
@@ -95,8 +95,8 @@ export default [
         description: "+2 to any situational awareness roll",
         levels: [
             {
-                level: 0,
-                description: "●●"
+                level: 2,
+                description: "+2 to any situational awareness roll"
             }
         ],
         requirements: [
@@ -145,7 +145,8 @@ export default [
             }
         ],
         requirements: [
-            "Crafts ●●●", "Specialty"
+            "Crafts ●●●",
+            "Specialty"
         ]
     },
     {
@@ -186,8 +187,8 @@ export default [
         description: "Gains 8-again when navigating in the Underworld; loses 10-again navigating above ground.",
         levels: [
             {
-                level: 0,
-                description: "(●)"
+                level: 1,
+                description: "Gains 8-again when navigating in the Underworld; loses 10-again navigating above ground."
             }
         ],
         requirements: []
@@ -204,8 +205,8 @@ export default [
         description: "inate sense of direction",
         levels: [
             {
-                level: 0,
-                description: "●"
+                level: 1,
+                description: "inate sense of direction"
             }
         ],
         requirements: []
@@ -215,7 +216,7 @@ export default [
         sources: [
             {
                 sourceBook: "World of Darkness",
-                sourcePage: "108 "
+                sourcePage: "108"
             },
             {
                 sourceBook: "God-Machine Rules Update",
@@ -245,8 +246,8 @@ export default [
         description: "Ignores stress penalties equal to resolve",
         levels: [
             {
-                level: 0,
-                description: "●"
+                level: 1,
+                description: "Ignores stress penalties equal to resolve"
             }
         ],
         requirements: [
@@ -287,8 +288,8 @@ export default [
         description: "+1 to Perception when using psychoactive drugs",
         levels: [
             {
-                level: 0,
-                description: "●"
+                level: 1,
+                description: "+1 to Perception when using psychoactive drugs"
             }
         ],
         requirements: []
@@ -305,8 +306,8 @@ export default [
         description: "can roll Intelligence + Composure to determine if scene has a supernatural cause",
         levels: [
             {
-                level: 0,
-                description: "●●"
+                level: 2,
+                description: "can roll Intelligence + Composure to determine if scene has a supernatural cause"
             }
         ],
         requirements: [
