@@ -57,7 +57,6 @@ export const RuleCommand: Command = {
         } else if (rules.length === 1) {
             let rule = rules[0]
             embed.setTitle(rule.name)
-            let description = ""
 
             rule.paragraphs.forEach(paragraph => {
                 if (paragraph.example) {
@@ -73,9 +72,13 @@ export const RuleCommand: Command = {
         } else {
             let rulesToDisplay = rules.slice(0, 25)
             let ruleTitles = rulesToDisplay.map(s => s.name).join('\n')
+            let searchTerms = [name ? `Name: ${name}` : null, search ? `Search: ${search}` : null].join('\n')
 
             embed
                 .setTitle(`Showing ${rulesToDisplay.length} of ${rules.length}`)
+                .addFields(
+                    { name: `Search`, value: searchTerms, inline: false },
+                )
                 .addFields(
                     { name: `Showing ${rulesToDisplay.length} of ${rules.length}`, value: ruleTitles, inline: false },
                 )
