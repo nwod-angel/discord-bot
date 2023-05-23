@@ -67,8 +67,8 @@ export const RuleCommand: Command = {
 
                     const table = new Table({
                         titles: paragraph.table.headers,
-                        titleIndexes: [0, 8, 16],
-                        columnIndexes: [0, 6, 14],
+                        titleIndexes: [0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80].slice(0, paragraph.table.headers.length),
+                        columnIndexes: [0, 6, 14, 22, 30, 38, 46, 54, 62, 70, 78].slice(0, paragraph.table.headers.length),
                         start: '`',
                         end: '`',
                         padEnd: 0
