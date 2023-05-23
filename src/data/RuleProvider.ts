@@ -25,7 +25,7 @@ export default class RuleProvider {
                     }
                     return new RuleParagraph({
                         prefix: p.prefix,
-                        text: p.text,
+                        text: (p as { text: string }).text,
                         example: (p as { example: boolean }).example,
                         table: false
                     })
