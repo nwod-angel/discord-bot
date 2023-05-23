@@ -17,8 +17,8 @@ export const RuleCommand: Command = {
             "autocomplete": true
         },
         {
-            "name": "description",
-            "description": "Search in the description of the rule",
+            "name": "search",
+            "description": "Search rules for an exact keyword or phrase",
             "type": 3, // String
         }
     ],
@@ -32,12 +32,13 @@ export const RuleCommand: Command = {
             name = interaction.options.get('name')!.value?.toString()
         }
 
-        let description: string | undefined = undefined
-        if (interaction.options.get('description')) {
-            description = interaction.options.get('description')!.value?.toString()
+        let search: string | undefined = undefined
+        if (interaction.options.get('search')) {
+            search = interaction.options.get('search')!.value?.toString()
         }
 
-        let rules = RuleProvider.getRules(name, description)
+        let rules = RuleProvider.getRules(name, search)
+        // No idea why this is here.  I wrote it for some reason though
         if (rules.filter(rule => rule.name.toLowerCase() === name!.toLowerCase()).length === 1) {
             rules = rules.filter(rule => rule.name.toLowerCase() === name!.toLowerCase())
         }
@@ -63,44 +64,27 @@ export const RuleCommand: Command = {
                     embed.addFields({ name: 'Example', value: `*${paragraph.text}*`, inline: false })
                 } else if (paragraph.prefix) {
                     embed.addFields({ name: paragraph.prefix, value: paragraph.text, inline: false })
-                } else if (paragraph.table) {
-                    let table = new AsciiTable()
-                    table.removeBorder()
-                    table.setHeading(paragraph.table.headers)
-                    paragraph.table.rows.forEach(row => {
-                        table.addRow(row);
-                    })
-                    embed.addFields({ name: '\u200b', value: `\`\`\`\n${table.toString()}\n\`\`\``, inline: false })
-
                 } else if (paragraph.text) {
                     embed.addFields({ name: '\u200b', value: paragraph.text, inline: false })
                 }
             })
 
-            // let descriptionChunks = rule.description.match(/.{1,1000}/g) || []
-            // descriptionChunks.forEach((chunk: string, index: number) => {
-            //     embed.addFields({ name: `Effect ${index > 0 ? ' (continued)' : ''}`, value: chunk, inline: false })
-            // })
-
             embed.addFields({ name: 'Sources', value: rule.sourcesString(), inline: false })
         } else {
             let rulesToDisplay = rules.slice(0, 25)
             let ruleTitles = rulesToDisplay.map(s => s.name).join('\n')
-            let parameters = ''
 
             embed
                 .setTitle(`Showing ${rulesToDisplay.length} of ${rules.length}`)
                 .addFields(
                     { name: `Showing ${rulesToDisplay.length} of ${rules.length}`, value: ruleTitles, inline: false },
                 )
-
         }
 
         await DiscordChannelLogger.setClient(client).logBaggage({ interaction: interaction, embed: embed })
         await interaction.followUp({
             ephemeral: true,
             embeds: [embed],
-            // components: [feedbackRow]
         });
     }
 };

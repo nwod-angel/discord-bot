@@ -10,8 +10,9 @@ export default class RuleProvider {
 
     static getRules(name?: string, description?: string): Array<RuleDefinition> {
         return this.rules.filter(r =>
-            (name === undefined || r.name.toLowerCase().includes(name.toLowerCase())) && true
-            // (description === undefined || r.description.toLowerCase().includes(description.toLowerCase()))
+            (name === undefined || r.name.toLowerCase().includes(name.toLowerCase())) &&
+            (description === undefined ||
+                r.paragraphs.some(paragraph => paragraph.text.toLowerCase().includes(description.toLowerCase())))
         )
     }
 
@@ -26,9 +27,8 @@ export default class RuleProvider {
                     }
                     return new RuleParagraph({
                         prefix: p.prefix,
-                        text: (p as { text: string }).text,
+                        text: p.text,
                         example: (p as { example: boolean }).example,
-                        table: (p as { table: Table }).table
                     })
                 }),
                 rule.sources.map(s => new Source(s.sourceBook, parseInt(s.sourcePage))
