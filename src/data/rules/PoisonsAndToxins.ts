@@ -13,18 +13,18 @@ export default {
         { prefix: "Inhalation", text: "The poison is breathed in as a gas. Vampires are immune to most inhaled poisons." },
         { prefix: "Touch", text: " Mere skin contact is all that’s required to activate the poison. A touch is often sufficient to deliver the toxin (see p. 157), and a target’s armor may apply as a penalty to the roll." },
         "Once delivered, the poison automatically deals damage (usually lethal, but a knockout gas could cause bashing) equal to its toxicity level. Some substances inflict damage only once. Others might inflict it for a number of turns or once per hour until purged or until the effect runs its course. It could be possible to resist the effects of such substances by rolling Stamina + Resolve in a reflexive and contested action. If more successes are rolled than damage is inflicted by the toxin, damage is ignored completely. If damage is equal to higher than success rolled, all damage is delivered as normal. Such a contested roll might occur once or in each period in which a toxin causes harm.",
-        {
-            table: {
-                headers: ["Poison/Toxin", "Toxicity"],
-                rows: [
-                    ["Ammonia (inhalation)", "3"],
-                    ["Bleach (ingestion)", "4"],
-                    ["Cyanide (ingestion or inhalation)", "7"],
-                    ["Drug/Alcohol Abuse (ingestion, inhalation, injection)", "3 to 7"],
-                    ["Salmonella (ingestion)", "2"],
-                    ["Venom (injection or ingestion)", "3 to 8"],
-                ]
-            }
-        }
+        // {
+        //     table: {
+        //         headers: ["Poison/Toxin", "Toxicity"],
+        //         rows: [
+        //             ["Ammonia (inhalation)", "3"],
+        //             ["Bleach (ingestion)", "4"],
+        //             ["Cyanide (ingestion or inhalation)", "7"],
+        //             ["Drug/Alcohol Abuse (ingestion, inhalation, injection)", "3 to 7"],
+        //             ["Salmonella (ingestion)", "2"],
+        //             ["Venom (injection or ingestion)", "3 to 8"],
+        //         ]
+        //     }
+        // }
     ]
 }

@@ -3,7 +3,7 @@ import { stringify } from "querystring";
 import rules from "./rules";
 import { RuleParagraph } from "./RuleParagraph";
 import { RuleDefinition } from "./RuleDefinition";
-import { RuleTable } from "./RuleTable";
+import { Table } from "./Table";
 
 export default class RuleProvider {
     static rules: Array<RuleDefinition>
@@ -28,7 +28,7 @@ export default class RuleProvider {
                         prefix: p.prefix,
                         text: (p as { text: string }).text,
                         example: (p as { example: boolean }).example,
-                        table: (p as { table: RuleTable }).table
+                        table: (p as { table: Table }).table
                     })
                 }),
                 rule.sources.map(s => new Source(s.sourceBook, parseInt(s.sourcePage))

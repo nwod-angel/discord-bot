@@ -1,5 +1,5 @@
 
-export class RuleTable {
+export class Table {
     headers: Array<string>
     rows: Array<Array<string>>
 

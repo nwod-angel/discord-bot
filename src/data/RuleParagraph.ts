@@ -1,17 +1,17 @@
-import { RuleTable } from "./RuleTable";
+import { Table } from "./Table";
 
 export class RuleParagraph {
     prefix?: string;
     text: string;
     example: boolean;
-    table?: RuleTable;
+    table?: Table;
 
     constructor(
         { prefix, text, example, table }: {
             text: string;
             prefix?: string;
             example?: boolean;
-            table?: RuleTable;
+            table?: Table;
         }
     ) {
         this.text = text;
