@@ -64,17 +64,18 @@ export const RuleCommand: Command = {
                 } else if (paragraph.prefix) {
                     embed.addFields({ name: paragraph.prefix, value: paragraph.text, inline: false })
                 } else if (paragraph.table) {
+
                     const table = new Table({
-                        titles: ['Level', 'Money', 'Wins'],
+                        titles: paragraph.table.headers,
                         titleIndexes: [0, 8, 16],
                         columnIndexes: [0, 6, 14],
                         start: '`',
                         end: '`',
                         padEnd: 0
-                    });
-                    table.addRow(['1', '$120', '2'], { override: 4 });
-                    table.addRow(['72', '$10', '25'], { override: 0 });
-                    table.addRow(['614', '$1220', '12']);
+                    })
+                    paragraph.table.rows.forEach(row => {
+                        table.addRow(row);
+                    })
                     embed.addFields(table.toField())
                 } else if (paragraph.text) {
                     embed.addFields({ name: '\u200b', value: paragraph.text, inline: false })
