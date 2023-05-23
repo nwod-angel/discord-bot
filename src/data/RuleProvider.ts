@@ -21,7 +21,7 @@ export default class RuleProvider {
                 rule.paragraphs.map(p => 
                     typeof(p) === 'string'
                         ? new RuleParagraph({ text: p })
-                        : new RuleParagraph({ prefix: p.prefix, text: p.text, example: p.example })),
+                        : new RuleParagraph({ prefix: p.prefix, text: p.text, example: p.example, table: false })),
                 rule.sources.map(s => new Source(s.sourceBook, parseInt(s.sourcePage))
                 ))
             )
