@@ -18,10 +18,18 @@ export default class RuleProvider {
         RuleProvider.rules =
             rules.map(rule => new RuleDefinition(
                 rule.name,
-                rule.paragraphs.map(p => 
-                    typeof(p) === 'string'
-                        ? new RuleParagraph({ text: p })
-                        : new RuleParagraph({ prefix: p.prefix, text: p.text, example: p.example, table: false })),
+                rule.paragraphs.map(p => {
+                    switch(typeof(p)){
+                        case 'string':
+                            return new RuleParagraph({ text: p })
+                    }
+                    return new RuleParagraph({
+                        prefix: p.prefix,
+                        text: p.text,
+                        example: (p as { example: boolean }).example,
+                        table: false
+                    })
+                }),
                 rule.sources.map(s => new Source(s.sourceBook, parseInt(s.sourcePage))
                 ))
             )
