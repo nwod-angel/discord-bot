@@ -76,7 +76,7 @@ export const RuleCommand: Command = {
                     table.addRow(['72', '$10', '25'], { override: 0 });
                     table.addRow(['614', '$1220', '12']);
                     embed.addFields(table.toField())
-                } else {
+                } else if (paragraph.text) {
                     embed.addFields({ name: '\u200b', value: paragraph.text, inline: false })
                 }
             })
