@@ -16,7 +16,7 @@ export const RuleAutocomplete: AutoCompleteCommand = {
             .slice(0, this.maxResponses)
             .map(r => 
                 ({
-                    name: `${r.name}`,
+                    name: `[${r.prefix}] ${r.name}`,
                     value: r.name
                 })) as unknown as ApplicationCommandOptionChoiceData<string | string>[];
     }
