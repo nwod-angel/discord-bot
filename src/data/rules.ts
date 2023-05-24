@@ -1,3 +1,8 @@
+import CombatDelayingActions from "./rules/CombatDelayingActions";
+import CombatInitiative from "./rules/CombatInitiative";
+import CombatSurprise from "./rules/CombatSurprise";
+import CombatUnarmed from "./rules/CombatUnarmed";
+import CombatUnarmedGrapple from "./rules/CombatUnarmedGrapple";
 import Defense from "./rules/Defense";
 import DrawbacksOfGnosis from "./rules/DrawbacksOfGnosis";
 import EffectsOfGnosis from "./rules/EffectsOfGnosis";
@@ -17,5 +22,10 @@ export default [
     EffectsOfGnosis,
     DrawbacksOfGnosis,
     MageSight,
-    UnseenSenses
+    UnseenSenses,
+    CombatDelayingActions,
+    CombatInitiative,
+    CombatSurprise,
+    CombatUnarmed,
+    CombatUnarmedGrapple
 ]
