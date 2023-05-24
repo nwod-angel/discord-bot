@@ -1,3 +1,5 @@
+import { RuleParagraph } from "../RuleParagraph";
+
 export default {
     name: "Combat: Unarmed Combat: Grapple Maneuvers",
     prefix: "Core",
@@ -8,7 +10,7 @@ export default {
         }
     ],
     paragraphs: [
-        { prefix: "Render opponent prone", text: "Both combatants fall to the ground. Either party must break the hold in order to stand again in a subsequent turn. Rising is considered an action in a turn. (See “Going Prone,” on p. 164.) If one combatant manages to rise, close-combat attack rolls to hit the prone opponent gain a +2 bonus." },
+        new RuleParagraph( { prefix: "Render opponent prone", text: "Both combatants fall to the ground. Either party must break the hold in order to stand again in a subsequent turn. Rising is considered an action in a turn. (See “Going Prone,” on p. 164.) If one combatant manages to rise, close-combat attack rolls to hit the prone opponent gain a +2 bonus." }),
         { prefix: "Damage opponent", text: "Successes achieved on this turn’s Strength + Brawl roll are applied as points of bashing damage inflicted on your character’s opponent. Your character crushes, squeezes, bends or bites his victim." },
         {
             prefix: "Immobilize opponent", text: "Your character seeks to interfere with his victim’s actions. Even one success renders the target immobile. The victim’s physical actions are restricted to breaking free (he cannot attempt any overpowering maneuvers of his own), although he could bring mental or some supernatural capabilities to bear (Storyteller’s discretion). Furthermore, the victim’s Defense does not apply against attacks from opponents outside the grapple. So, if your character immobilizes a victim, attacks on him from your character’s allies are not penalized by the victim’s Defense." + "\n" +
