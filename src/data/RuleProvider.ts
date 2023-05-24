@@ -3,7 +3,6 @@ import { stringify } from "querystring";
 import rules from "./rules";
 import { RuleParagraph } from "./RuleParagraph";
 import { RuleDefinition } from "./RuleDefinition";
-import { Table } from "./Table";
 
 export default class RuleProvider {
     static rules: Array<RuleDefinition>
@@ -20,6 +19,7 @@ export default class RuleProvider {
         RuleProvider.rules =
             rules.map(rule => new RuleDefinition(
                 rule.name,
+                rule.prefix,
                 rule.paragraphs.map(p => {
                     switch(typeof(p)){
                         case 'string':

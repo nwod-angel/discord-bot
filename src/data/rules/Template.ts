@@ -1,5 +1,6 @@
 export default {
     name: "TEMPLATE",
+    prefix: "Core|MtAw|VtM|etc",
     sources: [
         {
             sourceBook: "World of Darkness",

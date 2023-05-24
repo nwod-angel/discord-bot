@@ -2,6 +2,7 @@ import { RuleParagraph } from "../RuleParagraph";
 
 export default {
     name: "Health",
+    prefix: "Core",
     sources: [
         {
             sourceBook: "World of Darkness",

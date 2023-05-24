@@ -1,5 +1,6 @@
 export default {
     name: "Drawbacks of Gnosis",
+    prefix: "MtAw",
     sources: [
         {
             sourceBook: "Mage: the Awakening",

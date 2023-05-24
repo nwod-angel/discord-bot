@@ -1,5 +1,6 @@
 export default {
     name: "Rote Specialties",
+    prefix: "MtAw",
     sources: [
       {
         sourceBook: "Mage: the Awakening",
@@ -11,23 +12,23 @@ export default {
       "Whenever a mage’s Rote Specialty is used in rote casting, his player gains a +1 dice bonus to his casting dice pool. Each of the orders has the following Rote Specialties.",
       {
         prefix : "Adamantine Arrow",
-        "text": "Athletics, Intimidation, Medicine"
+        text: "Athletics, Intimidation, Medicine"
       },
       {
         prefix : "Free Council",
-        "text": "Crafts, Persuasion, Science"
+        text: "Crafts, Persuasion, Science"
       },
       {
         prefix : "Guardians of the Veil",
-        "text": "Investigation, Stealth, Subterfuge"
+        text: "Investigation, Stealth, Subterfuge"
       },
       {
         prefix : "Mysterium",
-        "text": "Investigation, Occult, Survival"
+        text: "Investigation, Occult, Survival"
       },
       {
         prefix : "Silver Ladder",
-        "text": "Expression, Persuasion, Subterfuge"
+        text: "Expression, Persuasion, Subterfuge"
       },
       "These Rote Specialties can be marked on your character sheet by underlining the Skill title or by drawing an asterisk next to it.",
       "Rote Specialties are “coded” into rotes by the creators of those rotes. Only someone trained in that order’s Rote Specialties can activate that portion of the rote’s code when casting the rote. See “Designing Rotes,” p. 291. If a mage leaves his order, he still retains his Rote Specialties, but they apply only to rotes created by masters of that order."

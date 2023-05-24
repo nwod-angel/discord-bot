@@ -1,5 +1,6 @@
 export default {
     name: "Defense",
+    prefix: "Core",
     sources: [
         {
             sourceBook: "World of Darkness",
