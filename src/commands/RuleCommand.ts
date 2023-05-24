@@ -25,8 +25,6 @@ export const RuleCommand: Command = {
     run: async (client: Client, interaction: CommandInteraction) => {
         await DiscordChannelLogger.setClient(client).logBaggage({ interaction: interaction, options: interaction.options })
 
-        const symbols = new NwodSymbols()
-
         let name: string | undefined = undefined
         if (interaction.options.get('name')) {
             name = interaction.options.get('name')!.value?.toString()
