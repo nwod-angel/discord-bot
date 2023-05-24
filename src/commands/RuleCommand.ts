@@ -38,10 +38,10 @@ export const RuleCommand: Command = {
         }
 
         let rules = RuleProvider.getRules(name, search)
-        // No idea why this is here.  I wrote it for some reason though
-        // if (rules.filter(rule => rule.name.toLowerCase() === name!.toLowerCase()).length === 1) {
-        //     rules = rules.filter(rule => rule.name.toLowerCase() === name!.toLowerCase())
-        // }
+        // If the name search matches perfectly to one, that's it
+        if (name && rules.filter(rule => rule.name.toLowerCase() === name!.toLowerCase()).length === 1) {
+            rules = rules.filter(rule => rule.name.toLowerCase() === name!.toLowerCase())
+        }
 
         let embed = new EmbedBuilder()
             .setFooter({
