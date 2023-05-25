@@ -11,6 +11,7 @@ import Initiative from "./rules/Initiative";
 import MageSight from "./rules/MageSight";
 import PoisonsAndToxins from "./rules/PoisonsAndToxins";
 import RoteSpecialties from "./rules/RoteSpecialties";
+import Speed from "./rules/Speed";
 import UnseenSenses from "./rules/UnseenSenses";
 
 export default [
@@ -27,5 +28,6 @@ export default [
     CombatInitiative,
     CombatSurprise,
     CombatUnarmed,
-    CombatUnarmedGrapple
+    CombatUnarmedGrapple,
+    Speed
 ]

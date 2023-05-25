@@ -10,6 +10,7 @@ import ObjectSizes from "./tables/ObjectSizes";
 import PoisonsAndToxins from "./tables/PoisonsAndToxins";
 import RangedWeapons from "./tables/RangedWeapons";
 import SampleVehicles from "./tables/SampleVehicles";
+import SpeciesSpeed from "./tables/SpeciesSpeed";
 
 export default [
     Armor,
@@ -23,5 +24,6 @@ export default [
     RangedWeapons,
     SampleVehicles,    
     ArcanaMastery,
-    HubrisWisdom
+    HubrisWisdom,
+    SpeciesSpeed
 ]
