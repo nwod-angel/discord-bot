@@ -1,4 +1,4 @@
-import { RuleParagraph } from "../RuleParagraph";
+import { RuleParagraph } from "../../RuleParagraph";
 
 export default {
     name: "Combat: Initiative",
