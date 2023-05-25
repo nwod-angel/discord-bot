@@ -1,5 +1,9 @@
+import CombatCharging from "./rules/CombatCharging";
 import CombatDelayingActions from "./rules/CombatDelayingActions";
+import CombatFlankAndRearAttacks from "./rules/CombatFlankAndRearAttacks";
+import CombatGoingProne from "./rules/CombatGoingProne";
 import CombatInitiative from "./rules/CombatInitiative";
+import CombatMovement from "./rules/CombatMovement";
 import CombatSurprise from "./rules/CombatSurprise";
 import CombatUnarmed from "./rules/CombatUnarmed";
 import CombatUnarmedGrapple from "./rules/CombatUnarmedGrapple";
@@ -29,5 +33,9 @@ export default [
     CombatSurprise,
     CombatUnarmed,
     CombatUnarmedGrapple,
+    CombatCharging,
+    CombatFlankAndRearAttacks,
+    CombatGoingProne,
+    CombatMovement,
     Speed
 ]
