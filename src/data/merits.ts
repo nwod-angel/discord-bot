@@ -1,5 +1,5 @@
 export default [
-	{
+    {
         name: "Architectural Attunement",
         sources: [
             {
@@ -673,7 +673,7 @@ export default [
             }
         ],
         requirements: [
-			"Science ●●●", "a Specialty"
+            "Science ●●●", "a Specialty"
         ]
     },
     {
@@ -913,8 +913,8 @@ export default [
             }
         ],
         category: "Physical",
-        description: "Brawling Dodge applies against incoming Brawl- and Weaponry-based attacks, against thrown-weapon attacks, and against Firearms attacks made within close-combat range. Your character can move up to his Speed and perform a Brawling Dodge maneuver in a turn.\n" + 
-				"A character can possess both the Brawling Dodge and Weaponry Dodge Merits, but only one can be used per turn.",
+        description: "Brawling Dodge applies against incoming Brawl- and Weaponry-based attacks, against thrown-weapon attacks, and against Firearms attacks made within close-combat range. Your character can move up to his Speed and perform a Brawling Dodge maneuver in a turn.\n" +
+            "A character can possess both the Brawling Dodge and Weaponry Dodge Merits, but only one can be used per turn.",
         levels: [
             {
                 level: 1,
@@ -1605,12 +1605,12 @@ export default [
         ],
         category: "Social",
         description: "Allies are people who are willing to help your character from time to time. They may be associates, friends of convenience or people who owe your character a favor. Each acquisition of this Merit is dedicated to one type of ally, whether in an organization, society or circle. Examples include the police, City Hall, criminals, unions, banks, university faculty and hospital staff. In order to have alliances in more than one venue, you need to purchase this Merit multiple times, each trait with its own dots. Thus, your character might have Allies (Police) ••, Allies (Criminals) ••• and Allies (City Hall) •, each acquired separately at character creation or during play." + "\n" +
-        "Each dot that your character has indicates how deep his influence runs in that group. One dot might mean he can ask for minor favors, such as being spared a parking ticket if alliance is among police, or being allowed to see an article before it goes to press if alliance is among reporters. Three dots garner considerable favors, such as a building permit “going missing” at City Hall, or a strike resolution being wrapped up early among union leaders. Five dots allow for dangerous and even overtly criminal favors, such as a stock being sabotaged on Wall Street or the answers to an exam being shared by a university professor." + "\n" +
-        "The kinds of requests made of people in an organization typically have to relate to their sphere of influence. Asking a criminal to slow down the bureaucratic process at City Hall makes no sense, but asking him to pass along word of a drug buy does. Favors might be minor and within the bounds of a person’s job or role, such as processing some paperwork more quickly than usual, or could be significant or dangerous and outside what’s allowed or even legal, such as allowing a civilian access to the police evidence locker." + "\n" +
-        "The Storyteller has final say over what is an acceptable request and what is not. If there’s any doubt, the Storyteller could call for a Manipulation + Persuasion roll, with a bonus equal to your character’s Allies dots. Penalties might also apply based on the importance or danger of the request. Asking someone to do something already in the bounds of their role imposes no modifier, while asking them to do something that could get them suspended imposes a -3 penalty, and asking for something that could get them jailed or killed is -5. Frequent favors asked of the same group also imposes a penalty as group members grow tired of being called upon." + "\n" +
-        "Similarly, a roll of Manipulation + Persuasion + Allies dots could determine how many police answer your character’s call for help, or how many longshoremen turn up when your character needs a show of force (one per success rolled)." + "\n" +
-        "Allies doesn’t have to be defined in terms of specific individuals over whom your character has sway. He could simply know a variety of people among city reporters and he can call upon them in general from time to time. You should, however, explain why your character has influence in a particular body. Maybe he worked there himself at one time and still has friends in the organization. Or he has done a group a favor and its members still owe him." + "\n" +
-        "Drawback: Allies are not automatons, waiting for your character to ask for help. They have their own lives and needs. An alliance is a two-way relationship. Calling for favors makes your character indebted to his friends, and they are sure to call such favors in when they need help. The Storyteller can use such debts as inspiration for future stories.",
+            "Each dot that your character has indicates how deep his influence runs in that group. One dot might mean he can ask for minor favors, such as being spared a parking ticket if alliance is among police, or being allowed to see an article before it goes to press if alliance is among reporters. Three dots garner considerable favors, such as a building permit “going missing” at City Hall, or a strike resolution being wrapped up early among union leaders. Five dots allow for dangerous and even overtly criminal favors, such as a stock being sabotaged on Wall Street or the answers to an exam being shared by a university professor." + "\n" +
+            "The kinds of requests made of people in an organization typically have to relate to their sphere of influence. Asking a criminal to slow down the bureaucratic process at City Hall makes no sense, but asking him to pass along word of a drug buy does. Favors might be minor and within the bounds of a person’s job or role, such as processing some paperwork more quickly than usual, or could be significant or dangerous and outside what’s allowed or even legal, such as allowing a civilian access to the police evidence locker." + "\n" +
+            "The Storyteller has final say over what is an acceptable request and what is not. If there’s any doubt, the Storyteller could call for a Manipulation + Persuasion roll, with a bonus equal to your character’s Allies dots. Penalties might also apply based on the importance or danger of the request. Asking someone to do something already in the bounds of their role imposes no modifier, while asking them to do something that could get them suspended imposes a -3 penalty, and asking for something that could get them jailed or killed is -5. Frequent favors asked of the same group also imposes a penalty as group members grow tired of being called upon." + "\n" +
+            "Similarly, a roll of Manipulation + Persuasion + Allies dots could determine how many police answer your character’s call for help, or how many longshoremen turn up when your character needs a show of force (one per success rolled)." + "\n" +
+            "Allies doesn’t have to be defined in terms of specific individuals over whom your character has sway. He could simply know a variety of people among city reporters and he can call upon them in general from time to time. You should, however, explain why your character has influence in a particular body. Maybe he worked there himself at one time and still has friends in the organization. Or he has done a group a favor and its members still owe him." + "\n" +
+            "Drawback: Allies are not automatons, waiting for your character to ask for help. They have their own lives and needs. An alliance is a two-way relationship. Calling for favors makes your character indebted to his friends, and they are sure to call such favors in when they need help. The Storyteller can use such debts as inspiration for future stories.",
         levels: [
             {
                 level: 1,
@@ -1915,7 +1915,7 @@ export default [
         ],
         category: "Social",
         description: "Many Seers of the Throne possess this Merit. It doesn’t represent flexible resources but the ability to live a privileged lifestyle without spending money. Seers acquire this through blackmail, favor trading and investments in businesses and other organizations that cater to the elite.  Your character lives like a millionaire or better, regardless of her actual        Resources. She wears fine clothes, drives expensive cars and can always get a spot at exclusive restaurants and resorts. She doesn’t pay for any of it through cash transactions. Instead, her social ties and backers provide these creature comforts." +
-        "\nDrawback: Your character’s luxuries ultimately belong to somebody else. They are for her personal use. She can have guests, of course, but can’t support them for an extended period of time. If she tries to resell or earn money using this Merit she finds that she either can’t move her borrowed assets, or is punished with the loss of this Merit. This Merit cannot be used to acquire weaponry or illegal items.",
+            "\nDrawback: Your character’s luxuries ultimately belong to somebody else. They are for her personal use. She can have guests, of course, but can’t support them for an extended period of time. If she tries to resell or earn money using this Merit she finds that she either can’t move her borrowed assets, or is punished with the loss of this Merit. This Merit cannot be used to acquire weaponry or illegal items.",
         levels: [
             {
                 level: 2,
@@ -1939,7 +1939,7 @@ export default [
         ],
         category: "Social",
         description: "This Merit gives your character a friend and teacher who provides her with advice and guidance. Your character’s mentor acts on her behalf, although the Storyteller determines exactly how. A mentor usually offers advice, allowing the Storyteller to use him to help guide your character through tough situations. A mentor may also use his influence or abilities to help your character out, although he probably wants to see his charge do things for herself. A mentor is likely to give up in disgust on a pupil who constantly asks for aid. Mentors may also ask for something in return for their assistance, which can lead your character into some interesting situations.\n" +
-				"The number of dots purchased in this Merit determines the relative power, knowledge and experience of your character’s teacher.",
+            "The number of dots purchased in this Merit determines the relative power, knowledge and experience of your character’s teacher.",
         levels: [
             {
                 level: 1,
@@ -1992,8 +1992,8 @@ export default [
         ],
         category: "Social",
         description: "This Merit measures your character’s material resources, both possessions and wealth. All characters are assumed to have a job or a source of income (trust fund, parents) that is sufficient to cover their basic needs: food, shelter and transportation. Dots in this Merit represent disposable income — wealth and assets that can be liquidated for more money in case of emergency. The number of dots indicates your character’s general level of wealth.\n" +
-				"Resources can be used to determine if your character can reasonably afford a purchase or expenditure. Equipment, weapons and items throughout these rules are assigned costs in dots. The Storyteller can assign cost dots to other items during play based on what’s here. If your character has the same or more dots in Resources, he can afford the item on his disposable income. That doesn’t mean he has a blank check with which to buy everything he sees. He might be able to afford one or two items with a cost equal to his Resources dots in a single month. Items with lower costs can be acquired more often. The Storyteller has final say on what’s too much or what’s too often.\n" +
-				"Your character’s Resources dots aren’t spent and don’t go away. They represent available cash at any given moment. The only means by which your character’s Resource dots might decrease is if story events conspire against them. Perhaps your character’s fortune is wiped out, he loses his job or his company is subjected to a hostile takeover. The Storyteller therefore influences how your character’s dots might decrease, and whether they can be salvaged.",
+            "Resources can be used to determine if your character can reasonably afford a purchase or expenditure. Equipment, weapons and items throughout these rules are assigned costs in dots. The Storyteller can assign cost dots to other items during play based on what’s here. If your character has the same or more dots in Resources, he can afford the item on his disposable income. That doesn’t mean he has a blank check with which to buy everything he sees. He might be able to afford one or two items with a cost equal to his Resources dots in a single month. Items with lower costs can be acquired more often. The Storyteller has final say on what’s too much or what’s too often.\n" +
+            "Your character’s Resources dots aren’t spent and don’t go away. They represent available cash at any given moment. The only means by which your character’s Resource dots might decrease is if story events conspire against them. Perhaps your character’s fortune is wiped out, he loses his job or his company is subjected to a hostile takeover. The Storyteller therefore influences how your character’s dots might decrease, and whether they can be salvaged.",
         levels: [
             {
                 level: 1,
@@ -2002,19 +2002,19 @@ export default [
             {
                 level: 2,
                 description: "Two dots suggest moderate disposable income: $1,000 a month and approximately $5000 worth of assets."
-						},
+            },
             {
                 level: 3,
                 description: "Three dots suggest significant disposable income: $2000 a month and maybe $10,000 worth of assets."
-						},
+            },
             {
                 level: 4,
                 description: "Four dots suggest substantial disposable income: $10,000 a month and $500,000 worth of assets."
-						},
+            },
             {
                 level: 5,
                 description: "Five dots suggest significant wealth: $50,000 a month and as much as $5,000,000 worth of assets."
-						}
+            }
         ],
         requirements: []
     },
@@ -2027,10 +2027,10 @@ export default [
             }
         ],
         category: "Social",
-        description: "Your character has an assistant, aide, indentured servant or fanatical follower on whom she can rely. You need to establish how this trusty companion was acquired. He may be paid exorbitant amounts of money that buy his unwavering loyalty. He might owe his life to your character (or to your character’s predecessors). Your character might blackmail this person or threaten his family with harm if services are not rendered. Or your character might have a supernatural hold over this poor person. Regardless of the circumstances, this person is constantly loyal and follows almost any order without question." + 
-				"\nA retainer can be called upon to perform many duties without fail. A bodyguard might be willing to hurt other people on a mere command. A dedicated street kid might hang on your character’s every word and get her information or contacts without being asked. Unless your character has direct control over a retainer’s mind, however, this person can’t be made to perform any task. He might not risk his own life unduly or perform a task that violates his own morals. You or the Storyteller should detail your retainer with an identity, background and character sheet of his own. The Storyteller usually plays your character’s retainer." +
-				"\nEach acquisition of this Merit grants your character one follower. Dots spent in the trait indicate the training, capability or flexibility of the aide. Retainer is different from Allies in that no roll is ever made to get results from an aide. He performs the task requested, unless subjected to repeated abuse or an utterly intolerable assignment (as decided by the Storyteller based on the assistant’s personality)." + 
-				"\nDrawback: If your retainer is ever hurt he may be incapable of service while recovering. If he is killed, he’s lost forever unless supernatural in origin. A retainer who possesses his own will and who is forced to perform a duty that offends his sensibilities or defies his morals may abandon your character, temporarily or permanently. Points spent to acquire a retainer who is killed or driven off are lost.",
+        description: "Your character has an assistant, aide, indentured servant or fanatical follower on whom she can rely. You need to establish how this trusty companion was acquired. He may be paid exorbitant amounts of money that buy his unwavering loyalty. He might owe his life to your character (or to your character’s predecessors). Your character might blackmail this person or threaten his family with harm if services are not rendered. Or your character might have a supernatural hold over this poor person. Regardless of the circumstances, this person is constantly loyal and follows almost any order without question." +
+            "\nA retainer can be called upon to perform many duties without fail. A bodyguard might be willing to hurt other people on a mere command. A dedicated street kid might hang on your character’s every word and get her information or contacts without being asked. Unless your character has direct control over a retainer’s mind, however, this person can’t be made to perform any task. He might not risk his own life unduly or perform a task that violates his own morals. You or the Storyteller should detail your retainer with an identity, background and character sheet of his own. The Storyteller usually plays your character’s retainer." +
+            "\nEach acquisition of this Merit grants your character one follower. Dots spent in the trait indicate the training, capability or flexibility of the aide. Retainer is different from Allies in that no roll is ever made to get results from an aide. He performs the task requested, unless subjected to repeated abuse or an utterly intolerable assignment (as decided by the Storyteller based on the assistant’s personality)." +
+            "\nDrawback: If your retainer is ever hurt he may be incapable of service while recovering. If he is killed, he’s lost forever unless supernatural in origin. A retainer who possesses his own will and who is forced to perform a duty that offends his sensibilities or defies his morals may abandon your character, temporarily or permanently. Points spent to acquire a retainer who is killed or driven off are lost.",
         levels: [
             {
                 level: 1,
@@ -2119,10 +2119,10 @@ export default [
         ],
         category: "Social",
         description: "Your character has standing, credentials, authority or respect within an organization, group, company or social body. He might have an official position or title, or might simply be revered and honored within the group and therefore accorded a degree of authority. Your character might be a company vice president, a police sergeant or lieutenant, an army corporal or a nurse at a hospital. Or he could be a lowly member of the group whom everyone likes or who has won some acclaim and is allowed more standing than he is officially entitled." + "\n" +
-        "Each acquisition of this Merit is dedicated to one type of authority, whether in an organization, society or circle. Examples include police, City Hall, criminals, unions, banks, a university faculty and hospital staff. In order to have authority in more than one venue, you need to purchase this Merit multiple times, each trait with its own dots. Thus, your character might have Status (Police) ●●, Status (Criminals) ●●● and Status (City Hall) ●, each acquired separately at character creation or during play. You would need to explain how he reconciles all this authority in the setting. The aforementioned character might be a dirty police sergeant who has paid his dues in civil elections and gained some recognition among city officials." + "\n" +
-        "Status represents the privileges and liberties that your character is authorized to take within the confines and definitions of his group. Increasing dots reflect increasing clout. A cop with Status 1 can enter the suspect lockup and interrogation rooms, while a cop with Status 4 can enter the evidence locker without supervision or get involved in a crimescene investigation without specifically being called in." + "\n" +
-        "The phrase “within the confines and definitions of his group” is emphasized above because Status operates exclusively through official channels. A surgeon might have one patient seen or operated on before another, because that’s within the official confines of his authority. Exceeding the confines of authority or proper channels transcends the limits of the Status Merit. Going above and beyond — to ask for favors rather than give orders or to requisition an official request — enters the realm of the Allies Merit. So, a police detective who gets a lower-ranking officer to investigate a case may do so with Status. That request is conducted through proper channels. Meanwhile, a police detective who asks another officer to overlook some evidence or to delay an investigation does so with Allies. The favor is asked outside official channels." + "\n" +
-        "While Status might allow your character to give orders to underlings, the Merit doesn’t automatically get results. Subordinates or co-workers might resent their assignments, dislike your character or have personal agendas that interfere with your character’s needs. Efforts to get things done through official channels still call for Manipulation + Intimidation, Persuasion or Socialize rolls, whichever Skill is appropriate to the request, circumstances and your character’s standing within the organization. Bonus dice equal your character’s Status dots. Penalties might apply if your character browbeats someone (-1), uses threats (-2), skirts the limits of his authority (-2) or exceeds his authority (-3 to -5).",
+            "Each acquisition of this Merit is dedicated to one type of authority, whether in an organization, society or circle. Examples include police, City Hall, criminals, unions, banks, a university faculty and hospital staff. In order to have authority in more than one venue, you need to purchase this Merit multiple times, each trait with its own dots. Thus, your character might have Status (Police) ●●, Status (Criminals) ●●● and Status (City Hall) ●, each acquired separately at character creation or during play. You would need to explain how he reconciles all this authority in the setting. The aforementioned character might be a dirty police sergeant who has paid his dues in civil elections and gained some recognition among city officials." + "\n" +
+            "Status represents the privileges and liberties that your character is authorized to take within the confines and definitions of his group. Increasing dots reflect increasing clout. A cop with Status 1 can enter the suspect lockup and interrogation rooms, while a cop with Status 4 can enter the evidence locker without supervision or get involved in a crimescene investigation without specifically being called in." + "\n" +
+            "The phrase “within the confines and definitions of his group” is emphasized above because Status operates exclusively through official channels. A surgeon might have one patient seen or operated on before another, because that’s within the official confines of his authority. Exceeding the confines of authority or proper channels transcends the limits of the Status Merit. Going above and beyond — to ask for favors rather than give orders or to requisition an official request — enters the realm of the Allies Merit. So, a police detective who gets a lower-ranking officer to investigate a case may do so with Status. That request is conducted through proper channels. Meanwhile, a police detective who asks another officer to overlook some evidence or to delay an investigation does so with Allies. The favor is asked outside official channels." + "\n" +
+            "While Status might allow your character to give orders to underlings, the Merit doesn’t automatically get results. Subordinates or co-workers might resent their assignments, dislike your character or have personal agendas that interfere with your character’s needs. Efforts to get things done through official channels still call for Manipulation + Intimidation, Persuasion or Socialize rolls, whichever Skill is appropriate to the request, circumstances and your character’s standing within the organization. Bonus dice equal your character’s Status dots. Penalties might apply if your character browbeats someone (-1), uses threats (-2), skirts the limits of his authority (-2) or exceeds his authority (-3 to -5).",
         levels: [
             {
                 level: 1,
@@ -2232,11 +2232,27 @@ export default [
             }
         ],
         category: "Supernatural",
-        description: "",
+        description: "Your character possesses an item of power but questionable providence. Though the character may use the item from time to time for an advantage, that advantage always comes at a price. See “Cursed Items,” p. 112, for examples of what a character may possess with this Merit.",
         levels: [
             {
-                level: 0,
-                description: "(● to ●●●●●)"
+                level: 1,
+                description: "A one dot cursed item."
+            },
+            {
+                level: 2,
+                description: "A one dot cursed item."
+            },
+            {
+                level: 3,
+                description: "A one dot cursed item."
+            },
+            {
+                level: 4,
+                description: "A one dot cursed item."
+            },
+            {
+                level: 5,
+                description: "A one dot cursed item."
             }
         ],
         requirements: []
@@ -2249,18 +2265,188 @@ export default [
                 sourcePage: "108"
             }
         ],
-        category: "Ghost",
+        category: "Supernatural",
         description: "Your character is remarkably resistant to being Urged, Ridden or Possessed by spirits or ghosts. Whether this is because of a hardening experience in her past or some hereditary predisposition depends on the story.",
         levels: [
             {
                 level: 4,
                 description: "The character adds two dice to all contested rolls against spirits’ attempts to affect her in that way (or with other forms of mental control), or adds two to her Resistance traits (if subtracted from a spirit’s roll)." +
-                "\nDrawback: Many spirits are angered by strong resistance and eager to get revenge. Others just want to eliminate such people so they never spawn more. Either way, your character becomes a target once her resistance becomes clear."
+                    "\nDrawback: Many spirits are angered by strong resistance and eager to get revenge. Others just want to eliminate such people so they never spawn more. Either way, your character becomes a target once her resistance becomes clear."
             }
         ],
         requirements: [
             "Composure •••", "Resolve •••"
         ]
+    },
+    {
+        name: "Easy Ride",
+        sources: [
+            {
+                sourceBook: "Book of Spirits",
+                sourcePage: "108"
+            }
+        ],
+        category: "Supernatural",
+        description: "Your character knows how to relax and let a spirit or ghost possess her.",
+        levels: [
+            {
+                level: 2,
+                description: "She forgoes any contesting roll or Resistance trait, and the possession takes place as long as the spirit rolls a single success. Possessing spirits gain full, penalty-free control over the character’s faculties immediately, without any muss or fuss. She remains aware of what is going on during the possession and has a couple of extra options." + "\n" +
+                    "She may allow the spirit to continue controlling her body for longer than a scene, if she likes. Or, if displeased as the possession progresses, she may try to eject the spirit. She and the spirit make the normal contested roll they would normally have made during the original possession. Success on the spirit’s part allows it to remain for the rest of the scene, and ties must be rerolled the next turn. The character may only try this once per scene." + "\n" +
+                    "Drawback: As a well-trod soul, the character suffers a –2 dice penalty to any contesting rolls or Resistance traits applied to prevent (or end, as above) a possession. She also earns a reputation as “easy” among local spirits, who may seek her out when they need a quick body for something, even if she’s not likely to go willingly."
+            }
+        ],
+        requirements: [
+            "Wits •••"
+        ]
+    },
+    {
+        name: "Hollow Soul",
+        sources: [
+            {
+                sourceBook: "Book of Spirits",
+                sourcePage: "109"
+            }
+        ],
+        category: "Supernatural",
+        description: "Your character can be possessed even by spirits that cannot normally use the Possession Numen.",
+        levels: [
+            {
+                level: 2,
+                description: "All the spirit needs to do is fetter to the character, and then it can possess him for a scene with a contested Power + Finesse versus Resolve + Composure roll. The character can serve as a mouthpiece for spirits too weak to normally interact with the material world on a meaningful level, but also gets sought out by more powerful spirits who would prefer to abuse the character’s ability."
+            }
+        ],
+        requirements: [
+            "Easy Ride ••"
+        ]
+    },
+    {
+        name: "Locus-Drinker",
+        sources: [
+            {
+                sourceBook: "Book of Spirits",
+                sourcePage: "109"
+            }
+        ],
+        category: "Supernatural",
+        description: "Your character can draw Essence from a locus, an ability normally reserved for spirits, werewolves, and some mages.",
+        levels: [
+            {
+                level: 3,
+                description: "This requires a Morality roll that the character can only attempt once per day. Each success allows the character to draw out one point of Essence, and each point requires one minute of meditative effort. The character still has no ability to store that Essence within himself or use it for any means, but he can channel it to objects or creatures that can (such as spirits or the Cup of Life fetish, see p. 120). If the character somehow has the ability to use Essence, he may bend this Essence to that use immediately (but still cannot store it)." + "\n" +
+                    "Drawback: Possession of this Merit makes the character a threat to some (endangering their supplies of Essence) and a resource to others (potentially doubling their daily Essence acquisition). If the character isn’t careful with his ability, others may try to eliminate him or use him as a tool."
+            }
+        ],
+        requirements: [
+            "Mortal (non-supernatural)"
+        ]
+    },
+    {
+        name: "Pleasing Aura",
+        sources: [
+            {
+                sourceBook: "Book of Spirits",
+                sourcePage: "109"
+            }
+        ],
+        category: "Supernatural",
+        description: "Strange things happen around your character. This is because, for whatever reason, spirits like his presence. The character might have an emotional resonance that is universally enjoyable for denizens of the Shadow Realm, or maybe they just like your style. The bad news is that spirits tend to flock around the character, making him one of those people who is always in the “right place at the right time” with respect to otherworldly events. The good news is that, as a general rule, the spirits don’t mean the character ill. Unless they get territorial or jealous.",
+        levels: [
+            {
+                level: 3,
+                description: "The character gains a +1 bonus to Persuasion and Socialize rolls to affect spirits."
+            }
+        ],
+        requirements: []
+    },
+    {
+        name: "Residual Spirit Energy",
+        sources: [
+            {
+                sourceBook: "Book of Spirits",
+                sourcePage: "110"
+            }
+        ],
+        category: "Supernatural",
+        description: "Your character releases spirit energy — Essence — into the world when her blood spills. And spirits can sense it. No one has ever been able to explain why to the character’s satisfaction, but it’s true. Because Essence is such a valuable resource to spirits, the character has some measure of influence over them. She can bribe them for information or favors, and all it takes is a splash of blood.",
+        levels: [
+            {
+                level: 2,
+                description: "Each point of lethal damage the character suffers frees one point of Essence into the air, as long as the injury actually causes blood loss. For the next several turns before the Essence dissipates, any spirit nearby may take an action to consume the Essence." + "\n" +
+                    "Drawback: While most spirits would rather preserve a renewable source of Essence, not all are so careful. Some might try to slaughter her all at once when they really, really need the Essence. Others notice her as a resource of their enemies and might decide to make a surgical strike against them (but at her). In short, the character becomes a target or potential possession to those spirits who don’t want to barter with her."
+            }
+        ],
+        requirements: [
+            "Mortal (non-supernatural)"
+        ]
+    },
+    {
+        name: "Saintly",
+        sources: [
+            {
+                sourceBook: "Book of Spirits",
+                sourcePage: "110"
+            }
+        ],
+        category: "Supernatural",
+        description: "Effect: Spirits do not like your character’s presence. She might make spirits uncomfortable because of her extraordinary faith (per the Merit’s name) or maybe she has a less earthly reason for disturbing them. A mighty spirit might have blessed or cursed her when she was young, or declared her off-limits to others for inscrutable reasons. Either way, she has a little influence on them, and they don’t like her.",
+        levels: [
+            {
+                level: 3,
+                description: "She gains a +1 to Intimidate rolls against spirits, and to attempts to abjure or exorcise them from places or human hosts (see the World of Darkness Rulebook, pp. 213–124). They may also be unwilling to harm her or disrupt her life." + "\n" +
+                "Drawback: Some spirits are not unwilling to harm her, and may even see it as a challenge — after all, she has a level of notoriety. She suffers a –1 die penalty to all Expression, Persuasion and Socialize rolls against spirits. A given spirit may be unwilling to involve itself with her at all, which could cause complications."
+            }
+        ],
+        requirements: []
+    },
+    {
+        name: "Shadow Contacts",
+        sources: [
+            {
+                sourceBook: "Book of Spirits",
+                sourcePage: "110"
+            }
+        ],
+        category: "Supernatural",
+        description: "Your character knows a place where she can ask questions and get information. She has reasonably free access to this place — which may be the urinal in a cathedral, a dank cave in a national park, the manhole that a murderer used to dispose of bodies or nearly anything else — and can occasionally go there to get answers. She does not know what entity she asks." + "\n" +
+        "For each answer the Shadow Contact provides, it asks a price. This price often has some tangential relation to the nature of the question, but may well not. The more urgent or esoteric the question, the stranger and more disturbing the price. Frivolous questions are discouraged by incommensurately outrageous demands. If the character asks whether and why her creepy neighbor is stealing locks of her hair, the voice may request a Barbie doll hanged in a noose made from a young girl’s hair. Asking whether she should change her hairstyle, the entity may demand all the hair shaved from three young girls." + "\n" +
+        "The character only pays the price if the Shadow Contact has the answer. The Storyteller (who likely knows just who or what the Shadow Contact is) may simply decide, or he may roll the character’s rating in the Merit to determine either way." + "\n" +
+        "Drawback: If the character receives an answer from the Shadow Contact, she must pay the price or make the contact reluctant to speak with her. Each time the character fails to give the Shadow Contact its dues, her rating in the Merit drops by one dot. She may purchase greater trust with proper roleplaying and experience points. This will often involve meeting the reneged-upon deal, with interest. If the rating drops below three dots, the contact refuses to speak with her any longer. She must purchase the Merit anew from zero dots, which represents finding a new mysterious font of information — no easy task. Note that the Merit degrades only if the Shadow Contact decides that her payment is officially past due. Clever characters may be able to delay the entity for some time.",
+        levels: [
+            {
+                level: 3,
+                description: "Minor contact"
+            },
+            {
+                level: 4,
+                description: "Moderate contact"
+            },
+            {
+                level: 5,
+                description: "Major contact"
+            }
+        ],
+        requirements: []
+    },
+    {
+        name: "Shadowless Chambers",
+        sources: [
+            {
+                sourceBook: "Book of Spirits",
+                sourcePage: "110"
+            }
+        ],
+        category: "Supernatural",
+        description: "Your character owns or can take refuge in a location that spirits have trouble finding. Maybe the location has no reflection in the Shadow Realm or has a peculiar resonance that confounds spirits. The location may have a bad reputation in the spirit world, in a way similar to the worst streets in a mortal city. Whatever the cause, spirits rarely go there and rarely think to go there. The character may hide there with reasonable surety that denizens of the Shadow Realm will not find him. Each dot in this Merit applies a –1 die penalty on spirits’ attempts to track the character to that location or reason out where he might be hiding." + "\n" +
+        "Drawback: This Merit is fragile. When a spirit does manage to find the character in the marked location, word begins to spread. The location’s reputation diminishes, or the presence of a spirit alters the resonance that once kept them away. Each such event reduces the Merit’s rating by one. On the other hand, when something bad does happen to the spirit there — the character manages to discorporate it, or the resonance infects the spirit — such events serve as excellent reason to increase this Merit with experience points.",
+        levels: [
+            {
+                level: 0,
+                levels: [1, 2, 3, 4, 5],
+                description: "(● to ●●●●●)"
+            }
+        ],
+        requirements: []
     },
     {
         name: "Driver's Charm",
@@ -2276,24 +2462,6 @@ export default [
             {
                 level: 0,
                 description: "(● to ●●●●●)"
-            }
-        ],
-        requirements: []
-    },
-    {
-        name: "Pleasing Aura",
-        sources: [
-            {
-                sourceBook: "Book of Spirits",
-                sourcePage: "109"
-            }
-        ],
-        category: "Supernatural",
-        description: "",
-        levels: [
-            {
-                level: 0,
-                description: "(●●●)"
             }
         ],
         requirements: []
@@ -2353,24 +2521,6 @@ export default [
         requirements: []
     },
     {
-        name: "Saintly",
-        sources: [
-            {
-                sourceBook: "Book of Spirits",
-                sourcePage: "110"
-            }
-        ],
-        category: "Supernatural",
-        description: "",
-        levels: [
-            {
-                level: 0,
-                description: "(●●●)"
-            }
-        ],
-        requirements: []
-    },
-    {
         name: "Seventh Son of a Seventh Son",
         sources: [
             {
@@ -2384,42 +2534,6 @@ export default [
             {
                 level: 0,
                 description: "(●●●●)"
-            }
-        ],
-        requirements: []
-    },
-    {
-        name: "Shadow Contacts",
-        sources: [
-            {
-                sourceBook: "Book of Spirits",
-                sourcePage: "110"
-            }
-        ],
-        category: "Supernatural",
-        description: "",
-        levels: [
-            {
-                level: 0,
-                description: "(●●● to ●●●●●)"
-            }
-        ],
-        requirements: []
-    },
-    {
-        name: "Shadowless Chambers",
-        sources: [
-            {
-                sourceBook: "Book of Spirits",
-                sourcePage: "110"
-            }
-        ],
-        category: "Supernatural",
-        description: "",
-        levels: [
-            {
-                level: 0,
-                description: "(● to ●●●●●)"
             }
         ],
         requirements: []
@@ -2470,24 +2584,24 @@ export default [
         ],
         category: "Mage",
         description: "Your mage has an item that originated in a Supernal Realm or that has been directly touched by Supernal power. Artifacts cannot be created by mages — their manufacture lies beyond the power of anyone in the Fallen World. An Artifact’s powers mimic those of magical spells, and they can sometimes be mistaken for imbued items.\n" +
-		"Artifacts have the following properties:\n" +
-		"Legendry: Every single Artifact is unique and legendary, meaning that it has a historical or mythical significance that can be researched, even if its origin or use is obscure and largely forgotten in modern times. Some rare Artifacts are new enough to be unknown to most mages, but even these sometimes appear in others’ dreams or prophecies.\n" +
-		"A known Artifact can bring its wielder a degree of renown — either good or bad, depending on the Artifact’s legendry. This can act at times like one dot in a sort of Status Merit (see pp. 88-89), although it applies only when the Artifact is of interest to the person its wielder tries to influence, such as a master with whom an audience is requested. The Status lies with the Artifact, not the bearer; if others desire to see it, they might grant the mage audience.\n" +
-		"The drawback of this legendry is that others might lust for the Artifact and seek to take it from the mage.\n" +
-		"\n" +
-		"Awakened use only: Only mages can use Artifacts. Sleepers and most other supernatural creatures lack the necessary sympathetic connection to the Supernal World.\n" +
-		"Unbreakable: All Artifacts have a Durability that’s two points higher than normal for their materials and manufacture.\n" +
-		"Function: Persistent or contingent. A persistent power is always active. The power does not have to be cast by the user to take effect; he simply needs to hold the Artifact or wear it. These include talismans of protection against spirits, mirrors that reflect the Shadow Realm version of whatever room they’re in, or cloaks of invisibility, hiding any portion of the wearer covered. The user must use or wear the Artifact to benefit from the power, but the power cannot be turned on or off with a switch or command word. If one or more of the Artifact’s powers is persistent, add one dot to its total cost. A contingent power needs to be activated for each use. It might be a sword that becomes supernaturally sharp when it tastes blood, a carpet that flies when the proper words are spoken, or even a gun made of bones that fires enervating Death energy with each pull of the trigger. The effect’s Duration depends on the default Duration of the spell it mimics, usually transitory (one turn) or prolonged (one hour/scene). Once this period expires, the mage may use the same trigger to use the power again. A trigger is an instant action and can be defined as anything performed within the proximity of the item: verbal commands, gestures and so on. When a trigger is activated, the Artifact’s spellcasting dice pool is rolled. It is equal to its wielder’s Gnosis + the highest Arcanum dot rating used to determine the Artifact’s Merit dots, based on the highest rated power (as described above).\n" +
-		"Mana: Some powers require Mana. Use the descriptions for the spell mimicked to determine any possible cost. All Artifacts hold up to 10 Mana points + 1 per spell (so an Artifact with three powers holds up to 13 Mana). A user can draw points from the Artifact to fuel its powers rather than spending his own. This pool is self-replenishing; they are restored at a rate of one point per Merit dot per day, although a mage can spend his own Mana to restore the points more quickly, or use Prime magic to transfer them from a Hallow or some other source. (See the “Channel Mana” spell, p. 224.)\n" +
-		"The wielder can also use the Artifact’s Mana to power his own spells, as if he were drawing on his own Mana reserves (he is still limited by his Gnosis for the amount he can spend per turn). He does not need to use the Prime Arcanum to acquire them, but he does need to be in contact (physical or sympathetic) with the Artifact.\n" +
-		"Paradox: Artifact powers can invoke Paradoxes just like the spells they mimic, and vulgar effects that are witnessed by Sleepers invoke Disbelief (see p. 274).\n" +
-		"Example: The Cave Lord’s Talisman is an Artifact in the form of a medallion that allows its wearer to grow bear claws upon activation (a contingent power). This mimics the Life 3 “Transform Self” spell, p. 187. It would be rated at five Merit dots (2 + 3rd-dot Arcanum = 5). Remember, though, that the fifth dot costs two dots, so the total cost would be six Merit dots.\n" +
-		"Acquiring an Artifact once play begins does not cost Merit dots; characters must gain them through roleplaying actions. If an Artifact is ever lost, stolen or destroyed, the player loses the Merit and the points he spent to gain it.",
+            "Artifacts have the following properties:\n" +
+            "Legendry: Every single Artifact is unique and legendary, meaning that it has a historical or mythical significance that can be researched, even if its origin or use is obscure and largely forgotten in modern times. Some rare Artifacts are new enough to be unknown to most mages, but even these sometimes appear in others’ dreams or prophecies.\n" +
+            "A known Artifact can bring its wielder a degree of renown — either good or bad, depending on the Artifact’s legendry. This can act at times like one dot in a sort of Status Merit (see pp. 88-89), although it applies only when the Artifact is of interest to the person its wielder tries to influence, such as a master with whom an audience is requested. The Status lies with the Artifact, not the bearer; if others desire to see it, they might grant the mage audience.\n" +
+            "The drawback of this legendry is that others might lust for the Artifact and seek to take it from the mage.\n" +
+            "\n" +
+            "Awakened use only: Only mages can use Artifacts. Sleepers and most other supernatural creatures lack the necessary sympathetic connection to the Supernal World.\n" +
+            "Unbreakable: All Artifacts have a Durability that’s two points higher than normal for their materials and manufacture.\n" +
+            "Function: Persistent or contingent. A persistent power is always active. The power does not have to be cast by the user to take effect; he simply needs to hold the Artifact or wear it. These include talismans of protection against spirits, mirrors that reflect the Shadow Realm version of whatever room they’re in, or cloaks of invisibility, hiding any portion of the wearer covered. The user must use or wear the Artifact to benefit from the power, but the power cannot be turned on or off with a switch or command word. If one or more of the Artifact’s powers is persistent, add one dot to its total cost. A contingent power needs to be activated for each use. It might be a sword that becomes supernaturally sharp when it tastes blood, a carpet that flies when the proper words are spoken, or even a gun made of bones that fires enervating Death energy with each pull of the trigger. The effect’s Duration depends on the default Duration of the spell it mimics, usually transitory (one turn) or prolonged (one hour/scene). Once this period expires, the mage may use the same trigger to use the power again. A trigger is an instant action and can be defined as anything performed within the proximity of the item: verbal commands, gestures and so on. When a trigger is activated, the Artifact’s spellcasting dice pool is rolled. It is equal to its wielder’s Gnosis + the highest Arcanum dot rating used to determine the Artifact’s Merit dots, based on the highest rated power (as described above).\n" +
+            "Mana: Some powers require Mana. Use the descriptions for the spell mimicked to determine any possible cost. All Artifacts hold up to 10 Mana points + 1 per spell (so an Artifact with three powers holds up to 13 Mana). A user can draw points from the Artifact to fuel its powers rather than spending his own. This pool is self-replenishing; they are restored at a rate of one point per Merit dot per day, although a mage can spend his own Mana to restore the points more quickly, or use Prime magic to transfer them from a Hallow or some other source. (See the “Channel Mana” spell, p. 224.)\n" +
+            "The wielder can also use the Artifact’s Mana to power his own spells, as if he were drawing on his own Mana reserves (he is still limited by his Gnosis for the amount he can spend per turn). He does not need to use the Prime Arcanum to acquire them, but he does need to be in contact (physical or sympathetic) with the Artifact.\n" +
+            "Paradox: Artifact powers can invoke Paradoxes just like the spells they mimic, and vulgar effects that are witnessed by Sleepers invoke Disbelief (see p. 274).\n" +
+            "Example: The Cave Lord’s Talisman is an Artifact in the form of a medallion that allows its wearer to grow bear claws upon activation (a contingent power). This mimics the Life 3 “Transform Self” spell, p. 187. It would be rated at five Merit dots (2 + 3rd-dot Arcanum = 5). Remember, though, that the fifth dot costs two dots, so the total cost would be six Merit dots.\n" +
+            "Acquiring an Artifact once play begins does not cost Merit dots; characters must gain them through roleplaying actions. If an Artifact is ever lost, stolen or destroyed, the player loses the Merit and the points he spent to gain it.",
         levels: [
             {
                 level: 3,
                 description: "An Artifact’s base Merit dot cost is equal to 2 dots plus the dot-rating of the Arcanum power it mimics, plus one dot per additional power. If it has more than one power or simulates a conjunctional spell, use the highest Arcanum dot-rating simulated.\n" +
-				"Base Cost: 2 + highest Arcanum dots +1 dot per additional power"
+                    "Base Cost: 2 + highest Arcanum dots +1 dot per additional power"
             }
         ],
         requirements: []
@@ -2559,7 +2673,7 @@ export default [
         levels: [
             {
                 level: 0,
-                levels: [1,2,3,4,5],
+                levels: [1, 2, 3, 4, 5],
                 description: "For each chapter in a story, you have a pool of “destiny dice” equal to twice the number of dots your character has in this Merit. For instance, a character with 2 dots of Destiny has four dice in his destiny pool.\nEach time you use one of these destiny dice, you can add it to any one dice pool. You can use them all on one dice roll, or split them up between different dice rolls. Either way, once you use them, they’re gone until the next chapter or game session. For example, a player whose character has Destiny 3 (giving him six dice) might choose to add two dice to a Brawl roll and then four to an Occult roll. The next game session, he might apply six dice to a single Intimidation roll. The bonus can apply to Mental, Physical or Social rolls, or to spellcasting rolls. You can even use these dice on a Skill for which your character has no training (although she still suffers the penalties for untrained Skill use)."
             }
         ],
@@ -2577,15 +2691,15 @@ export default [
         ],
         category: "Mage",
         description: "Your character has a connection to primordial forces in the world, ancient truths that can be seen and comprehended only in dreams. He gains insight into secrets through reverie and visions, finding answers to questions he couldn’t normally get by mundane means. This might be through the collective unconscious, universal mind, poetic reverie or even an imagined journey to a fictional dreamscape. Through effort of will, he can even channel this insight into action. Behind the lie of the so-called real world, dreams reveal the world as it really is… from a certain point of view. Once per game session, your character can use his Dream ability to gain a supernatural insight concerning a question or topic. Activating this ability requires at least one hour spent in sleep, trance or an activity exclusively focused on accessing an altered state of consciousness. The Storyteller then rolls the character’s Wits + Composure in secret. The results are:\n" +
-		"Dramatic failure: A nightmare. The character can interpret it any way he wants, but it probably leads to more trouble than solutions.\n" +
-		"Failure: Meaningless images.\n" +
-		"Success: One or more clues (one per Dream dot), although they must be interpreted.\n" +
-		"Exceptional success: One or more clues (one per Dream dot), and a suggestion about their interpretation provided by the Storyteller.\n" +
-		"The information conveyed is hidden behind allegory, symbols and archetypes. Dreams rarely answer questions directly, typically relying on symbolism and imagery to convey information. A mage seeking a specific person’s location wouldn’t see his address, but landmarks nearby could lead the way: a river, a tower or even the face of a man walking by at dusk. The answer has the potential to resolve the problem. It’s a tool for the Storyteller to help drive events of the story.",
+            "Dramatic failure: A nightmare. The character can interpret it any way he wants, but it probably leads to more trouble than solutions.\n" +
+            "Failure: Meaningless images.\n" +
+            "Success: One or more clues (one per Dream dot), although they must be interpreted.\n" +
+            "Exceptional success: One or more clues (one per Dream dot), and a suggestion about their interpretation provided by the Storyteller.\n" +
+            "The information conveyed is hidden behind allegory, symbols and archetypes. Dreams rarely answer questions directly, typically relying on symbolism and imagery to convey information. A mage seeking a specific person’s location wouldn’t see his address, but landmarks nearby could lead the way: a river, a tower or even the face of a man walking by at dusk. The answer has the potential to resolve the problem. It’s a tool for the Storyteller to help drive events of the story.",
         levels: [
             {
                 level: 0,
-                levels: [1,2,3,4,5],
+                levels: [1, 2, 3, 4, 5],
                 description: "One or more clues (one per Dream dot)."
             }
         ],
@@ -2601,21 +2715,21 @@ export default [
         ],
         category: "Mage",
         description: "Your mage has an object whose properties have been supernaturally altered, either for increased Durability, Structure, Size or an equipment bonus, or to give it some special property, such as to make steel transparent or flexible. Enhanced items are made with the Matter Arcanum (see pp. 194-204). Any special properties that would require the use of other Arcana (such as Forces to make a sword that glows) must be achieved by imbuing the item instead; see “Imbued Item,” below.\n" +
-		"Enhanced items have the following features:\n" +
-		"Function: Persistent only. A persistent power is always active (i.e., of indefinite Duration). The user simply needs to hold the item or wear it.\n" +
-		"No Paradox: Enhanced items’ properties do not invoke Paradoxes, although they might invoke Disbelief in Sleepers if their properties are clearly impossible.\n" +
-		"Example: A katana normally has a +3 equipment bonus, but Zeno carries a special katana. It sports a +2 enchanted equipment bonus (for a total bonus of +5 dice) and a +2 Durability (for a total of Durability 6). It costs him 3 Merit dots.\n" +
-		"An item can be both enhanced and imbued. See “Imbued Item,” below. Simply add the cost of all enhancements and imbuements together to determine the item’s total Merit cost.\n" +
-		"Acquiring an enhanced item once play begins does not cost Merit dots; characters must gain such items through roleplaying actions. If the item is ever lost, stolen or destroyed, the player loses the Merit and the points he spent to gain it",
+            "Enhanced items have the following features:\n" +
+            "Function: Persistent only. A persistent power is always active (i.e., of indefinite Duration). The user simply needs to hold the item or wear it.\n" +
+            "No Paradox: Enhanced items’ properties do not invoke Paradoxes, although they might invoke Disbelief in Sleepers if their properties are clearly impossible.\n" +
+            "Example: A katana normally has a +3 equipment bonus, but Zeno carries a special katana. It sports a +2 enchanted equipment bonus (for a total bonus of +5 dice) and a +2 Durability (for a total of Durability 6). It costs him 3 Merit dots.\n" +
+            "An item can be both enhanced and imbued. See “Imbued Item,” below. Simply add the cost of all enhancements and imbuements together to determine the item’s total Merit cost.\n" +
+            "Acquiring an enhanced item once play begins does not cost Merit dots; characters must gain such items through roleplaying actions. If the item is ever lost, stolen or destroyed, the player loses the Merit and the points he spent to gain it",
         levels: [
             {
                 level: 0,
                 description: "The cost depends on the enhanced item’s properties.\n" +
-				"Increased Durability: 1 dot per +2 Durability\n" +
-				"Increased Structure: 1 dot per +2 Structure\n" +
-				"Increased Size: 1 dot per +2 Size\n" +
-				"Increased equipment bonus: 1 dot per +1 dice modifier. (If the enhanced equipment bonus is more than double the item’s normal equipment bonus, the enhanced item causes Disbelief when Sleepers witness its use.)\n" +
-				"Special property 1 dot per Arcanum dot needed to achieve the property\n"
+                    "Increased Durability: 1 dot per +2 Durability\n" +
+                    "Increased Structure: 1 dot per +2 Structure\n" +
+                    "Increased Size: 1 dot per +2 Size\n" +
+                    "Increased equipment bonus: 1 dot per +1 dice modifier. (If the enhanced equipment bonus is more than double the item’s normal equipment bonus, the enhanced item causes Disbelief when Sleepers witness its use.)\n" +
+                    "Special property 1 dot per Arcanum dot needed to achieve the property\n"
             }
         ],
         requirements: []
@@ -2835,7 +2949,7 @@ export default [
         levels: [
             {
                 level: 0,
-                levels: [1,2,3,4],
+                levels: [1, 2, 3, 4],
                 description: "For each dot in this Merit, a mage automatically comprehends one type of High Speech glyph from any culture."
             }
         ],
@@ -2945,12 +3059,12 @@ export default [
         ],
         category: "Mage",
         description: "The mage who has studied the occult Law of Embodiment understands the deep secrets of the point of manifestation, where the Supernal macrocosm connects with the Fallen microcosm and true magic happens. These magicians are very skilled with rotes, and capable of performing mundane and magical actions nearly simultaneously." + "\n" +
-				"First, the mage must adapt a rote he knows to this purpose. Even if he cannot normally create the rote, he can adjust any rote that he learns by spending one experience point per rote. Once he has done this, he can Embody that rote in action." + "\n" +
-				"The process is relatively simple: the Embodied rote’s Imago is created in the Awakened will fi rst, and then with only a slight pause, the action is carried out in the physical world. When dealing with instant actions, there is some measure of delay; to outsiders, it appears as though the mage spends one turn focusing, and then acts, his action having both physical and magical purpose. (In game terms, the mage loses his place in the Initiative roster. He now acts last in the turn, after everybody else has taken an action.)" + "\n" + 
-				"In such an instant, an Adamantine Arrow might focus his will and then lash out with an eagle-claw fi st at his opponent, infl icting both punching damage and casting the spell “Life Force Assault.”" + "\n" +
-				"The mage rolls the rote’s Attribute + Skill dice pool (Dexterity + Athletics, in the case of the “Life Force Assault” rote). If it is successful, he then rolls his Arcanum dice for the spell (Life, in the case of “Life Force Assault”). The successes from the two rolls do not mix — the mundane action is resolved separately from the spellcasting action, even though they take place simultaneously. If the mundane roll fails, the spellcasting portion of the action cannot be performed (the Arcanum dice are not rolled)." + "\n" +
-				"A target’s defense is considered separately for both rolls. First, the mundane dice roll is affected by any condition that would normally affect such an action — the target’s Defense against melee attacks, any modifi ers for cover or concealment, range penalties, etc. Second, the spellcasting roll is affected by any defense the target is normally allowed (a contested roll, or subtracting a Resistance Attribute from the casting dice pool)." + "\n" +
-				"An Embodied casting might not be as effective as a normal casting if the caster’s mundane dice pool isn’t very good, but since a mundane action is accomplished at the same time, it can prove worthwhile for certain spells — especially those that require the caster to touch the target (so long as the rote Skill used is Athletics, Brawl or Weaponry).",
+            "First, the mage must adapt a rote he knows to this purpose. Even if he cannot normally create the rote, he can adjust any rote that he learns by spending one experience point per rote. Once he has done this, he can Embody that rote in action." + "\n" +
+            "The process is relatively simple: the Embodied rote’s Imago is created in the Awakened will fi rst, and then with only a slight pause, the action is carried out in the physical world. When dealing with instant actions, there is some measure of delay; to outsiders, it appears as though the mage spends one turn focusing, and then acts, his action having both physical and magical purpose. (In game terms, the mage loses his place in the Initiative roster. He now acts last in the turn, after everybody else has taken an action.)" + "\n" +
+            "In such an instant, an Adamantine Arrow might focus his will and then lash out with an eagle-claw fi st at his opponent, infl icting both punching damage and casting the spell “Life Force Assault.”" + "\n" +
+            "The mage rolls the rote’s Attribute + Skill dice pool (Dexterity + Athletics, in the case of the “Life Force Assault” rote). If it is successful, he then rolls his Arcanum dice for the spell (Life, in the case of “Life Force Assault”). The successes from the two rolls do not mix — the mundane action is resolved separately from the spellcasting action, even though they take place simultaneously. If the mundane roll fails, the spellcasting portion of the action cannot be performed (the Arcanum dice are not rolled)." + "\n" +
+            "A target’s defense is considered separately for both rolls. First, the mundane dice roll is affected by any condition that would normally affect such an action — the target’s Defense against melee attacks, any modifi ers for cover or concealment, range penalties, etc. Second, the spellcasting roll is affected by any defense the target is normally allowed (a contested roll, or subtracting a Resistance Attribute from the casting dice pool)." + "\n" +
+            "An Embodied casting might not be as effective as a normal casting if the caster’s mundane dice pool isn’t very good, but since a mundane action is accomplished at the same time, it can prove worthwhile for certain spells — especially those that require the caster to touch the target (so long as the rote Skill used is Athletics, Brawl or Weaponry).",
         levels: [
             {
                 level: 5,
@@ -3180,10 +3294,10 @@ export default [
                 level: 3,
                 description: "With Ritual Synergy •••, the mage leading the ritual must have the ability to cast the spell, but those participants who also possess this Merit do not need to know how to cast the spell themselves. The leader rolls his normal dice pool, but each participant’s dice pool is equal to his own Gnosis. Any mages who know the primary Arcanum used in the spell can add their dots to this dice pool. (The spell might require Death 3, but one of the participants knows only Death 1; he can still add his Death dot to the dice pool.) Each of the participants, including the leader, must also spend a point of Mana at the beginning of the ritual. Example: A cabal wishes to join together into a group ritual casting of Space 2 “Scrying.” However, only one member of the cabal knows Space 2. Luckily, the mages have all learned this Merit at three dots, allowing the mage with the requisite Arcanum lore to act as the group leader while the others assist, even though they do not themselves know how to cast the spell."
             },
-						{
-							level: 5,
-							description: "With Ritual Synergy •••••, the mage leading the ritual need not know how to cast the entirety of the spell; other participants with this Merit can contribute their personal Arcanum knowledge to conjunctional or combined spells. All participants roll their relevant dice pools (using the Arcanum they are contributing) and spend a point of Mana. Example: Adept Solis wishes to cast a conjunctional Fate 4 + Space 2 “Gift of Fortune” spell (see p. 157 in Mage: The Awakening). He knows Fate 4 but not Space 2. He teams with a fellow mage who does know Space 2. They each know the Ritual Synergy Merit at fi ve dots, so each can contribute his personal Arcanum knowledge to the whole of the casting."
-						}
+            {
+                level: 5,
+                description: "With Ritual Synergy •••••, the mage leading the ritual need not know how to cast the entirety of the spell; other participants with this Merit can contribute their personal Arcanum knowledge to conjunctional or combined spells. All participants roll their relevant dice pools (using the Arcanum they are contributing) and spend a point of Mana. Example: Adept Solis wishes to cast a conjunctional Fate 4 + Space 2 “Gift of Fortune” spell (see p. 157 in Mage: The Awakening). He knows Fate 4 but not Space 2. He teams with a fellow mage who does know Space 2. They each know the Ritual Synergy Merit at fi ve dots, so each can contribute his personal Arcanum knowledge to the whole of the casting."
+            }
         ],
         requirements: [
             "Gnosis 3 (for •••) or Gnosis 5 (for •••••)"
@@ -3260,8 +3374,8 @@ export default [
             }
         ],
         category: "Mage",
-        description: "Consilium Status represents a vested responsibility and according acknowledgement in the affairs of the Consilium of the region. Certain individuals rise to the top of the social strata, exemplary because of their efforts in the name of their cabal, Consilium or in the area as a whole. Hierarchs, Heralds, Sentinels and other “officers” fit this description, but the Merit can also apply to mages who are popular but who eschew politics. Their opinion holds sway even if they don’t involve themselves in a particular Consiliar function." + 
-				"\nConsilium Status is most often based on accomplishment. A character must earn his way into the title or esteem of his fellow mages. While this often involves being recognized for worthy deeds, it can also be a result of careful politicking and gossip. In general, mages of other cabals recognize a mage’s Consilium status and give him respect (although they do not necessarily heed him or reveal secrets)",
+        description: "Consilium Status represents a vested responsibility and according acknowledgement in the affairs of the Consilium of the region. Certain individuals rise to the top of the social strata, exemplary because of their efforts in the name of their cabal, Consilium or in the area as a whole. Hierarchs, Heralds, Sentinels and other “officers” fit this description, but the Merit can also apply to mages who are popular but who eschew politics. Their opinion holds sway even if they don’t involve themselves in a particular Consiliar function." +
+            "\nConsilium Status is most often based on accomplishment. A character must earn his way into the title or esteem of his fellow mages. While this often involves being recognized for worthy deeds, it can also be a result of careful politicking and gossip. In general, mages of other cabals recognize a mage’s Consilium status and give him respect (although they do not necessarily heed him or reveal secrets)",
         levels: [
             {
                 level: 1,
@@ -3296,10 +3410,10 @@ export default [
         ],
         category: "Mage",
         description: "Order Status represents rank, achievement and responsibility in a magical order. It is concerned with the order’s goals and accomplishments. It is not enough to be powerful or exemplary of the order’s ideals. The group is concerned with what its members have done to benefit its cause and combat its rivals." +
-				"\nThose mages who enjoy the greatest order-based recognition are often the core members of their order in a given region, those who call the local caucuses and around whom others rally. These mages instigate or mediate conflict with other orders or cabals, generally looking to further certain idealistic goals and to establish themselves or other members in positions of influence in the Consilium hierarchy of their region." +
-				"\nA character must have at least a single dot of Order Status in order to gain the benefits of any special abilities of that society. In other words, a character must have at least one dot of Order Status in order to learn the rotes of her order. (A character’s beginning six dots worth of rotes are an exception. They were presumably taught by the order to win the mage’s loyalty). If a character leaves an order after learning some of its secrets, she does not lose any of those abilities for which experience points were spent, such as rotes or Rote Specialties, but she may not learn additional abilities without finding a new teacher. In addition, some orders punish those who violate their oaths and spread their secrets." +
-				"\nOrder Status is not so specifically tied to certain titles. It is more a notion of an individual’s accomplishments.",
-				levels: [
+            "\nThose mages who enjoy the greatest order-based recognition are often the core members of their order in a given region, those who call the local caucuses and around whom others rally. These mages instigate or mediate conflict with other orders or cabals, generally looking to further certain idealistic goals and to establish themselves or other members in positions of influence in the Consilium hierarchy of their region." +
+            "\nA character must have at least a single dot of Order Status in order to gain the benefits of any special abilities of that society. In other words, a character must have at least one dot of Order Status in order to learn the rotes of her order. (A character’s beginning six dots worth of rotes are an exception. They were presumably taught by the order to win the mage’s loyalty). If a character leaves an order after learning some of its secrets, she does not lose any of those abilities for which experience points were spent, such as rotes or Rote Specialties, but she may not learn additional abilities without finding a new teacher. In addition, some orders punish those who violate their oaths and spread their secrets." +
+            "\nOrder Status is not so specifically tied to certain titles. It is more a notion of an individual’s accomplishments.",
+        levels: [
             {
                 level: 1,
                 description: "The character is known to a select subset of the order — a spy network, perhaps."
@@ -3576,7 +3690,7 @@ export default [
         levels: [
             {
                 level: 1,
-                levels: [ 1, 2, 3, 4, 5],
+                levels: [1, 2, 3, 4, 5],
                 description: "(Dreamspeakers can know multiple Dreamlands. Each one represents one Merit dot. A character does not require this Merit to reach a Dreamland, but he cannot access its wisdom without first purchasing this Merit.\nEach Dreamland contains one dot of the Library background (see Mage: The Awakening, pp. 85–86). This usually doesn’t represent Astral books and scrolls, but visions of wise ancestors and Dreamborn who are willing to share their knowledge. This lore can often reveal histories — both mundane and supernatural — of the region that are otherwise unrecorded in any book or living memory."
             }
         ],
@@ -3837,7 +3951,7 @@ export default [
                 sourcePage: "86"
             }
         ],
-                sourceBook: "Mage: The Awakening",
+        sourceBook: "Mage: The Awakening",
         category: "Sanctum",
         description: "A sanctum is a mage’s stronghold, a place where he can practice his Art away from the eyes of Sleepers and spies. Legends tell of wizard’s towers, witch’s huts and sorcerer’s caves, but the reality is usually more prosaic: a penthouse apartment, an old estate or even a nondescript suburban tract house." + "All sanctums are not created equal. A warehouse might have sufficient space, but it might not be secure against unwanted visitors. A hidden cave has adequate security, but it might be dark and cramped. Great time and effort is spent finding suitable sanctums, and their value is represented by two factors — size and security. Players who choose this Merit must also choose how to allocate these two factors when spending dots. For instance, two dots may be spent on Sanctum Size, with a third spent on Sanctum Security." + "Sanctum Size is important to characters who need a place to safely store their possessions and valuables. A sanctum with no dots in Size is just large enough for its owner and perhaps a single companion, with minimal if any storage capacity — a cramped apartment. By spending points to increase a sanctum’s Size, a player allows for accoutrements and personal effects. Larger sanctums can be anything from mansions to mountain hideaways to vast subterranean catacombs. Note, however, that sanctums of considerable size are not necessarily easy to maintain.",
         levels: [
@@ -3981,8 +4095,8 @@ export default [
             }
         ],
         category: "Mental",
-        description: "Your character maintains within his sanctum a personal collection of useful information, which can help with both natural and supernatural research. Whether it’s in the form of musty occult tomes, encrypted computer files, sacred scrolls, visual art or stranger media, this library includes reference works that can help the mage understand the realm surrounding him. The library also offers insight into supernatural and occult topics that mortals cannot comprehend. In both fields of knowledge — mundane research and occult lore — this collection relates to one or more fields of specialization." + "Ordinary people have libraries as well, of course, dealing with less exotic specialties. The study of the supernatural is different from ordinary research, however. Many occult tomes refer to magical insights that only mages understand, allegories to magical philosophy, ciphers and diagrams that make little sense to Sleepers, or even inscrutable incunabula that can be deciphered only by willworkers with certain Arcana. Aging magical tomes don’t typically use indices, keywords or cross-referenced page numbers — they’re as arcane as the mages who use them."  + "Gaining information from a library is a research task, as described on pp. 55-56 of the World of Darkness rulebook, except that a mage spends only 10 minutes per roll when researching from his library. Success doesn’t guarantee exactly the information for which she looks. Libraries aren’t all-knowing, and they don’t always provide one definitive answer to a question, since multiple authors may have different points of view on the same subject. The Storyteller is perfectly justified in saying that a particular library simply doesn’t reveal something. Any mage may allow another mage the privilege of consulting his library, but unless this consultant has put points toward the Merit, 30 minutes are spent per roll researching his topic. A library is located in a sanctum and is protected by that sanctum’s security. See the “Sanctum” Merit, pp. 86-87. Special: Characters who share a sanctum can also share Library dots, with each contributing to its areas of knowledge. These characters each receive the full benefits of the library, and may invite others to use the facility, so long as all parties agree. It may happen that mages suffer a falling out, in which case one or more might be asked to forfeit their library privileges by the others. Those who are banned lose whatever dots they contributed, unless an agreement is worked out to split the library, allowing outcasts to take their areas of knowledge with them. Shared libraries should be marked with an asterisk (*) on your character sheet. See the description of the Sanctum Merit for details on how to allocate dots.",
-				perDot: "Each dot in this Merit represents one field of study or area of knowledge in which your character has a wealth of tomes, computer files or scrolls, and from which he may draw information.",
+        description: "Your character maintains within his sanctum a personal collection of useful information, which can help with both natural and supernatural research. Whether it’s in the form of musty occult tomes, encrypted computer files, sacred scrolls, visual art or stranger media, this library includes reference works that can help the mage understand the realm surrounding him. The library also offers insight into supernatural and occult topics that mortals cannot comprehend. In both fields of knowledge — mundane research and occult lore — this collection relates to one or more fields of specialization." + "Ordinary people have libraries as well, of course, dealing with less exotic specialties. The study of the supernatural is different from ordinary research, however. Many occult tomes refer to magical insights that only mages understand, allegories to magical philosophy, ciphers and diagrams that make little sense to Sleepers, or even inscrutable incunabula that can be deciphered only by willworkers with certain Arcana. Aging magical tomes don’t typically use indices, keywords or cross-referenced page numbers — they’re as arcane as the mages who use them." + "Gaining information from a library is a research task, as described on pp. 55-56 of the World of Darkness rulebook, except that a mage spends only 10 minutes per roll when researching from his library. Success doesn’t guarantee exactly the information for which she looks. Libraries aren’t all-knowing, and they don’t always provide one definitive answer to a question, since multiple authors may have different points of view on the same subject. The Storyteller is perfectly justified in saying that a particular library simply doesn’t reveal something. Any mage may allow another mage the privilege of consulting his library, but unless this consultant has put points toward the Merit, 30 minutes are spent per roll researching his topic. A library is located in a sanctum and is protected by that sanctum’s security. See the “Sanctum” Merit, pp. 86-87. Special: Characters who share a sanctum can also share Library dots, with each contributing to its areas of knowledge. These characters each receive the full benefits of the library, and may invite others to use the facility, so long as all parties agree. It may happen that mages suffer a falling out, in which case one or more might be asked to forfeit their library privileges by the others. Those who are banned lose whatever dots they contributed, unless an agreement is worked out to split the library, allowing outcasts to take their areas of knowledge with them. Shared libraries should be marked with an asterisk (*) on your character sheet. See the description of the Sanctum Merit for details on how to allocate dots.",
+        perDot: "Each dot in this Merit represents one field of study or area of knowledge in which your character has a wealth of tomes, computer files or scrolls, and from which he may draw information.",
         levels: [
             {
                 level: 1,
@@ -4145,42 +4259,42 @@ export default [
         ],
         requirements: []
     },
-	{
-		name: "Ractain Strain",
-		sources: [
-			{
+    {
+        name: "Ractain Strain",
+        sources: [
+            {
                 sourceBook: "Intruders: Encounters with the Abyss",
                 sourcePage: "166"
-			}
-		],
-		category: "Mental",
+            }
+        ],
+        category: "Mental",
         description: "Your character is a member of the Ractain Strain of humanity. \nIf the character purchases the Unseen Sense Merit, she gains the benefits of the version of this trait possessed by all mages (see Mage: The Awakening, p. 110), so that even if the character is not a mage she is sensitive to all supernatural phenomena. The character is also likely to be nearsighted (and so may have the Poor Sight Flaw; see the World of Darkness Rulebook, p. 219). Because werewolves notice the difference in smell between bearers of the Ractain Strain and other humans, there are no werewolves or wolf-blooded among this population, but they can become vampires, mages and ghouls as easily as anyone else.",
         levels: [
             {
                 level: 1,
                 description: "This Merit mimics the effects of the Eidetic Memory, Meditative Mind and Direction Sense Merits.  In addition, bearers are unusual-looking to the point that most people consider them slightly unattractive. These characters gain a –1 die penalty to all Presence and Manipulation rolls involving attempts to use their looks to entertain, persuade, distract or deceive others. Purchasing the Striking Looks •• Merit cancels this penalty, and purchasing the Striking Looks •••• provides the same benefits that the Striking Looks •• Merit provides to most characters."
             }
-		],
-        requirements: []	
-	},
-	{
-		name: "Blood of the Oath of Ruin",
-		sources: [
-			{
+        ],
+        requirements: []
+    },
+    {
+        name: "Blood of the Oath of Ruin",
+        sources: [
+            {
                 sourceBook: "Intruders: Encounters with the Abyss",
                 sourcePage: "131"
-			}
-		],
-		category: "Physical",
+            }
+        ],
+        category: "Physical",
         description: "The integration of the Abyssal substance of the Oath of Ruin into the minds, bodies and souls of the Harpers has left them twisted and scarred, but such patronage has also resulted in its own curious boons. Those closest to the central bloodline of the family, whose metaphysical pollution runs thickest, occasionally manifest certain preternatural capabilities.",
         levels: [
             {
                 level: 2,
                 description: "This Merit allows the character to sense the presence of Abyssal phenomena (including, but not limited to, intruders of any sort, Paradox, Scelesti, everything save other “pure-blooded” Harpers) out to a distance of 100 feet or so. This sense typically manifests in some unpleasant way: nosebleeds, burning hives, intense stomach cramps and the like. Regardless of the pain or discomfort inherent in the character’s perception, he gains a +1 bonus to all rolls involving Physical Skills made while in the presence of Abyssal phenomena.\nIn exchange for this dubious gift, the character must take a permanent derangement, as well as a Physical Flaw or else one of the following Social Flaws: Deformity or Speech Impediment. (See the World of Darkness Rulebook, p. 218, for explanations of the various Flaws.)"
             }
-		],
-        requirements: []	
-	},
+        ],
+        requirements: []
+    },
     {
         name: "Guardian Spirit",
         sources: [
@@ -4191,7 +4305,7 @@ export default [
         ],
         category: "Sanctum",
         description: "A Twilight spirit has been fettered to an object or room within the material sanctum and commanded to guard the entire sanctum against intruders. The spirit will only heed the commands of its masters (i.e., anyone who has contributed Merit dots toward the purchase of this Merit); the spirit will treat all others as hostile unless commanded by its master to exempt a person from its ire. The masters do not need to be able to converse with the spirit (it can understand their commands), but they can’t see it or hear it without using the Spirit 1 “Spirit Tongue” spell, unless it uses a Numen to materialize. The dot rating of this Merit represents the power of the spirit. The player or Storyteller creates the spirit, distributing its Attribute dots among its Power, Finesse, Resistance and Influence traits, and choosing its Numina. The player or Storyteller also chooses its Ban. " +
-        "\nDrawback: Spirits can be controlled by other mages using the Spirit Arcanum. The spirit’s masters must provide the spirit with one Essence point per day (using Prime to convert Mana, or taking it from another source) or else the spirit will become surly. It can still be commanded, but it will seek to be freed from its bondage. If the spirit cannot harvest properly aspected Essence at the sanctum, the spirit will slowly lose Essence each day until falling into slumber and forced across the Gauntlet. If that happens, all dots in this Merit are lost.",
+            "\nDrawback: Spirits can be controlled by other mages using the Spirit Arcanum. The spirit’s masters must provide the spirit with one Essence point per day (using Prime to convert Mana, or taking it from another source) or else the spirit will become surly. It can still be commanded, but it will seek to be freed from its bondage. If the spirit cannot harvest properly aspected Essence at the sanctum, the spirit will slowly lose Essence each day until falling into slumber and forced across the Gauntlet. If that happens, all dots in this Merit are lost.",
         levels: [
             {
                 level: 2,
@@ -4224,14 +4338,14 @@ export default [
         ],
         category: "Mage",
         description: "A Hallow is a nexus of magical energy, a place that generates Mana each day. Such locations are vital to mages.Your character has one within his sanctum’s premises. Thesanctum’s security determines how well it is guarded fromaccess by uninvited mages." + "\n" +
-				"Hallows tend to be situated in high places, especially where the stars are visible at night. Mana seems to flow readily there, although that isn’t always the case; dark glens and hollows covered by a canopy of trees or steep peaks can still host such energy. Nonetheless, they occur most often on mountaintops, hills or at the tops of skyscrapers, giving birth to the legend of mages in their towers." + "\n" +
-				"A Hallow generates a number of points of Mana equal to its dots each day. A mage can transfer the power from his Hallow to replenish his own Mana points by performing an oblation (see p. 77) or using a Prime 3 spell. Each Hallow is tied to a particular time of day when this replenishment can take place — sundown, sunrise and midnight are the most common." + "\n" +
-				"If this Mana is not harvested, it congeals into tass, usually in the form of spring water or growing plants, or it’s imbued into stones or other objects. Some mages forbid others from harvesting free Mana, cultivating it into tass that can be stored and used later. See “Tass,” pp. 78-79." + "\n" +
-				"A Hallow’s Mana shares the place’s quality of resonance. Resonance quality in opposition to a spell’s effects — calm resonance for an attack spell, violent resonance for a healing spell — might levy anywhere from –1 to –2 penalties on spellcasting rolls. For this reason, mages do not let their Hallows become polluted with foreign or impure auras. They work to maintain proper resonance quality." + "\n" +
-				"Additionally, a Hallow’s close vicinity (five yards per dot rating) is always suffused with power. This power obviates the need to spend one point of Mana for any mage within the vicinity. Essentially, mages need not spend that one point even when it’s required, such as for improvisational spellcasting, but must spend any points in excess that are still required, such as when casting an improvisational spell that inflicts aggravated damage. This example would normally cost two points, but it costs only one within the Hallow’s vicinity. This suffuse power cannot be siphoned into something else using Prime magic or into the mage’s personal store of Mana." + "\n" +
-				"Special: Characters who share a sanctum can also share Hallow dots, with each contributing to its power. Cabals that do this usually work out a schedule by which each member can access the Hallow’s Mana, ensuring that none takes too much. If they suffer a falling out, one or more might be banned from access to the Hallow. Those who are banned lose whatever dots they contributed." + "\n" +
-				"Shared Hallows should be marked with an asterisk (*) on your character sheet. See the description of the Sanctum Merit for details on how to allocate dots.",
-				perDot: "A Hallow generates a number of points of Mana equal to its dots each day.",
+            "Hallows tend to be situated in high places, especially where the stars are visible at night. Mana seems to flow readily there, although that isn’t always the case; dark glens and hollows covered by a canopy of trees or steep peaks can still host such energy. Nonetheless, they occur most often on mountaintops, hills or at the tops of skyscrapers, giving birth to the legend of mages in their towers." + "\n" +
+            "A Hallow generates a number of points of Mana equal to its dots each day. A mage can transfer the power from his Hallow to replenish his own Mana points by performing an oblation (see p. 77) or using a Prime 3 spell. Each Hallow is tied to a particular time of day when this replenishment can take place — sundown, sunrise and midnight are the most common." + "\n" +
+            "If this Mana is not harvested, it congeals into tass, usually in the form of spring water or growing plants, or it’s imbued into stones or other objects. Some mages forbid others from harvesting free Mana, cultivating it into tass that can be stored and used later. See “Tass,” pp. 78-79." + "\n" +
+            "A Hallow’s Mana shares the place’s quality of resonance. Resonance quality in opposition to a spell’s effects — calm resonance for an attack spell, violent resonance for a healing spell — might levy anywhere from –1 to –2 penalties on spellcasting rolls. For this reason, mages do not let their Hallows become polluted with foreign or impure auras. They work to maintain proper resonance quality." + "\n" +
+            "Additionally, a Hallow’s close vicinity (five yards per dot rating) is always suffused with power. This power obviates the need to spend one point of Mana for any mage within the vicinity. Essentially, mages need not spend that one point even when it’s required, such as for improvisational spellcasting, but must spend any points in excess that are still required, such as when casting an improvisational spell that inflicts aggravated damage. This example would normally cost two points, but it costs only one within the Hallow’s vicinity. This suffuse power cannot be siphoned into something else using Prime magic or into the mage’s personal store of Mana." + "\n" +
+            "Special: Characters who share a sanctum can also share Hallow dots, with each contributing to its power. Cabals that do this usually work out a schedule by which each member can access the Hallow’s Mana, ensuring that none takes too much. If they suffer a falling out, one or more might be banned from access to the Hallow. Those who are banned lose whatever dots they contributed." + "\n" +
+            "Shared Hallows should be marked with an asterisk (*) on your character sheet. See the description of the Sanctum Merit for details on how to allocate dots.",
+        perDot: "A Hallow generates a number of points of Mana equal to its dots each day.",
         levels: [
             {
                 level: 1,
@@ -10609,7 +10723,7 @@ export default [
                 level: 4,
                 name: "Plunging Fire",
                 description: "Your character can eschew direct attacks in favor of launching arrows high into the air to plummet straight down on hapless victims. Your character’s bow attacks suffer no penalties for target concealment behind solid objects, so long as the target lacks overhead protection and your character can see any part of the target by which to gauge her location. For example, a target hiding behind a log with her foot sticking out applies no penalty, but a character in a fetal curl on a van’s floorboards receives normal protection." +
-                "\nDrawback: Your character may use this maneuver only outdoors or in enclosed spaces large enough to provide for several hundred feet of vertical flight (e.g., football stadiums)."
+                    "\nDrawback: Your character may use this maneuver only outdoors or in enclosed spaces large enough to provide for several hundred feet of vertical flight (e.g., football stadiums)."
             }
         ]
     },
@@ -10620,7 +10734,7 @@ export default [
                 sourceBook: "Armory",
                 sourcePage: "209"
             },
-			{
+            {
                 sourceBook: "Armoury Reloaded",
                 sourcePage: "?"
             }
@@ -10632,12 +10746,12 @@ export default [
             "Weaponry ●●●"
         ],
         description: "Your character is trained in the difficult art of fighting with chain weapons. Chain weapons are notoriously unpredictable unless mastered — a poorly skilled fighter is as likely to tangle or cut himself as he is to harm an opponent. Your character’s training is likely to have been formalized, having learned the skill at a martial arts dojo or perhaps in stage combat for the theater. (Note that a character using chained weapons who possesses no Dots in this Merit suffers an automatic –2 to all attack rolls.) Dots purchased with this Merit allow access to unique combat maneuvers with chain weapons. Each maneuver is a prerequisite for the subsequent maneuver. So, your character cannot have “Hand Bind” until he has “Impenetrable Defense.” These maneuvers and their effects are described below. All maneuvers are based upon the Weaponry Skill." +
-		"This Fighting Style applies to an array of flexible weapons, including the nunchaku, chain whip, rope dark, three section staff – even a length of rope. Your character’s choice of weapon does restrict the use of certain maneuvers, however:" +
-		"• If your character’s weapon uses rope instead of chain, an opponent with a sharp, sturdy blade (a combat knife or better) nullifies the benefits of Impenetrable Defense – she can cut right through it." +
-		"At the Storyteller’s discretion, this doesn’t apply to flexible weapons with very short rope lengths, like the nunchaku." +
-		"• To use the Outside Choke maneuver your character needs a weapon with at least six inches of loose chain or rope between its segments." +
-		"• To use Whirl and Thrust, your character’s weapon needs to have a weighted striking surface like a wooden segment or iron ball." +
-		"Schools: Okinawan kobudo has made the nunchaku a famous weapon, but it is also used in Filipino martial arts.",
+            "This Fighting Style applies to an array of flexible weapons, including the nunchaku, chain whip, rope dark, three section staff – even a length of rope. Your character’s choice of weapon does restrict the use of certain maneuvers, however:" +
+            "• If your character’s weapon uses rope instead of chain, an opponent with a sharp, sturdy blade (a combat knife or better) nullifies the benefits of Impenetrable Defense – she can cut right through it." +
+            "At the Storyteller’s discretion, this doesn’t apply to flexible weapons with very short rope lengths, like the nunchaku." +
+            "• To use the Outside Choke maneuver your character needs a weapon with at least six inches of loose chain or rope between its segments." +
+            "• To use Whirl and Thrust, your character’s weapon needs to have a weighted striking surface like a wooden segment or iron ball." +
+            "Schools: Okinawan kobudo has made the nunchaku a famous weapon, but it is also used in Filipino martial arts.",
         levels: [
             {
                 level: 1,
@@ -10658,7 +10772,7 @@ export default [
                 level: 4,
                 name: "Whirl and Thrust",
                 description: "Your character at this level is highly adept at using chains, and can make focused attacks with any part of the weapon. By whirling the chain a few times, she can build momentum on a single attack, which can be made with startling accuracy. On a targeted attack, you can ignore up to –2 of penalties associated with directed attacks. In other words, attacks to an opponent’s torso or limbs are done at no penalty, attacks the head would be at –1, to the hand –2 and to the eye –3." +
-                "\nDrawback: Your character negates her Defense for the rest of the turn. If your character has applied her Defense against any incoming attack before her turn, she may not perform this maneuver."
+                    "\nDrawback: Your character negates her Defense for the rest of the turn. If your character has applied her Defense against any incoming attack before her turn, she may not perform this maneuver."
             }
         ]
     },
@@ -10703,7 +10817,7 @@ export default [
                 level: 5,
                 name: "Rapid Fire",
                 description: "Your character’s concentration is such that she can unleash a hail of bullets. In a single action, she may make one extra Firearms attack for each point by which her Composure exceeds 2. Each extra attack is made at a cumulative –1 modifier. Thus, she can perform a total of two attacks at Composure 3 (the second of which is at –1), three attacks at Composure 4 (the third of which is at –2) and four at Composure 5 (the fourth of which is at –3). She must declare the targets of all attacks before rolling the first one. Each attack not directed against her initial target suffers an additional –1 penalty. All attacks made with this maneuver must be single shots." +
-                "\nDrawback: Your character cannot use her Defense against any attack in the same turn in which she intends to use this maneuver. If she uses Defense against attacks that occur earlier in the Initiative roster, before she can perform this maneuver, she cannot use Rapid Fire this turn. In addition, your character may not use this maneuver with bolt-action or break-action firearms."
+                    "\nDrawback: Your character cannot use her Defense against any attack in the same turn in which she intends to use this maneuver. If she uses Defense against attacks that occur earlier in the Initiative roster, before she can perform this maneuver, she cannot use Rapid Fire this turn. In addition, your character may not use this maneuver with bolt-action or break-action firearms."
             }
         ]
     },
@@ -10735,13 +10849,13 @@ export default [
                 level: 3,
                 name: "Riposte",
                 description: "A Riposte requires an attack to be made against your character. He steps out of the way of the attack sing his Dodge (i.e., her Defense, doubled). While his opponent is open, he can then make a sudden and quick attack, which is performed at a –1 penalty. However, the opponent’s Defense does not further penalize the attack roll." +
-                "\nDrawback: If your opponent suffers any further attacks on a turn where she has used Riposte, she cannot apply her Defense against them."
+                    "\nDrawback: If your opponent suffers any further attacks on a turn where she has used Riposte, she cannot apply her Defense against them."
             },
             {
                 level: 4,
                 name: "Moulinet",
                 description: "If your character makes a successful hit on an adversary with his sword, he may then rotate his wrist and perform a quick spiral cut with the tip of the weapon. This additional cut requires no additional roll; the cut does lethal damage to the opponent equal to your character’s Dexterity." +
-                "\nDrawback: To perform this maneuver, the character must spend a Willpower point before he makes her initial attack roll. The Willpower does not grant him the additional +3 to attack. If the initial attack roll fails, the Willpower point is wasted and the Moulinet may not be added."
+                    "\nDrawback: To perform this maneuver, the character must spend a Willpower point before he makes her initial attack roll. The Willpower does not grant him the additional +3 to attack. If the initial attack roll fails, the Willpower point is wasted and the Moulinet may not be added."
             }
         ]
     },
@@ -10773,13 +10887,13 @@ export default [
                 level: 3,
                 name: "Uchiotoshi Waza",
                 description: "An Uchiotoshi Waza, or “killing the sword” requires an attack to be made against your character. He steps out of the way or  parries the attack using his Dodge (i.e., her Defense, doubled). While his opponent is open, he can then make a sudden and quick attack, which is performed at a –1 penalty. However, the opponent’s Defense does not further penalize the attack roll." +
-                "\nDrawback: If your opponent suffers any further attacks on a turn where she has used Uchiotoshi Waza, she cannot apply her Defense against them."
+                    "\nDrawback: If your opponent suffers any further attacks on a turn where she has used Uchiotoshi Waza, she cannot apply her Defense against them."
             },
             {
                 level: 4,
                 name: "Nidan Waza",
                 description: "If your character makes a successful hit on an adversary with his sword, he may then rotate his wrist and perform a second quick cut with the sword. This additional cut requires no additional roll; the cut does lethal damage to the opponent equal to your character’s Dexterity." +
-                "\nDrawback: To perform this maneuver, the character must spend a Willpower point before he makes her initial attack roll. The Willpower does not grant him the additional +3 to attack. If the initial attack roll fails, the Willpower point is wasted and the Nidan Waza may not be added."
+                    "\nDrawback: To perform this maneuver, the character must spend a Willpower point before he makes her initial attack roll. The Willpower does not grant him the additional +3 to attack. If the initial attack roll fails, the Willpower point is wasted and the Nidan Waza may not be added."
             }
         ]
     },
@@ -10857,7 +10971,7 @@ export default [
                 level: 5,
                 name: "One Shot, One Kill",
                 description: "When your character picks up her rifle, people fall down. It’s just that simple. When making an aimed shot, do not add the rifle’s Damage rating to the attack dice pool (though “9 again” or “8 again” still applies if it would normally). Instead, if the attack succeeds, add the rifle’s Damage rating as extra successes." +
-                "\nDrawback: Spend one Willpower per attack. Note that this Willpower expenditure does not add three dice to the attack."
+                    "\nDrawback: Spend one Willpower per attack. Note that this Willpower expenditure does not add three dice to the attack."
             }
         ]
     },
@@ -10884,7 +10998,7 @@ export default [
                 level: 2,
                 name: "Advantageous Angle",
                 description: "Your knife-wielder knows how to make a feinted attack from the side or rear in a way that grants him advantage. While normally such attacks confer no bonuses, the character is aware how to deceive an opponent into mounting a Defense against an attack that isn’t coming — and then stage an attack from a different angle. The foe’s Defense is at –1 during such an attack." +
-                "\nDrawback: This maneuver can only be made every other turn. "
+                    "\nDrawback: This maneuver can only be made every other turn. "
             },
             {
                 level: 3,
@@ -10895,7 +11009,7 @@ export default [
                 level: 4,
                 name: "Slash and Stab",
                 description: "Your character’s deftness with a knife allows him to make two attacks against one target in a single action. The first attack is a slash, the second a thrusting stab. The first attack is made as normal, but the second suffers a –1 penalty." +
-                "\nDrawback: This quick maneuver leaves the character somewhat more vulnerable against the next attack coming toward him. His Defense is counted as being one less against the next attack."
+                    "\nDrawback: This quick maneuver leaves the character somewhat more vulnerable against the next attack coming toward him. His Defense is counted as being one less against the next attack."
             }
         ]
     },
@@ -10927,11 +11041,11 @@ export default [
                 level: 3,
                 name: "Dangerous Radius",
                 description: "With this technique, your character can swing her weapon in a wide arc, hitting anyone within three yards. Make a normal attack roll for the character (Strength + Weaponry + weapon bonuses). This roll receives a dice penalty equal to the number of opponents hit with this strike (to a maximum of –5 dice). Successes achieved on this roll are done as damage to all within the three-yard radius. If the weapon is a normal blunt polearm (i.e., a staff), it does bashing. If bladed, the weapon causes lethal damage." +
-                "\nDrawback: This attack cannot distinguish between friend or foe. Any allies within the three-yard radius are hit along with enemies. The technique cannot be pulled to exclude friends from the damage."
+                    "\nDrawback: This attack cannot distinguish between friend or foe. Any allies within the three-yard radius are hit along with enemies. The technique cannot be pulled to exclude friends from the damage."
             }
         ]
     },
-		{
+    {
         name: "Shurikenjutsu (Thrown Blade and Dart)",
         sources: [
             {
@@ -10941,25 +11055,25 @@ export default [
         ],
         category: "Fighting Style",
         description: "The Tenshin Shoden Katori Shinto Ryu’s curriculum includes shurikenjutsu. Despite the “ninja throwing star” stereotype, most shuriken were actually spikes (bo shuriken), not stars (hira shuriken or shaken), and were mostly used by samurai who trained in one of the dozens of koryu that taught their use. Drop the idea that they would have been thought of as “dishonorable” weapons – it’s false.\n" +
-				"This is the core Fighting Style for thrown edged weapons. We’ve included them under the TSKSR because traditional shurikenjutsu is almost never taught outside of a larger curriculum. Dedicated interest in the art is growing, however; there are a few small schools, new and old, that do teach it exclusively.\n" +
-				"Effect: Your character knows how to throw edged weapons with particular skill. Dots purchased in this Merit provide access to special combat maneuvers. Each maneuver is a prerequisite for the next.\n" +
-				"Your character may use Fighting Style: Shuriken-jutsu with any edged weapon that’s been designed for throwing. She may also use it with any other Size 1 object as if she had one dot less in this Merit, or any Size 2 weapon as if she had 2 dots less (Size 3 or greater weapons are not compatible with the Merit). The advantages of this Merit apply to the character’s attempts to throw a qualified weapon, not use it in close range combat.",
+            "This is the core Fighting Style for thrown edged weapons. We’ve included them under the TSKSR because traditional shurikenjutsu is almost never taught outside of a larger curriculum. Dedicated interest in the art is growing, however; there are a few small schools, new and old, that do teach it exclusively.\n" +
+            "Effect: Your character knows how to throw edged weapons with particular skill. Dots purchased in this Merit provide access to special combat maneuvers. Each maneuver is a prerequisite for the next.\n" +
+            "Your character may use Fighting Style: Shuriken-jutsu with any edged weapon that’s been designed for throwing. She may also use it with any other Size 1 object as if she had one dot less in this Merit, or any Size 2 weapon as if she had 2 dots less (Size 3 or greater weapons are not compatible with the Merit). The advantages of this Merit apply to the character’s attempts to throw a qualified weapon, not use it in close range combat.",
         levels: [
             {
                 level: 1,
                 name: "Ma-ai (Distance)",
                 description: "Your character learns to properly gauge a target’s distance and modify her technique to match it. Double her short, medium and long range throwing ranges."
-						},
+            },
             {
                 level: 2,
                 name: "Kakushi Buki (Hidden Weapons)",
                 description: "The character knows how to rapidly retrieve a throwing weapon from a sleeve, holster or other prepared spot on her body. She never needs to use an action to draw a throwing weapon from a prepared spot."
-						},
+            },
             {
                 level: 3,
                 name: "Choku Da-Ho (Direct Hit Method)",
                 description: "Your character can throw using the power of her entire body. Add her Strength dots to the dice pool for throwing the weapon. Drawback: The character is considered a still target and may not employ her Defense during the turn in which she uses this maneuver. She may not use this maneuver in conjunction with Ikki Gokken."
-						},
+            },
             {
                 level: 4,
                 name: "Ikki Gokken (Five Blades in One Breath)",
@@ -10970,7 +11084,7 @@ export default [
             "Dexterity •••", "Athletics ••"
         ]
     },
-		{
+    {
         name: "Boxing",
         sources: [
             {
@@ -10985,17 +11099,17 @@ export default [
                 level: 1,
                 name: "Body Blow",
                 description: "Your character can deliver powerful blows that leave opponents reeling and gasping for air. If successes inflicted in a single Brawl attack equal or exceed a target's Size, the victim loses his next action. Duck and W eave (¥¥): Your character is trained to instinctively duck and evade an opponent's blows. Use the higher of your character's Dexterity or Wits to determine his Defense when dealing with Brawl-based attacks only (not against Weaponry attacks). If a combination of Brawl- and Weaponry-based attacks is focused on your character in the same turn, use his normal Defense against both."
-						},
+            },
             {
                 level: 2,
                 name: "Combination Blows",
                 description: "Your character's training and experience allow him to devastate opponents with a flurry of rapid blows. He can make two Brawl attacks against the same target in a single action. The second attack suffers a -1 penalty. Drawback: Your character cannot use his Defense against any attack in the same turn in which he intends to use this maneuver. If he uses Defense against attacks that occur earlier in the Initiative roster,before he can perform this maneuver, he cannot perform the maneuver in the turn. He is too busy bobbing and weaving out of the way of attacks."
-						},
+            },
             {
                 level: 3,
                 name: "Haymaker",
                 description: "Your character can deliver powerful, accurate blows capable of knocking an opponent unconscious with a single punch. A single Brawl attack that equals or exceeds the target's Size in damage might knock him unconscious. A Stamina roll is made for the victim. If it succeeds, he is conscious but he still loses his next action due to the Body Blow (see above). If it fails, he is unconscious for a number of turns equal to the damage done. Drawback: Your character cannot use his Defense against any attack in the same turn in which he intends to use this maneuver. If he uses Defense against attacks that occur earlier in the Initiative roster, before he can perform this maneuver, he cannot perform the maneuver in the turn. He is too busy bobbing and weaving out of the way of attacks."
-						},
+            },
             {
                 level: 4,
                 name: "Brutal Blow",
@@ -11006,7 +11120,7 @@ export default [
             "Strength •••", "Stamina ••", "Brawl ••"
         ]
     },
-		{
+    {
         name: "Kung Fu",
         sources: [
             {
@@ -11021,22 +11135,22 @@ export default [
                 level: 1,
                 name: "Focused Attack",
                 description: "Physical conditioning and accuracy allow your character to deliver blows at vulnerable spots on targets. Penalties to hit specific targets are reduced by one. See 'Specified Targets,' p. 165. Even when a specific part of an opponent is not targeted, armor penalties to your character's Brawl attacks are reduced by one."
-			},
+            },
             {
                 level: 2,
                 name: "Iron Skin",
                 description: "Your character has hardened his body to physical blows, allowing him to withstand repeated hits with minimal effect. He has an effective armor trait of 1 against bashing attacks only."
-			},
+            },
             {
                 level: 3,
                 name: "Defensive Attack",
                 description: "Your character has mastered the ability to fight defensively. When using this maneuver, your character gains +2 to his Defense for the turn, but any attack he makes suffers a -2 penalty. He can move no more than his Speed while performing a Defense Attack maneuver in a turn."
-			},
+            },
             {
                 level: 4,
                 name: "Whirlwind Strike",
                 description: "Your character can unleash a storm of blows against an opponent. He can make a number of extra Brawl attacks for each point of Dexterity that he has above 2 in a single action. Each extra attack is made at a cumulative -1 modifier. Thus, he can perform a total of two attacks at Dexterity 3 (the second of which is at -1), three attacks at Dexterity 4 (the third of which is at -2), and four at Dexterity 5 (the fourth of which is at -3). All attacks must be on the same target. Drawback: Your character cannot use his Defense against any attack in the same turn in which he intends to use this maneuver. If he uses Defense against attacks that occur earlier in the Initiative roster, before he can perform this maneuver, he cannot perform the maneuver this turn. He is too busy bobbing and weaving out of the way of attacks."
-			},
+            },
             {
                 level: 5,
                 name: "Lethal Strike",
@@ -11047,7 +11161,7 @@ export default [
             "Strength ••", "Dexterity ••", "Stamina ••", "Brawl ••"
         ]
     },
-		{
+    {
         name: "Two Weapons",
         sources: [
             {
@@ -11062,17 +11176,17 @@ export default [
                 level: 1,
                 name: "Whirling Blades",
                 description: "Your characterÕs Dodge trait (Defense doubled; see p. 156) is not penalized by multiple attacks staged against him in a turn until the number of attacks exceeds his Weaponry dots, at which point each attack thereafter reduces his Dodge by -1. So, if your character (with 2 Defense and 3 Weaponry) dodges attacks in a turn, the first three incoming attacks suffer his full Dodge trait as a penalty (-4). The fourth suffers a -3 penalty, the fifth suffers a -2 penalty, and so on. Basically, your characterÕs weapons move so quickly all about him that opponents in close combat have trouble reaching or assaulting him. The Brawling Dodge Merit (see p. 110) cannot replace normal Dodge (Defense doubled) when this maneuver is performed."
-			},
+            },
             {
                 level: 2,
                 name: "Deflect and Thrust",
                 description: "Your character can avoid attacks and strike back in the same motion. When using this maneuver, your character gains +2 to his Defense for the turn, but any attack he makes suffers a -2 penalty. He can move no more than his Speed while performing a Deflect and Thrust maneuver in a turn."
-			},
+            },
             {
                 level: 3,
                 name: "Focused Attack",
                 description: "Your character can attack a single target twice in one turn. The second attack suffers a -1 penalty. Drawback: Your character cannot use his Defense against any attack in the same turn in which he intends to use this maneuver. If he uses Defense against attacks that occur earlier in the Initiative roster, before he can perform this maneuver, he cannot perform the maneuver this turn. He is too busy bobbing and weaving out of the way of attacks."
-			},
+            },
             {
                 level: 4,
                 name: "Fluid Attack",
@@ -11081,10 +11195,10 @@ export default [
         ],
         requirements: [
             "Dexterity •••",
-			"Weaponry •••"
+            "Weaponry •••"
         ]
     },
-		{
+    {
         name: "Aggressive Striking",
         sources: [
             {
@@ -11099,17 +11213,17 @@ export default [
                 level: 1,
                 name: "Body Blow",
                 description: "as the Boxing • maneuver."
-			},
+            },
             {
                 level: 2,
                 name: "Iron Skin",
                 description: "as the Kung Fu •• maneuver."
-			},
+            },
             {
                 level: 3,
                 name: "Combination Blows",
                 description: "as the Boxing ••• maneuver."
-			},
+            },
             {
                 level: 4,
                 name: "Haymaker",
@@ -11123,11 +11237,11 @@ export default [
         ],
         requirements: [
             "Strength •••",
-			"Stamina ••",
-			"Brawl ••"
+            "Stamina ••",
+            "Brawl ••"
         ]
     },
-		{
+    {
         name: "Evasive Striking",
         sources: [
             {
@@ -11142,17 +11256,17 @@ export default [
                 level: 1,
                 name: "Focused Attack",
                 description: "as the Kung Fu • maneuver."
-			},
+            },
             {
                 level: 2,
                 name: "Duck and Weave",
                 description: "as the Boxing •• maneuver."
-			},
+            },
             {
                 level: 3,
                 name: "Defensive Attack",
                 description: "as the Kung Fu ••• maneuver."
-			},
+            },
             {
                 level: 4,
                 name: "Whirlwind Strike",
@@ -11162,19 +11276,19 @@ export default [
                 level: 5,
                 name: "Destroy Defense",
                 description: "Your character uses clever combinations, feints, sidesteps and perhaps furtive grabbing (called “sticking” or “trapping” in some martial arts) to progressively destroy your opponent’s ability to defend himself." +
-				"Whenever he successfully hits an unarmed target with a Brawl attack, he reduces her Defense by 1 against his next attack. This is cumulative across multiple, successive attacks, up to a maximum Defense penalty equal to the lower of the attacker’s Wits or Dexterity. After that, the target recovers her full Defense, and the character must try to impose this penalty once again." +
-				"Your character can use Destroy Defense across multiple rounds as long as he does nothing except deliver successful Brawl attacks. If he misses or performs any other action, the running penalty imposed by the Merit automatically “resets” to 0." +
-				"The target retains her full Defense against other attackers; she’s only extraordinarily vulnerable to the maneuver user’s Brawl attacks. This maneuver does combine with Combination Blows or Whirlwind Strike. Destroy Defense’s penalty is cumulative with the normal Defense penalty against multiple attacks, if it applies."
+                    "Whenever he successfully hits an unarmed target with a Brawl attack, he reduces her Defense by 1 against his next attack. This is cumulative across multiple, successive attacks, up to a maximum Defense penalty equal to the lower of the attacker’s Wits or Dexterity. After that, the target recovers her full Defense, and the character must try to impose this penalty once again." +
+                    "Your character can use Destroy Defense across multiple rounds as long as he does nothing except deliver successful Brawl attacks. If he misses or performs any other action, the running penalty imposed by the Merit automatically “resets” to 0." +
+                    "The target retains her full Defense against other attackers; she’s only extraordinarily vulnerable to the maneuver user’s Brawl attacks. This maneuver does combine with Combination Blows or Whirlwind Strike. Destroy Defense’s penalty is cumulative with the normal Defense penalty against multiple attacks, if it applies."
             }
         ],
         requirements: [
             "Strength ••",
-			"Dexterity ••",
-			"Stamina ••",
-			"Brawl ••"
+            "Dexterity ••",
+            "Stamina ••",
+            "Brawl ••"
         ]
     },
-		{
+    {
         name: "Grappling",
         sources: [
             {
@@ -11188,90 +11302,90 @@ export default [
         ],
         category: "Fighting Style",
         description: "Your character has trained to grapple using old school, no holds barred catch wrestling (Olympic style wrestlers learn the first two maneuvers), Brazilian Jiu-Jitsu or Russian sombo. He uses leverage and positioning to outgrapple opponents." +
-		"Schools: As the core description mentions, the most common versions of this style are used by Brazilian Jiu-Jitsu stylists and mixed martial artists. Olympic style wrestlers don’t learn the listed higher dots, but might have specialized maneuvers to replace them. Some pro-wrestling schools teach real catch as catch can wrestling along with ring showmanship. In the wrestling world, “legit” grapplers enjoy a certain amount of prestige – and bring the real pain to anyone to tries to mess with them." +
-		"Remember that specific styles may have specialized maneuvers (see p. 106).",
+            "Schools: As the core description mentions, the most common versions of this style are used by Brazilian Jiu-Jitsu stylists and mixed martial artists. Olympic style wrestlers don’t learn the listed higher dots, but might have specialized maneuvers to replace them. Some pro-wrestling schools teach real catch as catch can wrestling along with ring showmanship. In the wrestling world, “legit” grapplers enjoy a certain amount of prestige – and bring the real pain to anyone to tries to mess with them." +
+            "Remember that specific styles may have specialized maneuvers (see p. 106).",
         levels: [
             {
                 level: 1,
                 name: "Sprawl",
                 description: "Your character knows how to “sprawl” and sink his weight to avoid being overpowered in a grapple. Subtract the higher of Strength +1 or Dexterity +1 from dice pools to overpower him in a grapple. This doesn’t apply to the initial hold, but subsequent attacks from the grip."
-			},
+            },
             {
                 level: 2,
                 name: "Takedown/Throw",
                 description: "Your character knows how to rapidly close with your enemy and take him to the ground. In lieu of securing a grappling hold, he can immediately render the opponent prone (see The World of Darkness, p. 157 and 164). Furthermore, if he takes an opponent down this way, he can choose whether or not to go prone with the target." +
-				"Mixed martial arts fighters take a crouching (but still standing) position from her and deliver vicious beatings with their hands – a technique called “ground and pound.”"
-			},
+                    "Mixed martial arts fighters take a crouching (but still standing) position from her and deliver vicious beatings with their hands – a technique called “ground and pound.”"
+            },
             {
                 level: 3,
                 name: "Chokehold",
                 description: "Your character can efficiently choke enemies by cutting off blood flow to their brains." +
-				"If he overpowers an opponent in a grapple, he can start the choke. The choke inflicts a cumulative –1 die penalty to the opponent’s actions for each turn it’s maintained. The victim falls unconscious if he endures a choking attack for a number of consecutive turns equal to his Stamina. Your character can continue choking an unconscious victim. This inflicts lethal damage equal to the attacker’s Strength + Brawl successes every turn." +
-				"Chokeholds don’t work on opponents who don’t need to breathe."
-			},
+                    "If he overpowers an opponent in a grapple, he can start the choke. The choke inflicts a cumulative –1 die penalty to the opponent’s actions for each turn it’s maintained. The victim falls unconscious if he endures a choking attack for a number of consecutive turns equal to his Stamina. Your character can continue choking an unconscious victim. This inflicts lethal damage equal to the attacker’s Strength + Brawl successes every turn." +
+                    "Chokeholds don’t work on opponents who don’t need to breathe."
+            },
             {
                 level: 4,
                 name: "Submission Hold",
                 description: "Opponents caught in your joint locks can’t escape without injuring themselves. If your character scores more successes than his opponent’s Size in an immobilization attempt, the victim can’t attempt any physical action – including breaking free – without suffering a point of lethal damage. This penalty lasts from the moment of immobilization to end of the next turn." +
-				"Furthermore, your character can always choose to inflict one point of lethal damage whenever he damages an opponent with an overpowering roll. The character’s first Strength + Brawl success inflicts a point of lethal damage; subsequent successes inflict bashing damage." +
-				"Submission holds don’t work on creatures that don’t have bones."
+                    "Furthermore, your character can always choose to inflict one point of lethal damage whenever he damages an opponent with an overpowering roll. The character’s first Strength + Brawl success inflicts a point of lethal damage; subsequent successes inflict bashing damage." +
+                    "Submission holds don’t work on creatures that don’t have bones."
             }
         ],
         requirements: [
             "Strength ••",
-			"Dexterity •••",
-			"Stamina •••",
-			"Brawl ••"
+            "Dexterity •••",
+            "Stamina •••",
+            "Brawl ••"
         ]
     },
-		{
+    {
         name: "Sojutsu/Jukendo (Spear and Bayonet Fighting; • to ••••)",
         sources: [
             {
                 sourceBook: "Armoury Reloaded",
                 sourcePage: "?"
             },
-			{
+            {
                 sourceBook: "Adamantine Arrow",
                 sourcePage: "?"
             }
         ],
         category: "Fighting Style",
         description: "Your character knows how to use a spear in close combat. Sojutsu (often incorrectly called yarijutsu) is the Japanese form of the style. These skills also apply to using a rifle with a fixed bayonet (called jukendo in Japan). Thus, characters might learn it in a modern military force or a martial arts school. Martial artists often learn this fighting style alongside Fighting Style: Staff Fighting (see World of Darkness: Armory, pp. 213–214)." +
-		"A character using this fighting style must use his weapon with both hands to take advantage of its maneuvers." +
-		"Schools: Numerous Chinese, African and European styles teach spear fighting, and fixed-bayonet training is taught to soldiers forces around the world. A skilled fighter can transfer expertise from one to the other." +
-		"To make the best use of a spear’s length, a practitioner should also learn Fighting Style: Staff Fighting." +
-		"Aside from the spear, this Fighting Style applies to glaives, halberds and poleaxes. Specific styles may have specialized maneuvers (see p. 106) to represent everything from Chinese arts that bounce the spear off the ground to the formation fighting skills of ancient phalanxes or Swiss pikemen.",
+            "A character using this fighting style must use his weapon with both hands to take advantage of its maneuvers." +
+            "Schools: Numerous Chinese, African and European styles teach spear fighting, and fixed-bayonet training is taught to soldiers forces around the world. A skilled fighter can transfer expertise from one to the other." +
+            "To make the best use of a spear’s length, a practitioner should also learn Fighting Style: Staff Fighting." +
+            "Aside from the spear, this Fighting Style applies to glaives, halberds and poleaxes. Specific styles may have specialized maneuvers (see p. 106) to represent everything from Chinese arts that bounce the spear off the ground to the formation fighting skills of ancient phalanxes or Swiss pikemen.",
         levels: [
             {
                 level: 1,
                 name: "Warding Stance",
                 description: "The basic advantage of a spear or fixed bayonet is its length. Trained fighters learn to keep the tip of the weapon pointed forward, constantly threatening incoming attackers. Thus, this maneuver lets a practitioner attack first whenever an opponent using a smaller-Size melee weapon attacks from the front."
-			},
+            },
             {
                 level: 2,
                 name: "Thrust",
                 description: "The character knows how to deliver precise, powerful thrusting blows. His spear or bayonet gains the 9 again quality. If the spear or fixed bayonet already has this quality, he gains no further benefit."
-			},
+            },
             {
                 level: 3,
                 name: "Block and Strike",
                 description: "Your character can deflect incoming attacks with the haft or stock of his weapon and swiftly strike back. When using this maneuver, your character gains +2 to his Defense for the turn, but any attack he makes suffers a –2 penalty. Unlike similar maneuvers (such as Two-Weapon Fighting’s Deflect and Thrust maneuver), the character can move freely while using the technique."
-			},
+            },
             {
                 level: 4,
                 name: "Great Thrust",
                 description: "The character lunges forward, putting his entire body behind a powerful thrust." +
-				"If he employs an All Out Attack (see The World of Darkness, p. 157), he adds a number of dice equal to his lower of his Strength or Weaponry skill instead of the standard 2 dice. Drawback: If the attack inflicts at least as much lethal damage as the opponent’s Size, the character lodges the weapon deep in his target’s body. Dislodging it requires an additional Strength + Weaponry roll, but automatically inflicts a point of lethal damage."
+                    "If he employs an All Out Attack (see The World of Darkness, p. 157), he adds a number of dice equal to his lower of his Strength or Weaponry skill instead of the standard 2 dice. Drawback: If the attack inflicts at least as much lethal damage as the opponent’s Size, the character lodges the weapon deep in his target’s body. Dislodging it requires an additional Strength + Weaponry roll, but automatically inflicts a point of lethal damage."
             }
         ],
         requirements: [
             "Strength •••",
-			"Dexterity ••",
-			"Weaponry •••"
+            "Dexterity ••",
+            "Weaponry •••"
         ]
     },
-		{
+    {
         name: "Fighting Style: Aikido (Throwing; • to •••••)",
         sources: [
             {
@@ -11281,44 +11395,44 @@ export default [
         ],
         category: "Fighting Style",
         description: "Your character is a skilled practitioner of aikido, or another martial art that emphasizes throwing the opponent. She knows how to blend with the force of an attack and amplify it to send her enemy sprawling." +
-		"Dots purchased in this Merit provide access to special combat maneuvers. Each maneuver is a prerequisite for the next. Aikido maneuvers are based on the Brawl Skill and work in conjunction with unarmed combat. (Some aspects of traditional aikido involve a weapon, but they are beyond the specific purview of this Merit).",
+            "Dots purchased in this Merit provide access to special combat maneuvers. Each maneuver is a prerequisite for the next. Aikido maneuvers are based on the Brawl Skill and work in conjunction with unarmed combat. (Some aspects of traditional aikido involve a weapon, but they are beyond the specific purview of this Merit).",
         levels: [
             {
                 level: 1,
                 name: "Ukemi (“Receiving”)",
                 description: "Your character knows how to fall properly and get up quickly. He may stand up from a prone position (but not both) once per turn as a reflexive action, and is considered to have one point of armor against bashing damage caused by falls – but not other sources."
-			},
+            },
             {
                 level: 2,
                 name: "Aiki (“Harmonious Energy”)",
                 description: "Your character is skilled enough to defend with a throw by avoiding the attack and seizing his opponent’s balance. If he forgoes his standard Defense, roll Dexterity + Brawl; if the result exceeds the opponent’s damage roll the character suffers no damage and immediately applies a grappling hold or (once he attains the third maneuver) shihonage. He may employ this maneuver against Brawl, Weaponry or close-range Firearms attacks." +
-				"Drawback: This maneuver constitutes your character’s action for the turn."
-			},
+                    "Drawback: This maneuver constitutes your character’s action for the turn."
+            },
             {
                 level: 3,
                 name: "Shihonage (“Four Directions Throw”)",
                 description: "The character can throw an opponent quickly and forcefully, without getting tangled up in a clinch. Treat a shihonage throw like a standard Brawl strike attack, except that it also knocks the opponent prone up to as many feet away as your Size + Brawl successes in any direction the character prefers."
-			},
+            },
             {
                 level: 4,
                 name: "Renzoku-waza (“Combination Techniques”)",
                 description: "The character can attempt multiple grappling or shihonage attacks per turn, or he can defend with multiple throws using the Aiki maneuver. He may make one additional grapple or shihonage for each point of Dexterity that he has above 2. Each extra action is rolled at a cumulative –1 modifier. Thus, he can attempt two grapples or shihonage at Dexterity 3 (with the second at a –1 modifier), three at Dexterity 4 (at a 0, –1 then –2 modifier to dice rolls) and four at Dexterity 5 (at 0, –1, –2 and –3 to each dice roll, in turn)." +
-				"Drawback: If the character’s first action is anything but a grapple or shihonage attempt he cannot use this benefit."
+                    "Drawback: If the character’s first action is anything but a grapple or shihonage attempt he cannot use this benefit."
             },
             {
                 level: 5,
                 name: "Kokyu-ho (“Breath Power”)",
                 description: "Your character’s throws are so strong that he can either throw someone double the usual distance with his shihonage, or inflict lethal damage with it." +
-				"Drawback: Spend one Willpower point per attack. Note that this Willpower expenditure does not add three dice to the attack."
+                    "Drawback: Spend one Willpower point per attack. Note that this Willpower expenditure does not add three dice to the attack."
             }
         ],
         requirements: [
             "Dexterity ••",
-			"Wits ••",
-			"Brawl ••"
+            "Wits ••",
+            "Brawl ••"
         ]
     },
-		{
+    {
         name: "Fighting Style: Iaido (Defensive Striking; • to •••••)",
         sources: [
             {
@@ -11328,26 +11442,26 @@ export default [
         ],
         category: "Fighting Style",
         description: "Your character has studied the art of iaido, focusing her awareness of her surroundings and her ability to respond to a threat to the razor’s edge. She has learned to draw a blade at a moment’s notice, and has internalized kata focused on swiping the blade across her opponent’s vitals." +
-		"Practitioners of iaido often cultivate the Wits Attribute, as speed of thought and awareness of one’s surroundings are valued by adherents of the style." +
-		"Dots purchased in this Merit provide access to special combat maneuvers. Each maneuver is a prerequisite for the next. Iaido maneuvers are based on the Weaponry Skill and are used with a curved sword, most commonly the katana.",
+            "Practitioners of iaido often cultivate the Wits Attribute, as speed of thought and awareness of one’s surroundings are valued by adherents of the style." +
+            "Dots purchased in this Merit provide access to special combat maneuvers. Each maneuver is a prerequisite for the next. Iaido maneuvers are based on the Weaponry Skill and are used with a curved sword, most commonly the katana.",
         levels: [
             {
                 level: 1,
                 name: "Tsuki Kage (“Draw and Cut”)",
                 description: "The character sharpens his already capable ability to quickly enter combat. If the character begins combat with his weapon sheathed, he adds his rating in the Weaponry Skill to his Initiative modifier. If the Storyteller utilizes the optional initiative rule from page 151 of the World of Darkness Rulebook, this bonus applies on any turn in which the character’s weapon begins the turn sheathed." +
-				"Drawback: The character must commit to an attack against an opponent during the first turn of combat to gain the advantage of this maneuver."
-			},
+                    "Drawback: The character must commit to an attack against an opponent during the first turn of combat to gain the advantage of this maneuver."
+            },
             {
                 level: 2,
                 name: "Zanshin (“Awareness”)",
                 description: "While honing the speed of one’s reactions can save one’s life, better still to be constantly vigilant. The character strives to remain ever aware of his surroundings, that he may never be taken by surprise. The character gains a bonus of two dice to all rolls to avoid an impending ambush. This Merit duplicates the effect of the Danger Sense Merit, and a character with both Merits gains a total +4 on rolls to avoid being surprised. Such characters are paragons of self-awareness."
-			},
+            },
             {
                 level: 3,
                 name: "Tachi-Sabaki (“Movement of the Sword”)",
                 description: "The character has mastered defensive kata designed to intercept incoming attacks and deflect them with the blade of the weapon. The character relies as much on the quality of his sword as he does his own speed of thought and motion. The character adds his weapon bonus (the weapon’s damage rating) to his Dodge value when taking a fully defensive action. A character may benefit from this Merit while utilizing the Weaponry Dodge Merit (though not the Brawling Dodge Merit)." +
-				"Drawback: The character only benefits from this Merit when taking a full Dodge action."
-			},
+                    "Drawback: The character only benefits from this Merit when taking a full Dodge action."
+            },
             {
                 level: 4,
                 name: "Kan Ken No Metsuke (“Seeing with Eyes and Mind”)",
@@ -11357,25 +11471,25 @@ export default [
                 level: 5,
                 name: "Uke Nagashi (“Catch and Slide Off”)",
                 description: "The character’s ability to move defensively and counter an attack with one of his own has been perfected. If the character’s weapon is sheathed, he can declare a Dodge action at any point during a turn, assuming she has not yet acted. His Defense is doubled as usual, though he may not utilize Weaponry Dodge or Tachi-Sabaki against attacks. However, the character can choose any opponent who is making an attack against him to perform a counter attack against. In a single swift motion, the character draws his blade, parries his enemy’s blow, and attacks his opponent. The character’s Weaponry Dodge (if he possesses it) and Tachi-Sabaki maneuver apply against the opponent’s attack (and only against this opponent). The character makes an immediate reflexive attack against the opponent at a one die penalty. After making his counter-attack, the character’s Defense applies as normal to further attacks made against him during the turn (i.e., his Defense is not doubled). Defense penalties for being attacked multiple times during a single turn are not affected by this maneuver in any way." +
-				"Drawback: The character spends one Willpower point per turn using this maneuver."
+                    "Drawback: The character spends one Willpower point per turn using this maneuver."
             },
             {
                 level: 4,
                 name: "Muso-Ken (“No-thought Sword”)",
                 description: "A modern school of iaido, Enshin Ryu teaches jujutsu and suemonogiri (the practice of cutting), but possesses a strong focus on being attacked from behind. Students of this style may purchase the following specialized maneuver instead of Kan Ken No Metsuke, above." +
-				"The character draws, turns, and thrusts his blade at a potential enemy in a single motion. A character with this Merit may make a reflexive counter-attack when successfully attacked at point-blank range by an opponent by surprise." +
-				"Drawback: This maneuver requires the user to expend a Willpower point. It constitutes the character’s action for the turn, though if used before initiative is rolled, the character may act on his initiative as usual."
+                    "The character draws, turns, and thrusts his blade at a potential enemy in a single motion. A character with this Merit may make a reflexive counter-attack when successfully attacked at point-blank range by an opponent by surprise." +
+                    "Drawback: This maneuver requires the user to expend a Willpower point. It constitutes the character’s action for the turn, though if used before initiative is rolled, the character may act on his initiative as usual."
             }
         ],
         requirements: [
             "Strength ••",
-			"Dexterity •••",
-			"Composure •••",
-			"Weaponry •••",
-			"Quick Draw"
+            "Dexterity •••",
+            "Composure •••",
+            "Weaponry •••",
+            "Quick Draw"
         ]
     },
-		{
+    {
         name: "Fighting Style: Krav Maga",
         sources: [
             {
@@ -11390,20 +11504,20 @@ export default [
                 level: 1,
                 name: "Immediate Defense",
                 description: "The character has learned to act quickly to neutralize a threat and make a fast escape." +
-				"She gains a bonus equal to her Initiative equal to her Brawl Skill when fighting armed opponents."
-			},
+                    "She gains a bonus equal to her Initiative equal to her Brawl Skill when fighting armed opponents."
+            },
             {
                 level: 2,
                 name: "Disarming Defense",
                 description: "The character twists her torso out of danger while grabbing her opponent’s wrist and pulling him forward, using her own torso for leverage as she tears his weapon from his hand. This acts as the Disarm Merit save that it utilizes the Brawl Skill." +
-				"Rather than knocking the weapon away, the character takes the weapon from her opponent, and may use it the following turn."
-			},
+                    "Rather than knocking the weapon away, the character takes the weapon from her opponent, and may use it the following turn."
+            },
             {
                 level: 3,
                 name: "Impenetrable Defense",
                 description: "The character knows that offense and defense are one in the same. The character may add his rating in his Brawl Skill to his Defense or Dodge against a single incoming attack. The bonus from this maneuver combines with that from Brawling Dodge." +
-				"Drawback: The character must expend a Willpower point to perform this maneuver. This maneuver is reflexive, and a character may use it and perform an instant action (such as attacking) so long as she did not use the Dodge action."
-			},
+                    "Drawback: The character must expend a Willpower point to perform this maneuver. This maneuver is reflexive, and a character may use it and perform an instant action (such as attacking) so long as she did not use the Dodge action."
+            },
             {
                 level: 4,
                 name: "The First Moment",
@@ -11413,18 +11527,18 @@ export default [
                 level: 5,
                 name: "Finishing the Fight",
                 description: "The character moves defensively, but knows when to lash out at an enemy to bring him crashing to the ground. The character declares and benefits from a Dodge action (including Brawling Dodge, if she possesses it). She may abort that action to make an immediate, reflexive counter-attack against an opponent whose attack fails to overcome her Dodge trait." +
-				"Drawback: This maneuver costs the character one Willpower point to enact. After making her counter-attack, the character loses her Defense for the remainder of the turn."
+                    "Drawback: This maneuver costs the character one Willpower point to enact. After making her counter-attack, the character loses her Defense for the remainder of the turn."
             }
         ],
         requirements: [
             "Strength ••",
-			"Dexterity •••",
-			"Wits •••",
-			"Brawl •••",
-			"Brawling Dodge"
+            "Dexterity •••",
+            "Wits •••",
+            "Brawl •••",
+            "Brawling Dodge"
         ]
     },
-		{
+    {
         name: "Fighting Style: Langschwert (Heavy Sword; • to •••••)",
         sources: [
             {
@@ -11434,45 +11548,45 @@ export default [
         ],
         category: "Fighting Style",
         description: "Your character is skilled in the German twohanded long sword style, or another martial art that specializes in using a long two-handed sword or stick." +
-		"Dots purchased in this Merit provide access to special combat maneuvers. Each maneuver is a prerequisite for the next. Langschwert maneuvers are based on the Weaponry Skill and work in conjunction with a Size 3 or 4 blade or staff.",
+            "Dots purchased in this Merit provide access to special combat maneuvers. Each maneuver is a prerequisite for the next. Langschwert maneuvers are based on the Weaponry Skill and work in conjunction with a Size 3 or 4 blade or staff.",
         levels: [
             {
                 level: 1,
                 name: "Wards",
                 description: "Your character knows how to use his weapon to deflect and threaten away attacks. Add 1 to his Defense when he wields a weapon compatible with this Fighting Style."
-			},
+            },
             {
                 level: 2,
                 name: "Fool’s Guard",
                 description: "Your character knows how to hold his weapon low to seemingly invite attack, but when the opponent strikes, he can quickly raise it to counter." +
-				"Instead of offering a normal Defense, roll Strength + Weaponry + 1 die against the opponent’s attack. This is an instant action. Each success reduces the attack’s damage by 1, and if the characters successes exceed the attacker’s, the difference is inflicted upon the attacker as damage from the character’s weapon" +
-				"Drawback: The character cannot employ his Defense in any turn where he uses the Fool’s Guard."
-			},
+                    "Instead of offering a normal Defense, roll Strength + Weaponry + 1 die against the opponent’s attack. This is an instant action. Each success reduces the attack’s damage by 1, and if the characters successes exceed the attacker’s, the difference is inflicted upon the attacker as damage from the character’s weapon" +
+                    "Drawback: The character cannot employ his Defense in any turn where he uses the Fool’s Guard."
+            },
             {
                 level: 3,
                 name: "Half Sword",
                 description: "Your character grabs the midpoint of his weapon to rain more powerful thrusts and blows at a shorter range, almost as if he was using the blade as a small spear. If his attack succeeds, add 2 to the weapon’s damage (do not add this as the weapon’s equipment bonus, but after rolling)." +
-				"Drawback: The weapon’s reduced range nullifies the Wards maneuver, so the character loses its Defense bonus. It also reduces the character’s Weaponry-based dice pool by one."
-			},
+                    "Drawback: The weapon’s reduced range nullifies the Wards maneuver, so the character loses its Defense bonus. It also reduces the character’s Weaponry-based dice pool by one."
+            },
             {
                 level: 4,
                 name: "Doubling Cut",
                 description: "Your character strikes the enemy with two quick cuts. He can make two Weaponry attacks against an opponent in the same turn." +
-				"Drawback: Your character cannot employ his Defense or the Fool’s Guard in the same turn as he uses this maneuver."
+                    "Drawback: Your character cannot employ his Defense or the Fool’s Guard in the same turn as he uses this maneuver."
             },
             {
                 level: 5,
                 name: "Wrathful Cut",
                 description: "Your character steps in with a powerful blow, capable of overwhelming his enemy’s defenses. When he makes an All-Out Attack (see the World of Darkness Rulebook, p. 157), add his Weaponry dots instead of the normal +2 bonus." +
-				"Drawback: Your character cannot employ his Defense or the Fool’s Guard in the same turn as he uses this maneuver."
+                    "Drawback: Your character cannot employ his Defense or the Fool’s Guard in the same turn as he uses this maneuver."
             }
         ],
         requirements: [
             "Strength •••",
-			"Weaponry •••"
+            "Weaponry •••"
         ]
     },
-		{
+    {
         name: "Fighting Style: Qinna (Controls; • to •••••)",
         sources: [
             {
@@ -11482,25 +11596,25 @@ export default [
         ],
         category: "Fighting Style",
         description: "Your character is skilled in a Chinese martial arts style that emphasizes qinna, or another martial art that specializes in standing joint locks, holds and chokes." +
-		"Dots purchased in this Merit provide access to special combat maneuvers. Each maneuver is a prerequisite for the next. Qinna maneuvers are based on the Brawl Skill and work in conjunction with unarmed combat." +
-		"Qinna maneuvers are designed to exploit weaknesses in the human anatomy. Targets who do not feel pain, possess the need to breathe or have skeletons will not be affected by certain maneuvers. Of the commonly played supernatural beings, this renders vampires immune to the effects of Sealing the Breath or Disrupting the Veins.",
+            "Dots purchased in this Merit provide access to special combat maneuvers. Each maneuver is a prerequisite for the next. Qinna maneuvers are based on the Brawl Skill and work in conjunction with unarmed combat." +
+            "Qinna maneuvers are designed to exploit weaknesses in the human anatomy. Targets who do not feel pain, possess the need to breathe or have skeletons will not be affected by certain maneuvers. Of the commonly played supernatural beings, this renders vampires immune to the effects of Sealing the Breath or Disrupting the Veins.",
         levels: [
             {
                 level: 1,
                 name: "Standing Control",
                 description: "Your character gains an additional overpowering maneuver, called Standing Control. If she overpowers her opponent she may force him to accompany him wherever he goes." +
-				"Drawback: The character can only move himself and his opponent half as far as his Speed would normally allow. The character cannot have moved earlier in the turn, and cannot automatically dump his enemy over a cliff or into a fire or other dangerous environment without performing a separate attack. [Can you use the target as cover?]"
-			},
+                    "Drawback: The character can only move himself and his opponent half as far as his Speed would normally allow. The character cannot have moved earlier in the turn, and cannot automatically dump his enemy over a cliff or into a fire or other dangerous environment without performing a separate attack. [Can you use the target as cover?]"
+            },
             {
                 level: 2,
                 name: "Misplacing the Bones",
                 description: "The character’s holds can snap bones and tear connective tissue. If his player inflicts more damage in an overpowering maneuver than the victim’s Size, he breaks a limb unless the defender opts to immediately fall prone. The fracture (or tissue separation) inflicts a point of lethal damage instead of the standard bashing damage, and renders the limb useless. It does not recover until the victim heals that damage. If the limb is an arm, reduce the defender’s Defense by 1 and note that he’s dropped anything held in it. If it’s a leg, the defender cannot walk upright. Drawback: Unless the character opts for a specified target (see World of Darkness, p. 165), the defender’s player (or Storyteller) chooses which limb’s been damaged."
-			},
+            },
             {
                 level: 3,
                 name: "Grabbing the Muscles",
                 description: "Your character’s grappling holds twist muscles out of place or puts the defender in a position where she can’t use strength to force her way out of the attack. Treat the defender as if her Strength was two dots lower for the purpose of resisting overpower maneuvers."
-			},
+            },
             {
                 level: 4,
                 name: "Sealing the Breath",
@@ -11510,16 +11624,16 @@ export default [
                 level: 5,
                 name: "Disrupting the Veins",
                 description: "Your character’s grappling maneuvers expertly attack anatomical weaknesses." +
-				"When he damages a victim with an overpower maneuver you can choose to inflict lethal damage, and when he uses any other maneuver he can choose to inflict a point of lethal damage in addition to other effects." +
-				"Drawback: Spend a point of Willpower per attack. This does not add three dice to your roll."
+                    "When he damages a victim with an overpower maneuver you can choose to inflict lethal damage, and when he uses any other maneuver he can choose to inflict a point of lethal damage in addition to other effects." +
+                    "Drawback: Spend a point of Willpower per attack. This does not add three dice to your roll."
             }
         ],
         requirements: [
             "Dexterity •••",
-			"Brawl ••"
+            "Brawl ••"
         ]
     },
-		{
+    {
         name: "Fighting Style: Sword and Shield (Shields; • to •••••)",
         sources: [
             {
@@ -11529,50 +11643,50 @@ export default [
         ],
         category: "Fighting Style",
         description: "Effect: Your character has trained extensively with a weapon in her primary hand and a shield in her off-hand." +
-		"She has learned to utilize the shield’s strengths, redirecting it towards incoming threats while overcoming some of the clumsiness involved in making attacks from behind a shield’s protective cover." +
-		"Dots purchased in this Merit provide access to special combat maneuvers. Each maneuver is a prerequisite for the next. Sword and Shield maneuvers are based on the Weaponry Skill and function only when a character possesses a shield.",
+            "She has learned to utilize the shield’s strengths, redirecting it towards incoming threats while overcoming some of the clumsiness involved in making attacks from behind a shield’s protective cover." +
+            "Dots purchased in this Merit provide access to special combat maneuvers. Each maneuver is a prerequisite for the next. Sword and Shield maneuvers are based on the Weaponry Skill and function only when a character possesses a shield.",
         levels: [
             {
                 level: 1,
                 name: "Cloak and Dagger",
                 description: "Your character’s extensive training with shields allows her to utilize improvised shields more effectively. This maneuver is named for the practice of using one’s cloak to buffet incoming attacks away. A character with this maneuver doubles the effective Structure of an improvised shield (usually an improvised shield can only deflect a number of attacks equal to its structure before being destroyed) and suffers a –2 penalty to attack rather than the standard –3. This penalty can be further decreased by the maneuver The Shielded Strike below, but improvised shields cannot be used to perform the Shield Bash, Shield Charge, or Stand Strong maneuvers."
-			},
+            },
             {
                 level: 2,
                 name: "Shield Bash",
                 description: "Your character has learned how to use the shield defensively and offensively." +
-				"Attempts to strike another combatant with the character’s shield still suffer a –1 penalty, but gain a Weapon bonus equal to the shield’s Defense rating." +
-				"Damage remains bashing. Drawback: A character using a shield to knock an enemy back is not using it for defense. A character does not benefit from a shield’s Defense rating on a turn in which she uses this maneuver. If she has already used the full Defense rating against an incoming attack during the turn, she may not use the maneuver."
-			},
+                    "Attempts to strike another combatant with the character’s shield still suffer a –1 penalty, but gain a Weapon bonus equal to the shield’s Defense rating." +
+                    "Damage remains bashing. Drawback: A character using a shield to knock an enemy back is not using it for defense. A character does not benefit from a shield’s Defense rating on a turn in which she uses this maneuver. If she has already used the full Defense rating against an incoming attack during the turn, she may not use the maneuver."
+            },
             {
                 level: 3,
                 name: "The Shielded Strike",
                 description: "The character’s use of her shield integrates seamlessly with that of her weapon." +
-				"She may rest the blade across the top or side of a rectangular shield, pushing the weapon forward as if playing billiards. Perhaps she has developed a careful rhythm in which she lowers the shield for the bare instant necessary to deliver a fatal attack. Either way, when the character uses this maneuver to make an attack, she no longer suffers a penalty for using a weapon while benefiting from her shield, and her shield adds +1 to its Defense rating against the target of the attack." +
-				"Drawback: The character’s concentration on coordinating her shield and weapon leaves her open to attacks from the flanks and rear. She loses her Defense against attacks made by any opponent save the one she is attacking. If she has already used her Defense against an incoming attack from another opponent during the turn, she may not use the maneuver."
-			},
+                    "She may rest the blade across the top or side of a rectangular shield, pushing the weapon forward as if playing billiards. Perhaps she has developed a careful rhythm in which she lowers the shield for the bare instant necessary to deliver a fatal attack. Either way, when the character uses this maneuver to make an attack, she no longer suffers a penalty for using a weapon while benefiting from her shield, and her shield adds +1 to its Defense rating against the target of the attack." +
+                    "Drawback: The character’s concentration on coordinating her shield and weapon leaves her open to attacks from the flanks and rear. She loses her Defense against attacks made by any opponent save the one she is attacking. If she has already used her Defense against an incoming attack from another opponent during the turn, she may not use the maneuver."
+            },
             {
                 level: 4,
                 name: "Shield Charge",
                 description: "The character charges forward, shield lowered before her, and crashes into the enemy line. The character makes a shield bash attack (see above) at a –2. The attack inflicts bashing damage, but if even a single success is scored on the attack, the character may send her enemy flying. An opponent who suffers the effects of this attack makes a reflexive Dexterity + Athletics roll; if he rolls fewer successes than the shield-user, he suffers knockdown (see the World of Darkness Rulebook, p. 168). At Storyteller’s discretion, this maneuver may be used against multiple opponents, provided that they are standing close enough together." +
-				"Each additional opponent targeted levies an additional –1 to the attack roll, and the damage rolled is distributed evenly among those hit. Those who suffer no damage do not check for knockdown, even if their companions do." +
-				"Drawback: Use of this maneuver necessitates a charge action (World of Darkness Rulebook, p. 164), which means, among other things, she loses her Defense. If she has already used her Defense against an incoming attack from another opponent during the turn, she may not use the maneuver."
+                    "Each additional opponent targeted levies an additional –1 to the attack roll, and the damage rolled is distributed evenly among those hit. Those who suffer no damage do not check for knockdown, even if their companions do." +
+                    "Drawback: Use of this maneuver necessitates a charge action (World of Darkness Rulebook, p. 164), which means, among other things, she loses her Defense. If she has already used her Defense against an incoming attack from another opponent during the turn, she may not use the maneuver."
             },
             {
                 level: 5,
                 name: "Stand Strong",
                 description: "The character digs in her feet, raises her shield, and stands as a human wall against an onslaught of attacks. She benefits from her full Dodge trait and shield defense bonus against attacks made from a single direction (Weaponry Dodge can be applied)." +
-				"Additionally, attacks from that direction do not decrease her Defense against later attacks in the round. For the purpose of this maneuver, a direction is approximately one third of the circumference of a circle drawn about the character (typically claiming defense against attacks from the left, front, or right is sufficient). Attacks made against the character from other directions suffer a penalty equal to Defense only, which suffers penalties from multiple attacks as usual. Note that while a single enemy might be able to move around the character’s defenses, no more than three characters can assault the character from a direction that she can’t fully defend against through this maneuver. Drawback: Using this maneuver requires an incredible exercise of will. A character must spend one Willpower point to gain the benefits of this Merit for one turn."
+                    "Additionally, attacks from that direction do not decrease her Defense against later attacks in the round. For the purpose of this maneuver, a direction is approximately one third of the circumference of a circle drawn about the character (typically claiming defense against attacks from the left, front, or right is sufficient). Attacks made against the character from other directions suffer a penalty equal to Defense only, which suffers penalties from multiple attacks as usual. Note that while a single enemy might be able to move around the character’s defenses, no more than three characters can assault the character from a direction that she can’t fully defend against through this maneuver. Drawback: Using this maneuver requires an incredible exercise of will. A character must spend one Willpower point to gain the benefits of this Merit for one turn."
             }
         ],
         requirements: [
-            "Strength •••", 
-			"Dexterity ••", 
-			"Stamina ••", 
-			"Weaponry ••"
+            "Strength •••",
+            "Dexterity ••",
+            "Stamina ••",
+            "Weaponry ••"
         ]
     },
-		{
+    {
         name: "Judo (Throwing)",
         sources: [
             {
@@ -11582,24 +11696,24 @@ export default [
         ],
         category: "Fighting Style",
         description: "Core Style: Fighting Style: Throwing (as listed under Aikido). In addition to the usual requirements for a Throwing style, the character must possess Athletics •• or higher to learn judo." +
-		"Advanced judoka perfect standing grappling and submission holds, so these characters might learn Fighting Style: Controls and Fighting Style: Submission Grappling." +
-		"Special Maneuvers: Judo employs the following alternate Fighting Style maneuvers. The • and •••• dot maneuvers remain unchanged.",
+            "Advanced judoka perfect standing grappling and submission holds, so these characters might learn Fighting Style: Controls and Fighting Style: Submission Grappling." +
+            "Special Maneuvers: Judo employs the following alternate Fighting Style maneuvers. The • and •••• dot maneuvers remain unchanged.",
         levels: [
             {
                 level: 1,
                 description: "See Throwing/Akido"
-			},
+            },
             {
                 level: 2,
                 name: "Nage-waza (“Throwing Techniques”)",
                 description: "Your character may use a grappling overpower to render an opponent prone without falling prone herself – but if she chooses to fall prone, she may simultaneously damage her opponent while rendering her prone." +
-				"Furthermore, she excels at gripping clothing. If the opponent wears anything heavier than a t-shirt on his upper body she gains a +1 equipment bonus to perform each of the above maneuvers. If the opponent wears a gi (a karate or judo-style uniform), this increases to +2."
-			},
+                    "Furthermore, she excels at gripping clothing. If the opponent wears anything heavier than a t-shirt on his upper body she gains a +1 equipment bonus to perform each of the above maneuvers. If the opponent wears a gi (a karate or judo-style uniform), this increases to +2."
+            },
             {
                 level: 3,
                 name: "Sutemi-waza (“Sacrifice Techniques”)",
                 description: "Your character uses her own bodyweight to drive her opponent to the ground, falling prone along with him. If she uses an all-out attack (see the World of Darkness Rulebook, p.157) you may add her Athletics skill to a roll instead of the usual +2 to render her opponent prone while using the nage-waza option that allows her to simultaneously damage an opponent and render her prone, while falling prone herself."
-			},
+            },
             {
                 level: 4,
                 description: "See Throwing/Akido"
@@ -11612,7 +11726,7 @@ export default [
         ],
         requirements: []
     },
-		{
+    {
         name: "Muay Thai",
         sources: [
             {
@@ -11622,37 +11736,37 @@ export default [
         ],
         category: "Fighting Style",
         description: "Core Style: Aggressive Striking. Many modern Muay Thai fighters learn Western boxing techniques as well, so they often learn that Fighting Style’s maneuvers." +
-		"Special Maneuvers: Muay Thai employs the following alternate Fighting Style maneuvers. The •• and ••• and ••••• dot maneuvers remain unchanged.",
+            "Special Maneuvers: Muay Thai employs the following alternate Fighting Style maneuvers. The •• and ••• and ••••• dot maneuvers remain unchanged.",
         levels: [
             {
                 level: 1,
                 name: "Cut Kick",
                 description: "Your character knows how to deliver powerful round kicks to her opponent’s legs. When you choose this option your character inflicts one less point of damage than usual, counted after rolling to see if the attack succeeds. (For example, an attack that scores one success would still be a successful cut kick, but inflicts no Health damage). However, each kick reduces the opponent’s Speed by one, down to a minimum of one. If you roll as many successes as the opponent’s Size, he falls prone because he’s been swept by her kick or can’t use his leg out of sheer pain. Her opponent can get back up whenever she has the chance, but her Speed only recovers at the end of the combat scene."
-			},
+            },
             {
                 level: 2,
                 description: "See Agressive Striking"
-			},
+            },
             {
                 level: 3,
                 description: "See Agressive Striking"
-			},
+            },
             {
                 level: 4,
                 name: "Thai Clinch",
                 description: "Your character grabs an enemy around the head and pulls him into a vicious elbow or knee strike. If you establishing a grappling hold as the first part of using the Combination Blows maneuver and inflict damage as the second move, add your Dexterity to your dice pool to attack." +
-				"Drawback: The usual –1 penalty for Combination Blows applies to the first grappling attempt, not the following attack." +
-				"This benefit does not apply if your character has already established a hold or in future attempts to damage an opponent from the same hold, but she can always abandon her current hold and try a new grapple to use the Thai Clinch."
+                    "Drawback: The usual –1 penalty for Combination Blows applies to the first grappling attempt, not the following attack." +
+                    "This benefit does not apply if your character has already established a hold or in future attempts to damage an opponent from the same hold, but she can always abandon her current hold and try a new grapple to use the Thai Clinch."
             },
             {
                 level: 5,
                 description: "See Agressive Striking"
-			}
+            }
         ],
         requirements: [
         ]
     },
-		{
+    {
         name: "Berserker (• to •••••)",
         sources: [
             {
@@ -11662,49 +11776,49 @@ export default [
         ],
         category: "Fighting Style",
         description: "Effect: The character supplements his chosen style or Skill with his own maddened fury. Berserk characters work themselves into a violent rage, sometimes aided through the use of drugs, which have the usual effect on their physiology (see p. 176, World of Darkness Rulebook)." +
-		"Working oneself into this fury requires an intense exercise of will, costing the character one Willpower point and an instant action. Once the character has entered the berserkergang, she may use any of the maneuvers listed below." +
-		"These benefits can be combined with one another or with an associated Fighting Style Merit during the same turn, so long as the drawbacks or necessary expenditures do not contradict (for example, a character cannot benefit from Strength in the Fury when using a Fighting Style maneuver that otherwise costs the character her Defense)." +
-		"A character in a berserker haze occasionally has difficulty telling friend from foe, and must make a reflexive Resolve + Composure roll to avoid assaulting allies during any turn in which those allies present a more tempting target than an enemy. Characters who are already prone to a form of supernatural rage (such as vampires and werewolves) must roll Resolve + Composure during every turn in which they take advantage of this style. If they fail, they fall into their maddened state (frenzy, Kuruth, etc.) and lose the benefits of being berserk." +
-		"The character remains in a berserk state until she either spends a second Willpower to calm herself, she is rendered unconscious, or the combat comes to an end." +
-		"Characters who fight in a berserk haze often purchase Iron Stamina to represent their ability to ignore pain. The Brawl and Weaponry Skills are equally appropriate for use with this style, as are the Two-Weapon (usually axes), Shield, Knife, Stick and Staff Fighting Styles. Styles that require careful precision such as Evasive Striking or Light Sword are not appropriate. Defensive styles are explicitly incompatible with the aggressiveness required of berserkers." +
-		"Dots purchased in this Merit provide access to special combat maneuvers. Each maneuver is a prerequisite for the next.",
+            "Working oneself into this fury requires an intense exercise of will, costing the character one Willpower point and an instant action. Once the character has entered the berserkergang, she may use any of the maneuvers listed below." +
+            "These benefits can be combined with one another or with an associated Fighting Style Merit during the same turn, so long as the drawbacks or necessary expenditures do not contradict (for example, a character cannot benefit from Strength in the Fury when using a Fighting Style maneuver that otherwise costs the character her Defense)." +
+            "A character in a berserker haze occasionally has difficulty telling friend from foe, and must make a reflexive Resolve + Composure roll to avoid assaulting allies during any turn in which those allies present a more tempting target than an enemy. Characters who are already prone to a form of supernatural rage (such as vampires and werewolves) must roll Resolve + Composure during every turn in which they take advantage of this style. If they fail, they fall into their maddened state (frenzy, Kuruth, etc.) and lose the benefits of being berserk." +
+            "The character remains in a berserk state until she either spends a second Willpower to calm herself, she is rendered unconscious, or the combat comes to an end." +
+            "Characters who fight in a berserk haze often purchase Iron Stamina to represent their ability to ignore pain. The Brawl and Weaponry Skills are equally appropriate for use with this style, as are the Two-Weapon (usually axes), Shield, Knife, Stick and Staff Fighting Styles. Styles that require careful precision such as Evasive Striking or Light Sword are not appropriate. Defensive styles are explicitly incompatible with the aggressiveness required of berserkers." +
+            "Dots purchased in this Merit provide access to special combat maneuvers. Each maneuver is a prerequisite for the next.",
         levels: [
             {
                 level: 1,
                 name: "Strength in the Fury",
                 description: "A berserker goes all-out, all the time, and her body rewards her heedless actions with increased power and speed. The berserker gains an additional die (for a total of three) when taking all-out attacks (page 157, World of Darkness Rulebook)."
-			},
+            },
             {
                 level: 2,
                 name: "Adrenaline Rush",
                 description: "The berserker ignores pain and her foes’ attacks only drive her madness, pushing her to brutally defeat them. The character gains a point of armor against bashing and lethal attacks as she casually shrugs off weak attacks."
-			},
+            },
             {
                 level: 3,
                 name: "Inhuman Alacrity",
                 description: "A berserker’s opponents are shocked and frightened by the speed and ferocity that manifests in her actions, making her far more difficult to hit. The character gains an additional 2 dice (for a total of four dice) when using Willpower to avoid suffering an attack."
-			},
+            },
             {
                 level: 4,
                 name: "Ignorant in the Face of Death",
                 description: "The berserker’s rage overrides her physical limitations, pushing her to greater feats even when others would fall in pain. In a mad, violently fit, the character can ignore some or all wound penalties for a turn." +
-				"Drawback: The character sacrifices part of her Defense in any turn during which she ignores wound penalties on a one-for-one basis (for example, by ignoring two dice of wound penalties, she suffers a –2 to her Defense trait)." +
-				"If she has already applied her full Defense against an incoming attack during the turn, she may not use this maneuver. The character may still use Willpower to enhance her attack or Defense, if she so chooses, but may not utilize any other maneuver or supernatural ability that necessitates the loss of Defense (such as an all-out attack)."
+                    "Drawback: The character sacrifices part of her Defense in any turn during which she ignores wound penalties on a one-for-one basis (for example, by ignoring two dice of wound penalties, she suffers a –2 to her Defense trait)." +
+                    "If she has already applied her full Defense against an incoming attack during the turn, she may not use this maneuver. The character may still use Willpower to enhance her attack or Defense, if she so chooses, but may not utilize any other maneuver or supernatural ability that necessitates the loss of Defense (such as an all-out attack)."
             },
             {
                 level: 5,
                 name: "Bloody-Handed Bastard",
                 description: "The berserker gouges at eyes, bites at ears, and tears at genitals. Her behavior is so violent that she inflicts lasting damage on her foes, regardless of weapon. The character’s attacks inflict lethal damage." +
-				"Drawback: The character sacrifices her Defense during a turn in which she uses this maneuver. If she has already applied her Defense against an incoming attack during the turn, she may not use this maneuver."
+                    "Drawback: The character sacrifices her Defense during a turn in which she uses this maneuver. If she has already applied her Defense against an incoming attack during the turn, she may not use this maneuver."
             }
         ],
         requirements: [
             "Resolve •••",
-			"Stamina •••",
-			"Supplemented Skill or Style •"
+            "Stamina •••",
+            "Supplemented Skill or Style •"
         ]
     },
-		{
+    {
         name: "Combat Art (• to •••••)",
         sources: [
             {
@@ -11714,47 +11828,47 @@ export default [
         ],
         category: "Fighting Style",
         description: "Effect: The character supplements her chosen style or Skill with a carefully-trained showmanship." +
-		"Her movements are graceful yet expedient, her blades or fists flashing through the air as she steps lightly upon the balls of her feet. Combat artists often learn their skills in professions that are not traditionally associated with violence, namely the theatre and film, but many also train to showcase their own skills during martial arts demos or non-combative martial arts competitions. These maneuvers represent those who value style over substance." +
-		"As such, this supplemental style may be purchased for the Expression Skill, representing those whose combat training is wholly theatrical. If used to supplement Expression, the style cannot be used effectively in combat, and the fourth tier of the Merit cannot be purchased." +
-		"Disarm, Fast Reflexes, Fighting Finesse, Quick Draw and Student of the Blade are all popular Merits for those whose primary combat training is primarily for show. Those combat artists who reside in Hollywood often possess the Stunt Driver Merit, as well." +
-		"Trick shooters and show marksmen often possess Gunslinger. The Expression and Weaponry Skills are equally appropriate for use with this style, though Athletics, Brawl and Firearms versions are widely learned, as well. Fighting Styles typically supplemented by Combat Art include Aggressive and Evasive Striking, Control, Knives, Light Sword, Throwing and Two-Weapon, while Combat Marksmanship, Sniping and even Archery find occasional crossover with this style." +
-		"The combination of Combat Art with the Flexible Weapons Fighting Style can be stunning in martial arts competitions." +
-		"Combat Art is rarely combined with the teaching of those schools that teachings are overwhelmingly pragmatic, such as Krav Maga. Exceptions do exist, however; Krav Maga’s popularity in entertainment demands stunt persons capable of convincingly performing the vicious style, for example. Particularly traditional schools may frown upon Combat Art, as well, though many perform careful rituals and katas that can be considered powerful performance in its own right." +
-		"Dots purchased in this Merit provide access to special combat maneuvers. Each maneuver is a prerequisite for the next.",
+            "Her movements are graceful yet expedient, her blades or fists flashing through the air as she steps lightly upon the balls of her feet. Combat artists often learn their skills in professions that are not traditionally associated with violence, namely the theatre and film, but many also train to showcase their own skills during martial arts demos or non-combative martial arts competitions. These maneuvers represent those who value style over substance." +
+            "As such, this supplemental style may be purchased for the Expression Skill, representing those whose combat training is wholly theatrical. If used to supplement Expression, the style cannot be used effectively in combat, and the fourth tier of the Merit cannot be purchased." +
+            "Disarm, Fast Reflexes, Fighting Finesse, Quick Draw and Student of the Blade are all popular Merits for those whose primary combat training is primarily for show. Those combat artists who reside in Hollywood often possess the Stunt Driver Merit, as well." +
+            "Trick shooters and show marksmen often possess Gunslinger. The Expression and Weaponry Skills are equally appropriate for use with this style, though Athletics, Brawl and Firearms versions are widely learned, as well. Fighting Styles typically supplemented by Combat Art include Aggressive and Evasive Striking, Control, Knives, Light Sword, Throwing and Two-Weapon, while Combat Marksmanship, Sniping and even Archery find occasional crossover with this style." +
+            "The combination of Combat Art with the Flexible Weapons Fighting Style can be stunning in martial arts competitions." +
+            "Combat Art is rarely combined with the teaching of those schools that teachings are overwhelmingly pragmatic, such as Krav Maga. Exceptions do exist, however; Krav Maga’s popularity in entertainment demands stunt persons capable of convincingly performing the vicious style, for example. Particularly traditional schools may frown upon Combat Art, as well, though many perform careful rituals and katas that can be considered powerful performance in its own right." +
+            "Dots purchased in this Merit provide access to special combat maneuvers. Each maneuver is a prerequisite for the next.",
         levels: [
             {
                 level: 1,
                 name: "Flourish",
                 description: "The character performs an example of her style in order to threaten rather than entertain (though audiences often experience a thrill when witnessing such a feat) as an instant action." +
-				"She gains a bonus to Intimidation rolls equal to her rating in the supplemented Skill or Fighting Style." +
-				"This bonus lasts until the end of the scene or the character suffers a successful attack from an opponent (whichever comes first). Characters who enter the scene after the flourish is performed are not affected by it." +
-				"Drawback: The flourishing character’s bonus is penalized by others who know her supplemented Skill or Fighting Style, as they might see through the emptiness of her action. For each dot the target of the character’s intimidation possesses in the same Skill or Fighting Style as that being supplemented, subtract one die from the flourishing character’s roll. Against sufficiently skilled opponents, this can completely cancel the bonus granted by the maneuver and even remove dice from the base Intimidation pool. A master sees through such petty posturing and thinks less of the student as a result."
-			},
+                    "She gains a bonus to Intimidation rolls equal to her rating in the supplemented Skill or Fighting Style." +
+                    "This bonus lasts until the end of the scene or the character suffers a successful attack from an opponent (whichever comes first). Characters who enter the scene after the flourish is performed are not affected by it." +
+                    "Drawback: The flourishing character’s bonus is penalized by others who know her supplemented Skill or Fighting Style, as they might see through the emptiness of her action. For each dot the target of the character’s intimidation possesses in the same Skill or Fighting Style as that being supplemented, subtract one die from the flourishing character’s roll. Against sufficiently skilled opponents, this can completely cancel the bonus granted by the maneuver and even remove dice from the base Intimidation pool. A master sees through such petty posturing and thinks less of the student as a result."
+            },
             {
                 level: 2,
                 name: "Staged Combat",
                 description: "The character has trained to make perfectly safe and choreographed combat seem exceedingly real. The character gains a bonus to Expression or Subterfuge rolls to falsify combat equal to her rating in the supplemented Skill or Fighting Style." +
-				"Drawback: This maneuver can only be used with another individual who is working to fake the fight (and typically functions as a teamwork action)."
-			},
+                    "Drawback: This maneuver can only be used with another individual who is working to fake the fight (and typically functions as a teamwork action)."
+            },
             {
                 level: 3,
                 name: "Dancing for Mars",
                 description: "The character gains a bonus equal to her rating in her supplemented Skill or Fighting Style to Expression rolls when utilizing her combat prowess as a performance piece (those using Combat Art to supplement Expression may double their Expression rating). This may be used to win competitions, secure a job teaching martial arts, or even intimidate one’s enemies." +
-				"The bonus does not, however, ever apply to attacks made with the Skill, and use of this maneuver usually constitutes an extended action."
-			},
+                    "The bonus does not, however, ever apply to attacks made with the Skill, and use of this maneuver usually constitutes an extended action."
+            },
             {
                 level: 4,
                 name: "Function Follows Form",
                 description: "The character has learned how to marry life and art, and her extensive training allows her to utilize the grace she exemplifies on the stage or gym mat to out-maneuver her enemies on the mean streets of the World of Darkness." +
-				"The character gains one half of her rating in the supplemented Skill or Fighting Style, rounded up, as bonus dice to her attack roll and as a bonus to her Defense (which is not doubled in the case of a Dodge maneuver)." +
-				"Drawback: The character must spend one Willpower point during any turn in which she benefits from this maneuver."
+                    "The character gains one half of her rating in the supplemented Skill or Fighting Style, rounded up, as bonus dice to her attack roll and as a bonus to her Defense (which is not doubled in the case of a Dodge maneuver)." +
+                    "Drawback: The character must spend one Willpower point during any turn in which she benefits from this maneuver."
             }
         ],
         requirements: [
             "Dexterity •••",
-			"Stamina ••",
-			"Composure ••",
-			"Supplemented Skill or Style •"
+            "Stamina ••",
+            "Composure ••",
+            "Supplemented Skill or Style •"
         ]
     }
 ]
