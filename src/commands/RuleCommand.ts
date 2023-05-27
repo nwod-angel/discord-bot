@@ -4,6 +4,7 @@ import DiscordChannelLogger from "../DiscordChannelLogger.js"
 import RuleProvider from "../data/RuleProvider"
 import { NwodSymbols } from "@nwod-angel/nwod-core"
 import AsciiTable from 'ascii-table'
+import FeedbackController from "./FeedbackController.js"
 
 export const RuleCommand: Command = {
     name: "rule",
@@ -87,5 +88,6 @@ export const RuleCommand: Command = {
             ephemeral: true,
             embeds: [embed],
         });
+        new FeedbackController(client, interaction).getFeedback()
     }
 };

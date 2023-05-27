@@ -4,6 +4,7 @@ import DiscordChannelLogger from "../DiscordChannelLogger.js"
 import TableProvider from "../data/TableProvider.js"
 import { NwodSymbols } from "@nwod-angel/nwod-core"
 import AsciiTable from 'ascii-table'
+import FeedbackController from "./FeedbackController.js"
 
 export const TableCommand: Command = {
     name: "table",
@@ -76,5 +77,7 @@ export const TableCommand: Command = {
 
         // await DiscordChannelLogger.setClient(client).logBaggage({ interaction: interaction, embed: embed })
         await interaction.followUp(message)
+        new FeedbackController(client, interaction).getFeedback()
+
     }
 };

@@ -3,6 +3,7 @@ import { Command } from "../Command.js";
 import DiscordChannelLogger from "../DiscordChannelLogger.js";
 import SpellProvider from "../data/SpellProvider.js";
 import { Arcana, ArcanaType, Practice, PracticeType } from "@nwod-angel/nwod-core";
+import FeedbackController from "./FeedbackController.js";
 
 export const SpellCommand: Command = {
     name: "spell",
@@ -120,6 +121,7 @@ export const SpellCommand: Command = {
             ephemeral: true,
             embeds: [embed]
         });
+        new FeedbackController(client, interaction).getFeedback()
 
     }
 };
