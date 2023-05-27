@@ -29,6 +29,8 @@ function stringify (content: any): string {
 export default class DiscordChannelLogger implements Logger {
         
     static client: Client<boolean>;
+    static loggingChannelId = process.env['DISCORD_LOGGING_CHANNEL_ID']!
+    static feedbackChannelId = process.env['DISCORD_FEEDBACK_CHANNEL_ID']!
 
     static setClient(client: Client) {
         this.client = client
@@ -39,8 +41,8 @@ export default class DiscordChannelLogger implements Logger {
         return str.match(new RegExp('(.|[\r\n]){1,' + length + '}', 'g')) || new Array<string>()
     }
     
-    static log(message: string): void {
-        this.client.channels.fetch(process.env['DISCORD_LOGGING_CHANNEL_ID']!)
+    static log(message: string, channelId: string): void {
+        this.client.channels.fetch(channelId)
             .then(channel => {
                 let chunks = this.chunkString(message, 1500)
                 chunks.forEach((messageChunk, index) => {
@@ -50,18 +52,22 @@ export default class DiscordChannelLogger implements Logger {
     }
 
     static logBaggage(object: any) {
-        DiscordChannelLogger.log(`\`\`\`\n${stringify(object)}\n\`\`\``)
+        DiscordChannelLogger.log(`\`\`\`\n${stringify(object)}\n\`\`\``, this.loggingChannelId)
+    }
+
+    static logFeedback(feedback: string) {
+        DiscordChannelLogger.log(feedback, this.loggingChannelId)
     }
     
     log(message: string): void {
         if (DiscordChannelLogger.client == undefined) {
             throw Error("Must define a client on the static instance before logging to this logger.")
         }
-        DiscordChannelLogger.log(message)
+        DiscordChannelLogger.log(message, DiscordChannelLogger.loggingChannelId)
     }
     
     logBaggage(object: any): void {
-        DiscordChannelLogger.log(`\`\`\`\n${stringify(object)}\n\`\`\``)
+        DiscordChannelLogger.log(`\`\`\`\n${stringify(object)}\n\`\`\``, DiscordChannelLogger.loggingChannelId)
     }
 
 }
