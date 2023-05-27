@@ -9,6 +9,7 @@ export default class FeedbackController {
     constructor(client: Client<boolean>, interaction: CommandInteraction<CacheType>) {
         this.client = client
         this.interaction = interaction
+        return this
     }
 
     async getFeedback() {

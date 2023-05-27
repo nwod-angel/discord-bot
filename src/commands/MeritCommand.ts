@@ -66,60 +66,12 @@ export const MeritCommand: Command = {
                 )
         }
 
-
-        // Get feedback
-        // const actionRow = new ActionRowBuilder<ButtonBuilder>()
-        // .addComponents(
-        //     new ButtonBuilder()
-        //         .setCustomId('happy')
-        //         // .setLabel('Not good')
-        //         .setStyle(ButtonStyle.Success)
-        //         .setEmoji("🙂")
-        // )
-        // .addComponents(
-        //     new ButtonBuilder()
-        //         .setCustomId('unhappy')
-        //         // .setLabel('Not good')
-        //         .setStyle(ButtonStyle.Danger)
-        //         .setEmoji("😦")
-        // )
-
         await DiscordChannelLogger.setClient(client).logBaggage({ interaction: interaction, embed: embed })
 
-        interaction.followUp({
+        await interaction.followUp({
             embeds: [embed],
-            // components: [actionRow]
-        }).then(response => {
-            if(response !== null)
-            {
-                const feedbackController = new FeedbackController(client, interaction)
-                feedbackController.getFeedback()
-            }
         })
-
-        // const feedbackController = new FeedbackController(client, response.interaction)
-        // feedbackController.getFeedback()
-
-        // try {
-        //     const response = await responseInteraction.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 10000 })
-        //     switch(response.customId) {
-        //         case 'unhappy':
-        //             let unhappy = `${interaction.user.username} is unhappy with interaction ${interaction.id}.`
-        //             console.log(unhappy)
-        //             DiscordChannelLogger.setClient(client).logFeedback(unhappy)
-        //             break
-        //         case 'happy':  
-        //             let happy = `${interaction.user.username} is happy with interaction ${interaction.id}.`
-        //             console.log(happy)
-        //             DiscordChannelLogger.setClient(client).logFeedback(happy)
-        //             break
-        //     }
-        //     await response.editReply({ components: [] })
-        // } catch (e) {
-        //     // No response
-        //     await interaction.editReply({ components: [] })
-        // }
-        // await interaction.reply({ content: 'Was this helpful?', ephemeral: true, components: [feedbackRow] });
-
+        new FeedbackController(client, interaction)
+            .getFeedback()
     }
 };
