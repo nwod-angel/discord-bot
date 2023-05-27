@@ -15,6 +15,7 @@ export default class SpellProvider {
     }
 
     private static _initialize = (() => {
+        console.log("Reading spells...")
         SpellProvider.spells = 
         spells.map(spell => new Spell(
                         spell.name,

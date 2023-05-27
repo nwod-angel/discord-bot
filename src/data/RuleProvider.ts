@@ -16,6 +16,7 @@ export default class RuleProvider {
     }
 
     private static _initialize = (() => {
+        console.log("Reading rules...")
         RuleProvider.rules =
             rules.map(rule => new RuleDefinition(
                 rule.name,

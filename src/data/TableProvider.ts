@@ -15,6 +15,7 @@ export default class TableProvider {
     }
 
     private static _initialize = (() => {
+        console.log("Reading tables...")
         TableProvider.tables =
             tables.map(table => new TableDefinition(
                 table.name,

@@ -14,6 +14,7 @@ export default class MeritProvider {
     }
 
     private static _initialize = (() => {
+        console.log("Reading merits...")
         MeritProvider.merits = 
         merits.map(merit => new MeritDefinition(
                         merit.name,
