@@ -119,10 +119,12 @@ export const MeritCommand: Command = {
             switch(response.customId) {
                 case 'unhappy':
                     console.log(`${interaction.user.username} is unhappy with interaction ${interaction.id}.`)
+                    break
                 case 'happy':  
                     console.log(`${interaction.user.username} is happy with interaction ${interaction.id}.`)
+                    break
             }
-            await interaction.editReply({ components: [] })
+            await response.editReply({ content: 'Thanks for your feedback.', components: [] })
         } catch (e) {
             // No response
             await interaction.editReply({ components: [] })
