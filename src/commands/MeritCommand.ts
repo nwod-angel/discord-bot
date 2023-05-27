@@ -48,7 +48,6 @@ export const MeritCommand: Command = {
 
         if (merits.length === 0) { // None
             await interaction.followUp({
-                ephemeral: true,
                 content: `No merits found.`
             })
         } else if (merits.length === 1) { // One
@@ -101,7 +100,7 @@ export const MeritCommand: Command = {
                     console.log(`${interaction.user.username} is happy with interaction ${interaction.id}.`)
                     break
             }
-            await response.editReply({ content: 'Thanks for your feedback.', components: [] })
+            await response.editReply({ components: [] })
         } catch (e) {
             // No response
             await interaction.editReply({ components: [] })
