@@ -47,9 +47,7 @@ export const MeritCommand: Command = {
             })
 
         if (merits.length === 0) { // None
-            await interaction.followUp({
-                content: `No merits found.`
-            })
+            embed.setTitle( `No merits found.`)
         } else if (merits.length === 1) { // One
             let merit = merits[0]
 
@@ -94,10 +92,14 @@ export const MeritCommand: Command = {
             const response = await responseInteraction.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 10000 })
             switch(response.customId) {
                 case 'unhappy':
-                    console.log(`${interaction.user.username} is unhappy with interaction ${interaction.id}.`)
+                    let unhappy = `${interaction.user.username} is unhappy with interaction ${interaction.id}.`
+                    console.log(unhappy)
+                    DiscordChannelLogger.setClient(client).logFeedback(unhappy)
                     break
                 case 'happy':  
-                    console.log(`${interaction.user.username} is happy with interaction ${interaction.id}.`)
+                    let happy = `${interaction.user.username} is happy with interaction ${interaction.id}.`
+                    console.log(happy)
+                    DiscordChannelLogger.setClient(client).logFeedback(happy)
                     break
             }
             await response.editReply({ components: [] })
