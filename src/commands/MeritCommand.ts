@@ -3,6 +3,7 @@ import { Command } from "../Command.js"
 import DiscordChannelLogger from "../DiscordChannelLogger.js"
 import MeritProvider from "../data/MeritProvider.js"
 import { NwodSymbols } from "@nwod-angel/nwod-core"
+import { MeritEmbedBuilder } from "src/embedBuilders/MeritEmbedBuilder.js"
 
 export const MeritCommand: Command = {
     name: "merit",
@@ -24,7 +25,6 @@ export const MeritCommand: Command = {
     run: async (client: Client, interaction: CommandInteraction) => {
         await DiscordChannelLogger.setClient(client).logBaggage({ interaction: interaction, options: interaction.options })
 
-        const symbols = new NwodSymbols()
 
         let name: string | undefined = undefined
         if (interaction.options.get('name')) {
@@ -37,7 +37,7 @@ export const MeritCommand: Command = {
         }
 
         let merits = MeritProvider.getMerits(name, description)
-        if (merits.filter(merit => merit.name.toLowerCase() === name!.toLowerCase()).length === 1) {
+        if (name && merits.filter(merit => merit.name.toLowerCase() === name!.toLowerCase()).length === 1) {
             merits = merits.filter(merit => merit.name.toLowerCase() === name!.toLowerCase())
         }
 
@@ -47,38 +47,17 @@ export const MeritCommand: Command = {
                 // iconURL: 'https://i.imgur.com/AfFp7pu.png'
             })
 
-        if (merits.length === 0) {
+        if (merits.length === 0) { // None
             await interaction.followUp({
                 ephemeral: true,
                 content: `No merits found.`
             })
-        } else if (merits.length === 1) {
+        } else if (merits.length === 1) { // One
             let merit = merits[0]
-            embed.setTitle(merit.titleString())
 
-            if (merit.hasRequirements()) {
-                embed.addFields({ name: 'Requirements', value: merit.requirementsString(), inline: false })
-            }
+            MeritEmbedBuilder.buildMeritEmbed(merit, embed)
 
-            let descriptionChunks = merit.description.match(/.{1,1000}/g) || []
-            descriptionChunks.forEach((chunk: string, index: number) => {
-                embed.addFields({ name: `Effect ${index > 0 ? ' (continued)' : ''}`, value: chunk, inline: false })
-            })
-            try {
-                merit.levels.forEach(level => {
-                    let levelDescriptionChunks = level.description.match(/.{1,1000}/g) || []
-                    levelDescriptionChunks.forEach((descriptionChunk: string, index: number) => {
-                        embed.addFields({ name: `${level.name || merit.name} ${symbols.MeritDot.repeat(level.level)} ${index > 0 ? ' (continued)' : ''}`, value: descriptionChunk, inline: false })
-                    })
-                })
-            } catch (error) {
-                console.error('An error occurred while adding fields to the embed:', error)
-                console.log("Merit:")
-                console.log(merit)
-            }
-
-            embed.addFields({ name: 'Sources', value: merit.sourcesString(), inline: false })
-        } else {
+        } else { // More than one
             let meritsToDisplay = merits.slice(0, 25)
             let meritTitles = meritsToDisplay.map(s => s.titleString()).join('\n')
             let parameters = ''
@@ -88,7 +67,6 @@ export const MeritCommand: Command = {
                 .addFields(
                     { name: `Showing ${meritsToDisplay.length} of ${merits.length}`, value: meritTitles, inline: false },
                 )
-
         }
 
         // Get feedback
