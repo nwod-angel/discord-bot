@@ -92,7 +92,7 @@ export const MeritCommand: Command = {
         }).then(response => {
             if(response !== null)
             {
-                const feedbackController = new FeedbackController(client, (response as any).interaction)
+                const feedbackController = new FeedbackController(client, interaction)
                 feedbackController.getFeedback()
             }
         })
