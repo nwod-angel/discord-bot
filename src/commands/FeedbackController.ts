@@ -1,5 +1,5 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, CacheType, Client, CommandInteraction } from "discord.js";
-import DiscordChannelLogger from "src/DiscordChannelLogger";
+import DiscordChannelLogger from "../DiscordChannelLogger";
 
 export default class FeedbackController {
 
