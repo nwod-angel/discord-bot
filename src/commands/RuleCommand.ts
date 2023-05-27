@@ -89,5 +89,6 @@ export const RuleCommand: Command = {
             embeds: [embed],
         });
         new FeedbackController(client, interaction).getFeedback()
+        new FeedbackController(client, interaction).getFeedback()
     }
 };
