@@ -56,7 +56,7 @@ export default class DiscordChannelLogger implements Logger {
     }
 
     static logFeedback(feedback: string) {
-        DiscordChannelLogger.log(feedback, this.loggingChannelId)
+        DiscordChannelLogger.log(feedback, this.feedbackChannelId)
     }
     
     log(message: string): void {
