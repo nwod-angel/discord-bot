@@ -42,7 +42,6 @@ export default class FeedbackController {
                     break
                 case 'happy':
                     let happy = `${this.interaction.user.username} is happy with interaction ${this.interaction.id}.`
-                    console.log(happy)
                     DiscordChannelLogger.setClient(this.client).logFeedback(happy)
                     break
             }
