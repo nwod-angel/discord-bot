@@ -144,23 +144,25 @@ export const Roll: Command = {
 		// https://discordjs.guide/popular-topics/embeds.html#using-the-embed-constructor
 		let embed = new EmbedBuilder()
 
-
         .setTitle([actionResult, description].join(' '))
         .setColor(colour as ColorResolvable)
-        .addFields(
-            {
-                name: `${name} rolled ${dicePool} dice and got __${successes} success${(successes === 1 ? '' : 'es')}__.`,
-                value: rollDescription.slice(0, 1023)
-            }
-        )
+        // .addFields(
+        //     {
+        //         name: `${name} rolled ${dicePool} dice and got __${successes} success${(successes === 1 ? '' : 'es')}__.`,
+        //         value: rollDescription.slice(0, 1023)
+        //     }
+        // )
 	    .setFooter({ 
             text: interaction.id, 
             // iconURL: 'https://i.imgur.com/AfFp7pu.png'
         });
 
-        // 2000 character limit
+        let descriptionChunks = rollDescription.match(/.{1,1000}/g) || []
+        descriptionChunks.forEach((chunk: string, index: number) => {
+            embed.addFields({ name: index == 1 ? `${name} rolled ${dicePool} dice and got __${successes} success${(successes === 1 ? '' : 'es')}__.` : `(continued)`, value: chunk, inline: false })
+        })
+
         await interaction.followUp({
-            ephemeral: true,
             embeds: [embed]
         });
         DiscordChannelLogger.setClient(client).logBaggage({interaction: interaction, embed: embed})
