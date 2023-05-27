@@ -93,13 +93,20 @@ export const MeritCommand: Command = {
 
         // Get feedback
         const actionRow = new ActionRowBuilder<ButtonBuilder>()
-            .addComponents(
-                new ButtonBuilder()
-                    .setCustomId('notGood')
-                    .setLabel('Not good')
-                    .setStyle(ButtonStyle.Danger)
-                    .setEmoji("😦")
-            );
+        .addComponents(
+            new ButtonBuilder()
+                .setCustomId('happy')
+                // .setLabel('Not good')
+                .setStyle(ButtonStyle.Success)
+                .setEmoji("🙂")
+        )
+        .addComponents(
+            new ButtonBuilder()
+                .setCustomId('unhappy')
+                // .setLabel('Not good')
+                .setStyle(ButtonStyle.Danger)
+                .setEmoji("😦")
+        )
 
         await DiscordChannelLogger.setClient(client).logBaggage({ interaction: interaction, embed: embed })
         const responseInteraction = await interaction.followUp({
@@ -109,12 +116,16 @@ export const MeritCommand: Command = {
 
         try {
             const response = await responseInteraction.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 10000 })
-            if (response.customId === 'notGood') {
-                console.log(`${interaction.user.username} thinks ${interaction.id} is not good.`)
+            switch(response.customId) {
+                case 'unhappy':
+                    console.log(`${interaction.user.username} is unhappy with interaction ${interaction.id}.`)
+                case 'happy':  
+                    console.log(`${interaction.user.username} is happy with interaction ${interaction.id}.`)
             }
+            await interaction.editReply({ components: [] })
         } catch (e) {
             // No response
-            await interaction.editReply({ embeds: [embed] });
+            await interaction.editReply({ components: [] })
         }
         // await interaction.reply({ content: 'Was this helpful?', ephemeral: true, components: [feedbackRow] });
 
