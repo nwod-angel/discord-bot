@@ -66,8 +66,6 @@ export const MeritCommand: Command = {
                 )
         }
 
-        const feedbackController = new FeedbackController(client, interaction)
-        feedbackController.getFeedback()
 
         // Get feedback
         // const actionRow = new ActionRowBuilder<ButtonBuilder>()
@@ -87,10 +85,20 @@ export const MeritCommand: Command = {
         // )
 
         await DiscordChannelLogger.setClient(client).logBaggage({ interaction: interaction, embed: embed })
+
         interaction.followUp({
             embeds: [embed],
             // components: [actionRow]
-        });
+        }).then(response => {
+            if(response !== null)
+            {
+                const feedbackController = new FeedbackController(client, (response as any).interaction)
+                feedbackController.getFeedback()
+            }
+        })
+
+        // const feedbackController = new FeedbackController(client, response.interaction)
+        // feedbackController.getFeedback()
 
         // try {
         //     const response = await responseInteraction.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 10000 })

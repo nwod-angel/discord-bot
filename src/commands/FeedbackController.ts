@@ -6,7 +6,7 @@ export default class FeedbackController {
     interaction: CommandInteraction<CacheType>
     client: Client<boolean>
 
-    constructor(client: Client<boolean>,interaction: CommandInteraction<CacheType>) {
+    constructor(client: Client<boolean>, interaction: CommandInteraction<CacheType>) {
         this.client = client
         this.interaction = interaction
     }
@@ -28,7 +28,7 @@ export default class FeedbackController {
                     .setEmoji("😦")
             )
 
-        const responseInteraction = await this.interaction.followUp({
+        const responseInteraction = await this.interaction.editReply({
             components: [actionRow]
         })
 
