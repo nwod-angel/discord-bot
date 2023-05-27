@@ -157,9 +157,10 @@ export const Roll: Command = {
             // iconURL: 'https://i.imgur.com/AfFp7pu.png'
         });
 
-        let descriptionChunks = rollDescription.match(/.{1,1000}/g) || []
+        // https://regex101.com/r/Zc8Vpl/1
+        let descriptionChunks = rollDescription.match(/^(?:.){0,1000}(?:$|\n)/sgm) || []
         descriptionChunks.forEach((chunk: string, index: number) => {
-            embed.addFields({ name: index == 1 ? `${name} rolled ${dicePool} dice and got __${successes} success${(successes === 1 ? '' : 'es')}__.` : `(continued)`, value: chunk, inline: false })
+            embed.addFields({ name: index == 0 ? `${name} rolled ${dicePool} dice and got __${successes} success${(successes === 1 ? '' : 'es')}__.` : `(continued)`, value: chunk, inline: false })
         })
 
         await interaction.followUp({
