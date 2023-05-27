@@ -2,8 +2,7 @@ import { Interaction, Client, ApplicationCommandType, CommandInteraction, EmbedB
 import { Command } from "../Command.js"
 import DiscordChannelLogger from "../DiscordChannelLogger.js"
 import MeritProvider from "../data/MeritProvider.js"
-import { NwodSymbols } from "@nwod-angel/nwod-core"
-import { MeritEmbedBuilder } from "src/embedBuilders/MeritEmbedBuilder.js"
+import { MeritEmbedBuilder } from "../embedBuilders/MeritEmbedBuilder.js"
 
 export const MeritCommand: Command = {
     name: "merit",
