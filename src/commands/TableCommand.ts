@@ -5,7 +5,7 @@ import TableProvider from "../data/TableProvider.js"
 import { NwodSymbols } from "@nwod-angel/nwod-core"
 import AsciiTable from 'ascii-table'
 import FeedbackController from "./FeedbackController.js"
-import { TableViewController as TableViewController } from "src/ViewControllers/TableViewController.js"
+import { TableViewController as TableViewController } from "../ViewControllers/TableViewController.js"
 
 export const TableCommand: Command = {
     name: "table",
