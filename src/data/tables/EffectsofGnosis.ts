@@ -20,5 +20,8 @@ export default {
             ["9", "9", "50/10", "+4", "5 dice", "1 minute"],
             ["10", "10", "100/15", "+5", "5 dice", "1 minute"]
           ]
-    }
+    },
+    seeAlso: [
+      { type: "rule", name: "Effects of Gnosis" }
+    ]
 }
