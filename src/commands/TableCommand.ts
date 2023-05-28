@@ -5,6 +5,7 @@ import TableProvider from "../data/TableProvider.js"
 import { NwodSymbols } from "@nwod-angel/nwod-core"
 import AsciiTable from 'ascii-table'
 import FeedbackController from "./FeedbackController.js"
+import { TableViewController as TableViewController } from "src/ViewControllers/TableViewController.js"
 
 export const TableCommand: Command = {
     name: "table",
@@ -43,20 +44,22 @@ export const TableCommand: Command = {
                 ephemeral: true,
                 content: `No tables found.`
             })
+            new FeedbackController(client, interaction).getFeedback()
         } else if (tables.length === 1) {
             let table = tables[0]
-            message += `**${table.name}**\n`
+            TableViewController.displayTable(table, client, interaction)
+            // message += `**${table.name}**\n`
 
-            let tableOutput = new AsciiTable()
-            tableOutput.removeBorder()
-            tableOutput.setHeading(table.table.headers)
-            table.table.rows.forEach(row => {
-                tableOutput.addRow(row);
-            })
+            // let tableOutput = new AsciiTable()
+            // tableOutput.removeBorder()
+            // tableOutput.setHeading(table.table.headers)
+            // table.table.rows.forEach(row => {
+            //     tableOutput.addRow(row);
+            // })
 
-            message += `\`\`\`\n${tableOutput.toString()}\n\`\`\`\n`
+            // message += `\`\`\`\n${tableOutput.toString()}\n\`\`\`\n`
 
-            message += `**Sources:** ${table.sourcesString()}\n`
+            // message += `**Sources:** ${table.sourcesString()}\n`
 
         } else {
             let tablesToDisplay = tables.slice(0, 25)
@@ -64,6 +67,8 @@ export const TableCommand: Command = {
             let parameters = ''
 
             message += `Multiple tables found`
+            await interaction.followUp(message)
+            new FeedbackController(client, interaction).getFeedback()
 
             // embed
             //     .setTitle(`Showing ${tablesToDisplay.length} of ${tables.length}`)
@@ -73,11 +78,11 @@ export const TableCommand: Command = {
 
         }
 
-        message += `${interaction.id}`
+        // message += `${interaction.id}`
 
         // await DiscordChannelLogger.setClient(client).logBaggage({ interaction: interaction, embed: embed })
-        await interaction.followUp(message)
-        new FeedbackController(client, interaction).getFeedback()
+        // await interaction.followUp(message)
+        // new FeedbackController(client, interaction).getFeedback()
 
     }
 };
