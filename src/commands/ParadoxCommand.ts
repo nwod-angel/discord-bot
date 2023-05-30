@@ -62,7 +62,7 @@ export const ParadoxCommand: Command = {
         await DiscordChannelLogger.setClient(client).logBaggage({ interaction: interaction, options: interaction.options })
 
         let name = interaction.member?.user.username
-        if(interaction.options.get('name')){
+        if (interaction.options.get('name')) {
             name = `*${interaction.options.get('name')!.value?.toString()!}*`
         }
         let gnosis = Number(interaction.options.get('gnosis')!.value)
@@ -81,11 +81,12 @@ export const ParadoxCommand: Command = {
         let mitigationMod = -mitigation
 
         let totalMod = Math.max(0, gnosisMod + castsMod + roteMod + toolMod + sleepersMod + mitigationMod)
-        
-        let instantRoll = new InstantRoll({dicePool: totalMod})
+
+        let instantRoll = new InstantRoll({ dicePool: totalMod })
         let rollDescription = instantRoll.toString()
         let successes = instantRoll.numberOfSuccesses()
         let finalResult = successes - backlash
+        const backlashTaken = Math.min(finalResult, backlash)
 
         let embed = new EmbedBuilder()
             .setFooter({
@@ -96,15 +97,39 @@ export const ParadoxCommand: Command = {
         embed
             .setTitle(`${name} rolls ${totalMod} for Paradox!`)
             .addFields(
-                { name: 'Gnosis', value: `${gnosis} [+${gnosisMod}]`, inline: true },           
-                { name: 'Previous casts', value: `${casts} [+${castsMod}]`, inline: true },           
-                { name: 'Rote', value: `${rote} [${roteMod}]`, inline: true },           
-                { name: 'Magical Tool', value: `${tool} [${toolMod}]`, inline: true },           
-                { name: 'Sleeper witnesses', value: `${sleepers} [${sleepersMod}]`, inline: true },           
-                { name: 'Mitigation', value: `${mitigation} [${mitigationMod}]`, inline: true },            
+                { name: 'Gnosis', value: `${gnosis} [+${gnosisMod}]`, inline: true },
+                { name: 'Previous casts', value: `${casts} [+${castsMod}]`, inline: true },
+                { name: 'Rote', value: `${rote} [${roteMod}]`, inline: true },
+                { name: 'Magical Tool', value: `${tool} [${toolMod}]`, inline: true },
+                { name: 'Sleeper witnesses', value: `${sleepers} [+${sleepersMod}]`, inline: true },
+                { name: 'Mitigation', value: `${mitigation} [${mitigationMod}]`, inline: true },
                 { name: 'Roll', value: rollDescription, inline: false },
-                { name: 'Result', value: `${successes}-${backlash}(backlash)`, inline: false },
+                { name: 'Result', value: `${successes}-${backlash}(backlash) = **${finalResult}**`, inline: false },
             )
+        if (backlashTaken > 0) {
+            embed.addFields({ name: 'Backlash', value: `${name} takes ${backlashTaken} resistant bashing damage`, inline: false })
+        }
+        if (finalResult >= 5) {
+            embed.addFields({ name: 'Manifestation', value: `${name} causes a manifestation.`, inline: false })
+        } else {
+            switch (finalResult) {
+                case 0:
+                    embed.addFields({ name: 'No paradox!', value: `${name} gets away with it this time.`, inline: false })
+                    break
+                case 1:
+                    embed.addFields({ name: 'Havoc', value: `${name} causes Havoc.`, inline: false })
+                    break
+                case 2:
+                    embed.addFields({ name: 'Bedlam', value: `${name} causes Bedlam.`, inline: false })
+                    break
+                case 3:
+                    embed.addFields({ name: 'Anomaly', value: `${name} causes an Anomaly.`, inline: false })
+                    break
+                case 4:
+                    embed.addFields({ name: 'Branding', value: `${name} causes a Branding.`, inline: false })
+                    break
+            }
+        }
 
         await DiscordChannelLogger.setClient(client).logBaggage({ interaction: interaction, embed: embed })
 
