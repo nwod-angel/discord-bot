@@ -66,12 +66,12 @@ export const ParadoxCommand: Command = {
             name = `*${interaction.options.get('name')!.value?.toString()!}*`
         }
         let gnosis = Number(interaction.options.get('gnosis')!.value)
-        let casts = Number(interaction.options.get('casts')!.value || 0)
-        let rote = Boolean(interaction.options.get('rote')!.value || false)
-        let tool = Boolean(interaction.options.get('tool')!.value || false)
-        let sleepers = Boolean(interaction.options.get('sleepers')!.value || false)
-        let mitigation = Number(interaction.options.get('mitigation')!.value || 0)
-        let backlash = Number(interaction.options.get('backlash')!.value || 0)
+        let casts = Number(interaction.options.get('casts')?.value || 0)
+        let rote = Boolean(interaction.options.get('rote')?.value || false)
+        let tool = Boolean(interaction.options.get('tool')?.value || false)
+        let sleepers = Boolean(interaction.options.get('sleepers')?.value || false)
+        let mitigation = Number(interaction.options.get('mitigation')?.value || 0)
+        let backlash = Number(interaction.options.get('backlash')?.value || 0)
 
         let gnosisMod = Math.ceil(gnosis / 2)
         let castsMod = casts
