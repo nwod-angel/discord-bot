@@ -99,8 +99,18 @@ export const ParadoxCommand: Command = {
         let mitigation = Number(interaction.options.get('mitigation')?.value || 0)
         let backlash = Number(interaction.options.get('backlash')?.value || 0)
 
-        let wisdom = Number(interaction.options.get('wisdom')?.value) || await getWisdom(client, interaction) || 0
-        let path = Number(interaction.options.get('path')?.value)
+        let wisdom = Number(interaction.options.get('wisdom')?.value)
+        
+        let path = ''
+        if (interaction.options.get('path')) {
+            path = `*${interaction.options.get('path')!.value?.toString()!}*`
+        } else {
+            getPath(client, interaction)
+            .then(pathResponse => {
+                path = pathResponse || ""
+            })
+        }
+
         let arcanumDots = Number(interaction.options.get('arcanum-dots')?.value)
 
         let gnosisMod = Math.ceil(gnosis / 2)
@@ -173,9 +183,6 @@ export const ParadoxCommand: Command = {
         await interaction.followUp({
             embeds: [embed],
         })
-        await interaction.followUp({
-            embeds: [embed],
-        })
         new FeedbackController(client, interaction).getFeedback()
     }
 };
@@ -187,15 +194,15 @@ async function getWisdom(client: Client, interaction: CommandInteraction) {
     const maxWisdom = 10
     const wisdomOptions = Array.from({ length: maxWisdom }, (_, index) => index + 1)
     const wisdomOptionRows = splitArray(wisdomOptions, buttonsPerRow)
-            wisdomOptionRows.forEach(wisdomOptionRow => {
-            actionRows.push(new ActionRowBuilder<ButtonBuilder>()
+    wisdomOptionRows.forEach(wisdomOptionRow => {
+        actionRows.push(new ActionRowBuilder<ButtonBuilder>()
             .addComponents(
                 wisdomOptionRow.map(opt => new ButtonBuilder()
-                .setCustomId(opt.toString())
-                .setStyle(ButtonStyle.Secondary)
-                .setLabel(opt.toString()))
-            ))       
-            });
+                    .setCustomId(opt.toString())
+                    .setStyle(ButtonStyle.Secondary)
+                    .setLabel(opt.toString()))
+            ))
+    });
 
     const responseInteraction = await interaction.followUp({
         content: "What is your current Wisdom?",
@@ -217,6 +224,54 @@ async function getWisdom(client: Client, interaction: CommandInteraction) {
         return null
     }
 
+}
+
+async function getPath(client: Client, interaction: CommandInteraction): Promise<string | undefined> {
+
+    let actionRows = new Array<ActionRowBuilder<ButtonBuilder>>()
+    const buttonsPerRow = 5
+    const pathOptions = [
+        'Acanthus',
+        'Mastigos',
+        'Moros',
+        'Obrimos', 
+        'Thyrsus', 
+    ]
+    const optionRows = splitArray(pathOptions, buttonsPerRow)
+    optionRows.forEach(optionRow => {
+        actionRows.push(new ActionRowBuilder<ButtonBuilder>()
+            .addComponents(
+                optionRow.map(opt => new ButtonBuilder()
+                    .setCustomId(opt.toString())
+                    .setStyle(ButtonStyle.Secondary)
+                    .setLabel(opt.toString()))
+            ))
+    });
+
+    return interaction.followUp({
+        content: "What is your path?",
+        components: actionRows,
+        ephemeral: true
+    })
+    .then(responseInteraction => {
+        try {
+            return responseInteraction
+                .awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 30000 })
+                .then(response => {
+                    return response.customId
+                })
+        } catch (e) {
+            // No response
+            interaction.editReply({
+                content: "What is your path? Cancelling.  No response after 30 seconds",
+                components: []
+            }).then(() => {
+                return ""
+            })
+        }
+    }).finally(() => {
+        return ""
+    })
 }
 
 function splitArray<T>(array: Array<T>, n: number) {
