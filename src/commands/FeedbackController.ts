@@ -29,7 +29,7 @@ export default class FeedbackController {
                     .setEmoji("😦")
             )
 
-        const responseInteraction = await this.interaction.editReply({
+        const responseInteraction = await this.interaction.followUp({
             components: [actionRow]
         })
 
