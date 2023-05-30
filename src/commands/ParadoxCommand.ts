@@ -99,7 +99,7 @@ export const ParadoxCommand: Command = {
         let mitigation = Number(interaction.options.get('mitigation')?.value || 0)
         let backlash = Number(interaction.options.get('backlash')?.value || 0)
 
-        let wisdom = Number(interaction.options.get('wisdom')?.value)
+        let wisdom = Number(interaction.options.get('wisdom')?.value) || await getWisdom(client, interaction) || 0
         let path = Number(interaction.options.get('path')?.value)
         let arcanumDots = Number(interaction.options.get('arcanum-dots')?.value)
 
@@ -148,6 +148,13 @@ export const ParadoxCommand: Command = {
                     break
                 case 1:
                     embed.addFields({ name: 'Havoc', value: `${name} causes Havoc.`, inline: false })
+                    if (!wisdom) {
+                        wisdom = await getWisdom(client, interaction) || 0
+                        if(wisdom != 0) {
+                            let wisdomRoll = new InstantRoll({ dicePool: wisdom })
+
+                        }
+                    }
                     break
                 case 2:
                     embed.addFields({ name: 'Bedlam', value: `${name} causes Bedlam.`, inline: false })
@@ -172,3 +179,34 @@ export const ParadoxCommand: Command = {
         new FeedbackController(client, interaction).getFeedback()
     }
 };
+
+async function getWisdom(client: Client, interaction: CommandInteraction) {
+
+    const actionRow = new ActionRowBuilder<ButtonBuilder>()
+        .addComponents(
+            Array.from({ length: 10 }, (_, index) => index + 1).map(opt => new ButtonBuilder()
+                .setCustomId(opt.toString())
+                .setStyle(ButtonStyle.Secondary)
+                .setLabel(opt.toString()))
+        )
+
+    const responseInteraction = await interaction.followUp({
+        content: "What is your current Wisdom?",
+        components: [actionRow],
+        ephemeral: true
+    })
+
+    try {
+        const response = await responseInteraction.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 30000 })
+
+        const wisdom = Number(response.customId)
+        return wisdom
+    } catch (e) {
+        // No response
+        await interaction.editReply({ 
+            content: "What is your current Wisdom? Cancelling.  No response after 30 seconds",
+            components: []
+        })
+        return null
+    }
+}
