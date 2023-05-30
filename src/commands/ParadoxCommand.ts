@@ -20,6 +20,32 @@ export const ParadoxCommand: Command = {
             maxValue: 10
         },
         {
+            name: "wisdom",
+            description: "The wisdom of the caster",
+            type: 4, // Integer
+            minValue: 1,
+            maxValue: 10
+        },
+        {
+            name: "arcanum-dots",
+            description: "The arcanum dots of the spell",
+            type: 4, // Integer
+            minValue: 1,
+            maxValue: 10
+        },
+        {
+            name: "path",
+            description: "The caster's path",
+            type: 3, // String
+            choices: [
+                { name: 'Acanthus', value: 'Acanthus' },
+                { name: 'Mastigos', value: 'Mastigos' },
+                { name: 'Moros', value: 'Moros' },
+                { name: 'Obrimos', value: 'Obrimos' },
+                { name: 'Thyrsus', value: 'Thyrsus' }
+            ]
+        },
+        {
             name: "name",
             description: "The name of the caster rolling [optional]",
             type: 3 // String
@@ -73,6 +99,10 @@ export const ParadoxCommand: Command = {
         let mitigation = Number(interaction.options.get('mitigation')?.value || 0)
         let backlash = Number(interaction.options.get('backlash')?.value || 0)
 
+        let wisdom = Number(interaction.options.get('wisdom')?.value)
+        let path = Number(interaction.options.get('path')?.value)
+        let arcanumDots = Number(interaction.options.get('arcanum-dots')?.value)
+
         let gnosisMod = Math.ceil(gnosis / 2)
         let castsMod = casts
         let roteMod = rote ? -1 : 0
@@ -85,7 +115,7 @@ export const ParadoxCommand: Command = {
         let instantRoll = new InstantRoll({ dicePool: totalMod })
         let rollDescription = instantRoll.toString()
         let successes = instantRoll.numberOfSuccesses()
-        let finalResult = successes - backlash
+        let finalResult = Math.max(0, successes - backlash)
         const backlashTaken = Math.min(finalResult, backlash)
 
         let embed = new EmbedBuilder()
@@ -133,6 +163,9 @@ export const ParadoxCommand: Command = {
 
         await DiscordChannelLogger.setClient(client).logBaggage({ interaction: interaction, embed: embed })
 
+        await interaction.followUp({
+            embeds: [embed],
+        })
         await interaction.followUp({
             embeds: [embed],
         })
