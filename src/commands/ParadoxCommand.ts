@@ -105,7 +105,7 @@ export const ParadoxCommand: Command = {
         if (interaction.options.get('path')) {
             path = `*${interaction.options.get('path')!.value?.toString()!}*`
         } else {
-            getPath(client, interaction)
+            await getPath(client, interaction)
             .then(pathResponse => {
                 path = pathResponse || ""
             })
