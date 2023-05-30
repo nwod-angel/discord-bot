@@ -150,7 +150,7 @@ export const ParadoxCommand: Command = {
                     embed.addFields({ name: 'Havoc', value: `${name} causes Havoc.`, inline: false })
                     if (!wisdom) {
                         wisdom = await getWisdom(client, interaction) || 0
-                        if(wisdom != 0) {
+                        if (wisdom != 0) {
                             let wisdomRoll = new InstantRoll({ dicePool: wisdom })
 
                         }
@@ -182,17 +182,24 @@ export const ParadoxCommand: Command = {
 
 async function getWisdom(client: Client, interaction: CommandInteraction) {
 
-    const actionRow = new ActionRowBuilder<ButtonBuilder>()
-        .addComponents(
-            Array.from({ length: 10 }, (_, index) => index + 1).map(opt => new ButtonBuilder()
+    let actionRows = new Array<ActionRowBuilder<ButtonBuilder>>()
+    const buttonsPerRow = 5
+    const maxWisdom = 10
+    const wisdomOptions = Array.from({ length: maxWisdom }, (_, index) => index + 1)
+    const wisdomOptionRows = splitArray(wisdomOptions, buttonsPerRow)
+            wisdomOptionRows.forEach(wisdomOptionRow => {
+            actionRows.push(new ActionRowBuilder<ButtonBuilder>()
+            .addComponents(
+                wisdomOptionRow.map(opt => new ButtonBuilder()
                 .setCustomId(opt.toString())
                 .setStyle(ButtonStyle.Secondary)
                 .setLabel(opt.toString()))
-        )
+            ))       
+            });
 
     const responseInteraction = await interaction.followUp({
         content: "What is your current Wisdom?",
-        components: [actionRow],
+        components: actionRows,
         ephemeral: true
     })
 
@@ -203,10 +210,17 @@ async function getWisdom(client: Client, interaction: CommandInteraction) {
         return wisdom
     } catch (e) {
         // No response
-        await interaction.editReply({ 
+        await interaction.editReply({
             content: "What is your current Wisdom? Cancelling.  No response after 30 seconds",
             components: []
         })
         return null
     }
+
+}
+
+function splitArray<T>(array: Array<T>, n: number) {
+    return Array.from({ length: Math.ceil(array.length / n) }, (_, index) =>
+        array.slice(index * n, index * n + n)
+    );
 }
