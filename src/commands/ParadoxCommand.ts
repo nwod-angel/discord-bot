@@ -1,11 +1,9 @@
 import { Interaction, Client, ApplicationCommandType, CommandInteraction, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js"
 import { Command } from "../Command.js"
 import DiscordChannelLogger from "../DiscordChannelLogger.js"
-import MeritProvider from "../data/MeritProvider.js"
-import { MeritEmbedBuilder } from "../embedBuilders/MeritEmbedBuilder.js"
 import FeedbackController from "./FeedbackController.js"
 import { InstantRoll } from "@nwod-angel/nwod-roller"
-import derangements from "src/data/derangements.js"
+import derangements from "../data/derangements.js"
 
 export const ParadoxCommand: Command = {
     name: "paradox",
