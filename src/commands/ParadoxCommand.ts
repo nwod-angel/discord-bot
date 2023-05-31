@@ -207,8 +207,9 @@ export const ParadoxCommand: Command = {
                 break
             case 'Bedlam':
                 embed.addFields({ name: '😬 Bedlam', value: bedlamSummary, inline: false })
+                wisdom = await getWisdom(wisdom, client, interaction) || 0
                 let duration = 'One scene'
-                switch (await getWisdom(wisdom, client, interaction)) {
+                switch (wisdom) {
                     case 1: duration = 'Two days'; break
                     case 2: duration = '24 hours'; break
                     case 3: duration = '12 hours'; break
@@ -219,7 +220,6 @@ export const ParadoxCommand: Command = {
                     name: `${name} suffers a **${derangementSeverity}** derangement for **${duration}**`,
                     value: derangements.filter(d => d.category == derangementSeverity).map(d => d.name).join(', '), inline: false
                 })
-                wisdom = await getWisdom(wisdom, client, interaction) || 0
                 if (wisdom != 0) {
                     let wisdomRoll = new InstantRoll({ dicePool: wisdom })
 
