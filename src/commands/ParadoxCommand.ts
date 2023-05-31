@@ -150,9 +150,7 @@ export const ParadoxCommand: Command = {
                 { name: 'Magical Tool', value: `${tool} [${toolMod}]`, inline: true },
                 { name: 'Sleeper witnesses', value: `${sleepers} [+${sleepersMod}]`, inline: true },
                 { name: 'Mitigation', value: `${mitigation} [${mitigationMod}]`, inline: true },
-                { name: 'Roll', value: rollDescription, inline: false },
-
-                { name: 'Result', value: `${successes} ${backlashString} = **${finalResult} (${result})**`, inline: false },
+                { name: 'Roll', value: `[${rollDescription}]${backlashString} = **${finalResult} (${result})**`, inline: false },
             )
         if (backlashTaken > 0) {
             embed.addFields({ name: '🤕 Backlash', value: `${name} takes ${backlashTaken} resistant bashing damage`, inline: false })
