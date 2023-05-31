@@ -67,6 +67,11 @@ export const ParadoxCommand: Command = {
             type: 5, // Boolean
         },
         {
+            name: "in-shadow",
+            description: "When mages cast vulgar spells in Shadow two dice are subtracted.",
+            type: 5, // Boolean
+        },
+        {
             name: "sleepers",
             description: "One or more Sleepers witnesses the magic",
             type: 5, // Boolean
@@ -95,6 +100,7 @@ export const ParadoxCommand: Command = {
         let casts = Number(interaction.options.get('casts')?.value || 0)
         let rote = Boolean(interaction.options.get('rote')?.value || false)
         let tool = Boolean(interaction.options.get('tool')?.value || false)
+        let inShadow = Boolean(interaction.options.get('in-shadow')?.value || false)
         let sleepers = Boolean(interaction.options.get('sleepers')?.value || false)
         let mitigation = Number(interaction.options.get('mitigation')?.value || 0)
         let backlash = Number(interaction.options.get('backlash')?.value || 0)
@@ -113,19 +119,20 @@ export const ParadoxCommand: Command = {
 
         let arcanumDots = Number(interaction.options.get('arcanum-dots')?.value)
 
-        let gnosisMod = Math.ceil(gnosis / 2)
-        let castsMod = casts
-        let roteMod = rote ? -1 : 0
-        let toolMod = tool ? -1 : 0
-        let sleepersMod = sleepers ? +2 : 0
-        let mitigationMod = -mitigation
+        const gnosisMod = Math.ceil(gnosis / 2)
+        const castsMod = casts
+        const roteMod = rote ? -1 : 0
+        const toolMod = tool ? -1 : 0
+        const shadowMod = inShadow ? -1 : 0
+        const sleepersMod = sleepers ? +2 : 0
+        const mitigationMod = -mitigation
 
-        let totalMod = Math.max(0, gnosisMod + castsMod + roteMod + toolMod + sleepersMod + mitigationMod)
+        const totalMod = Math.max(0, gnosisMod + castsMod + roteMod + toolMod + shadowMod + sleepersMod + mitigationMod)
 
-        let instantRoll = new InstantRoll({ dicePool: totalMod })
-        let rollDescription = instantRoll.toString()
-        let successes = instantRoll.numberOfSuccesses()
-        let finalResult = Math.max(0, successes - backlash)
+        const instantRoll = new InstantRoll({ dicePool: totalMod })
+        const rollDescription = instantRoll.toString()
+        const successes = instantRoll.numberOfSuccesses()
+        const finalResult = Math.max(0, successes - backlash)
         const backlashTaken = Math.min(successes, backlash)
         const backlashString = backlashTaken > 0 ? ` - ${backlashTaken}[backlash taken]` : ''
         const result = finalResult >= 5 ? 'Manifestation' :
@@ -144,17 +151,24 @@ export const ParadoxCommand: Command = {
         embed
             .setTitle(`${name} rolls ${totalMod} for Paradox!`)
             .addFields(
-                { name: 'Gnosis', value: `${gnosis} [+${gnosisMod}]`, inline: true },
-                { name: 'Previous casts', value: `${casts} [+${castsMod}]`, inline: true },
-                { name: 'Rote', value: `${rote} [${roteMod}]`, inline: true },
-                { name: 'Magical Tool', value: `${tool} [${toolMod}]`, inline: true },
-                { name: 'Sleeper witnesses', value: `${sleepers} [+${sleepersMod}]`, inline: true },
-                { name: 'Mitigation', value: `${mitigation} [${mitigationMod}]`, inline: true },
-                { name: 'Roll', value: `${successes}[${rollDescription}]${backlashString} = **${finalResult} (${result})**`, inline: false },
+                { name: 'Gnosis', value: `${gnosis} [+${gnosisMod}]`, inline: true }
             )
+        if (castsMod > 0) { embed.addFields({ name: 'Previous casts', value: `${casts} [+${castsMod}]`, inline: true }) }
+        if (roteMod > 0) { embed.addFields({ name: 'Rote', value: `${rote} [${roteMod}]`, inline: true }) }
+        if (toolMod > 0) { embed.addFields({ name: 'Magical Tool', value: `${tool} [${toolMod}]`, inline: true }) }
+        if (shadowMod > 0) { embed.addFields({ name: 'In Shadow', value: `${inShadow} [${shadowMod}]`, inline: true }) }
+        if (sleepersMod > 0) { embed.addFields({ name: 'Sleeper witnesses', value: `${sleepers} [+${sleepersMod}]`, inline: true }) }
+        if (mitigationMod > 0) { embed.addFields({ name: 'Mana Mitigation', value: `${mitigation} [${mitigationMod}]`, inline: true }) }
+
+        embed.addFields({ name: 'Roll', value: `${successes}[${rollDescription}]${backlashString} = **${finalResult} (${result})**`, inline: false })
+
+        if (mitigation > 0) {
+            embed.addFields({ name: '✨ Mana Mitigation', value: `${name} uses **${mitigation} mana** to mitigate the paradox`, inline: false })
+        }
         if (backlashTaken > 0) {
             embed.addFields({ name: '🤕 Backlash', value: `${name} takes **${backlashTaken} resistant bashing damage**`, inline: false })
         }
+
         switch (result) {
             case 'No Paradox':
                 embed.addFields({ name: '😮‍💨 No paradox!', value: `${name} gets away with it this time.`, inline: false })
