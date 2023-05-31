@@ -100,7 +100,7 @@ export const ParadoxCommand: Command = {
         let backlash = Number(interaction.options.get('backlash')?.value || 0)
 
         let wisdom = Number(interaction.options.get('wisdom')?.value)
-        
+
         let path = ''
         if (interaction.options.get('path')) {
             path = `${interaction.options.get('path')!.value?.toString()!}`
@@ -127,6 +127,13 @@ export const ParadoxCommand: Command = {
         let successes = instantRoll.numberOfSuccesses()
         let finalResult = Math.max(0, successes - backlash)
         const backlashTaken = Math.min(successes, backlash)
+        const backlashString = backlashTaken > 0 ? `- ${backlashTaken}(backlash)` : ''
+        const result = finalResult >= 5 ? 'Manifestation' :
+            finalResult == 4 ? 'Branding' :
+                finalResult == 3 ? 'Anomaly' :
+                    finalResult == 2 ? 'Bedlam' :
+                        finalResult == 1 ? 'Havoc' :
+                            'No Paradox'
 
         let embed = new EmbedBuilder()
             .setFooter({
@@ -144,64 +151,63 @@ export const ParadoxCommand: Command = {
                 { name: 'Sleeper witnesses', value: `${sleepers} [+${sleepersMod}]`, inline: true },
                 { name: 'Mitigation', value: `${mitigation} [${mitigationMod}]`, inline: true },
                 { name: 'Roll', value: rollDescription, inline: false },
-                
-                { name: 'Result', value: `${successes}-${backlash}(backlash) = **${finalResult}**`, inline: false },
+
+                { name: 'Result', value: `${successes} ${backlashString} = **${finalResult} (${result})**`, inline: false },
             )
         if (backlashTaken > 0) {
             embed.addFields({ name: '🤕 Backlash', value: `${name} takes ${backlashTaken} resistant bashing damage`, inline: false })
         }
-        if (finalResult >= 5) {
-            embed.addFields({ name: '😱 Manifestation', value: `${name} causes a manifestation.`, inline: false })
-        } else {
-            switch (finalResult) {
-                case 0:
-                    embed.addFields({ name: '😮‍💨 No paradox!', value: `${name} gets away with it this time.`, inline: false })
-                    break
-                case 1:
-                    embed.addFields({ name: '😒 Havoc', value: havocDefinition, inline: false })
-                    if (!wisdom) {
-                        wisdom = await getWisdom(client, interaction) || 0
-                        if (wisdom != 0) {
-                            let wisdomRoll = new InstantRoll({ dicePool: wisdom })
+        switch (result) {
+            case 'No Paradox':
+                embed.addFields({ name: '😮‍💨 No paradox!', value: `${name} gets away with it this time.`, inline: false })
+                break
+            case 'Havoc':
+                embed.addFields({ name: '😒 Havoc', value: havocDefinition, inline: false })
+                if (!wisdom) {
+                    wisdom = await getWisdom(client, interaction) || 0
+                    if (wisdom != 0) {
+                        let wisdomRoll = new InstantRoll({ dicePool: wisdom })
 
-                            if(wisdomRoll.isCriticalFailure()){
-                                embed.addFields({
-                                    name: `💀 Wisdom Roll **${wisdomRoll.numberOfSuccesses()}**`,
-                                    value: wisdomRoll.toString() + '\n' +
+                        if (wisdomRoll.isCriticalFailure()) {
+                            embed.addFields({
+                                name: `💀 Wisdom Roll **${wisdomRoll.numberOfSuccesses()}**`,
+                                value: wisdomRoll.toString() + '\n' +
                                     'Dramatic Failure: The spell’s desired effect is reversed. A blessing becomes a curse, a magical perception spell blinds the mage to all resonance, or an attack spell helps the target instead.'
-                                })
-                            } else if(wisdomRoll.isFailure()){
-                                embed.addFields({
-                                    name: `❌ Wisdom Roll **${wisdomRoll.numberOfSuccesses()}**`,
-                                    value: wisdomRoll.toString() + '\n' +
+                            })
+                        } else if (wisdomRoll.isFailure()) {
+                            embed.addFields({
+                                name: `❌ Wisdom Roll **${wisdomRoll.numberOfSuccesses()}**`,
+                                value: wisdomRoll.toString() + '\n' +
                                     'Failure: The spell’s desired effect is reversed. A blessing becomes a curse, a magical perception spell blinds the mage to all resonance, or an attack spell helps the target instead.'
-                                })
-                            } else if(wisdomRoll.isExceptionalSuccess()){
-                                embed.addFields({
-                                    name: `⭐ Wisdom Roll **${wisdomRoll.numberOfSuccesses()}**`,
-                                    value: wisdomRoll.toString() + '\n' +
+                            })
+                        } else if (wisdomRoll.isExceptionalSuccess()) {
+                            embed.addFields({
+                                name: `⭐ Wisdom Roll **${wisdomRoll.numberOfSuccesses()}**`,
+                                value: wisdomRoll.toString() + '\n' +
                                     'Exceptional Success: The spell’s effect is unaltered and the mage gains a +2 dice bonus for any attempts he might make to dispel the Havoc spell.'
-                                })
-                            } else if(wisdomRoll.isSuccess()){
-                                embed.addFields({
-                                    name: `✅ Wisdom Roll **${wisdomRoll.numberOfSuccesses()}**`,
-                                    value: wisdomRoll.toString() + '\n' +
+                            })
+                        } else if (wisdomRoll.isSuccess()) {
+                            embed.addFields({
+                                name: `✅ Wisdom Roll **${wisdomRoll.numberOfSuccesses()}**`,
+                                value: wisdomRoll.toString() + '\n' +
                                     'Success: The spell’s effect is unaltered.'
-                                })
-                            }                            
+                            })
                         }
                     }
-                    break
-                case 2:
-                    embed.addFields({ name: '😬 Bedlam', value: `${name} causes Bedlam.`, inline: false })
-                    break
-                case 3:
-                    embed.addFields({ name: '😰 Anomaly', value: `${name} causes an Anomaly.`, inline: false })
-                    break
-                case 4:
-                    embed.addFields({ name: '😡 Branding', value: `${name} causes a Branding.`, inline: false })
-                    break
-            }
+                }
+                break
+            case 'Bedlam':
+                embed.addFields({ name: '😬 Bedlam', value: `${name} causes Bedlam.`, inline: false })
+                break
+            case 'Anomaly':
+                embed.addFields({ name: '😰 Anomaly', value: `${name} causes an Anomaly.`, inline: false })
+                break
+            case 'Branding':
+                embed.addFields({ name: '😡 Branding', value: `${name} causes a Branding.`, inline: false })
+                break
+            case 'Manifestation':
+                embed.addFields({ name: '😱 Manifestation', value: `${name} causes a manifestation.`, inline: false })
+                break
         }
 
         await DiscordChannelLogger.setClient(client).logBaggage({ interaction: interaction, embed: embed })
@@ -240,7 +246,7 @@ async function getWisdom(client: Client, interaction: CommandInteraction) {
         const response = await responseInteraction.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 30000 })
 
         const wisdom = Number(response.customId)
-        response.update({ content: `Using Wisdom ${wisdom}`, components: []})
+        response.update({ content: `Using Wisdom ${wisdom}`, components: [] })
         return wisdom
     } catch (e) {
         // No response
@@ -261,8 +267,8 @@ async function getPath(client: Client, interaction: CommandInteraction): Promise
         '⌛🎲 Acanthus',
         '🧠🌌 Mastigos',
         '💀🧱 Moros',
-        '⚡🪄 Obrimos', 
-        '🌿👻 Thyrsus', 
+        '⚡🪄 Obrimos',
+        '🌿👻 Thyrsus',
     ]
     const optionRows = splitArray(pathOptions, buttonsPerRow)
     optionRows.forEach(optionRow => {
@@ -280,27 +286,27 @@ async function getPath(client: Client, interaction: CommandInteraction): Promise
         components: actionRows,
         ephemeral: true
     })
-    .then(responseInteraction => {
-        try {
-            return responseInteraction
-                .awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 30000 })
-                .then(response => {
-                    const path = response.customId
-                    response.update({ content: `Using Path ${path}`, components: []})
-                    return path
+        .then(responseInteraction => {
+            try {
+                return responseInteraction
+                    .awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 30000 })
+                    .then(response => {
+                        const path = response.customId
+                        response.update({ content: `Using Path ${path}`, components: [] })
+                        return path
+                    })
+            } catch (e) {
+                // No response
+                interaction.editReply({
+                    content: "What is your path? Cancelling.  No response after 30 seconds",
+                    components: []
+                }).then(() => {
+                    return ""
                 })
-        } catch (e) {
-            // No response
-            interaction.editReply({
-                content: "What is your path? Cancelling.  No response after 30 seconds",
-                components: []
-            }).then(() => {
-                return ""
-            })
-        }
-    }).finally(() => {
-        return ""
-    })
+            }
+        }).finally(() => {
+            return ""
+        })
 }
 
 function splitArray<T>(array: Array<T>, n: number) {
@@ -314,6 +320,6 @@ const havocDefinition = "The mage's spell becomes Havoc, affecting a randomly ch
 
 // const havocDefinition = "The mage’s spell is no longer under his control and is considered a Havoc spell. It affects a randomly chosen target (or targets, if multiple targets were factored into the casting) instead of the caster’s declared target(s). The caster himself is included in this pool of random victims. The new target must be of the same type — if the mage targeted a living person, then the pool of random targets include only living people. If the mage’s target is an object, then only objects are affected. If the caster is the only viable target present, he is the target of his own spell (unless he was its originally intended target, in which case the spell affects a target of a different kind, such as an object)." + "\n" +
 // "The new target — including the mage himself if he is the spell’s new target — can contest or resist the spell if it is normally allowed (see the spell’s description)." + "\n" +
-// "In addition, the mage’s Wisdom is rolled." + "\n" + 
+// "In addition, the mage’s Wisdom is rolled." + "\n" +
 // "Since the spell is no longer under the caster’s control he cannot dismiss it at will." + "\n" +
 // "A Havoc lasts for only as long as the spell’s Duration. Note that spells with a concentration-based Duration become transitory; the Storyteller rolls a single die and the result is the number of turns the spells lasts."
