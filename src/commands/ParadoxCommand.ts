@@ -217,7 +217,7 @@ export const ParadoxCommand: Command = {
                 }
                 let derangementSeverity = (await getArcanumDots(arcanumDots, client, interaction) || 0) < 3 ? 'mild' : 'severe'
                 embed.addFields({
-                    name: `${name} suffers a **${derangementSeverity}** derangement for **${duration}**`,
+                    name: `🫠 ${name} suffers a **${derangementSeverity}** derangement for **${duration}**`,
                     value: derangements.filter(d => d.category == derangementSeverity).map(d => d.name).join(', '), inline: false
                 })
                 if (wisdom != 0) {
