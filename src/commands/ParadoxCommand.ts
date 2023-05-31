@@ -214,7 +214,7 @@ export const ParadoxCommand: Command = {
                     case 3: duration = '12 hours'; break
                     case 4: duration = '2 hours'; break
                 }
-                let derangementSeverity = await getArcanumDots(arcanumDots, client, interaction) || 0 < 3 ? 'mild' : 'severe'
+                let derangementSeverity = (await getArcanumDots(arcanumDots, client, interaction) || 0) < 3 ? 'mild' : 'severe'
                 embed.addFields({
                     name: `${name} suffers a **${derangementSeverity}** derangement for **${duration}**`,
                     value: derangements.filter(d => d.category == derangementSeverity).map(d => d.name).join(', '), inline: false
