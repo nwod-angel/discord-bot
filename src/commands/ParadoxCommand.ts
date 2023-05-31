@@ -201,7 +201,7 @@ async function getWisdom(client: Client, interaction: CommandInteraction) {
             .addComponents(
                 wisdomOptionRow.map(opt => new ButtonBuilder()
                     .setCustomId(opt.toString())
-                    .setStyle(ButtonStyle.Secondary)
+                    .setStyle(ButtonStyle.Primary)
                     .setLabel(opt.toString()))
             ))
     });
@@ -216,7 +216,7 @@ async function getWisdom(client: Client, interaction: CommandInteraction) {
         const response = await responseInteraction.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 30000 })
 
         const wisdom = Number(response.customId)
-        response.update({ content: `Using Wisdom ${wisdom}`})
+        response.update({ content: `Using Wisdom ${wisdom}`, components: []})
         return wisdom
     } catch (e) {
         // No response
@@ -234,11 +234,11 @@ async function getPath(client: Client, interaction: CommandInteraction): Promise
     let actionRows = new Array<ActionRowBuilder<ButtonBuilder>>()
     const buttonsPerRow = 5
     const pathOptions = [
-        'Acanthus',
-        'Mastigos',
-        'Moros',
-        'Obrimos', 
-        'Thyrsus', 
+        '⌛🎲 Acanthus',
+        '🧠🌌 Mastigos',
+        '💀🧱 Moros',
+        '⚡🪄 Obrimos', 
+        '🌿👻 Thyrsus', 
     ]
     const optionRows = splitArray(pathOptions, buttonsPerRow)
     optionRows.forEach(optionRow => {
@@ -246,7 +246,7 @@ async function getPath(client: Client, interaction: CommandInteraction): Promise
             .addComponents(
                 optionRow.map(opt => new ButtonBuilder()
                     .setCustomId(opt.toString())
-                    .setStyle(ButtonStyle.Secondary)
+                    .setStyle(ButtonStyle.Primary)
                     .setLabel(opt.toString()))
             ))
     });
@@ -262,7 +262,7 @@ async function getPath(client: Client, interaction: CommandInteraction): Promise
                 .awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 30000 })
                 .then(response => {
                     const path = response.customId
-                    response.update({ content: `Using Path ${path}`})
+                    response.update({ content: `Using Path ${path}`, components: []})
                     return path
                 })
         } catch (e) {
