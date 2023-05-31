@@ -123,7 +123,7 @@ export const ParadoxCommand: Command = {
         const castsMod = casts
         const roteMod = rote ? -1 : 0
         const toolMod = tool ? -1 : 0
-        const shadowMod = inShadow ? -1 : 0
+        const shadowMod = inShadow ? -2 : 0
         const sleepersMod = sleepers ? +2 : 0
         const mitigationMod = -mitigation
 
@@ -153,12 +153,12 @@ export const ParadoxCommand: Command = {
             .addFields(
                 { name: 'Gnosis', value: `${gnosis} [+${gnosisMod}]`, inline: true }
             )
-        if (castsMod > 0) { embed.addFields({ name: 'Previous casts', value: `${casts} [+${castsMod}]`, inline: true }) }
-        if (roteMod > 0) { embed.addFields({ name: 'Rote', value: `${rote} [${roteMod}]`, inline: true }) }
-        if (toolMod > 0) { embed.addFields({ name: 'Magical Tool', value: `${tool} [${toolMod}]`, inline: true }) }
-        if (shadowMod > 0) { embed.addFields({ name: 'In Shadow', value: `${inShadow} [${shadowMod}]`, inline: true }) }
-        if (sleepersMod > 0) { embed.addFields({ name: 'Sleeper witnesses', value: `${sleepers} [+${sleepersMod}]`, inline: true }) }
-        if (mitigationMod > 0) { embed.addFields({ name: 'Mana Mitigation', value: `${mitigation} [${mitigationMod}]`, inline: true }) }
+        if (casts > 0) { embed.addFields({ name: 'Previous casts', value: `${casts} [+${castsMod}]`, inline: true }) }
+        if (rote) { embed.addFields({ name: 'Rote', value: `${rote} [${roteMod}]`, inline: true }) }
+        if (tool) { embed.addFields({ name: 'Magical Tool', value: `${tool} [${toolMod}]`, inline: true }) }
+        if (inShadow) { embed.addFields({ name: 'In Shadow', value: `${inShadow} [${shadowMod}]`, inline: true }) }
+        if (sleepers) { embed.addFields({ name: 'Sleeper witnesses', value: `${sleepers} [+${sleepersMod}]`, inline: true }) }
+        if (mitigation > 0) { embed.addFields({ name: 'Mana Mitigation', value: `${mitigation} [${mitigationMod}]`, inline: true }) }
 
         embed.addFields({ name: 'Roll', value: `${successes}[${rollDescription}]${backlashString} = **${finalResult} (${result})**`, inline: false })
 
