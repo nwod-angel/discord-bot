@@ -216,6 +216,7 @@ async function getWisdom(client: Client, interaction: CommandInteraction) {
         const response = await responseInteraction.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 30000 })
 
         const wisdom = Number(response.customId)
+        response.update({ content: `Using Wisdom ${wisdom}`})
         return wisdom
     } catch (e) {
         // No response
@@ -260,7 +261,9 @@ async function getPath(client: Client, interaction: CommandInteraction): Promise
             return responseInteraction
                 .awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 30000 })
                 .then(response => {
-                    return response.customId
+                    const path = response.customId
+                    response.update({ content: `Using Path ${path}`})
+                    return path
                 })
         } catch (e) {
             // No response
