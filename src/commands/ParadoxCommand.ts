@@ -103,12 +103,12 @@ export const ParadoxCommand: Command = {
         
         let path = ''
         if (interaction.options.get('path')) {
-            path = `*${interaction.options.get('path')!.value?.toString()!}*`
+            path = `${interaction.options.get('path')!.value?.toString()!}`
         } else {
-            await getPath(client, interaction)
-            .then(pathResponse => {
-                path = pathResponse || ""
-            })
+            // await getPath(client, interaction)
+            // .then(pathResponse => {
+            //     path = pathResponse || ""
+            // })
         }
 
         let arcanumDots = Number(interaction.options.get('arcanum-dots')?.value)
@@ -126,7 +126,7 @@ export const ParadoxCommand: Command = {
         let rollDescription = instantRoll.toString()
         let successes = instantRoll.numberOfSuccesses()
         let finalResult = Math.max(0, successes - backlash)
-        const backlashTaken = Math.min(finalResult, backlash)
+        const backlashTaken = Math.min(successes, backlash)
 
         let embed = new EmbedBuilder()
             .setFooter({
@@ -162,7 +162,9 @@ export const ParadoxCommand: Command = {
                         wisdom = await getWisdom(client, interaction) || 0
                         if (wisdom != 0) {
                             let wisdomRoll = new InstantRoll({ dicePool: wisdom })
-
+                            embed.addFields(
+                                { name: 'Wisdom Roll', value: wisdomRoll.toString(), inline: false },
+                            )
                         }
                     }
                     break
@@ -183,7 +185,7 @@ export const ParadoxCommand: Command = {
         await interaction.followUp({
             embeds: [embed],
         })
-        new FeedbackController(client, interaction).getFeedback()
+        // new FeedbackController(client, interaction).getFeedback()
     }
 };
 
