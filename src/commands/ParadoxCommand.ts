@@ -127,7 +127,7 @@ export const ParadoxCommand: Command = {
         let successes = instantRoll.numberOfSuccesses()
         let finalResult = Math.max(0, successes - backlash)
         const backlashTaken = Math.min(successes, backlash)
-        const backlashString = backlashTaken > 0 ? `- ${backlashTaken}(backlash)` : ''
+        const backlashString = backlashTaken > 0 ? ` - ${backlashTaken}[backlash taken]` : ''
         const result = finalResult >= 5 ? 'Manifestation' :
             finalResult == 4 ? 'Branding' :
                 finalResult == 3 ? 'Anomaly' :
@@ -150,10 +150,10 @@ export const ParadoxCommand: Command = {
                 { name: 'Magical Tool', value: `${tool} [${toolMod}]`, inline: true },
                 { name: 'Sleeper witnesses', value: `${sleepers} [+${sleepersMod}]`, inline: true },
                 { name: 'Mitigation', value: `${mitigation} [${mitigationMod}]`, inline: true },
-                { name: 'Roll', value: `[${rollDescription}]${backlashString} = **${finalResult} (${result})**`, inline: false },
+                { name: 'Roll', value: `${successes}[${rollDescription}]${backlashString} = **${finalResult} (${result})**`, inline: false },
             )
         if (backlashTaken > 0) {
-            embed.addFields({ name: '🤕 Backlash', value: `${name} takes ${backlashTaken} resistant bashing damage`, inline: false })
+            embed.addFields({ name: '🤕 Backlash', value: `${name} takes **${backlashTaken} resistant bashing damage**`, inline: false })
         }
         switch (result) {
             case 'No Paradox':
