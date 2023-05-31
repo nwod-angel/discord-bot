@@ -5,6 +5,7 @@ import MeritProvider from "../data/MeritProvider.js"
 import { MeritEmbedBuilder } from "../embedBuilders/MeritEmbedBuilder.js"
 import FeedbackController from "./FeedbackController.js"
 import { InstantRoll } from "@nwod-angel/nwod-roller"
+import derangements from "src/data/derangements.js"
 
 export const ParadoxCommand: Command = {
     name: "paradox",
@@ -174,42 +175,82 @@ export const ParadoxCommand: Command = {
                 embed.addFields({ name: '😮‍💨 No paradox!', value: `${name} gets away with it this time.`, inline: false })
                 break
             case 'Havoc':
-                embed.addFields({ name: '😒 Havoc', value: havocDefinition, inline: false })
-                if (!wisdom) {
-                    wisdom = await getWisdom(client, interaction) || 0
-                    if (wisdom != 0) {
-                        let wisdomRoll = new InstantRoll({ dicePool: wisdom })
+                embed.addFields({ name: '😒 Havoc', value: havocSummary, inline: false })
+                wisdom = await getWisdom(wisdom, client, interaction) || 0
+                if (wisdom != 0) {
+                    let wisdomRoll = new InstantRoll({ dicePool: wisdom })
 
-                        if (wisdomRoll.isCriticalFailure()) {
-                            embed.addFields({
-                                name: `💀 Wisdom Roll **${wisdomRoll.numberOfSuccesses()}**`,
-                                value: wisdomRoll.toString() + '\n' +
-                                    'Dramatic Failure: The spell’s desired effect is reversed. A blessing becomes a curse, a magical perception spell blinds the mage to all resonance, or an attack spell helps the target instead.'
-                            })
-                        } else if (wisdomRoll.isFailure()) {
-                            embed.addFields({
-                                name: `❌ Wisdom Roll **${wisdomRoll.numberOfSuccesses()}**`,
-                                value: wisdomRoll.toString() + '\n' +
-                                    'Failure: The spell’s desired effect is reversed. A blessing becomes a curse, a magical perception spell blinds the mage to all resonance, or an attack spell helps the target instead.'
-                            })
-                        } else if (wisdomRoll.isExceptionalSuccess()) {
-                            embed.addFields({
-                                name: `⭐ Wisdom Roll **${wisdomRoll.numberOfSuccesses()}**`,
-                                value: wisdomRoll.toString() + '\n' +
-                                    'Exceptional Success: The spell’s effect is unaltered and the mage gains a +2 dice bonus for any attempts he might make to dispel the Havoc spell.'
-                            })
-                        } else if (wisdomRoll.isSuccess()) {
-                            embed.addFields({
-                                name: `✅ Wisdom Roll **${wisdomRoll.numberOfSuccesses()}**`,
-                                value: wisdomRoll.toString() + '\n' +
-                                    'Success: The spell’s effect is unaltered.'
-                            })
-                        }
+                    if (wisdomRoll.isCriticalFailure()) {
+                        embed.addFields({
+                            name: `💀 Wisdom Roll **${wisdomRoll.numberOfSuccesses()}**`,
+                            value: wisdomRoll.toString() + '\n' +
+                                '**Dramatic Failure:** The spell’s desired effect is reversed. A blessing becomes a curse, a magical perception spell blinds the mage to all resonance, or an attack spell helps the target instead.'
+                        })
+                    } else if (wisdomRoll.isFailure()) {
+                        embed.addFields({
+                            name: `❌ Wisdom Roll **${wisdomRoll.numberOfSuccesses()}**`,
+                            value: wisdomRoll.toString() + '\n' +
+                                '**Failure:** The spell’s desired effect is reversed. A blessing becomes a curse, a magical perception spell blinds the mage to all resonance, or an attack spell helps the target instead.'
+                        })
+                    } else if (wisdomRoll.isExceptionalSuccess()) {
+                        embed.addFields({
+                            name: `⭐ Wisdom Roll **${wisdomRoll.numberOfSuccesses()}**`,
+                            value: wisdomRoll.toString() + '\n' +
+                                '**Exceptional Success:** The spell’s effect is unaltered and the mage gains a +2 dice bonus for any attempts he might make to dispel the Havoc spell.'
+                        })
+                    } else if (wisdomRoll.isSuccess()) {
+                        embed.addFields({
+                            name: `✅ Wisdom Roll **${wisdomRoll.numberOfSuccesses()}**`,
+                            value: wisdomRoll.toString() + '\n' +
+                                '**Success:** The spell’s effect is unaltered.'
+                        })
                     }
                 }
                 break
             case 'Bedlam':
-                embed.addFields({ name: '😬 Bedlam', value: `${name} causes Bedlam.`, inline: false })
+                embed.addFields({ name: '😬 Bedlam', value: bedlamSummary, inline: false })
+                let duration = 'One scene'
+                switch (await getWisdom(wisdom, client, interaction)) {
+                    case 1: duration = 'Two days'; break
+                    case 2: duration = '24 hours'; break
+                    case 3: duration = '12 hours'; break
+                    case 4: duration = '2 hours'; break
+                }
+                let derangementSeverity = await getArcanumDots(arcanumDots, client, interaction) || 0 < 3 ? 'mild' : 'severe'
+                embed.addFields({
+                    name: `${name} suffers a **${derangementSeverity}** derangement for **${duration}**`,
+                    value: derangements.filter(d => d.category == derangementSeverity).map(d => d.name).join(', '), inline: false
+                })
+                wisdom = await getWisdom(wisdom, client, interaction) || 0
+                if (wisdom != 0) {
+                    let wisdomRoll = new InstantRoll({ dicePool: wisdom })
+
+                    if (wisdomRoll.isCriticalFailure()) {
+                        embed.addFields({
+                            name: `💀 Wisdom Roll **${wisdomRoll.numberOfSuccesses()}**`,
+                            value: wisdomRoll.toString() + '\n' +
+                                '**Dramatic Failure:** The mage’s madness is contagious. One other mage per dot of the invoker’s Presence also suffers from the Bedlam derangement for as long as the Paradox lasts (based on the invoker’s Wisdom, not the victim’s). Randomly choose targets from within the spell’s range, including any sympathetic targets. The target may contest the Bedlam with a reflexive Resolve + Composure roll. If successful, he is unaffected.'
+                        })
+                    } else if (wisdomRoll.isFailure()) {
+                        embed.addFields({
+                            name: `❌ Wisdom Roll **${wisdomRoll.numberOfSuccesses()}**`,
+                            value: wisdomRoll.toString() + '\n' +
+                                '**Failure:** The mage’s madness is contagious. One other mage also suffers from the Bedlam derangement for as long as the Paradox lasts (based on the invoker’s Wisdom, not the victim’s). Randomly choose target from within the spell’s range, including any sympathetic targets. The target may contest the Bedlam with a reflexive Resolve + Composure roll. If successful, he is unaffected.'
+                        })
+                    } else if (wisdomRoll.isExceptionalSuccess()) {
+                        embed.addFields({
+                            name: `⭐ Wisdom Roll **${wisdomRoll.numberOfSuccesses()}**`,
+                            value: wisdomRoll.toString() + '\n' +
+                                '**Exceptional Success:** Only the mage is affected by Bedlam.'
+                        })
+                    } else if (wisdomRoll.isSuccess()) {
+                        embed.addFields({
+                            name: `✅ Wisdom Roll **${wisdomRoll.numberOfSuccesses()}**`,
+                            value: wisdomRoll.toString() + '\n' +
+                                '**Success:** Only the mage is affected by Bedlam.'
+                        })
+                    }
+                }
                 break
             case 'Anomaly':
                 embed.addFields({ name: '😰 Anomaly', value: `${name} causes an Anomaly.`, inline: false })
@@ -231,7 +272,62 @@ export const ParadoxCommand: Command = {
     }
 };
 
-async function getWisdom(client: Client, interaction: CommandInteraction) {
+getArcanumDots
+
+async function getArcanumDots(arcanumDots: number, client: Client, interaction: CommandInteraction) {
+    if (arcanumDots > 0) {
+        return arcanumDots
+    } else {
+        return getArcanumDotsInteractive(client, interaction)
+    }
+}
+async function getArcanumDotsInteractive(client: Client, interaction: CommandInteraction) {
+
+    let actionRows = new Array<ActionRowBuilder<ButtonBuilder>>()
+    const buttonsPerRow = 5
+    const maxArcanumDots = 5
+    const arcanumdotsOptions = Array.from({ length: maxArcanumDots }, (_, index) => index + 1)
+    const arcanumdotsOptionRows = splitArray(arcanumdotsOptions, buttonsPerRow)
+    arcanumdotsOptionRows.forEach(arcanumdotsOptionRow => {
+        actionRows.push(new ActionRowBuilder<ButtonBuilder>()
+            .addComponents(
+                arcanumdotsOptionRow.map(opt => new ButtonBuilder()
+                    .setCustomId(opt.toString())
+                    .setStyle(ButtonStyle.Primary)
+                    .setLabel(opt.toString()))
+            ))
+    });
+
+    const responseInteraction = await interaction.followUp({
+        content: "What is the highest arcanum dots of the spell?",
+        components: actionRows,
+        ephemeral: true
+    })
+
+    try {
+        const response = await responseInteraction.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 30000 })
+
+        const arcanumdots = Number(response.customId)
+        response.update({ content: `Using ${arcanumdots} arcanum dots`, components: [] })
+        return arcanumdots
+    } catch (e) {
+        // No response
+        await interaction.editReply({
+            content: "What is the highest arcanum dots of the spell? Cancelling.  No response after 30 seconds",
+            components: []
+        })
+        return null
+    }
+}
+
+async function getWisdom(wisdom: number, client: Client, interaction: CommandInteraction) {
+    if (wisdom > 0) {
+        return wisdom
+    } else {
+        return getWisdomInteractive(client, interaction)
+    }
+}
+async function getWisdomInteractive(client: Client, interaction: CommandInteraction) {
 
     let actionRows = new Array<ActionRowBuilder<ButtonBuilder>>()
     const buttonsPerRow = 5
@@ -327,8 +423,8 @@ function splitArray<T>(array: Array<T>, n: number) {
     );
 }
 
-
-const havocDefinition = "The mage's spell becomes Havoc, affecting a randomly chosen target instead of the intended one. The new target must be of the same type. The mage and objects can also be affected. The new target can resist the spell. The mage's Wisdom is rolled: Dramatic Failure or Failure reverses it, Success keeps the effect unchanged, and Exceptional Success grants a bonus for dispelling. The spell cannot be dismissed and lasts for its Duration. Concentration-based spells become transitory, with the duration determined by a die roll."
+const havocSummary = "The mage's spell becomes Havoc, affecting a randomly chosen target instead of the intended one. The new target must be of the same type. The mage and objects can also be affected. The new target can resist the spell. The mage's Wisdom is rolled: Dramatic Failure or Failure reverses it, Success keeps the effect unchanged, and Exceptional Success grants a bonus for dispelling. The spell cannot be dismissed and lasts for its Duration. Concentration-based spells become transitory, with the duration determined by a die roll."
+const bedlamSummary = "The mage gains a temporary derangement as a result of invoking Paradox, similar to Wisdom degeneration. The specific derangement is chosen by the player and Storyteller. The derangement is active for the duration of the Paradox and disappears once it ends. The player is expected to roleplay the derangement creatively, but the Storyteller can intervene if the character's actions contradict the derangement, imposing a Willpower penalty if necessary."
 
 // const havocDefinition = "The mage’s spell is no longer under his control and is considered a Havoc spell. It affects a randomly chosen target (or targets, if multiple targets were factored into the casting) instead of the caster’s declared target(s). The caster himself is included in this pool of random victims. The new target must be of the same type — if the mage targeted a living person, then the pool of random targets include only living people. If the mage’s target is an object, then only objects are affected. If the caster is the only viable target present, he is the target of his own spell (unless he was its originally intended target, in which case the spell affects a target of a different kind, such as an object)." + "\n" +
 // "The new target — including the mage himself if he is the spell’s new target — can contest or resist the spell if it is normally allowed (see the spell’s description)." + "\n" +
