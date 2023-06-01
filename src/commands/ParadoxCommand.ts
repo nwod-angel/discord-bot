@@ -171,25 +171,25 @@ export const ParadoxCommand: Command = {
 
                     if (wisdomRoll.isCriticalFailure()) {
                         embed.addFields({
-                            name: `💀 Wisdom Roll: **${wisdomRoll.numberOfSuccesses()}**`,
+                            name: `💀 ${name} rolled ${wisdomRoll.dicePool} for Wisdom: **${wisdomRoll.numberOfSuccesses()}**`,
                             value: wisdomRoll.toString() + '\n' +
                                 '**Dramatic Failure:** The spell’s desired effect is reversed. A blessing becomes a curse, a magical perception spell blinds the mage to all resonance, or an attack spell helps the target instead.'
                         })
                     } else if (wisdomRoll.isFailure()) {
                         embed.addFields({
-                            name: `❌ Wisdom Roll: **${wisdomRoll.numberOfSuccesses()}**`,
+                            name: `❌ ${name} rolled ${wisdomRoll.dicePool} for Wisdom: **${wisdomRoll.numberOfSuccesses()}**`,
                             value: wisdomRoll.toString() + '\n' +
                                 '**Failure:** The spell’s desired effect is reversed. A blessing becomes a curse, a magical perception spell blinds the mage to all resonance, or an attack spell helps the target instead.'
                         })
                     } else if (wisdomRoll.isExceptionalSuccess()) {
                         embed.addFields({
-                            name: `⭐ Wisdom Roll: **${wisdomRoll.numberOfSuccesses()}**`,
+                            name: `⭐ ${name} rolled ${wisdomRoll.dicePool} for Wisdom: **${wisdomRoll.numberOfSuccesses()}**`,
                             value: wisdomRoll.toString() + '\n' +
                                 '**Exceptional Success:** The spell’s effect is unaltered and the mage gains a +2 dice bonus for any attempts he might make to dispel the Havoc spell.'
                         })
                     } else if (wisdomRoll.isSuccess()) {
                         embed.addFields({
-                            name: `✅ Wisdom Roll: **${wisdomRoll.numberOfSuccesses()}**`,
+                            name: `✅ ${name} rolled ${wisdomRoll.dicePool} for Wisdom: **${wisdomRoll.numberOfSuccesses()}**`,
                             value: wisdomRoll.toString() + '\n' +
                                 '**Success:** The spell’s effect is unaltered.'
                         })
@@ -235,25 +235,25 @@ export const ParadoxCommand: Command = {
 
                     if (wisdomRoll.isCriticalFailure()) {
                         embed.addFields({
-                            name: `💀 Wisdom Roll: **${wisdomRoll.numberOfSuccesses()}**`,
+                            name: `💀 ${name} rolled ${wisdomRoll.dicePool} for Wisdom: **${wisdomRoll.numberOfSuccesses()}**`,
                             value: wisdomRoll.toString() + '\n' +
                                 '**Dramatic Failure:** The mage’s madness is contagious. One other mage per dot of the invoker’s Presence also suffers from the Bedlam derangement for as long as the Paradox lasts (based on the invoker’s Wisdom, not the victim’s). Randomly choose targets from within the spell’s range, including any sympathetic targets. The target may contest the Bedlam with a reflexive Resolve + Composure roll. If successful, he is unaffected.'
                         })
                     } else if (wisdomRoll.isFailure()) {
                         embed.addFields({
-                            name: `❌ Wisdom Roll: **${wisdomRoll.numberOfSuccesses()}**`,
+                            name: `❌ ${name} rolled ${wisdomRoll.dicePool} for Wisdom: **${wisdomRoll.numberOfSuccesses()}**`,
                             value: wisdomRoll.toString() + '\n' +
                                 '**Failure:** The mage’s madness is contagious. One other mage also suffers from the Bedlam derangement for as long as the Paradox lasts (based on the invoker’s Wisdom, not the victim’s). Randomly choose target from within the spell’s range, including any sympathetic targets. The target may contest the Bedlam with a reflexive Resolve + Composure roll. If successful, he is unaffected.'
                         })
                     } else if (wisdomRoll.isExceptionalSuccess()) {
                         embed.addFields({
-                            name: `⭐ Wisdom Roll: **${wisdomRoll.numberOfSuccesses()}**`,
+                            name: `⭐ ${name} rolled ${wisdomRoll.dicePool} for Wisdom: **${wisdomRoll.numberOfSuccesses()}**`,
                             value: wisdomRoll.toString() + '\n' +
                                 '**Exceptional Success:** Only the mage is affected by Bedlam.'
                         })
                     } else if (wisdomRoll.isSuccess()) {
                         embed.addFields({
-                            name: `✅ Wisdom Roll: **${wisdomRoll.numberOfSuccesses()}**`,
+                            name: `✅ ${name} rolled ${wisdomRoll.dicePool} for Wisdom: **${wisdomRoll.numberOfSuccesses()}**`,
                             value: wisdomRoll.toString() + '\n' +
                                 '**Success:** Only the mage is affected by Bedlam.'
                         })
@@ -272,7 +272,7 @@ export const ParadoxCommand: Command = {
                 path = await getPath(path, client, interaction)
                 const radius = (await getArcanumDots(arcanumDots, client, interaction) || 0) * 20
                 embed.addFields({
-                    name: `${name} causes a **${paths.filter(p => p.pathId == path)[0].fancyName}** anomaly for **${duration}** in a **${radius} yard radius**.`,
+                    name: `${name} causes a **${paths.filter(p => p.pathId.toLowerCase() == path?.toLowerCase())[0].fancyName}** anomaly for **${duration}** in a **${radius} yard radius**.`,
                     value: paths.filter(p => p.pathId == path)[0].anomalyDescription
                 })
 
