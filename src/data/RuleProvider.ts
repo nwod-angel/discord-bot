@@ -40,6 +40,9 @@ export default class RuleProvider {
         // RuleProvider.rules.filter(rule => rule.description === '').forEach(rule => {
         //     console.log(`Rule has no description: ${rule.name} [${rule.sourcesString()}]`)
         // })
+        RuleProvider.rules.filter(rule => rule.paragraphs.some(p => p.text.length > 1024)).forEach(rule => {
+            console.log(`Rule has a long paragraph: ${rule.name} [${rule.sourcesString()}]`)
+        })
 
     })()
 }
