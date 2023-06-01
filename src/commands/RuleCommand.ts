@@ -61,7 +61,7 @@ export const RuleCommand: Command = {
                 if (paragraph.example) {
                     embed.addFields({ name: 'Example', value: `*${paragraph.text}*`, inline: false })
                 } else if (paragraph.prefix) {
-                    embed.addFields({ name: paragraph.prefix, value: paragraph.text, inline: false })
+                    embed.addFields({ name: paragraph.prefix, value: paragraph.text.slice(0, 1024), inline: false })
                 } else if (paragraph.text) {
                     embed.addFields({ name: '\u200b', value: paragraph.text, inline: false })
                 }
