@@ -8,17 +8,12 @@ import CombatSurprise from "./rules/wod/CombatSurprise";
 import CombatUnarmed from "./rules/wod/CombatUnarmed";
 import CombatUnarmedGrapple from "./rules/wod/CombatUnarmedGrapple";
 import Defense from "./rules/wod/Defense";
-import DrawbacksOfGnosis from "./rules/mtaw/DrawbacksOfGnosis";
-import EffectsOfGnosis from "./rules/mtaw/EffectsOfGnosis";
 import Health from "./rules/wod/Health";
 import Initiative from "./rules/wod/Initiative";
-import MageSight from "./rules/mtaw/MageSight";
 import PoisonsAndToxins from "./rules/wod/PoisonsAndToxins";
-import RoteSpecialties from "./rules/mtaw/RoteSpecialties";
 import Speed from "./rules/wod/Speed";
-import UnseenSenses from "./rules/mtaw/UnseenSenses";
-import ScrutinizingBeingsAndObjects from "./rules/mtaw/ScrutinizingBeingsAndObjects";
-import UnvielingResonance from "./rules/mtaw/UnvielingResonance";
+
+import mtawRules from "./rules/mtaw/mtaw-rules";
 
 export default [
     Defense,
@@ -37,11 +32,5 @@ export default [
     Speed,
 
     // MtAw
-    ScrutinizingBeingsAndObjects,
-    UnvielingResonance,
-    RoteSpecialties,
-    EffectsOfGnosis,
-    DrawbacksOfGnosis,
-    MageSight,
-    UnseenSenses,
+    mtawRules
 ]
