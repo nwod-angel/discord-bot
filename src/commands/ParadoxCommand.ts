@@ -3,7 +3,6 @@ import { Command } from "../Command.js"
 import DiscordChannelLogger from "../DiscordChannelLogger.js"
 import FeedbackController from "./FeedbackController.js"
 import { InstantRoll } from "@nwod-angel/nwod-roller"
-import derangements from "../data/derangements.js"
 
 export const ParadoxCommand: Command = {
     name: "paradox",
@@ -207,6 +206,26 @@ export const ParadoxCommand: Command = {
                     case 4: duration = '2 hours'; break
                 }
                 let derangementSeverity = (await getArcanumDots(arcanumDots, client, interaction) || 0) < 3 ? 'mild' : 'severe'
+                let derangements = [
+                    { name: 'Avoidance', category: 'mild' },
+                    { name: 'Fugue', category: 'severe' },
+                    { name: 'Depression', category: 'mild' },
+                    { name: 'Melancholia', category: 'severe' },
+                    { name: 'Fixation', category: 'mild' },
+                    { name: 'Obsessive Compulsion', category: 'severe' },
+                    { name: 'Inferiority Complex', category: 'mild' },
+                    { name: 'Anxiety', category: 'severe' },
+                    { name: 'Irrationality', category: 'mild' },
+                    { name: 'Mulitple Personality', category: 'severe' },
+                    { name: 'Narcissism', category: 'mild' },
+                    { name: 'Megalomania', category: 'severe' },
+                    { name: 'Phobia', category: 'mild' },
+                    { name: 'Hysteria', category: 'severe' },
+                    { name: 'Suspicion', category: 'mild' },
+                    { name: 'Paranoia', category: 'severe' },
+                    { name: 'Vocalization', category: 'mild' },
+                    { name: 'Schizophrenia', category: 'severe' },
+                ]
                 embed.addFields({
                     name: `🫠 ${name} suffers a **${derangementSeverity}** derangement for **${duration}**`,
                     value: derangements.filter(d => d.category == derangementSeverity).map(d => d.name).join(', '), inline: false
