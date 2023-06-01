@@ -275,9 +275,19 @@ export const ParadoxCommand: Command = {
                 break
             case 'Branding':
                 embed.addFields({ name: '😡 Branding', value: brandingSummary, inline: false })
+                arcanumDots = await getArcanumDots(arcanumDots, client, interaction) || 0
+                if(arcanumDots) {
+                    const brandingLevel = brandingLevels.filter(bl => bl.value == arcanumDots)[0]
+                    embed.addFields({ name: `${name} is branded with a **${brandingLevel.name}**`, value: brandingLevel.description, inline: false })
+                }
                 break
             case 'Manifestation':
                 embed.addFields({ name: '👿 Manifestation', value: manifestationSummary, inline: false })
+                arcanumDots = await getArcanumDots(arcanumDots, client, interaction) || 0
+                if(arcanumDots) {
+                    const manifestationLevel = manifestationLevels.filter(ml => ml.value == arcanumDots)[0]
+                    embed.addFields({ name: `${name} invokes a ${'⬤'.repeat(arcanumDots)} manifestation`, value: manifestationLevel.description, inline: false })
+                }
                 break
         }
 
@@ -447,3 +457,59 @@ const bedlamSummary = "The mage gains a temporary derangement as a result of inv
 const anomalySummary = "Reality fractures and allows for the occurrence of impossible events. The extent of the affected area depends on the highest Arcanum used, with a radius of 20 yards per dot. Anomalies are not influenced by the disbelief of regular individuals. Anomalies are unpredictable, with the Storyteller determining their effects and rules. Examples based on the Path realm are given, but Storytellers are encouraged to be inventive and perplex the caster. If multiple Paradox Anomalies from different Path realms occur in the same area during a scene, their effects combine. Furthermore, if the same Path realm causes multiple Anomalies in the same area during the same scene, the effects are intensified."
 const brandingSummary = "When a mage misuses magic, their body is affected and bears the mark of their spell. Different levels of Arcanum Dots result in distinct Brands. Examples of Brands include the Uncanny Nimbus, Witch's Mark, Disfigurement, Bestial Feature, and Inhuman Feature. The Storyteller has the freedom to create a Brand that symbolically represents the mage's Vice. For instance, an Envious or Prideful mage's nimbus may appear weaker when affecting others but stronger when affecting the mage. A Greedy mage's nimbus may not affect others directly but is still noticeable, while a Wrathful mage's nimbus may be menacing without causing direct harm."
 const manifestationSummary = "An entity from the Abyss enters the Fallen World, it materializes in the vicinity of the mage who summoned it. The manifestation occurs within a certain range, typically not exceeding 10 yards per dot of the caster's Gnosis. The entity's appearance is not necessarily within the mage's line of sight; it could emerge below the mage, in the sewers, or even in a concealed room beyond the nearest wall."
+
+const brandingLevels = [
+    {
+        value: 1,
+        name: 'Uncanny Nimbus',
+        description: 'The mage’s nimbus is disfigured by his Vice. Anyone with supernatural perception can see it. An Envious or Prideful mage’s nimbus might be weaker when affecting others and seem stronger when affecting the mage himself. A Greedy mage’s nimbus might not affect others at all, although its presence is still obvious. A Wrathful mage’s nimbus might seem threatening to others, although it cannot harm them directly.'
+    },
+    {
+        value: 2,
+        name: 'Witch’s Mark',
+        description: 'The mage bears a weird but non-prominent blemish that is visible to Sleepers. He might have luminous motes in his eyes (Lust or Greed), his body radiates heat (Wrath) or cold (Envy), or there is a grayish pallor to his skin (Sloth). In addition, he has an uncanny nimbus, as above.'
+    },
+    {
+        value: 3,
+        name: 'Disfigurement',
+        description: 'The mage bears a prominent blemish that is visible to Sleepers, such as a metallic sheen to his skin (Pride), the pupils of an animal (Wrath or Gluttony), a bizarre tenor to his voice (Lust, Envy, Greed). In addition, he has an uncanny nimbus, as above. He suffers a –1 dice penalty to Social rolls with Sleepers (except Intimidation Skill uses).'
+    },
+    {
+        value: 4,
+        name: 'Bestial Feature',
+        description: 'The mage gains an animal trait, such as claws (Wrath; +1 dice, lethal damage), fangs (Envy or Gluttony; +1 dice, lethal damage), horns (Pride; +2 dice, lethal damage), a tail (Greed or Lust; it has half the mage’s Strength, rounding up), fur or scales (Sloth or Pride; one armor point). None of these features can be concealed easily. He suffers a –3 dice penalty to all Social rolls (except Intimidation Skill uses).'
+    },
+    {
+        value: 5,
+        name: 'Inhuman Feature',
+        description: 'The mage gains an inhuman trait, such as a bestial feature that is clearly demonic or supernatural. Maybe his tail is forked or his eyes glow. Or he might be surrounded by a cloud of flies (Gluttony or Greed), a miasma that causes plants to wither (Sloth or Envy), a herd of crawling vermin (Pride or Lust), or a pall of smoke (Wrath). He suffers a –5 dice penalty to all Social rolls (except Intimidation Skill uses).'
+    }
+]
+
+const manifestationLevels = [
+    {
+        value: 1,
+        title: '1 Arcanum Dot',
+        description: 'The manifestation is a gremlin or imp, a minor spirit with a dark sense of humor that troubles the mage for a short time. It is of Rank 1 (with 5-8 Attribute dots) or 2 (9-14 Attribute dots). This entity exists in Twilight and cannot cause direct harm, but it can cause any number of minor problems. It has some influence over the material world, like a poltergeist. It can open and close doors, tip things over, and send small objects flying across a room.'
+    },
+    {
+        value: 2,
+        title: '2 Arcanum Dots',
+        description: 'A more powerful and menacing entity (Rank 3, with 15-25 Attribute dots) manifests in the material realm. It is malicious and rarely humorous. It has a keen sense of timing, causes various hassles and has powers like those of gremlins, above.'
+    },
+    {
+        value: 3,
+        title: '3 Arcanum Dots',
+        description: 'Entities of this intensity are more complex and capable (Rank 3 or 4, with 26-35 Attribute dots), driven less by pure instinct and emotion and more by thought and planning. They are also powerful enough to manifest a physical form and interact with the material world. They are cunning enough to pretend to have the mage’s interests at heart, while leading him astray. The promises of such creatures are not to be trusted.'
+    },
+    {
+        value: 4,
+        title: '4 Arcanum Dots',
+        description: 'The entity’s power is equal to that of the mage in every respect. Such entities range from murderous monsters that stalk and kill the mage’s loved ones (or enemies, pinning the blame on the mage) to seductive manifestations of the mage’s darkest desires. Some entities this powerful, called doppelgangers, appear exactly like the mage who spawned them. Doppelgangers never appear in the same place as their double. They are always elsewhere, causing mischief. The only means of banishing a doppelganger is for the mage to confront it directly (whereupon is vanishes). Doppelgangers must be restrained in order to do this. They can sense the approach of their double and flee if at all possible.'
+    },
+    {
+        value: 5,
+        title: '5 Arcanum Dots',
+        description: 'The mage draws the attention of a truly powerful entity (Rank 4 or 5, with 36-45 Attribute dots). The entity may try to destroy the mage or possess his body. Alternately, it may attempt to seduce the mage with promises of power, knowledge and the fulfillment of his desires. The entity remains in the world until either banished by the mage who summoned it or until the mage’s death. In the past, the orders have sanctioned the execution of mages responsible for calling such entities into reality.'
+    }
+]
