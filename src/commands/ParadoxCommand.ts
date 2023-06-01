@@ -130,6 +130,7 @@ export const ParadoxCommand: Command = {
                     finalResult == 2 ? 'Bedlam' :
                         finalResult == 1 ? 'Havoc' :
                             'No Paradox'
+        let duration = 'One scene'
 
         let embed = new EmbedBuilder()
             .setFooter({
@@ -198,7 +199,6 @@ export const ParadoxCommand: Command = {
             case 'Bedlam':
                 embed.addFields({ name: '😬 Bedlam', value: bedlamSummary, inline: false })
                 wisdom = await getWisdom(wisdom, client, interaction) || 0
-                let duration = 'One scene'
                 switch (wisdom) {
                     case 1: duration = 'Two days'; break
                     case 2: duration = '24 hours'; break
@@ -261,7 +261,20 @@ export const ParadoxCommand: Command = {
                 }
                 break
             case 'Anomaly':
-                embed.addFields({ name: '😰 Anomaly', value: `${name} causes an Anomaly.`, inline: false })
+                embed.addFields({ name: '😰 Anomaly', value: anomalySummary, inline: false })
+                wisdom = await getWisdom(wisdom, client, interaction) || 0
+                switch (wisdom) {
+                    case 1: duration = 'One month'; break
+                    case 2: duration = 'One week'; break
+                    case 3: duration = 'Two days'; break
+                    case 4: duration = '24 hours'; break
+                }
+                path = await getPath(path, client, interaction)
+                embed.addFields({
+                    name: `${name} causes a **${paths.filter(p => p.pathId == path)[0].fancyName}** anomaly for **${duration}**`,
+                    value: paths.filter(p => p.pathId == path)[0].anomalyDescription
+                })
+
                 break
             case 'Branding':
                 embed.addFields({ name: '😡 Branding', value: `${name} causes a Branding.`, inline: false })
@@ -375,25 +388,26 @@ async function getWisdomInteractive(client: Client, interaction: CommandInteract
 
 }
 
-async function getPath(client: Client, interaction: CommandInteraction): Promise<string | undefined> {
+async function getPath(path: string | undefined, client: Client, interaction: CommandInteraction) {
+    if (path) {
+        return path
+    } else {
+        return getPathInteractive(client, interaction)
+    }
+}
+
+async function getPathInteractive(client: Client, interaction: CommandInteraction): Promise<string | undefined> {
 
     let actionRows = new Array<ActionRowBuilder<ButtonBuilder>>()
     const buttonsPerRow = 5
-    const pathOptions = [
-        '⌛🎲 Acanthus',
-        '🧠🌌 Mastigos',
-        '💀🧱 Moros',
-        '⚡🪄 Obrimos',
-        '🌿👻 Thyrsus',
-    ]
-    const optionRows = splitArray(pathOptions, buttonsPerRow)
+    const optionRows = splitArray(paths, buttonsPerRow)
     optionRows.forEach(optionRow => {
         actionRows.push(new ActionRowBuilder<ButtonBuilder>()
             .addComponents(
                 optionRow.map(opt => new ButtonBuilder()
-                    .setCustomId(opt.toString())
+                    .setCustomId(opt.pathId)
                     .setStyle(ButtonStyle.Primary)
-                    .setLabel(opt.toString()))
+                    .setLabel(opt.fancyName))
             ))
     });
 
@@ -433,7 +447,35 @@ function splitArray<T>(array: Array<T>, n: number) {
 
 const havocSummary = "The mage's spell becomes Havoc, affecting a randomly chosen target instead of the intended one. The new target must be of the same type. The mage and objects can also be affected. The new target can resist the spell. The mage's Wisdom is rolled: Dramatic Failure or Failure reverses it, Success keeps the effect unchanged, and Exceptional Success grants a bonus for dispelling. The spell cannot be dismissed and lasts for its Duration. Concentration-based spells become transitory, with the duration determined by a die roll."
 const bedlamSummary = "The mage gains a temporary derangement as a result of invoking Paradox, similar to Wisdom degeneration. The specific derangement is chosen by the player and Storyteller. The derangement is active for the duration of the Paradox and disappears once it ends. The player is expected to roleplay the derangement creatively, but the Storyteller can intervene if the character's actions contradict the derangement, imposing a Willpower penalty if necessary."
+const anomalySummary = "Reality fractures and allows for the occurrence of impossible events. The extent of the affected area depends on the highest Arcanum used, with a radius of 20 yards per dot. Anomalies are not influenced by the disbelief of regular individuals. Anomalies are unpredictable, with the Storyteller determining their effects and rules. Examples based on the Path realm are given, but Storytellers are encouraged to be inventive and perplex the caster. If multiple Paradox Anomalies from different Path realms occur in the same area during a scene, their effects combine. Furthermore, if the same Path realm causes multiple Anomalies in the same area during the same scene, the effects are intensified."
 
+const paths = [
+    {
+        pathId: 'acanthus',
+        fancyName: '⌛🎲 Acanthus',
+        anomalyDescription: 'Acanthus anomaly'
+    },
+    {
+        pathId: 'mastigos',
+        fancyName: '🧠🌌 Mastigos',
+        anomalyDescription: 'Mastigos anomaly'
+    },
+    {
+        pathId: 'moros',
+        fancyName: '💀🧱 Moros',
+        anomalyDescription: 'Moros anomaly'
+    },
+    {
+        pathId: 'obrimos',
+        fancyName: '⚡🪄 Obrimos',
+        anomalyDescription: 'Obrimos anomaly'
+    },
+    {
+        pathId: 'thyrsus',
+        fancyName: '🌿👻 Thyrsus',
+        anomalyDescription: 'Thyrsus anomaly'
+    }
+]
 // const havocDefinition = "The mage’s spell is no longer under his control and is considered a Havoc spell. It affects a randomly chosen target (or targets, if multiple targets were factored into the casting) instead of the caster’s declared target(s). The caster himself is included in this pool of random victims. The new target must be of the same type — if the mage targeted a living person, then the pool of random targets include only living people. If the mage’s target is an object, then only objects are affected. If the caster is the only viable target present, he is the target of his own spell (unless he was its originally intended target, in which case the spell affects a target of a different kind, such as an object)." + "\n" +
 // "The new target — including the mage himself if he is the spell’s new target — can contest or resist the spell if it is normally allowed (see the spell’s description)." + "\n" +
 // "In addition, the mage’s Wisdom is rolled." + "\n" +
