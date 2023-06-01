@@ -3,6 +3,7 @@ import { Command } from "../Command.js"
 import DiscordChannelLogger from "../DiscordChannelLogger.js"
 import FeedbackController from "./FeedbackController.js"
 import { InstantRoll } from "@nwod-angel/nwod-roller"
+import paths from "../data/paths.js"
 
 export const ParadoxCommand: Command = {
     name: "paradox",
@@ -35,13 +36,7 @@ export const ParadoxCommand: Command = {
             name: "path",
             description: "The caster's path",
             type: 3, // String
-            choices: [
-                { name: 'Acanthus', value: 'Acanthus' },
-                { name: 'Mastigos', value: 'Mastigos' },
-                { name: 'Moros', value: 'Moros' },
-                { name: 'Obrimos', value: 'Obrimos' },
-                { name: 'Thyrsus', value: 'Thyrsus' }
-            ]
+            choices: paths.map(p => { return { name: p.fancyName, value: p.pathId } })
         },
         {
             name: "name",
@@ -273,7 +268,7 @@ export const ParadoxCommand: Command = {
                 const radius = (await getArcanumDots(arcanumDots, client, interaction) || 0) * 20
                 const pathData = paths.filter(p => p.pathId.toLowerCase() == path?.toLowerCase())[0]
                 embed.addFields({
-                    name: `${name} causes a **${pathData.fancyName}** anomaly for **${duration}** in a **${radius} yard radius**.`,
+                    name: `${name} causes a **${pathData.realm}** anomaly for **${duration}** in a **${radius} yard radius**.`,
                     value: pathData.anomalyDescription
                 })
 
@@ -452,62 +447,3 @@ const bedlamSummary = "The mage gains a temporary derangement as a result of inv
 const anomalySummary = "Reality fractures and allows for the occurrence of impossible events. The extent of the affected area depends on the highest Arcanum used, with a radius of 20 yards per dot. Anomalies are not influenced by the disbelief of regular individuals. Anomalies are unpredictable, with the Storyteller determining their effects and rules. Examples based on the Path realm are given, but Storytellers are encouraged to be inventive and perplex the caster. If multiple Paradox Anomalies from different Path realms occur in the same area during a scene, their effects combine. Furthermore, if the same Path realm causes multiple Anomalies in the same area during the same scene, the effects are intensified."
 const brandingSummary = "When a mage misuses magic, their body is affected and bears the mark of their spell. Different levels of Arcanum Dots result in distinct Brands. Examples of Brands include the Uncanny Nimbus, Witch's Mark, Disfigurement, Bestial Feature, and Inhuman Feature. The Storyteller has the freedom to create a Brand that symbolically represents the mage's Vice. For instance, an Envious or Prideful mage's nimbus may appear weaker when affecting others but stronger when affecting the mage. A Greedy mage's nimbus may not affect others directly but is still noticeable, while a Wrathful mage's nimbus may be menacing without causing direct harm."
 const manifestationSummary = "An entity from the Abyss enters the Fallen World, it materializes in the vicinity of the mage who summoned it. The manifestation occurs within a certain range, typically not exceeding 10 yards per dot of the caster's Gnosis. The entity's appearance is not necessarily within the mage's line of sight; it could emerge below the mage, in the sewers, or even in a concealed room beyond the nearest wall."
-
-const paths = [
-    {
-        pathId: 'acanthus',
-        fancyName: '🎲⌛ Acanthus',
-        realm: 'Arcadia',
-        anomalyDescription: '* Ill-luck taints the scene, causing everyone there to suffer a reverse of a rote action effect (see pp. 134-135 of the World of Darkness Rulebook) on their rolls: re-roll successes once, not to add new successes to the total but to replace rolled successes if the second roll results in failures. For example, a roll results in three successes and two failures. The successes are re-rolled, and this time the dice yield only two successes.' + '\n' +
-        '* People get a powerful sense of déjà vu over and over again. They repeat tasks they just accomplished unless they succeed in a Wits + Composure roll.' + '\n' +
-        '* People and/or things move in slow motion while time outside the area of the Intrusion passes normally.' + '\n' +
-        '* Forces spells suffer a –2 penalty (Forces is Arcadia’s Inferior Arcanum).'
-    },
-    {
-        pathId: 'mastigos',
-        fancyName: '🧠🌌 Mastigos',
-        realm: 'Pandemonium',
-        anomalyDescription: '& Repressed or denied thoughts and emotions rise up and plague everyone’s mind. Any Social rolls suffer a –2 dice penalty.' + '\n' +
-        '* People become lost and disoriented easily (–2 on any Survival rolls to orient oneself).' + '\n' +
-        '* Objects sometimes roll uphill or sideways.' + '\n' +
-        '* Destinations that are close take longer to get to than places farther away, as if they were at least twice the distance apart.' + '\n' +
-        '* Matter spells suffer a –2 penalty (Death is Pandemonium’s Inferior Arcanum).'
-    },
-    {
-        pathId: 'moros',
-        fancyName: '💀🧱 Moros',
-        realm: 'Stygia',
-        anomalyDescription: '* Ghosts in Twilight are attracted to the scene. They are usually malevolent or aroused to anger by the magic that draws them.' + '\n' +
-        '* Darkness becomes a palpable force, dimming the light even during day.' + '\n' +
-        '* Things become delicate and breakable (ignore one point of Durability and armor when striking objects).' + '\n' +
-        '* Spirit spells suffer a –2 penalty (Spirit is Stygia’s Inferior Arcanum)'
-    },
-    {
-        pathId: 'obrimos',
-        fancyName: '⚡✨ Obrimos',
-        realm: 'Aether',
-        anomalyDescription: '* A storm brews or the weather acts crazy, raining hail in clear skies.' + '\n' +
-        '* The electrical system goes haywire, shorting out anything plugged into the local grid.' + '\n' +
-        '* Mana cannot be drawn from any Hallow in the area of the Anomaly for the duration of the Paradox.' + '\n' +
-        '* Tass cannot be converted to Mana in the area of the Anomaly for the duration of the Paradox.' + '\n' +
-        '* Mana cannot be solidified into tass in the area of the Anomaly for the duration of the Paradox.' + '\n' +
-        '* Resonance becomes negatively aspected. This is a lasting effect.' + '\n' +
-        '* Death spells suffer a –2 penalty (Death is the Aether’s Inferior Arcanum).'
-    },
-    {
-        pathId: 'thyrsus',
-        fancyName: '🌱🧞 Thyrsus',
-        realm: 'Primal Wild',
-        anomalyDescription: '* Everyone on the scene becomes enervated, lacking energy. It is an effort to perform physical actions (–2 to all such rolls), even walking. Speed is halved.' + '\n' +
-        '* Flowers wither, milk curdles, animals are skittish and on edge.' + '\n' +
-        '* Some objects become ephemeral, existing only in Twilight. If 3+ dots were used in the spell that invoked the Paradox, objects might be transferred across the Gauntlet.' + '\n' +
-        '* Malevolent spirits in Twilight are attracted to the scene, or if 3+ dots were used in the spell that invoked the Paradox, they cross over from the Gauntlet.' + '\n' +
-        '* Slumbering spirits in objects awaken and turn against their wielders.' + '\n' +
-        '* Mind spells suffer a –2 penalty (Mind is the Primal Wild’s Inferior Arcanum).'
-    }
-]
-// const havocDefinition = "The mage’s spell is no longer under his control and is considered a Havoc spell. It affects a randomly chosen target (or targets, if multiple targets were factored into the casting) instead of the caster’s declared target(s). The caster himself is included in this pool of random victims. The new target must be of the same type — if the mage targeted a living person, then the pool of random targets include only living people. If the mage’s target is an object, then only objects are affected. If the caster is the only viable target present, he is the target of his own spell (unless he was its originally intended target, in which case the spell affects a target of a different kind, such as an object)." + "\n" +
-// "The new target — including the mage himself if he is the spell’s new target — can contest or resist the spell if it is normally allowed (see the spell’s description)." + "\n" +
-// "In addition, the mage’s Wisdom is rolled." + "\n" +
-// "Since the spell is no longer under the caster’s control he cannot dismiss it at will." + "\n" +
-// "A Havoc lasts for only as long as the spell’s Duration. Note that spells with a concentration-based Duration become transitory; the Storyteller rolls a single die and the result is the number of turns the spells lasts."
