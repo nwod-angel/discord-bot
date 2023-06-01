@@ -270,17 +270,18 @@ export const ParadoxCommand: Command = {
                     case 4: duration = '24 hours'; break
                 }
                 path = await getPath(path, client, interaction)
+                const radius = (await getArcanumDots(arcanumDots, client, interaction) || 0) * 20
                 embed.addFields({
-                    name: `${name} causes a **${paths.filter(p => p.pathId == path)[0].fancyName}** anomaly for **${duration}**`,
+                    name: `${name} causes a **${paths.filter(p => p.pathId == path)[0].fancyName}** anomaly for **${duration}** in a **${radius} yard radius**.`,
                     value: paths.filter(p => p.pathId == path)[0].anomalyDescription
                 })
 
                 break
             case 'Branding':
-                embed.addFields({ name: '😡 Branding', value: `${name} causes a Branding.`, inline: false })
+                embed.addFields({ name: '😡 Branding', value: brandingSummary, inline: false })
                 break
             case 'Manifestation':
-                embed.addFields({ name: '😱 Manifestation', value: `${name} causes a manifestation.`, inline: false })
+                embed.addFields({ name: '👿 Manifestation', value: manifestationSummary, inline: false })
                 break
         }
 
@@ -448,32 +449,60 @@ function splitArray<T>(array: Array<T>, n: number) {
 const havocSummary = "The mage's spell becomes Havoc, affecting a randomly chosen target instead of the intended one. The new target must be of the same type. The mage and objects can also be affected. The new target can resist the spell. The mage's Wisdom is rolled: Dramatic Failure or Failure reverses it, Success keeps the effect unchanged, and Exceptional Success grants a bonus for dispelling. The spell cannot be dismissed and lasts for its Duration. Concentration-based spells become transitory, with the duration determined by a die roll."
 const bedlamSummary = "The mage gains a temporary derangement as a result of invoking Paradox, similar to Wisdom degeneration. The specific derangement is chosen by the player and Storyteller. The derangement is active for the duration of the Paradox and disappears once it ends. The player is expected to roleplay the derangement creatively, but the Storyteller can intervene if the character's actions contradict the derangement, imposing a Willpower penalty if necessary."
 const anomalySummary = "Reality fractures and allows for the occurrence of impossible events. The extent of the affected area depends on the highest Arcanum used, with a radius of 20 yards per dot. Anomalies are not influenced by the disbelief of regular individuals. Anomalies are unpredictable, with the Storyteller determining their effects and rules. Examples based on the Path realm are given, but Storytellers are encouraged to be inventive and perplex the caster. If multiple Paradox Anomalies from different Path realms occur in the same area during a scene, their effects combine. Furthermore, if the same Path realm causes multiple Anomalies in the same area during the same scene, the effects are intensified."
+const brandingSummary = "When a mage misuses magic, their body is affected and bears the mark of their spell. Different levels of Arcanum Dots result in distinct Brands. Examples of Brands include the Uncanny Nimbus, Witch's Mark, Disfigurement, Bestial Feature, and Inhuman Feature. The Storyteller has the freedom to create a Brand that symbolically represents the mage's Vice. For instance, an Envious or Prideful mage's nimbus may appear weaker when affecting others but stronger when affecting the mage. A Greedy mage's nimbus may not affect others directly but is still noticeable, while a Wrathful mage's nimbus may be menacing without causing direct harm."
+const manifestationSummary = "An entity from the Abyss enters the Fallen World, it materializes in the vicinity of the mage who summoned it. The manifestation occurs within a certain range, typically not exceeding 10 yards per dot of the caster's Gnosis. The entity's appearance is not necessarily within the mage's line of sight; it could emerge below the mage, in the sewers, or even in a concealed room beyond the nearest wall."
 
 const paths = [
     {
         pathId: 'acanthus',
-        fancyName: '⌛🎲 Acanthus',
-        anomalyDescription: 'Acanthus anomaly'
+        fancyName: '🎲⌛ Acanthus',
+        realm: 'Arcadia',
+        anomalyDescription: '* Ill-luck taints the scene, causing everyone there to suffer a reverse of a rote action effect (see pp. 134-135 of the World of Darkness Rulebook) on their rolls: re-roll successes once, not to add new successes to the total but to replace rolled successes if the second roll results in failures. For example, a roll results in three successes and two failures. The successes are re-rolled, and this time the dice yield only two successes.' + '\n' +
+        '* People get a powerful sense of déjà vu over and over again. They repeat tasks they just accomplished unless they succeed in a Wits + Composure roll.' + '\n' +
+        '* People and/or things move in slow motion while time outside the area of the Intrusion passes normally.' + '\n' +
+        '* Forces spells suffer a –2 penalty (Forces is Arcadia’s Inferior Arcanum).'
     },
     {
         pathId: 'mastigos',
         fancyName: '🧠🌌 Mastigos',
-        anomalyDescription: 'Mastigos anomaly'
+        realm: 'Pandemonium',
+        anomalyDescription: '& Repressed or denied thoughts and emotions rise up and plague everyone’s mind. Any Social rolls suffer a –2 dice penalty.' + '\n' +
+        '* People become lost and disoriented easily (–2 on any Survival rolls to orient oneself).' + '\n' +
+        '* Objects sometimes roll uphill or sideways.' + '\n' +
+        '* Destinations that are close take longer to get to than places farther away, as if they were at least twice the distance apart.' + '\n' +
+        '* Matter spells suffer a –2 penalty (Death is Pandemonium’s Inferior Arcanum).'
     },
     {
         pathId: 'moros',
         fancyName: '💀🧱 Moros',
-        anomalyDescription: 'Moros anomaly'
+        realm: 'Stygia',
+        anomalyDescription: '* Ghosts in Twilight are attracted to the scene. They are usually malevolent or aroused to anger by the magic that draws them.' + '\n' +
+        '* Darkness becomes a palpable force, dimming the light even during day.' + '\n' +
+        '* Things become delicate and breakable (ignore one point of Durability and armor when striking objects).' + '\n' +
+        '* Spirit spells suffer a –2 penalty (Spirit is Stygia’s Inferior Arcanum)'
     },
     {
         pathId: 'obrimos',
-        fancyName: '⚡🪄 Obrimos',
-        anomalyDescription: 'Obrimos anomaly'
+        fancyName: '⚡✨ Obrimos',
+        realm: 'Aether',
+        anomalyDescription: '* A storm brews or the weather acts crazy, raining hail in clear skies.' + '\n' +
+        '* The electrical system goes haywire, shorting out anything plugged into the local grid.' + '\n' +
+        '* Mana cannot be drawn from any Hallow in the area of the Anomaly for the duration of the Paradox.' + '\n' +
+        '* Tass cannot be converted to Mana in the area of the Anomaly for the duration of the Paradox.' + '\n' +
+        '* Mana cannot be solidified into tass in the area of the Anomaly for the duration of the Paradox.' + '\n' +
+        '* Resonance becomes negatively aspected. This is a lasting effect.' + '\n' +
+        '* Death spells suffer a –2 penalty (Death is the Aether’s Inferior Arcanum).'
     },
     {
         pathId: 'thyrsus',
-        fancyName: '🌿👻 Thyrsus',
-        anomalyDescription: 'Thyrsus anomaly'
+        fancyName: '🌱🧞 Thyrsus',
+        realm: 'Primal Wild',
+        anomalyDescription: '* Everyone on the scene becomes enervated, lacking energy. It is an effort to perform physical actions (–2 to all such rolls), even walking. Speed is halved.' + '\n' +
+        '* Flowers wither, milk curdles, animals are skittish and on edge.' + '\n' +
+        '* Some objects become ephemeral, existing only in Twilight. If 3+ dots were used in the spell that invoked the Paradox, objects might be transferred across the Gauntlet.' + '\n' +
+        '* Malevolent spirits in Twilight are attracted to the scene, or if 3+ dots were used in the spell that invoked the Paradox, they cross over from the Gauntlet.' + '\n' +
+        '* Slumbering spirits in objects awaken and turn against their wielders.' + '\n' +
+        '* Mind spells suffer a –2 penalty (Mind is the Primal Wild’s Inferior Arcanum).'
     }
 ]
 // const havocDefinition = "The mage’s spell is no longer under his control and is considered a Havoc spell. It affects a randomly chosen target (or targets, if multiple targets were factored into the casting) instead of the caster’s declared target(s). The caster himself is included in this pool of random victims. The new target must be of the same type — if the mage targeted a living person, then the pool of random targets include only living people. If the mage’s target is an object, then only objects are affected. If the caster is the only viable target present, he is the target of his own spell (unless he was its originally intended target, in which case the spell affects a target of a different kind, such as an object)." + "\n" +
