@@ -106,16 +106,7 @@ export const ParadoxCommand: Command = {
 
         let wisdom = Number(interaction.options.get('wisdom')?.value)
 
-        let path = ''
-        if (interaction.options.get('path')) {
-            path = `${interaction.options.get('path')!.value?.toString()!}`
-        } else {
-            // await getPath(client, interaction)
-            // .then(pathResponse => {
-            //     path = pathResponse || ""
-            // })
-        }
-
+        let path = interaction.options.get('path')?.value?.toString()
         let arcanumDots = Number(interaction.options.get('arcanum-dots')?.value)
 
         const gnosisMod = Math.ceil(gnosis / 2)

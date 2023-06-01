@@ -30,7 +30,4 @@ export default [
     CombatGoingProne,
     CombatMovement,
     Speed,
-
-    // MtAw
-    mtawRules
-]
+].concat(mtawRules)
