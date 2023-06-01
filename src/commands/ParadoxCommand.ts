@@ -271,9 +271,10 @@ export const ParadoxCommand: Command = {
                 }
                 path = await getPath(path, client, interaction)
                 const radius = (await getArcanumDots(arcanumDots, client, interaction) || 0) * 20
+                const pathData = paths.filter(p => p.pathId.toLowerCase() == path?.toLowerCase())[0]
                 embed.addFields({
-                    name: `${name} causes a **${paths.filter(p => p.pathId.toLowerCase() == path?.toLowerCase())[0].fancyName}** anomaly for **${duration}** in a **${radius} yard radius**.`,
-                    value: paths.filter(p => p.pathId == path)[0].anomalyDescription
+                    name: `${name} causes a **${pathData.fancyName}** anomaly for **${duration}** in a **${radius} yard radius**.`,
+                    value: pathData.anomalyDescription
                 })
 
                 break
