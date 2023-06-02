@@ -101,8 +101,8 @@ export const ParadoxCommand: Command = {
         await DiscordChannelLogger.setClient(client).logBaggage({ interaction: interaction, options: interaction.options })
 
 
-        let name = interaction.options.get('name')!.value?.toString() || interaction.member?.user.username
-        let description = interaction.options.get('description')!.value?.toString() || undefined
+        let name = interaction.options.get('name')!.value?.toString() || interaction.member?.user.username || 'A user'
+        let description = interaction.options.get('description')?.value?.toString() || undefined
         let gnosis = Number(interaction.options.get('gnosis')!.value)
         let casts = Number(interaction.options.get('casts')?.value || 0)
         let rote = Boolean(interaction.options.get('rote')?.value || false)
@@ -112,7 +112,7 @@ export const ParadoxCommand: Command = {
         let mitigation = Number(interaction.options.get('mitigation')?.value || 0)
         let backlash = Number(interaction.options.get('backlash')?.value || 0)
         let otherMods = Number(interaction.options.get('other-mods')?.value || 0)
-        let otherModsDescription = interaction.options.get('other-mods-description')!.value?.toString() || 'Other Mods'
+        let otherModsDescription = interaction.options.get('other-mods-description')?.value?.toString() || 'Other Mods'
 
 
         let wisdom = Number(interaction.options.get('wisdom')?.value)
