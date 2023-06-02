@@ -150,7 +150,7 @@ export const ParadoxCommand: Command = {
         }
 
         embed.addFields({
-            name: `Paradox rolled ${instantRoll.dicePool} dice and got ${successes} successes`,
+            name: `🎲 Paradox rolled ${instantRoll.dicePool} dice and got ${successes} successes`,
             value: rollDescription
         })
 
