@@ -1,7 +1,6 @@
 import { Interaction, Client, ApplicationCommandType, CommandInteraction, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js"
 import { Command } from "../Command.js"
 import DiscordChannelLogger from "../DiscordChannelLogger.js"
-import FeedbackController from "./FeedbackController.js"
 import { InstantRoll } from "@nwod-angel/nwod-roller"
 import paths from "../data/paths.js"
 
@@ -41,12 +40,14 @@ export const ParadoxCommand: Command = {
         {
             name: "name",
             description: "The name of the caster rolling",
-            type: 3 // String
+            type: 3, // String
+            maxLength: 32
         },
         {
             name: "description",
             description: "The description of the paradox roll",
-            type: 3 // String
+            type: 3, // String
+            maxLength: 256
         },
         {
             name: "casts",
@@ -94,12 +95,12 @@ export const ParadoxCommand: Command = {
         {
             name: "other-mods-description",
             description: "The description of other mods to the paradox dice pool (Ignored if other mods is not present)",
-            type: 3 // String
+            type: 3, // String
+            maxLength: 256
         },
     ],
     run: async (client: Client, interaction: CommandInteraction) => {
         await DiscordChannelLogger.setClient(client).logBaggage({ interaction: interaction, options: interaction.options })
-
 
         let name = interaction.options.get('name')!.value?.toString() || interaction.member?.user.username || 'A user'
         let description = interaction.options.get('description')?.value?.toString() || undefined
@@ -114,9 +115,7 @@ export const ParadoxCommand: Command = {
         let otherMods = Number(interaction.options.get('other-mods')?.value || 0)
         let otherModsDescription = interaction.options.get('other-mods-description')?.value?.toString() || 'Other Mods'
 
-
         let wisdom = Number(interaction.options.get('wisdom')?.value)
-
         let path = interaction.options.get('path')?.value?.toString()
         let arcanumDots = Number(interaction.options.get('arcanum-dots')?.value)
 
@@ -152,7 +151,7 @@ export const ParadoxCommand: Command = {
 
         embed.setTitle(`${name} rolls ${totalMod} for Paradox!`)
 
-        if (description) { embed.addFields({ name: 'Description', value: description}) }
+        if (description) { embed.setDescription(description) }
         embed.addFields({ name: 'Gnosis', value: `${gnosis} [+${gnosisMod}]`, inline: true })
         if (casts > 0) { embed.addFields({ name: 'Previous casts', value: `${casts} [+${castsMod}]`, inline: true }) }
         if (rote) { embed.addFields({ name: 'Rote', value: `${rote} [${roteMod}]`, inline: true }) }
@@ -163,7 +162,10 @@ export const ParadoxCommand: Command = {
         if (otherMods !== 0) { embed.addFields({ name: otherModsDescription, value: `${otherMods} [${otherMods}]`, inline: true }) }
 
         if (mitigation > 0) {
-            embed.addFields({ name: '✨ Mana Mitigation', value: `${name} uses **${mitigation} mana** to mitigate the paradox`, inline: false })
+            embed.addFields({
+                name: '✨ Mana Mitigation',
+                value: `${name} uses **${mitigation} mana** to mitigate the paradox`
+            })
         }
 
         embed.addFields({
@@ -172,7 +174,10 @@ export const ParadoxCommand: Command = {
         })
 
         if (backlashTaken > 0) {
-            embed.addFields({ name: '🤕 Backlash', value: `${name} takes **${backlashTaken} resistant bashing damage**`, inline: false })
+            embed.addFields({
+                name: '🤕 Backlash',
+                value: `${name} takes **${backlashTaken} resistant bashing damage**`
+            })
         }
 
         embed.addFields({
@@ -182,10 +187,10 @@ export const ParadoxCommand: Command = {
 
         switch (result) {
             case 'No Paradox':
-                embed.addFields({ name: '😮‍💨 No paradox!', value: `${name} gets away with it this time.`, inline: false })
+                embed.addFields({ name: '😮‍💨 No paradox!', value: `${name} gets away with it this time.` })
                 break
             case 'Havoc':
-                embed.addFields({ name: '😒 Havoc', value: havocSummary, inline: false })
+                embed.addFields({ name: '😒 Havoc', value: havocSummary })
                 wisdom = await getWisdom(wisdom, client, interaction) || 0
                 if (wisdom != 0) {
                     embed.addFields({ name: 'Wisdom', value: `${wisdom}`, inline: true })
@@ -219,7 +224,7 @@ export const ParadoxCommand: Command = {
                 }
                 break
             case 'Bedlam':
-                embed.addFields({ name: '😬 Bedlam', value: bedlamSummary, inline: false })
+                embed.addFields({ name: '😬 Bedlam', value: bedlamSummary })
                 wisdom = await getWisdom(wisdom, client, interaction) || 0
                 embed.addFields({ name: 'Wisdom', value: `${wisdom || 'unknown'}`, inline: true })
                 switch (wisdom) {
@@ -253,7 +258,7 @@ export const ParadoxCommand: Command = {
                 ]
                 embed.addFields({
                     name: `🫠 ${name} suffers a **${derangementSeverity}** derangement for **${duration}**`,
-                    value: derangements.filter(d => d.category == derangementSeverity).map(d => d.name).join(', '), inline: false
+                    value: derangements.filter(d => d.category == derangementSeverity).map(d => d.name).join(', ')
                 })
                 if (wisdom != 0) {
                     let wisdomRoll = new InstantRoll({ dicePool: wisdom })
@@ -286,7 +291,7 @@ export const ParadoxCommand: Command = {
                 }
                 break
             case 'Anomaly':
-                embed.addFields({ name: '😰 Anomaly', value: anomalySummary, inline: false })
+                embed.addFields({ name: '😰 Anomaly', value: anomalySummary })
                 wisdom = await getWisdom(wisdom, client, interaction) || 0
                 embed.addFields({ name: 'Wisdom', value: `${wisdom || 'unknown'}`, inline: true })
                 switch (wisdom) {
@@ -310,21 +315,21 @@ export const ParadoxCommand: Command = {
 
                 break
             case 'Branding':
-                embed.addFields({ name: '😡 Branding', value: brandingSummary, inline: false })
+                embed.addFields({ name: '😡 Branding', value: brandingSummary })
                 arcanumDots = await getArcanumDots(arcanumDots, client, interaction) || 0
                 embed.addFields({ name: 'Arcanum Dots', value: `${arcanumDots || 'unknown'}`, inline: true })
                 if (arcanumDots) {
                     const brandingLevel = brandingLevels.filter(bl => bl.value == arcanumDots)[0]
-                    embed.addFields({ name: `${name} is branded with a **${brandingLevel.name}**`, value: brandingLevel.description, inline: false })
+                    embed.addFields({ name: `${name} is branded with a **${brandingLevel.name}**`, value: brandingLevel.description })
                 }
                 break
             case 'Manifestation':
-                embed.addFields({ name: '👿 Manifestation', value: manifestationSummary, inline: false })
+                embed.addFields({ name: '👿 Manifestation', value: manifestationSummary })
                 arcanumDots = await getArcanumDots(arcanumDots, client, interaction) || 0
                 embed.addFields({ name: 'Arcanum Dots', value: `${arcanumDots || 'unknown'}`, inline: true })
                 if (arcanumDots) {
                     const manifestationLevel = manifestationLevels.filter(ml => ml.value == arcanumDots)[0]
-                    embed.addFields({ name: `${name} invokes a ${'⬤'.repeat(arcanumDots)} manifestation`, value: manifestationLevel.description, inline: false })
+                    embed.addFields({ name: `${name} invokes a ${'⬤'.repeat(arcanumDots)} manifestation`, value: manifestationLevel.description })
                 }
                 break
         }
