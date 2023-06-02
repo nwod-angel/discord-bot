@@ -1,4 +1,4 @@
-import { Interaction, Client, ApplicationCommandType, CommandInteraction } from "discord.js";
+import { Interaction, Client, ApplicationCommandType, CommandInteraction, EmbedBuilder } from "discord.js";
 import { Command } from "../Command.js";
 
 const durationAdvancedProlongedChoices = [
@@ -282,11 +282,20 @@ export const CastCommand: Command = {
 		}, spell.dicePoolModifiersTotal)
 		spell.dicePoolDescription = spell.dicePoolModifiers.map(dpm => `${dpm.type} ${dpm.value} \`(${dpm.modifier})\``).join('\n') + `\n\`= ${spell.dicePoolModifiersTotal}\``
         
-        const content = JSON.stringify(spell)
+        
+        let embed = new EmbedBuilder()
+            .setFooter({
+                text: interaction.id,
+                // iconURL: 'https://i.imgur.com/AfFp7pu.png'
+            })
+            .setTitle(`Dice Pool = ${spell.dicePoolModifiersTotal}`)
 
+            embed.addFields(
+                { name: `Modifiers`, value: spell.dicePoolDescription}
+            )
+            
         await interaction.followUp({
-            ephemeral: true,
-            content
+            embeds: [embed]
         });
     }
 };
