@@ -171,6 +171,7 @@ export const ParadoxCommand: Command = {
                 embed.addFields({ name: '😒 Havoc', value: havocSummary, inline: false })
                 wisdom = await getWisdom(wisdom, client, interaction) || 0
                 if (wisdom != 0) {
+                    embed.addFields({ name: 'Wisdom', value: `${wisdom}`, inline: true })
                     let wisdomRoll = new InstantRoll({ dicePool: wisdom })
 
                     if (wisdomRoll.isCriticalFailure()) {
@@ -203,13 +204,16 @@ export const ParadoxCommand: Command = {
             case 'Bedlam':
                 embed.addFields({ name: '😬 Bedlam', value: bedlamSummary, inline: false })
                 wisdom = await getWisdom(wisdom, client, interaction) || 0
+                embed.addFields({ name: 'Wisdom', value: `${wisdom || 'unknown'}`, inline: true })
                 switch (wisdom) {
                     case 1: duration = 'Two days'; break
                     case 2: duration = '24 hours'; break
                     case 3: duration = '12 hours'; break
                     case 4: duration = '2 hours'; break
                 }
-                let derangementSeverity = (await getArcanumDots(arcanumDots, client, interaction) || 0) < 3 ? 'mild' : 'severe'
+                arcanumDots = await getArcanumDots(arcanumDots, client, interaction) || 0
+                embed.addFields({ name: 'Arcanum Dots', value: `${arcanumDots || 'unknown'}`, inline: true })
+                let derangementSeverity = (arcanumDots) < 3 ? 'mild' : 'severe'
                 let derangements = [
                     { name: 'Avoidance', category: 'mild' },
                     { name: 'Fugue', category: 'severe' },
@@ -235,6 +239,7 @@ export const ParadoxCommand: Command = {
                     value: derangements.filter(d => d.category == derangementSeverity).map(d => d.name).join(', '), inline: false
                 })
                 if (wisdom != 0) {
+                    embed.addFields({ name: 'Wisdom', value: `${wisdom || 'unknown'}`, inline: true })
                     let wisdomRoll = new InstantRoll({ dicePool: wisdom })
 
                     if (wisdomRoll.isCriticalFailure()) {
@@ -267,6 +272,7 @@ export const ParadoxCommand: Command = {
             case 'Anomaly':
                 embed.addFields({ name: '😰 Anomaly', value: anomalySummary, inline: false })
                 wisdom = await getWisdom(wisdom, client, interaction) || 0
+                embed.addFields({ name: 'Wisdom', value: `${wisdom || 'unknown'}`, inline: true })
                 switch (wisdom) {
                     case 1: duration = 'One month'; break
                     case 2: duration = 'One week'; break
@@ -274,8 +280,13 @@ export const ParadoxCommand: Command = {
                     case 4: duration = '24 hours'; break
                 }
                 path = await getPath(path, client, interaction)
-                const radius = (await getArcanumDots(arcanumDots, client, interaction) || 0) * 20
                 const pathData = paths.filter(p => p.pathId.toLowerCase() == path?.toLowerCase())[0]
+                embed.addFields({ name: 'Path', value: pathData.fancyName, inline: true })
+
+                arcanumDots = await getArcanumDots(arcanumDots, client, interaction) || 0
+                embed.addFields({ name: 'Arcanum Dots', value: `${arcanumDots || 'unknown'}`, inline: true })
+
+                const radius = arcanumDots * 20
                 embed.addFields({
                     name: `${name} causes a **${pathData.realm}** anomaly for **${duration}** in a **${radius} yard radius**.`,
                     value: pathData.anomalyDescription
@@ -285,6 +296,7 @@ export const ParadoxCommand: Command = {
             case 'Branding':
                 embed.addFields({ name: '😡 Branding', value: brandingSummary, inline: false })
                 arcanumDots = await getArcanumDots(arcanumDots, client, interaction) || 0
+                embed.addFields({ name: 'Arcanum Dots', value: `${arcanumDots || 'unknown'}`, inline: true })
                 if(arcanumDots) {
                     const brandingLevel = brandingLevels.filter(bl => bl.value == arcanumDots)[0]
                     embed.addFields({ name: `${name} is branded with a **${brandingLevel.name}**`, value: brandingLevel.description, inline: false })
@@ -293,6 +305,7 @@ export const ParadoxCommand: Command = {
             case 'Manifestation':
                 embed.addFields({ name: '👿 Manifestation', value: manifestationSummary, inline: false })
                 arcanumDots = await getArcanumDots(arcanumDots, client, interaction) || 0
+                embed.addFields({ name: 'Arcanum Dots', value: `${arcanumDots || 'unknown'}`, inline: true })
                 if(arcanumDots) {
                     const manifestationLevel = manifestationLevels.filter(ml => ml.value == arcanumDots)[0]
                     embed.addFields({ name: `${name} invokes a ${'⬤'.repeat(arcanumDots)} manifestation`, value: manifestationLevel.description, inline: false })
