@@ -14,6 +14,7 @@ import PoisonsAndToxins from "./rules/wod/PoisonsAndToxins";
 import Speed from "./rules/wod/Speed";
 
 import mtawRules from "./rules/mtaw/mtaw-rules";
+import SkillRules from "./rules/wod/SkillRules";
 
 export default [
     Defense,
@@ -30,4 +31,6 @@ export default [
     CombatGoingProne,
     CombatMovement,
     Speed,
-].concat(mtawRules)
+]
+.concat(mtawRules)
+.concat(SkillRules)
