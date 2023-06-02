@@ -150,18 +150,18 @@ export const ParadoxCommand: Command = {
         }
 
         embed.addFields({
-                name: `Paradox rolled ${instantRoll.dicePool} dice and got ${successes} successes`,
-                value: rollDescription
-            })
-                
-        embed.addFields(
-            {
-                name: `Result`,
-                value: `${successes}${backlashString} = **${finalResult} (${result})**`
-            })
+            name: `Paradox rolled ${instantRoll.dicePool} dice and got ${successes} successes`,
+            value: rollDescription
+        })
+
         if (backlashTaken > 0) {
             embed.addFields({ name: '🤕 Backlash', value: `${name} takes **${backlashTaken} resistant bashing damage**`, inline: false })
         }
+
+        embed.addFields({
+            name: `Result`,
+            value: `${successes}${backlashString} = **${finalResult} (${result})**`
+        })
 
         switch (result) {
             case 'No Paradox':
@@ -296,7 +296,7 @@ export const ParadoxCommand: Command = {
                 embed.addFields({ name: '😡 Branding', value: brandingSummary, inline: false })
                 arcanumDots = await getArcanumDots(arcanumDots, client, interaction) || 0
                 embed.addFields({ name: 'Arcanum Dots', value: `${arcanumDots || 'unknown'}`, inline: true })
-                if(arcanumDots) {
+                if (arcanumDots) {
                     const brandingLevel = brandingLevels.filter(bl => bl.value == arcanumDots)[0]
                     embed.addFields({ name: `${name} is branded with a **${brandingLevel.name}**`, value: brandingLevel.description, inline: false })
                 }
@@ -305,7 +305,7 @@ export const ParadoxCommand: Command = {
                 embed.addFields({ name: '👿 Manifestation', value: manifestationSummary, inline: false })
                 arcanumDots = await getArcanumDots(arcanumDots, client, interaction) || 0
                 embed.addFields({ name: 'Arcanum Dots', value: `${arcanumDots || 'unknown'}`, inline: true })
-                if(arcanumDots) {
+                if (arcanumDots) {
                     const manifestationLevel = manifestationLevels.filter(ml => ml.value == arcanumDots)[0]
                     embed.addFields({ name: `${name} invokes a ${'⬤'.repeat(arcanumDots)} manifestation`, value: manifestationLevel.description, inline: false })
                 }
