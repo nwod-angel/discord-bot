@@ -18,4 +18,4 @@ export default skills.map(skill => {
             new RuleParagraph({ prefix: 'Specialties', text: skill.specialties.join(', ')})
         ]
     }
-})
+}) as any
