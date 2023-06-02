@@ -239,7 +239,6 @@ export const ParadoxCommand: Command = {
                     value: derangements.filter(d => d.category == derangementSeverity).map(d => d.name).join(', '), inline: false
                 })
                 if (wisdom != 0) {
-                    embed.addFields({ name: 'Wisdom', value: `${wisdom || 'unknown'}`, inline: true })
                     let wisdomRoll = new InstantRoll({ dicePool: wisdom })
 
                     if (wisdomRoll.isCriticalFailure()) {
