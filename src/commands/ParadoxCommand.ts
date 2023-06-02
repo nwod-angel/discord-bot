@@ -160,7 +160,7 @@ export const ParadoxCommand: Command = {
         if (inShadow) { embed.addFields({ name: 'In Shadow', value: `${inShadow} [${shadowMod}]`, inline: true }) }
         if (sleepers) { embed.addFields({ name: 'Sleeper witnesses', value: `${sleepers} [+${sleepersMod}]`, inline: true }) }
         if (mitigation > 0) { embed.addFields({ name: 'Mana Mitigation', value: `${mitigation} [${mitigationMod}]`, inline: true }) }
-        if (otherMods > 0) { embed.addFields({ name: otherModsDescription, value: `${otherMods} [${otherMods}]`, inline: true }) }
+        if (otherMods !== 0) { embed.addFields({ name: otherModsDescription, value: `${otherMods} [${otherMods}]`, inline: true }) }
 
         if (mitigation > 0) {
             embed.addFields({ name: '✨ Mana Mitigation', value: `${name} uses **${mitigation} mana** to mitigate the paradox`, inline: false })
