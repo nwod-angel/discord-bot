@@ -7,6 +7,7 @@ import { MeritCommand } from "./commands/MeritCommand.js";
 import { RuleCommand } from "./commands/RuleCommand.js";
 import { TableCommand } from "./commands/TableCommand.js";
 import { ParadoxCommand } from "./commands/ParadoxCommand.js";
+import { CastCommand } from "./commands/CastCommand.js";
 
 export const Commands: Command[] = [
     Hello,
@@ -16,5 +17,6 @@ export const Commands: Command[] = [
     MeritCommand,
     RuleCommand,
     TableCommand,
-    ParadoxCommand
+    ParadoxCommand,
+    CastCommand
 ];
