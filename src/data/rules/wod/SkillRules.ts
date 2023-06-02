@@ -13,7 +13,7 @@ export default skills.map(skill => {
         ],
         paragraphs:  
         [
-            new RuleParagraph({ text: skill.description}),
+            skill.description.map(d => new RuleParagraph({ text: d})),
             new RuleParagraph({ prefix: 'Possessed By', text: skill.possessedBy.join(', ')}),
             new RuleParagraph({ prefix: 'Specialties', text: skill.specialties.join(', ')})
         ]
