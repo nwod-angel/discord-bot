@@ -11,11 +11,11 @@ export default skills.map(skill => {
                 sourcePage: "-"
             }
         ],
-        paragraphs:  
-        [
-            skill.description.map(d => new RuleParagraph({ text: d})),
+        paragraphs:
+        skill.description.map(d => new RuleParagraph({ text: d}))
+        .concat([
             new RuleParagraph({ prefix: 'Possessed By', text: skill.possessedBy.join(', ')}),
             new RuleParagraph({ prefix: 'Specialties', text: skill.specialties.join(', ')})
-        ]
+        ])
     }
-}) as any
+})
