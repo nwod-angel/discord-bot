@@ -118,7 +118,7 @@ export const ParadoxCommand: Command = {
         const successes = instantRoll.numberOfSuccesses()
         const finalResult = Math.max(0, successes - backlash)
         const backlashTaken = Math.min(successes, backlash)
-        const backlashString = backlashTaken > 0 ? ` - ${backlashTaken}[backlash taken]` : ''
+        const backlashString = backlashTaken > 0 ? ` - ${backlashTaken} (backlash taken)` : ''
         const result = finalResult >= 5 ? 'Manifestation' :
             finalResult == 4 ? 'Branding' :
                 finalResult == 3 ? 'Anomaly' :
@@ -145,7 +145,16 @@ export const ParadoxCommand: Command = {
         if (sleepers) { embed.addFields({ name: 'Sleeper witnesses', value: `${sleepers} [+${sleepersMod}]`, inline: true }) }
         if (mitigation > 0) { embed.addFields({ name: 'Mana Mitigation', value: `${mitigation} [${mitigationMod}]`, inline: true }) }
 
-        embed.addFields({ name: 'Roll', value: `${successes}[${rollDescription}]${backlashString} = **${finalResult} (${result})**`, inline: false })
+        embed.addFields({
+                name: `Paradox rolled ${instantRoll.dicePool} dice and got ${successes} successes`,
+                value: rollDescription
+            })
+                
+        embed.addFields(
+            {
+                name: `Result`,
+                value: `${successes}${backlashString} = **${finalResult} (${result})**`
+            })
 
         if (mitigation > 0) {
             embed.addFields({ name: '✨ Mana Mitigation', value: `${name} uses **${mitigation} mana** to mitigate the paradox`, inline: false })
