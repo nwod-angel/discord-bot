@@ -145,6 +145,10 @@ export const ParadoxCommand: Command = {
         if (sleepers) { embed.addFields({ name: 'Sleeper witnesses', value: `${sleepers} [+${sleepersMod}]`, inline: true }) }
         if (mitigation > 0) { embed.addFields({ name: 'Mana Mitigation', value: `${mitigation} [${mitigationMod}]`, inline: true }) }
 
+        if (mitigation > 0) {
+            embed.addFields({ name: '✨ Mana Mitigation', value: `${name} uses **${mitigation} mana** to mitigate the paradox`, inline: false })
+        }
+
         embed.addFields({
                 name: `Paradox rolled ${instantRoll.dicePool} dice and got ${successes} successes`,
                 value: rollDescription
@@ -155,10 +159,6 @@ export const ParadoxCommand: Command = {
                 name: `Result`,
                 value: `${successes}${backlashString} = **${finalResult} (${result})**`
             })
-
-        if (mitigation > 0) {
-            embed.addFields({ name: '✨ Mana Mitigation', value: `${name} uses **${mitigation} mana** to mitigate the paradox`, inline: false })
-        }
         if (backlashTaken > 0) {
             embed.addFields({ name: '🤕 Backlash', value: `${name} takes **${backlashTaken} resistant bashing damage**`, inline: false })
         }
