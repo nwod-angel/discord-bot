@@ -1,3 +1,4 @@
+import ArcanaRules from "./ArcanaRules";
 import BedlamDerangementAvoidanceFugue from "./BedlamDerangementAvoidanceFugue";
 import BedlamDerangementDepressionMelancholia from "./BedlamDerangementDepressionMelancholia";
 import BedlamDerangementFixationObsessiveCompulsion from "./BedlamDerangementFixationObsessiveCompulsion";
@@ -36,3 +37,4 @@ export default [
     BedlamDerangementVocalizationSchizophrenia
     
 ]
+.concat(ArcanaRules)
