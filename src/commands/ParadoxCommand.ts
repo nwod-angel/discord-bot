@@ -76,7 +76,7 @@ export const ParadoxCommand: Command = {
         },
         {
             name: "mitigation",
-            description: "One Mana is spent per die the player wants to subtract from the Paradox dice pool.",
+            description: "One Mana is spent per die the player wants to subtract from the Paradox dice pool",
             type: 4, // Integer
             minValue: 0,
         },
@@ -85,7 +85,17 @@ export const ParadoxCommand: Command = {
             description: "A caster can convert Paradox successes to bashing damage on a one-for-one basis.",
             type: 4, // Integer
             minValue: 0,
-        }
+        },
+        {
+            name: "other-mods",
+            description: "Any other mods to the paradox dice pool",
+            type: 4, // Integer
+        },
+        {
+            name: "other-mods-description",
+            description: "The description of other mods to the paradox dice pool (Ignored if other mods is not present)",
+            type: 3 // String
+        },
     ],
     run: async (client: Client, interaction: CommandInteraction) => {
         await DiscordChannelLogger.setClient(client).logBaggage({ interaction: interaction, options: interaction.options })
@@ -101,6 +111,9 @@ export const ParadoxCommand: Command = {
         let sleepers = Boolean(interaction.options.get('sleepers')?.value || false)
         let mitigation = Number(interaction.options.get('mitigation')?.value || 0)
         let backlash = Number(interaction.options.get('backlash')?.value || 0)
+        let otherMods = Number(interaction.options.get('other-mods')?.value || 0)
+        let otherModsDescription = interaction.options.get('other-mods-description')!.value?.toString() || 'Other Mods'
+
 
         let wisdom = Number(interaction.options.get('wisdom')?.value)
 
@@ -115,7 +128,7 @@ export const ParadoxCommand: Command = {
         const sleepersMod = sleepers ? +2 : 0
         const mitigationMod = -mitigation
 
-        const totalMod = Math.max(0, gnosisMod + castsMod + roteMod + toolMod + shadowMod + sleepersMod + mitigationMod)
+        const totalMod = Math.max(0, gnosisMod + castsMod + roteMod + toolMod + shadowMod + sleepersMod + mitigationMod + otherMods)
 
         const instantRoll = new InstantRoll({ dicePool: totalMod })
         const rollDescription = instantRoll.toString()
@@ -147,6 +160,7 @@ export const ParadoxCommand: Command = {
         if (inShadow) { embed.addFields({ name: 'In Shadow', value: `${inShadow} [${shadowMod}]`, inline: true }) }
         if (sleepers) { embed.addFields({ name: 'Sleeper witnesses', value: `${sleepers} [+${sleepersMod}]`, inline: true }) }
         if (mitigation > 0) { embed.addFields({ name: 'Mana Mitigation', value: `${mitigation} [${mitigationMod}]`, inline: true }) }
+        if (otherMods > 0) { embed.addFields({ name: otherModsDescription, value: `${otherMods} [${otherMods}]`, inline: true }) }
 
         if (mitigation > 0) {
             embed.addFields({ name: '✨ Mana Mitigation', value: `${name} uses **${mitigation} mana** to mitigate the paradox`, inline: false })
