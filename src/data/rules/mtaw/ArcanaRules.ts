@@ -1,4 +1,4 @@
-import arcanum from "src/data/arcanum"
+import arcanum from "../../arcanum"
 import { RuleParagraph } from "../../RuleParagraph"
 
 export default arcanum.map(arcana => {
