@@ -40,7 +40,12 @@ export const ParadoxCommand: Command = {
         },
         {
             name: "name",
-            description: "The name of the caster rolling [optional]",
+            description: "The name of the caster rolling",
+            type: 3 // String
+        },
+        {
+            name: "description",
+            description: "The description of the paradox roll",
             type: 3 // String
         },
         {
@@ -85,10 +90,9 @@ export const ParadoxCommand: Command = {
     run: async (client: Client, interaction: CommandInteraction) => {
         await DiscordChannelLogger.setClient(client).logBaggage({ interaction: interaction, options: interaction.options })
 
-        let name = interaction.member?.user.username
-        if (interaction.options.get('name')) {
-            name = `*${interaction.options.get('name')!.value?.toString()!}*`
-        }
+
+        let name = interaction.options.get('name')!.value?.toString() || interaction.member?.user.username
+        let description = interaction.options.get('description')!.value?.toString() || undefined
         let gnosis = Number(interaction.options.get('gnosis')!.value)
         let casts = Number(interaction.options.get('casts')?.value || 0)
         let rote = Boolean(interaction.options.get('rote')?.value || false)
@@ -133,11 +137,10 @@ export const ParadoxCommand: Command = {
                 // iconURL: 'https://i.imgur.com/AfFp7pu.png'
             })
 
-        embed
-            .setTitle(`${name} rolls ${totalMod} for Paradox!`)
-            .addFields(
-                { name: 'Gnosis', value: `${gnosis} [+${gnosisMod}]`, inline: true }
-            )
+        embed.setTitle(`${name} rolls ${totalMod} for Paradox!`)
+
+        if (description) { embed.addFields({ name: 'Description', value: description}) }
+        embed.addFields({ name: 'Gnosis', value: `${gnosis} [+${gnosisMod}]`, inline: true })
         if (casts > 0) { embed.addFields({ name: 'Previous casts', value: `${casts} [+${castsMod}]`, inline: true }) }
         if (rote) { embed.addFields({ name: 'Rote', value: `${rote} [${roteMod}]`, inline: true }) }
         if (tool) { embed.addFields({ name: 'Magical Tool', value: `${tool} [${toolMod}]`, inline: true }) }
