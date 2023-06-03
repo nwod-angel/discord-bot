@@ -280,7 +280,7 @@ export const CastCommand: Command = {
 		spell.dicePoolModifiersTotal = spell.dicePoolModifiers.reduce(function(prevValue, current, index, array) {
 			return prevValue + current.modifier
 		}, spell.dicePoolModifiersTotal)
-		spell.dicePoolDescription = spell.dicePoolModifiers.map(dpm => `${dpm.type} ${dpm.value} \`(${dpm.modifier})\``).join('\n') + `\n\`= ${spell.dicePoolModifiersTotal}\``
+		spell.dicePoolDescription = spell.dicePoolModifiers.map(dpm => `\`(${dpm.modifier})\` ${dpm.type} ${dpm.value}`).join('\n')
         
         
         let embed = new EmbedBuilder()
@@ -288,7 +288,7 @@ export const CastCommand: Command = {
                 text: interaction.id,
                 // iconURL: 'https://i.imgur.com/AfFp7pu.png'
             })
-            .setTitle(`Dice Pool = ${spell.dicePoolModifiersTotal}`)
+            .setTitle(`Spellcasting factors mod (${spell.action}) = ${spell.dicePoolModifiersTotal}`)
 
             embed.addFields(
                 { name: `Modifiers`, value: spell.dicePoolDescription}
