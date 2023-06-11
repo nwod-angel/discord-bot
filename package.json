@@ -5,7 +5,7 @@
   "type": "module",
   "dependencies": {
     "@nwod-angel/nwod-core": "^1.1.0",
-    "@nwod-angel/nwod-roller": "^1.1.3",
+    "@nwod-angel/nwod-roller": "^1.1.4",
     "@types/node": "^18.7.15",
     "ascii-table": "^0.0.9",
     "axios": "^0.27.2",
