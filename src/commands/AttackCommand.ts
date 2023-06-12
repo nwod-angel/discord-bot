@@ -31,7 +31,7 @@ export const AttackCommand: Command = {
         },
         {
             name: "weapon-damage",
-            description: "The damage modifier on a gun does not add dice to the roll to hit. Rather, the damage is applied automatically provided that the Dexterity + Firearms roll is successful.",
+            description: "Gun damage modifier doesn't add dice to hit. Damage applied if Dexterity + Firearms roll succeeds.",
             type: 4, // Integer
             minValue: 0,
         },
@@ -55,7 +55,7 @@ export const AttackCommand: Command = {
         },
         {
             name: "burst",
-            description: "Long: +3 per attack, -1 per extra target. Medium: +2 per attack, 1-3 targets, -1 per extra target.  Short: +1 to attack, single target.",
+            description: "Long, Medium, Short",
             type: 3, // String
             choices: [
                 { name: 'Long: +3 per attack, -1 per extra target', value: 'long' },
@@ -76,7 +76,7 @@ export const AttackCommand: Command = {
         },
         {
             name: "cover-durability",
-            description: "Successful ranged attacks exceeding cover's Durability pass through, hitting the target behind while causing excess successes as Structure damage to the cover.",
+            description: "Ranged attacks over cover's Durability hit target behind, excess successes do Structure damage",
             type: 4, // Integer
             minValue: 1,
         },
@@ -87,12 +87,12 @@ export const AttackCommand: Command = {
         },
         {
             name: "firing-from-concealment",
-            description: "Shooter’s own concealment quality (-1, -2 or -3) reduced by one as a penalty to fire back (so, no modifier, -1 or -2)",
+            description: "Shooter’s own concealment quality reduced by one as a penalty to fire back",
             type: 3, // String
             choices: [
-                { name: 'Barely', value: 'barely' },
-                { name: 'Partially', value: 'partially' },
-                { name: 'Substantially', value: 'substantially' }
+                { name: 'Barely (-0)', value: 'barely' },
+                { name: 'Partially (-1)', value: 'partially' },
+                { name: 'Substantially (-2)', value: 'substantially' }
             ]
         },
         {
@@ -102,7 +102,7 @@ export const AttackCommand: Command = {
         },
         {
             name: "prone-target",
-            description: "Prone Target: -2 penalty to hit in ranged combat; +2 bonus to hit when attacker is within close-combat distance",
+            description: "Prone Target: -2 in ranged combat; +2 when attacker is within close-combat distance",
             type: 3, // String
             choices: [
                 { name: 'Ranged', value: 'ranged' },
