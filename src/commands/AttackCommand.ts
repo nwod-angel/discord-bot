@@ -7,6 +7,24 @@ export const AttackCommand: Command = {
     type: ApplicationCommandType.ChatInput,
     options: [
         {
+            name: "name",
+            description: "The name of the attacker",
+            type: 3, // String
+            maxLength: 32
+        },
+        {
+            name: "target",
+            description: "The name of the target or targets of the attack",
+            type: 3, // String
+            maxLength: 32
+        },
+        {
+            name: "description",
+            description: "The description of the attack",
+            type: 3, // String
+            maxLength: 256
+        },
+        {
             name: "attack-type",
             description: "Armor Piercing: Ignores amount of target’s armor equal to item’s own rating",
             type: 3, // String
@@ -160,32 +178,27 @@ export const AttackCommand: Command = {
     ],
     run: async (client: Client, interaction: CommandInteraction) => {
 
+        let name = interaction.options.get('name')!.value?.toString() || interaction.member?.user.username || 'A user'
+        let description = interaction.options.get('description')?.value?.toString() || undefined
+
         let attack = {
             dicePoolModifiers: Array<{ type: string, value: string, modifier: number }>(),
             dicePoolModifiersTotal: 0,
             dicePoolDescription: '',
             action: interaction.options.get('action')?.value || 'instant',
-            potency: Number(interaction.options.get('potency')?.value || 1),
             targets: Number(interaction.options.get('targets')?.value || 1),
             size: Number(interaction.options.get('size')?.value || 1),
-            radius: Number(interaction.options.get('radius')?.value) || undefined,
-            radius_advanced: Number(interaction.options.get('radius-advanced')?.value) || undefined,
-            volume: Number(interaction.options.get('volume')?.value) || undefined,
-            volume_advanced: Number(interaction.options.get('volume-advanced')?.value) || undefined,
-            duration_turns: Number(interaction.options.get('duration-turns')?.value) || undefined,
-            duration_hours: Number(interaction.options.get('duration-hours')?.value) || undefined,
-            duration_days: Number(interaction.options.get('duration-days')?.value) || undefined,
-            duration_advanced_prolonged: interaction.options.get('duration-advanced-prolonged')?.value || undefined
         }
 
         // TODO Check for incompatible options. e.g. targets and radius
 
         let embed = new EmbedBuilder()
+            .setTitle(`${name} attacks! [Work in Progress]`)
             .setFooter({
                 text: interaction.id,
                 // iconURL: 'https://i.imgur.com/AfFp7pu.png'
             })
-            embed.setTitle(`${name} attacks! [Work in Progress]`)
+        if (description) { embed.setDescription(description) }
 
         await interaction.followUp({
             embeds: [embed]
