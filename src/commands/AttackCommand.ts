@@ -10,7 +10,7 @@ export const AttackCommand: Command = {
     options: AttackCommandOptions,
     run: async (client: Client, interaction: CommandInteraction) => {
 
-        let name = interaction.options.get('name')!.value?.toString() || interaction.member?.user.username || 'A user'
+        let name = interaction.options.get('name')?.value?.toString() || interaction.member?.user.username || 'A user'
         let description = interaction.options.get('description')?.value?.toString() || undefined
         let attackTypeId = interaction.options.get('attack-type')!.value!.toString()
         let attackType = attackTypes.find(at => at.id === attackTypeId)!
