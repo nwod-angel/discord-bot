@@ -6,7 +6,7 @@ export const attackTypes = [
     { name: 'Armed close combat', symbol: '🪓' , attribute: 'Strength', skill: 'Weaponry', defense: true, armor: true, id: 'armed-close-combat' },
     { name: 'Armed close combat (finesse)', symbol: '🗡️' , attribute: 'Dexterity', skill: 'Weaponry', defense: true, armor: true, id: 'armed-close-combat-finesse' },
     { name: 'Ranged combat (guns and bows)', symbol: '🔫' , attribute: 'Dexterity', skill: 'Firearms', defense: false, armor: true, id: 'ranged-fired' },
-    { name: 'Ranged combat (thrown weapons)', symbol: '🪃' , attribute: 'Dexterity', skill: 'Athletics', defense: true, armor: true, id: 'ranged-thrown' },
+    { name: 'Ranged combat (thrown weapons)', symbol: '⚾' , attribute: 'Dexterity', skill: 'Athletics', defense: true, armor: true, id: 'ranged-thrown' },
 ]
 
 export default [
