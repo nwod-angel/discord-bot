@@ -15,7 +15,7 @@ export default [
         description: "Armor Piercing: Ignores amount of target’s armor equal to item’s own rating",
         type: 3, // String
         required: true,
-        choices: attackTypes.map(at => ({ name: `${at.symbol} ${at.name}: ${at.attribute} + ${at.skill}, minus target's ${[at.defense ? 'Defence' : undefined, at.armor ? 'Armor' : undefined].join(' and ')}`, value: at.id }))
+        choices: attackTypes.map(at => ({ name: `${at.symbol} ${at.name}: ${at.attribute} + ${at.skill}, minus target's ${[at.defense ? 'Defence' : undefined, at.armor ? 'Armor' : undefined].filter(Boolean).join(' and ')}`, value: at.id }))
     },
     {
         name: "attacker-dice-pool",
