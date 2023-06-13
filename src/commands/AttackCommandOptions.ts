@@ -56,131 +56,131 @@ export default [
         type: 3, // String
         maxLength: MAX_DESCRIPTION_LENGTH
     },
-    {
-        name: "weapon-bonus",
-        description: "A number of bonus dice are added to your pool equal to the rating of the tool or effect used.",
-        type: 4, // Integer
-        minValue: 0,
-    },
-    {
-        name: "weapon-damage",
-        description: "Gun damage modifier doesn't add dice to hit. Damage applied if Dexterity + Firearms roll succeeds.",
-        type: 4, // Integer
-        minValue: 0,
-    },
-    {
-        name: "aiming",
-        description: "Aiming: +1 per turn to a +3 maximum",
-        type: 4, // Integer
-        minValue: 1,
-        maxValue: 3
-    },
-    {
-        name: "all-out",
-        description: "All-Out Attack: +2 with Brawl or Weaponry attack; lose Defense",
-        type: 5, // Boolean
-    },
-    {
-        name: "armor-piercing",
-        description: "Armor Piercing: Ignores amount of target’s armor equal to item’s own rating",
-        type: 4, // Integer
-        minValue: 1,
-    },
-    {
-        name: "burst",
-        description: "Long, Medium, Short",
-        type: 3, // String
-        choices: burstTypes.map(bt => ({ name: `${bt.name}: +${bt.bonus} per attack, max ${bt.maxTargets} target/s${ bt.modPerExtraTarget > 0 ? `, ${bt.modPerExtraTarget} per extra target` : ''}`, value: bt.id }))
-    },
-    {
-        name: "concealment",
-        description: "Barely -1; partially -2; substantially -3; fully, see “Cover”",
-        type: 3, // String
-        choices: concealmentTypes.map(ct => ({ name: `${ct.name}: ${[(ct.attackMod !== 0 ? ct.attackMod : null), (ct.specialRules ? `see '${ct.specialRules}'` : null)].filter(Boolean).join(', ')}`, value: ct.id }))
-    },
-    {
-        name: "cover-durability",
-        description: "Ranged attacks over cover's Durability hit target behind, excess successes do Structure damage",
-        type: 4, // Integer
-        minValue: 1,
-    },
-    {
-        name: "dodge",
-        description: "Double target’s Defense",
-        type: 5, // Boolean
-    },
-    {
-        name: "firing-from-concealment",
-        description: "Shooter’s own concealment quality reduced by one as a penalty to fire back",
-        type: 3, // String
-        choices: [
-            { name: 'Barely (-0)', value: 'barely' },
-            { name: 'Partially (-1)', value: 'partially' },
-            { name: 'Substantially (-2)', value: 'substantially' }
-        ]
-    },
-    {
-        name: "offhand",
-        description: "Offhand Attack: -2 penalty",
-        type: 5, // Boolean
-    },
-    {
-        name: "prone-target",
-        description: "Prone Target: -2 in ranged combat; +2 when attacker is within close-combat distance",
-        type: 3, // String
-        choices: [
-            { name: 'Ranged', value: 'ranged' },
-            { name: 'Close-combat', value: 'close-combat' }
-        ]
-    },
-    {
-        name: "range",
-        description: "Range: -2 at medium range, -4 at long range",
-        type: 3, // String
-        choices: [
-            { name: 'Medium', value: 'medium' },
-            { name: 'Long', value: 'long' }
-        ]
-    },
-    {
-        name: "combatants-avoided",
-        description: "Shooting into Close Combat: -2 per combatant avoided in a single shot (not applicable to autofire)",
-        type: 4, // Integer
-        minValue: 1
-    },
-    {
-        name: "specified-target",
-        description: "Specified Target: Torso -1, leg or arm -2, head -3, hand -4, eye -5",
-        type: 3, // String
-        choices: [
-            { name: 'Torso', value: 'torso' },
-            { name: 'Leg/Arm', value: 'legArm' },
-            { name: 'Head', value: 'head' },
-            { name: 'Hand', value: 'hand' },
-            { name: 'Eye', value: 'eye' }
-        ]
-    },
-    {
-        name: "surprised-or-immobilised",
-        description: "Surprised or Immobilized Target: Defense doesn’t apply",
-        type: 5, // Boolean
-    },
-    {
-        name: "targets",
-        description: "Number of targets for multitargeted attacks.",
-        type: 4, // Integer
-        minValue: 1
-    },
-    {
-        name: "willpower-attack",
-        description: " Willpower: Add three dice in one roll or instance",
-        type: 5, // Boolean
-    },
-    {
-        name: "willpower-defence",
-        description: "Willpower: +2 to a Resistance trait (Stamina, Resolve, Composure or Defense) in one roll or instance",
-        type: 5, // Boolean
-    },
+    // {
+    //     name: "weapon-bonus",
+    //     description: "A number of bonus dice are added to your pool equal to the rating of the tool or effect used.",
+    //     type: 4, // Integer
+    //     minValue: 0,
+    // },
+    // {
+    //     name: "weapon-damage",
+    //     description: "Gun damage modifier doesn't add dice to hit. Damage applied if Dexterity + Firearms roll succeeds.",
+    //     type: 4, // Integer
+    //     minValue: 0,
+    // },
+    // {
+    //     name: "aiming",
+    //     description: "Aiming: +1 per turn to a +3 maximum",
+    //     type: 4, // Integer
+    //     minValue: 1,
+    //     maxValue: 3
+    // },
+    // {
+    //     name: "all-out",
+    //     description: "All-Out Attack: +2 with Brawl or Weaponry attack; lose Defense",
+    //     type: 5, // Boolean
+    // },
+    // {
+    //     name: "armor-piercing",
+    //     description: "Armor Piercing: Ignores amount of target’s armor equal to item’s own rating",
+    //     type: 4, // Integer
+    //     minValue: 1,
+    // },
+    // {
+    //     name: "burst",
+    //     description: "Long, Medium, Short",
+    //     type: 3, // String
+    //     choices: burstTypes.map(bt => ({ name: `${bt.name}: +${bt.bonus} per attack, max ${bt.maxTargets} target/s${ bt.modPerExtraTarget > 0 ? `, ${bt.modPerExtraTarget} per extra target` : ''}`, value: bt.id }))
+    // },
+    // {
+    //     name: "concealment",
+    //     description: "Barely -1; partially -2; substantially -3; fully, see “Cover”",
+    //     type: 3, // String
+    //     choices: concealmentTypes.map(ct => ({ name: `${ct.name}: ${[(ct.attackMod !== 0 ? ct.attackMod : null), (ct.specialRules ? `see '${ct.specialRules}'` : null)].filter(Boolean).join(', ')}`, value: ct.id }))
+    // },
+    // {
+    //     name: "cover-durability",
+    //     description: "Ranged attacks over cover's Durability hit target behind, excess successes do Structure damage",
+    //     type: 4, // Integer
+    //     minValue: 1,
+    // },
+    // {
+    //     name: "dodge",
+    //     description: "Double target’s Defense",
+    //     type: 5, // Boolean
+    // },
+    // {
+    //     name: "firing-from-concealment",
+    //     description: "Shooter’s own concealment quality reduced by one as a penalty to fire back",
+    //     type: 3, // String
+    //     choices: [
+    //         { name: 'Barely (-0)', value: 'barely' },
+    //         { name: 'Partially (-1)', value: 'partially' },
+    //         { name: 'Substantially (-2)', value: 'substantially' }
+    //     ]
+    // },
+    // {
+    //     name: "offhand",
+    //     description: "Offhand Attack: -2 penalty",
+    //     type: 5, // Boolean
+    // },
+    // {
+    //     name: "prone-target",
+    //     description: "Prone Target: -2 in ranged combat; +2 when attacker is within close-combat distance",
+    //     type: 3, // String
+    //     choices: [
+    //         { name: 'Ranged', value: 'ranged' },
+    //         { name: 'Close-combat', value: 'close-combat' }
+    //     ]
+    // },
+    // {
+    //     name: "range",
+    //     description: "Range: -2 at medium range, -4 at long range",
+    //     type: 3, // String
+    //     choices: [
+    //         { name: 'Medium', value: 'medium' },
+    //         { name: 'Long', value: 'long' }
+    //     ]
+    // },
+    // {
+    //     name: "combatants-avoided",
+    //     description: "Shooting into Close Combat: -2 per combatant avoided in a single shot (not applicable to autofire)",
+    //     type: 4, // Integer
+    //     minValue: 1
+    // },
+    // {
+    //     name: "specified-target",
+    //     description: "Specified Target: Torso -1, leg or arm -2, head -3, hand -4, eye -5",
+    //     type: 3, // String
+    //     choices: [
+    //         { name: 'Torso', value: 'torso' },
+    //         { name: 'Leg/Arm', value: 'legArm' },
+    //         { name: 'Head', value: 'head' },
+    //         { name: 'Hand', value: 'hand' },
+    //         { name: 'Eye', value: 'eye' }
+    //     ]
+    // },
+    // {
+    //     name: "surprised-or-immobilised",
+    //     description: "Surprised or Immobilized Target: Defense doesn’t apply",
+    //     type: 5, // Boolean
+    // },
+    // {
+    //     name: "targets",
+    //     description: "Number of targets for multitargeted attacks.",
+    //     type: 4, // Integer
+    //     minValue: 1
+    // },
+    // {
+    //     name: "willpower-attack",
+    //     description: " Willpower: Add three dice in one roll or instance",
+    //     type: 5, // Boolean
+    // },
+    // {
+    //     name: "willpower-defence",
+    //     description: "Willpower: +2 to a Resistance trait (Stamina, Resolve, Composure or Defense) in one roll or instance",
+    //     type: 5, // Boolean
+    // },
     {
         name: "mod-1",
         description: "Extra modifier followed by an option description. (e.g. `-4 Darkness` or `+3 Enhanced Dexterity)",

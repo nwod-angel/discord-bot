@@ -12,6 +12,7 @@ export const AttackCommand: Command = {
     run: async (client: Client, interaction: CommandInteraction) => {
 
         let name = interaction.options.get('name')?.value?.toString() || interaction.member?.user.username || 'A user'
+        let target = interaction.options.get('target')?.value?.toString() || 'their target'
         let description = interaction.options.get('description')?.value?.toString() || undefined
         let attackTypeId = interaction.options.get('attack-type')!.value!.toString()
         let attackType = attackTypes.find(at => at.id === attackTypeId)!
@@ -47,7 +48,7 @@ export const AttackCommand: Command = {
         // TODO Check for incompatible options. e.g. targets and radius
 
         let embed = new EmbedBuilder()
-            .setTitle(`${name} makes an ${attackType.symbol}${attackType.name}${attackType.symbol} attack! [Work in Progress]`)
+            .setTitle(`${name} makes an ${attackType.symbol}${attackType.name}${attackType.symbol} attack against ${target}! [Work in Progress]`)
             .setFooter({
                 text: interaction.id,
                 // iconURL: 'https://i.imgur.com/AfFp7pu.png'
