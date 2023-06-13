@@ -9,10 +9,23 @@ export const attackTypes = [
     { name: 'Ranged combat (thrown weapons)', symbol: '⚾' , attribute: 'Dexterity', skill: 'Athletics', defense: true, armor: true, id: 'ranged-thrown' },
 ]
 
+export const burstTypes = [
+    { name: 'Long', maxTargets: 50, bonus: 3, modPerExtraTarget: -1, id: 'long' },
+    { name: 'Medium', maxTargets: 3, bonus: 2, modPerExtraTarget: -1, id: 'medium' },
+    { name: 'Short', maxTargets: 1, bonus: 1, modPerExtraTarget: 0, id: 'short' },
+]
+
+export const concealmentTypes = [
+    { name: 'Barely', attackMod: -1, id: 'barely' },
+    { name: 'Partially', attackMod: -2, id: 'partially' },
+    { name: 'Substantially', attackMod: -3, id: 'substantially' },
+    { name: 'Fully', specialRules: 'Cover', id: 'fully' },
+]
+
 export default [
     {
         name: "attack-type",
-        description: "Armor Piercing: Ignores amount of target’s armor equal to item’s own rating",
+        description: "The type of attack being made",
         type: 3, // String
         required: true,
         choices: attackTypes.map(at => ({ name: `${at.symbol} ${at.name}: ${at.attribute} + ${at.skill}, minus target's ${[at.defense ? 'Defence' : undefined, at.armor ? 'Armor' : undefined].filter(Boolean).join(' and ')}`, value: at.id }))
@@ -35,7 +48,7 @@ export default [
         name: "target",
         description: "The name of the target or targets of the attack",
         type: 3, // String
-        maxLength: MAX_TITLE_LENGTH
+        maxLength: MAX_DESCRIPTION_LENGTH
     },
     {
         name: "description",
@@ -77,22 +90,13 @@ export default [
         name: "burst",
         description: "Long, Medium, Short",
         type: 3, // String
-        choices: [
-            { name: 'Long: +3 per attack, -1 per extra target', value: 'long' },
-            { name: 'Medium: +2 per attack, 1-3 targets, -1 per extra target', value: 'medium' },
-            { name: 'Short: +1 to attack, single target', value: 'short' },
-        ]
+        choices: burstTypes.map(bt => ({ name: `${bt.name}: +${bt.bonus} per attack, max ${bt.maxTargets} target/s${ bt.modPerExtraTarget > 0 ? `, ${bt.modPerExtraTarget} per extra target` : ''}`, value: bt.id }))
     },
     {
         name: "concealment",
         description: "Barely -1; partially -2; substantially -3; fully, see “Cover”",
         type: 3, // String
-        choices: [
-            { name: 'Barely', value: 'barely' },
-            { name: 'Partially', value: 'partially' },
-            { name: 'Substantially', value: 'substantially' },
-            { name: 'Fully', value: 'fully' },
-        ]
+        choices: concealmentTypes.map(ct => ({ name: `${ct.name}: ${[(ct.attackMod !== 0 ? ct.attackMod : null), (ct.specialRules ? `see '${ct.specialRules}'` : null)].filter(Boolean).join(', ')}`, value: ct.id }))
     },
     {
         name: "cover-durability",

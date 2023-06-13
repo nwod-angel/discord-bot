@@ -2,6 +2,7 @@ import { Interaction, Client, ApplicationCommandType, CommandInteraction, EmbedB
 import { Command } from "../Command.js";
 import AttackAction from "./AttackAction.js";
 import AttackCommandOptions, { attackTypes } from "./AttackCommandOptions.js";
+import { InstantRoll } from "@nwod-angel/nwod-roller";
 
 export const AttackCommand: Command = {
     name: "attack",
@@ -15,6 +16,14 @@ export const AttackCommand: Command = {
         let attackTypeId = interaction.options.get('attack-type')!.value!.toString()
         let attackType = attackTypes.find(at => at.id === attackTypeId)!
 
+        let attackerDicePool = Number(interaction.options.get('attacker-dice-pool')!.value)
+
+        const totalMod = Math.max(0, attackerDicePool)
+
+        const instantRoll = new InstantRoll({ dicePool: totalMod })
+        const rollDescription = instantRoll.toString()
+        const successes = instantRoll.numberOfSuccesses()
+        
         // let targets = Number(interaction.options.get('targets')?.value || 1)
 
         // let attack = new AttackAction({
@@ -35,6 +44,11 @@ export const AttackCommand: Command = {
                 // iconURL: 'https://i.imgur.com/AfFp7pu.png'
             })
         if (description) { embed.setDescription(description) }
+
+        embed.addFields({
+            name: `🎲 ${name} rolled ${instantRoll.dicePool} dice and got ${successes} successes`,
+            value: rollDescription
+        })
 
         await interaction.followUp({
             embeds: [embed]
