@@ -18,12 +18,21 @@ export const AttackCommand: Command = {
 
         let attackerDicePool = Number(interaction.options.get('attacker-dice-pool')!.value)
 
-        const totalMod = Math.max(0, attackerDicePool)
+        let mods = []
+        // Generate the values mod-1 to mod-9 and lookup the interaction.  If the value exists add it to the mods array
+        for (let i = 1; i <= 9; i++) {
+            let modValue = interaction.options.get(`mod-${i}`)?.value?.toString()
+            if (modValue) {
+                mods.push({ mod: parseInt(modValue), description: modValue.substring(modValue.indexOf(' ') + 1).trim() || `mod-${i}`})
+            }
+        }
+
+        const totalMod = Math.max(0, attackerDicePool + mods.reduce((sum, mod) => sum + mod.mod, 0))
 
         const instantRoll = new InstantRoll({ dicePool: totalMod })
         const rollDescription = instantRoll.toString()
         const successes = instantRoll.numberOfSuccesses()
-        
+
         // let targets = Number(interaction.options.get('targets')?.value || 1)
 
         // let attack = new AttackAction({
@@ -48,6 +57,20 @@ export const AttackCommand: Command = {
         embed.addFields({
             name: `🎲 ${name} rolled ${instantRoll.dicePool} dice and got ${successes} successes`,
             value: rollDescription
+        })
+
+        embed.addFields({
+            name: `${name}'s ${attackType.attribute} + ${attackType.skill}`,
+            value: attackerDicePool.toString(),
+            inline: true
+        })
+
+        mods.forEach(mod => {
+            embed.addFields({
+                name: mod.description,
+                value: mod.mod.toString(),
+                inline: true
+            })
         })
 
         await interaction.followUp({

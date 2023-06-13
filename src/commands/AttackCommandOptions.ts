@@ -183,7 +183,47 @@ export default [
     },
     {
         name: "mod-1",
-        description: "Extra modifier followed by an option description. (e.g. `-4 Darkness` or `+3 Enhanced Dexterity",
+        description: "Extra modifier followed by an option description. (e.g. `-4 Darkness` or `+3 Enhanced Dexterity)",
         type: 3, // String
-    }
+    },
+    {
+        name: "mod-2",
+        description: "Extra modifier followed by an option description. (e.g. `-4 Darkness` or `+3 Enhanced Dexterity)",
+        type: 3, // String
+    },
+    {
+        name: "mod-3",
+        description: "Extra modifier followed by an option description. (e.g. `-4 Darkness` or `+3 Enhanced Dexterity)",
+        type: 3, // String
+    },
+    {
+        name: "mod-4",
+        description: "Extra modifier followed by an option description. (e.g. `-4 Darkness` or `+3 Enhanced Dexterity)",
+        type: 3, // String
+    },
+    {
+        name: "mod-5",
+        description: "Extra modifier followed by an option description. (e.g. `-4 Darkness` or `+3 Enhanced Dexterity)",
+        type: 3, // String
+    },
+    {
+        name: "mod-6",
+        description: "Extra modifier followed by an option description. (e.g. `-4 Darkness` or `+3 Enhanced Dexterity)",
+        type: 3, // String
+    },
+    {
+        name: "mod-7",
+        description: "Extra modifier followed by an option description. (e.g. `-4 Darkness` or `+3 Enhanced Dexterity)",
+        type: 3, // String
+    },
+    {
+        name: "mod-8",
+        description: "Extra modifier followed by an option description. (e.g. `-4 Darkness` or `+3 Enhanced Dexterity)",
+        type: 3, // String
+    },
+    {
+        name: "mod-9",
+        description: "Extra modifier followed by an option description. (e.g. `-4 Darkness` or `+3 Enhanced Dexterity)",
+        type: 3, // String
+    },
 ]
