@@ -22,6 +22,54 @@ export const concealmentTypes = [
     { name: 'Fully', specialRules: 'Cover', id: 'fully' },
 ]
 
+const modsOptions = [
+    {
+        name: "mod-1",
+        description: "Extra modifier followed by an option description. (e.g. `-4 Darkness` or `+3 Enhanced Dexterity)",
+        type: 3, // String
+    },
+    {
+        name: "mod-2",
+        description: "Extra modifier followed by an option description. (e.g. `-4 Darkness` or `+3 Enhanced Dexterity)",
+        type: 3, // String
+    },
+    {
+        name: "mod-3",
+        description: "Extra modifier followed by an option description. (e.g. `-4 Darkness` or `+3 Enhanced Dexterity)",
+        type: 3, // String
+    },
+    {
+        name: "mod-4",
+        description: "Extra modifier followed by an option description. (e.g. `-4 Darkness` or `+3 Enhanced Dexterity)",
+        type: 3, // String
+    },
+    {
+        name: "mod-5",
+        description: "Extra modifier followed by an option description. (e.g. `-4 Darkness` or `+3 Enhanced Dexterity)",
+        type: 3, // String
+    },
+    {
+        name: "mod-6",
+        description: "Extra modifier followed by an option description. (e.g. `-4 Darkness` or `+3 Enhanced Dexterity)",
+        type: 3, // String
+    },
+    {
+        name: "mod-7",
+        description: "Extra modifier followed by an option description. (e.g. `-4 Darkness` or `+3 Enhanced Dexterity)",
+        type: 3, // String
+    },
+    {
+        name: "mod-8",
+        description: "Extra modifier followed by an option description. (e.g. `-4 Darkness` or `+3 Enhanced Dexterity)",
+        type: 3, // String
+    },
+    {
+        name: "mod-9",
+        description: "Extra modifier followed by an option description. (e.g. `-4 Darkness` or `+3 Enhanced Dexterity)",
+        type: 3, // String
+    }
+]
+
 export default [
     {
         name: "attack-type",
@@ -181,49 +229,4 @@ export default [
     //     description: "Willpower: +2 to a Resistance trait (Stamina, Resolve, Composure or Defense) in one roll or instance",
     //     type: 5, // Boolean
     // },
-    {
-        name: "mod-1",
-        description: "Extra modifier followed by an option description. (e.g. `-4 Darkness` or `+3 Enhanced Dexterity)",
-        type: 3, // String
-    },
-    {
-        name: "mod-2",
-        description: "Extra modifier followed by an option description. (e.g. `-4 Darkness` or `+3 Enhanced Dexterity)",
-        type: 3, // String
-    },
-    {
-        name: "mod-3",
-        description: "Extra modifier followed by an option description. (e.g. `-4 Darkness` or `+3 Enhanced Dexterity)",
-        type: 3, // String
-    },
-    {
-        name: "mod-4",
-        description: "Extra modifier followed by an option description. (e.g. `-4 Darkness` or `+3 Enhanced Dexterity)",
-        type: 3, // String
-    },
-    {
-        name: "mod-5",
-        description: "Extra modifier followed by an option description. (e.g. `-4 Darkness` or `+3 Enhanced Dexterity)",
-        type: 3, // String
-    },
-    {
-        name: "mod-6",
-        description: "Extra modifier followed by an option description. (e.g. `-4 Darkness` or `+3 Enhanced Dexterity)",
-        type: 3, // String
-    },
-    {
-        name: "mod-7",
-        description: "Extra modifier followed by an option description. (e.g. `-4 Darkness` or `+3 Enhanced Dexterity)",
-        type: 3, // String
-    },
-    {
-        name: "mod-8",
-        description: "Extra modifier followed by an option description. (e.g. `-4 Darkness` or `+3 Enhanced Dexterity)",
-        type: 3, // String
-    },
-    {
-        name: "mod-9",
-        description: "Extra modifier followed by an option description. (e.g. `-4 Darkness` or `+3 Enhanced Dexterity)",
-        type: 3, // String
-    },
-]
+].concat(modsOptions as any)
