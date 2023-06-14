@@ -131,7 +131,6 @@ export default [
         name: "damage-type",
         description: "What type of damage the attack inflicts.",
         type: 3, // String
-        required: true,
         choices: damageTypes.map(dt => ({
             name: `${dt.name} ${dt.symbol}`,
             value: dt.id
