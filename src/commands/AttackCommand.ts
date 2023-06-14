@@ -33,6 +33,8 @@ export const AttackCommand: Command = {
     options: AttackCommandOptions,
     run: async (client: Client, interaction: CommandInteraction) => {
 
+        console.log(interaction.options)
+        return
 
         let name = interaction.options.get('name')?.value?.toString() || interaction.member?.user.username || 'A user'
         let target = interaction.options.get('target')?.value?.toString() || 'their target'
@@ -53,7 +55,7 @@ export const AttackCommand: Command = {
         for (let i = 1; i <= 9; i++) {
             let modValue = interaction.options.get(`mod-${i}`)?.value?.toString()
             if (modValue) {
-                mods.push({ mod: parseInt(modValue), description: modValue.substring(modValue.indexOf(' ') + 1).trim() || `mod-${i}` })
+                // mods.push({ mod: parseInt(modValue), description: modValue.substring(modValue.indexOf(' ') + 1).trim() || `mod-${i}` })
             }
         }
 
@@ -94,7 +96,7 @@ export const AttackCommand: Command = {
                 text: interaction.id,
                 // iconURL: 'https://i.imgur.com/AfFp7pu.png'
             })
-        if (description) { embed.setDescription(description) }
+        // if (description) { embed.setDescription(description) }
 
         embed.addFields({
             name: `${symbols.die} ${name} rolled ${instantRoll.dicePool} dice and got ${successes} successes`,

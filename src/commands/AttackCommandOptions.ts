@@ -141,7 +141,8 @@ export const attackTypes = [
             options.name,
             options.target,
             options.description,
-            options.allOut
+            options.allOut,
+            options.weaponBonus
         ]
     },
     {
@@ -157,7 +158,9 @@ export const attackTypes = [
             options.name,
             options.target,
             options.description,
-            options.allOut
+            options.allOut,
+            options.weaponBonus,
+            options.weaponDamage
         ]
     },
     {
@@ -173,6 +176,8 @@ export const attackTypes = [
             options.name,
             options.target,
             options.description,
+            options.weaponBonus,
+            options.weaponDamage,
         ]
     },
     {
@@ -192,13 +197,24 @@ export const attackTypes = [
     }
 ]
 
-export default [
+export default attackTypes.map(at => ({
+    name: `${at.symbol} ${at.name}`,
+    description: `${at.attribute} + ${at.skill}, minus target's ${[at.defense ? 'Defence' : undefined, at.armor ? 'Armor' : undefined].filter(Boolean).join(' and ')}`,
+    "type": 1, // 1 is type SUB_COMMAND
+    "options": at.options
+})).concat(modsOptions as any)
+
+
+
+export const original = [
     {
         name: "attack-type",
         description: "The type of attack being made",
-        type: 3, // String
-        required: true,
-        choices: attackTypes.map(at => ({ name: `${at.symbol} ${at.name}: ${at.attribute} + ${at.skill}, minus target's ${[at.defense ? 'Defence' : undefined, at.armor ? 'Armor' : undefined].filter(Boolean).join(' and ')}`, value: at.id }))
+        type: 1, // String
+        choices: attackTypes.map(at => ({
+            name: `${at.symbol} ${at.name}: ${at.attribute} + ${at.skill}, minus target's ${[at.defense ? 'Defence' : undefined, at.armor ? 'Armor' : undefined].filter(Boolean).join(' and ')}`,
+            value: at.id
+        }))
     },
     options.attackerDicePool,
     options.name,
