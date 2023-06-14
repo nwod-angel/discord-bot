@@ -104,18 +104,18 @@ export default [
         type: 3, // String
         maxLength: MAX_DESCRIPTION_LENGTH
     },
-    // {
-    //     name: "weapon-bonus",
-    //     description: "A number of bonus dice are added to your pool equal to the rating of the tool or effect used.",
-    //     type: 4, // Integer
-    //     minValue: 0,
-    // },
-    // {
-    //     name: "weapon-damage",
-    //     description: "Gun damage modifier doesn't add dice to hit. Damage applied if Dexterity + Firearms roll succeeds.",
-    //     type: 4, // Integer
-    //     minValue: 0,
-    // },
+    {
+        name: "weapon-bonus",
+        description: "A number of bonus dice are added to your pool equal to the rating of the tool or effect used.",
+        type: 4, // Integer
+        minValue: 0,
+    },
+    {
+        name: "weapon-damage",
+        description: "Gun damage modifier doesn't add dice to hit. Damage applied if Dexterity + Firearms roll succeeds.",
+        type: 4, // Integer
+        minValue: 0,
+    },
     // {
     //     name: "aiming",
     //     description: "Aiming: +1 per turn to a +3 maximum",

@@ -11,6 +11,7 @@ export const AttackCommand: Command = {
     options: AttackCommandOptions,
     run: async (client: Client, interaction: CommandInteraction) => {
 
+
         let name = interaction.options.get('name')?.value?.toString() || interaction.member?.user.username || 'A user'
         let target = interaction.options.get('target')?.value?.toString() || 'their target'
         let description = interaction.options.get('description')?.value?.toString() || undefined
@@ -18,14 +19,20 @@ export const AttackCommand: Command = {
         let attackType = attackTypes.find(at => at.id === attackTypeId)!
 
         let attackerDicePool = Number(interaction.options.get('attacker-dice-pool')!.value)
+        let weaponBonus = Number(interaction.options.get('weapon-bonus')?.value)
+        let weaponDamage = Number(interaction.options.get('weapon-damage')?.value)
 
         let mods = []
         // Generate the values mod-1 to mod-9 and lookup the interaction.  If the value exists add it to the mods array
         for (let i = 1; i <= 9; i++) {
             let modValue = interaction.options.get(`mod-${i}`)?.value?.toString()
             if (modValue) {
-                mods.push({ mod: parseInt(modValue), description: modValue.substring(modValue.indexOf(' ') + 1).trim() || `mod-${i}`})
+                mods.push({ mod: parseInt(modValue), description: modValue.substring(modValue.indexOf(' ') + 1).trim() || `mod-${i}` })
             }
+        }
+
+        if(weaponBonus){
+            mods.push({ mod: weaponBonus, description: `${attackType.symbol} Weapon Bonus`})
         }
 
         const totalMod = Math.max(0, attackerDicePool + mods.reduce((sum, mod) => sum + mod.mod, 0))
@@ -72,6 +79,22 @@ export const AttackCommand: Command = {
                 value: mod.mod.toString(),
                 inline: true
             })
+        })
+
+        let totalDamage = successes
+
+        if (weaponDamage) {
+            totalDamage += weaponDamage
+            embed.addFields({
+                name: `💥 Weapon damage`,
+                value: weaponDamage.toString(),
+                inline: true
+            })
+        }
+        let weaponDamageDescription = weaponDamage ? `+ ${attackType.symbol}${weaponDamage}` : ''
+        embed.addFields({
+            name: `${target} takes ${totalDamage} damage`,
+            value: `🎲${successes}${weaponDamageDescription}`,
         })
 
         await interaction.followUp({
