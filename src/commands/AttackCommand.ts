@@ -22,7 +22,8 @@ const symbols =  {
     boomerang: '🪃',
     shield: '🛡️',
     anger: '💢',
-    prohibited: '🚫'
+    prohibited: '🚫',
+    personShrugging: '🤷',
 }
 
 export const AttackCommand: Command = {
@@ -93,7 +94,7 @@ export const AttackCommand: Command = {
         // TODO Check for incompatible options. e.g. targets and radius
 
         let embed = new EmbedBuilder()
-            .setTitle(`${name} makes an ${attackType.symbol} ${attackType.name} ${attackType.symbol} attack against ${target}! [Work in Progress]`)
+            .setTitle(`${name} makes an ${attackType.symbol} ${attackType.name} ${attackType.symbol} attack against ${target}!`)
             .setFooter({
                 text: interaction.id,
                 // iconURL: 'https://i.imgur.com/AfFp7pu.png'
@@ -156,12 +157,12 @@ export const AttackCommand: Command = {
         let weaponDamageDescription = weaponDamage ? `+ ${attackType.symbol} ${weaponDamage}` : ''
         embed.addFields({
             name: `${target} takes ${totalDamage} ${damageType ? damageType.name + ' ' : ''}damage`,
-            value: `${symbols.die} ${successes}${weaponDamageDescription}${ damageType ? ' ' + damageType.symbol.repeat(totalDamage) : ''}`,
+            value: `${symbols.die} ${successes}${weaponDamageDescription}${ damageType ? '\n' + damageType.symbol.repeat(totalDamage) : ''}`,
         })
 
         if(defenceLostTo){
             embed.addFields({
-                name: `${symbols.prohibited}${symbols.personRunning} ${name} loses their defence.`,
+                name: `${symbols.personShrugging} ${name} loses their defence`,
                 value: `${defenceLostTo}`,
             })
         }
