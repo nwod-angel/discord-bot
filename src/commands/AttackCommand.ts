@@ -4,7 +4,7 @@ import AttackAction from "./AttackAction.js";
 import AttackCommandOptions, { attackTypes, damageTypes } from "./AttackCommandOptions.js";
 import { InstantRoll } from "@nwod-angel/nwod-roller";
 
-const symbols =  {
+const symbols = {
     helmet: '🪖',
     blood: '🩸',
     bomb: '💣',
@@ -44,9 +44,9 @@ export const AttackCommand: Command = {
         let weaponBonus = Number(interaction.options.get('weapon-bonus')?.value)
         let weaponDamage = Number(interaction.options.get('weapon-damage')?.value)
         let damageTypeId = interaction.options.get('damage-type')?.value?.toString() || undefined
-        let damageType = damageTypeId ? damageTypes.find(dt => dt.id === damageTypeId) : undefined 
+        let damageType = damageTypeId ? damageTypes.find(dt => dt.id === damageTypeId) : undefined
         let allOutAttack = Boolean(interaction.options.get('all-out')?.value || false)
-        
+
         let successThreshold = Number(interaction.options.get('success-threshold')?.value) || undefined
         let rerollThreshold = Number(interaction.options.get('reroll-threshold')?.value) || undefined
         let rote = Boolean(interaction.options.get('rote')?.value) || undefined
@@ -62,21 +62,21 @@ export const AttackCommand: Command = {
             }
         }
 
-        if(weaponBonus){
-            mods.push({ mod: weaponBonus, description: `${attackType.symbol} Weapon Bonus`})
+        if (weaponBonus) {
+            mods.push({ mod: weaponBonus, description: `${attackType.symbol} Weapon Bonus` })
         }
-        if(allOutAttack){
-            if(defenceLostTo) {
+        if (allOutAttack) {
+            if (defenceLostTo) {
                 interaction.followUp({ content: "Unable to lose defense more than once." })
                 return
             }
-            mods.push({ mod: 2, description: `${symbols.anger} All out Attack`})
+            mods.push({ mod: 2, description: `${symbols.anger} All out Attack` })
             defenceLostTo = `${symbols.anger} All out Attack`
         }
 
-        const totalMod = Math.max(0, attackerDicePool + mods.reduce((sum, mod) => sum + mod.mod, 0))
+        const dicePool = Math.max(0, attackerDicePool + mods.reduce((sum, mod) => sum + mod.mod, 0))
 
-        const instantRoll = new InstantRoll({ dicePool: totalMod, rote: rote, successThreshold: successThreshold, rerollThreshold: rerollThreshold })
+        const instantRoll = new InstantRoll({ dicePool: dicePool, rote: rote, successThreshold: successThreshold, rerollThreshold: rerollThreshold })
         const rollDescription = instantRoll.toString()
         const successes = instantRoll.numberOfSuccesses()
 
@@ -114,24 +114,24 @@ export const AttackCommand: Command = {
                 inline: true
             })
         })
-        
-        if(successThreshold) {
+
+        if (successThreshold) {
             embed.addFields({
                 name: `Successes on`,
                 value: successThreshold.toString(),
                 inline: true
             })
         }
-        
-        if(rerollThreshold) {
+
+        if (rerollThreshold) {
             embed.addFields({
                 name: `Reroll on`,
                 value: rerollThreshold.toString(),
                 inline: true
             })
         }
-        
-        if(rote) {
+
+        if (rote) {
             embed.addFields({
                 name: `Rote Action`,
                 value: 'Rerolling failures once',
@@ -140,27 +140,29 @@ export const AttackCommand: Command = {
         }
 
         embed.addFields({
-            name: `${symbols.die} ${name} rolled ${instantRoll.dicePool} dice and got ${successes} successes`,
+            name: `${symbols.die} ${name} rolled ${dicePool} dice and got ${successes} successes`,
             value: rollDescription
         })
 
-        let totalDamage = successes
+        if (successes > 0) {
+            let totalDamage = successes
 
-        if (weaponDamage) {
-            totalDamage += weaponDamage
+            if (weaponDamage) {
+                totalDamage += weaponDamage
+                embed.addFields({
+                    name: `${symbols.damage} Weapon damage`,
+                    value: weaponDamage.toString(),
+                    inline: true
+                })
+            }
+            let weaponDamageDescription = weaponDamage ? `+ ${attackType.symbol} ${weaponDamage}` : ''
             embed.addFields({
-                name: `${symbols.damage} Weapon damage`,
-                value: weaponDamage.toString(),
-                inline: true
+                name: `${target} takes ${totalDamage} ${damageType ? damageType.name + ' ' : ''}damage`,
+                value: `${symbols.die} ${successes}${weaponDamageDescription}${damageType ? '\n' + damageType.symbol.repeat(totalDamage) : ''}`,
             })
         }
-        let weaponDamageDescription = weaponDamage ? `+ ${attackType.symbol} ${weaponDamage}` : ''
-        embed.addFields({
-            name: `${target} takes ${totalDamage} ${damageType ? damageType.name + ' ' : ''}damage`,
-            value: `${symbols.die} ${successes}${weaponDamageDescription}${ damageType ? '\n' + damageType.symbol.repeat(totalDamage) : ''}`,
-        })
 
-        if(defenceLostTo){
+        if (defenceLostTo) {
             embed.addFields({
                 name: `${symbols.personShrugging} ${name} loses their defence`,
                 value: `${defenceLostTo}`,
