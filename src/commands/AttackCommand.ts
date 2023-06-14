@@ -115,21 +115,24 @@ export const AttackCommand: Command = {
         if(successThreshold) {
             embed.addFields({
                 name: `Successes on`,
-                value: successThreshold.toString()
+                value: successThreshold.toString(),
+                inline: true
             })
         }
         
         if(rerollThreshold) {
             embed.addFields({
                 name: `Reroll on`,
-                value: rerollThreshold.toString()
+                value: rerollThreshold.toString(),
+                inline: true
             })
         }
         
         if(rote) {
             embed.addFields({
                 name: `Rote Action`,
-                value: 'Rerolling failures once'
+                value: 'Rerolling failures once',
+                inline: true
             })
         }
 
