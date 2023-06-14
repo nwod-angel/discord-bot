@@ -2,11 +2,11 @@ const MAX_TITLE_LENGTH = 32
 const MAX_DESCRIPTION_LENGTH = 256
 
 export const attackTypes = [
-    { name: 'Unarmed close combat', symbol: '👊' , attribute: 'Strength', skill: 'Brawl', defense: true, armor: true, id: 'unarmed-close-combat' },
-    { name: 'Armed close combat', symbol: '🪓' , attribute: 'Strength', skill: 'Weaponry', defense: true, armor: true, id: 'armed-close-combat' },
-    { name: 'Armed close combat (finesse)', symbol: '🗡️' , attribute: 'Dexterity', skill: 'Weaponry', defense: true, armor: true, id: 'armed-close-combat-finesse' },
-    { name: 'Ranged combat (guns and bows)', symbol: '🔫' , attribute: 'Dexterity', skill: 'Firearms', defense: false, armor: true, id: 'ranged-fired' },
-    { name: 'Ranged combat (thrown weapons)', symbol: '⚾' , attribute: 'Dexterity', skill: 'Athletics', defense: true, armor: true, id: 'ranged-thrown' },
+    { name: 'Unarmed close combat', symbol: '👊', attribute: 'Strength', skill: 'Brawl', defense: true, armor: true, id: 'unarmed-close-combat' },
+    { name: 'Armed close combat', symbol: '🪓', attribute: 'Strength', skill: 'Weaponry', defense: true, armor: true, id: 'armed-close-combat' },
+    { name: 'Armed close combat (finesse)', symbol: '🗡️', attribute: 'Dexterity', skill: 'Weaponry', defense: true, armor: true, id: 'armed-close-combat-finesse' },
+    { name: 'Ranged combat (guns and bows)', symbol: '🔫', attribute: 'Dexterity', skill: 'Firearms', defense: false, armor: true, id: 'ranged-fired' },
+    { name: 'Ranged combat (thrown weapons)', symbol: '⚾', attribute: 'Dexterity', skill: 'Athletics', defense: true, armor: true, id: 'ranged-thrown' },
 ]
 
 export const burstTypes = [
@@ -229,4 +229,19 @@ export default [
     //     description: "Willpower: +2 to a Resistance trait (Stamina, Resolve, Composure or Defense) in one roll or instance",
     //     type: 5, // Boolean
     // },
+    {
+        name: "rote",
+        description: "Rote actions re-roll failures once",
+        type: 5 // Boolean
+    },
+    {
+        name: "success-threshold",
+        description: "The lowest number on the die representing a success (default: 8)",
+        type: 4 // Integer
+    },
+    {
+        name: "reroll-threshold",
+        description: "The lowest number on the die representing a reroll (default: 10)",
+        type: 4 // Integer
+    },
 ].concat(modsOptions as any)

@@ -43,7 +43,10 @@ export const AttackCommand: Command = {
         let weaponBonus = Number(interaction.options.get('weapon-bonus')?.value)
         let weaponDamage = Number(interaction.options.get('weapon-damage')?.value)
         let allOutAttack = Boolean(interaction.options.get('all-out')?.value || false)
-
+        
+        let successThreshold = Number(interaction.options.get('success-threshold')?.value) || undefined
+        let rerollThreshold = Number(interaction.options.get('reroll-threshold')?.value) || undefined
+        let rote = Boolean(interaction.options.get('rote')?.value) || undefined
 
         let defenceLostTo = ''
 
@@ -70,7 +73,7 @@ export const AttackCommand: Command = {
 
         const totalMod = Math.max(0, attackerDicePool + mods.reduce((sum, mod) => sum + mod.mod, 0))
 
-        const instantRoll = new InstantRoll({ dicePool: totalMod })
+        const instantRoll = new InstantRoll({ dicePool: totalMod, rote: rote, successThreshold: successThreshold, rerollThreshold: rerollThreshold })
         const rollDescription = instantRoll.toString()
         const successes = instantRoll.numberOfSuccesses()
 
@@ -96,11 +99,6 @@ export const AttackCommand: Command = {
         if (description) { embed.setDescription(description) }
 
         embed.addFields({
-            name: `${symbols.die} ${name} rolled ${instantRoll.dicePool} dice and got ${successes} successes`,
-            value: rollDescription
-        })
-
-        embed.addFields({
             name: `${name}'s ${attackType.attribute} + ${attackType.skill}`,
             value: attackerDicePool.toString(),
             inline: true
@@ -112,6 +110,32 @@ export const AttackCommand: Command = {
                 value: mod.mod.toString(),
                 inline: true
             })
+        })
+        
+        if(successThreshold) {
+            embed.addFields({
+                name: `Successes on`,
+                value: successThreshold.toString()
+            })
+        }
+        
+        if(rerollThreshold) {
+            embed.addFields({
+                name: `Reroll on`,
+                value: rerollThreshold.toString()
+            })
+        }
+        
+        if(rote) {
+            embed.addFields({
+                name: `Rote Action`,
+                value: 'Rerolling failures once'
+            })
+        }
+
+        embed.addFields({
+            name: `${symbols.die} ${name} rolled ${instantRoll.dicePool} dice and got ${successes} successes`,
+            value: rollDescription
         })
 
         let totalDamage = successes
