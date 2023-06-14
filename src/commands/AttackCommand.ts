@@ -22,7 +22,8 @@ const symbols =  {
     boomerang: '🪃',
     shield: '🛡️',
     anger: '💢',
-    prohibited: '🚫'
+    prohibited: '🚫',
+    ninja: '🥷'
 }
 
 export const AttackCommand: Command = {
@@ -132,7 +133,7 @@ export const AttackCommand: Command = {
 
         if(defenceLostTo){
             embed.addFields({
-                name: `${symbols.prohibited}${symbols.personRunning} ${name} loses their defence.`,
+                name: `${symbols.prohibited}${symbols.ninja} ${name} loses their defence.`,
                 value: `${defenceLostTo}`,
             })
         }

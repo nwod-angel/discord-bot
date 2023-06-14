@@ -1,13 +1,6 @@
 const MAX_TITLE_LENGTH = 32
 const MAX_DESCRIPTION_LENGTH = 256
 
-export const attackTypes = [
-    { name: 'Unarmed close combat', symbol: '👊' , attribute: 'Strength', skill: 'Brawl', defense: true, armor: true, id: 'unarmed-close-combat' },
-    { name: 'Armed close combat', symbol: '🪓' , attribute: 'Strength', skill: 'Weaponry', defense: true, armor: true, id: 'armed-close-combat' },
-    { name: 'Armed close combat (finesse)', symbol: '🗡️' , attribute: 'Dexterity', skill: 'Weaponry', defense: true, armor: true, id: 'armed-close-combat-finesse' },
-    { name: 'Ranged combat (guns and bows)', symbol: '🔫' , attribute: 'Dexterity', skill: 'Firearms', defense: false, armor: true, id: 'ranged-fired' },
-    { name: 'Ranged combat (thrown weapons)', symbol: '⚾' , attribute: 'Dexterity', skill: 'Athletics', defense: true, armor: true, id: 'ranged-thrown' },
-]
 
 export const burstTypes = [
     { name: 'Long', maxTargets: 50, bonus: 3, modPerExtraTarget: -1, id: 'long' },
@@ -70,6 +63,135 @@ const modsOptions = [
     }
 ]
 
+export const options = {
+    attackerDicePool: {
+        name: "attacker-dice-pool",
+        description: "The attackers dice pool based on the type of attack",
+        type: 4, // Integer
+        required: true,
+        minValue: 0,
+    },
+    name: {
+        name: "name",
+        description: "The name of the attacker",
+        type: 3, // String
+        maxLength: MAX_TITLE_LENGTH,
+        default: undefined
+    },
+    target: {
+        name: "target",
+        description: "The name of the target or targets of the attack",
+        type: 3, // String
+        maxLength: MAX_DESCRIPTION_LENGTH
+    },
+    description: {
+        name: "description",
+        description: "The description of the attack",
+        type: 3, // String
+        maxLength: MAX_DESCRIPTION_LENGTH
+    },
+    weaponBonus: {
+        name: "weapon-bonus",
+        description: "A number of bonus dice are added to your pool equal to the rating of the tool or effect used.",
+        type: 4, // Integer
+        minValue: 0,
+    },
+    weaponDamage: {
+        name: "weapon-damage",
+        description: "Gun damage modifier doesn't add dice to hit. Damage applied if Dexterity + Firearms roll succeeds.",
+        type: 4, // Integer
+        minValue: 0,
+    },
+    allOut: {
+        name: "all-out",
+        description: "All-Out Attack: +2 with Brawl or Weaponry attack; lose Defense",
+        type: 5, // Boolean
+    },
+
+
+}
+
+export const attackTypes = [
+    {
+        id: 'unarmed-close-combat',
+        name: 'Unarmed close combat',
+        symbol: '👊',
+        attribute: 'Strength',
+        skill: 'Brawl',
+        defense: true,
+        armor: true,
+        options: [
+            options.attackerDicePool,
+            options.name,
+            options.target,
+            options.description,
+            options.allOut
+        ]
+    },
+    {
+        name: 'Armed close combat',
+        id: 'armed-close-combat',
+        symbol: '🪓',
+        attribute: 'Strength',
+        skill: 'Weaponry',
+        defense: true,
+        armor: true,
+        options: [
+            options.attackerDicePool,
+            options.name,
+            options.target,
+            options.description,
+            options.allOut
+        ]
+    },
+    {
+        name: 'Armed close combat (finesse)',
+        symbol: '🗡️',
+        attribute: 'Dexterity',
+        skill: 'Weaponry',
+        defense: true,
+        armor: true,
+        id: 'armed-close-combat-finesse',
+        options: [
+            options.attackerDicePool,
+            options.name,
+            options.target,
+            options.description,
+            options.allOut
+        ]
+    },
+    {
+        name: 'Ranged combat (guns and bows)',
+        symbol: '🔫',
+        attribute: 'Dexterity',
+        skill: 'Firearms',
+        defense: false,
+        armor: true,
+        id: 'ranged-fired',
+        options: [
+            options.attackerDicePool,
+            options.name,
+            options.target,
+            options.description,
+        ]
+    },
+    {
+        name: 'Ranged combat (thrown weapons)',
+        symbol: '⚾',
+        attribute: 'Dexterity',
+        skill: 'Athletics',
+        defense: true,
+        armor: true,
+        id: 'ranged-thrown',
+        options: [
+            options.attackerDicePool,
+            options.name,
+            options.target,
+            options.description,
+        ]
+    }
+]
+
 export default [
     {
         name: "attack-type",
@@ -78,44 +200,12 @@ export default [
         required: true,
         choices: attackTypes.map(at => ({ name: `${at.symbol} ${at.name}: ${at.attribute} + ${at.skill}, minus target's ${[at.defense ? 'Defence' : undefined, at.armor ? 'Armor' : undefined].filter(Boolean).join(' and ')}`, value: at.id }))
     },
-    {
-        name: "attacker-dice-pool",
-        description: "The attackers dice pool based on the type of attack",
-        type: 4, // Integer
-        required: true,
-        minValue: 0,
-    },
-    {
-        name: "name",
-        description: "The name of the attacker",
-        type: 3, // String
-        maxLength: MAX_TITLE_LENGTH,
-        default: undefined
-    },
-    {
-        name: "target",
-        description: "The name of the target or targets of the attack",
-        type: 3, // String
-        maxLength: MAX_DESCRIPTION_LENGTH
-    },
-    {
-        name: "description",
-        description: "The description of the attack",
-        type: 3, // String
-        maxLength: MAX_DESCRIPTION_LENGTH
-    },
-    {
-        name: "weapon-bonus",
-        description: "A number of bonus dice are added to your pool equal to the rating of the tool or effect used.",
-        type: 4, // Integer
-        minValue: 0,
-    },
-    {
-        name: "weapon-damage",
-        description: "Gun damage modifier doesn't add dice to hit. Damage applied if Dexterity + Firearms roll succeeds.",
-        type: 4, // Integer
-        minValue: 0,
-    },
+    options.attackerDicePool,
+    options.name,
+    options.target,
+    options.description,
+    options.weaponBonus,
+    options.weaponDamage,
     // {
     //     name: "aiming",
     //     description: "Aiming: +1 per turn to a +3 maximum",
@@ -123,11 +213,7 @@ export default [
     //     minValue: 1,
     //     maxValue: 3
     // },
-    {
-        name: "all-out",
-        description: "All-Out Attack: +2 with Brawl or Weaponry attack; lose Defense",
-        type: 5, // Boolean
-    },
+    options.allOut,
     // {
     //     name: "armor-piercing",
     //     description: "Armor Piercing: Ignores amount of target’s armor equal to item’s own rating",
