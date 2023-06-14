@@ -55,7 +55,7 @@ export const AttackCommand: Command = {
         // TODO Check for incompatible options. e.g. targets and radius
 
         let embed = new EmbedBuilder()
-            .setTitle(`${name} makes an ${attackType.symbol}${attackType.name}${attackType.symbol} attack against ${target}! [Work in Progress]`)
+            .setTitle(`${name} makes an ${attackType.symbol} ${attackType.name} ${attackType.symbol} attack against ${target}! [Work in Progress]`)
             .setFooter({
                 text: interaction.id,
                 // iconURL: 'https://i.imgur.com/AfFp7pu.png'
@@ -91,10 +91,10 @@ export const AttackCommand: Command = {
                 inline: true
             })
         }
-        let weaponDamageDescription = weaponDamage ? `+ ${attackType.symbol}${weaponDamage}` : ''
+        let weaponDamageDescription = weaponDamage ? `+ ${attackType.symbol} ${weaponDamage}` : ''
         embed.addFields({
             name: `${target} takes ${totalDamage} damage`,
-            value: `🎲${successes}${weaponDamageDescription}`,
+            value: `🎲 ${successes}${weaponDamageDescription}`,
         })
 
         await interaction.followUp({
