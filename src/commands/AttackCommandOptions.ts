@@ -1,3 +1,5 @@
+import { NwodSymbols } from "@nwod-angel/nwod-core"
+
 const MAX_TITLE_LENGTH = 32
 const MAX_DESCRIPTION_LENGTH = 256
 
@@ -20,6 +22,15 @@ export const concealmentTypes = [
     { name: 'Partially', attackMod: -2, id: 'partially' },
     { name: 'Substantially', attackMod: -3, id: 'substantially' },
     { name: 'Fully', specialRules: 'Cover', id: 'fully' },
+]
+const symbolLibrary = new NwodSymbols()
+export const damageTypes = [
+    { name: 'Bashing', symbol: symbolLibrary.HealthBoxBashing, id: 'bashing' },
+    { name: 'Lethal', symbol: symbolLibrary.HealthBoxLethal, id: 'lethal' },
+    { name: 'Aggravated', symbol: symbolLibrary.HealthBoxAggravated, id: 'aggravated' },
+    { name: 'Bashing (Resistant)', symbol: '!' + symbolLibrary.HealthBoxBashing, id: 'bashing-resistant' },
+    { name: 'Lethal (Resistant)', symbol: '!' + symbolLibrary.HealthBoxLethal, id: 'lethal-resistant' },
+    { name: 'Aggravated (Resistant)', symbol: '!' + symbolLibrary.HealthBoxAggravated, id: 'aggravated-resistant' }
 ]
 
 const modsOptions = [
@@ -115,6 +126,16 @@ export default [
         description: "Gun damage modifier doesn't add dice to hit. Damage applied if Dexterity + Firearms roll succeeds.",
         type: 4, // Integer
         minValue: 0,
+    },
+    {
+        name: "damage-type",
+        description: "What type of damage the attack inflicts.",
+        type: 3, // String
+        required: true,
+        choices: damageTypes.map(dt => ({
+            name: `${dt.name} ${dt.symbol}`,
+            value: dt.id
+        }))
     },
     // {
     //     name: "aiming",

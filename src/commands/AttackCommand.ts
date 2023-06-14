@@ -1,7 +1,7 @@
 import { Interaction, Client, ApplicationCommandType, CommandInteraction, EmbedBuilder } from "discord.js";
 import { Command } from "../Command.js";
 import AttackAction from "./AttackAction.js";
-import AttackCommandOptions, { attackTypes } from "./AttackCommandOptions.js";
+import AttackCommandOptions, { attackTypes, damageTypes } from "./AttackCommandOptions.js";
 import { InstantRoll } from "@nwod-angel/nwod-roller";
 
 const symbols =  {
@@ -42,6 +42,8 @@ export const AttackCommand: Command = {
         let attackerDicePool = Number(interaction.options.get('attacker-dice-pool')!.value)
         let weaponBonus = Number(interaction.options.get('weapon-bonus')?.value)
         let weaponDamage = Number(interaction.options.get('weapon-damage')?.value)
+        let damageTypeId = interaction.options.get('damage-type')?.value?.toString() || undefined
+        let damageType = damageTypeId ? damageTypes.find(dt => dt.id === damageTypeId) : undefined 
         let allOutAttack = Boolean(interaction.options.get('all-out')?.value || false)
         
         let successThreshold = Number(interaction.options.get('success-threshold')?.value) || undefined
@@ -153,8 +155,8 @@ export const AttackCommand: Command = {
         }
         let weaponDamageDescription = weaponDamage ? `+ ${attackType.symbol} ${weaponDamage}` : ''
         embed.addFields({
-            name: `${target} takes ${totalDamage} damage`,
-            value: `${symbols.die} ${successes}${weaponDamageDescription}`,
+            name: `${target} takes ${totalDamage} ${damageType ? damageType.name + ' ' : ''}damage`,
+            value: `${symbols.die} ${successes}${weaponDamageDescription}${ damageType ? ' ' + damageType.symbol.repeat(totalDamage) : ''}`,
         })
 
         if(defenceLostTo){
