@@ -4,6 +4,27 @@ import AttackAction from "./AttackAction.js";
 import AttackCommandOptions, { attackTypes } from "./AttackCommandOptions.js";
 import { InstantRoll } from "@nwod-angel/nwod-roller";
 
+const symbols =  {
+    helmet: '🪖',
+    blood: '🩸',
+    bomb: '💣',
+    damage: '💥',
+    die: '🎲',
+    firecracker: '🧨',
+    runningShoe: '👟',
+    personRunning: '🏃',
+    hammer: '🔨',
+    axe: '🪓',
+    pick: '⛏️',
+    dagger: '🗡️',
+    crossedSwords: '⚔️',
+    waterPistol: '🔫',
+    boomerang: '🪃',
+    shield: '🛡️',
+    anger: '💢',
+    prohibited: '🚫'
+}
+
 export const AttackCommand: Command = {
     name: "attack",
     description: "Makes an attack roll",
@@ -21,6 +42,10 @@ export const AttackCommand: Command = {
         let attackerDicePool = Number(interaction.options.get('attacker-dice-pool')!.value)
         let weaponBonus = Number(interaction.options.get('weapon-bonus')?.value)
         let weaponDamage = Number(interaction.options.get('weapon-damage')?.value)
+        let allOutAttack = Boolean(interaction.options.get('all-out')?.value || false)
+
+
+        let defenceLostTo = ''
 
         let mods = []
         // Generate the values mod-1 to mod-9 and lookup the interaction.  If the value exists add it to the mods array
@@ -33,6 +58,14 @@ export const AttackCommand: Command = {
 
         if(weaponBonus){
             mods.push({ mod: weaponBonus, description: `${attackType.symbol} Weapon Bonus`})
+        }
+        if(allOutAttack){
+            if(defenceLostTo) {
+                interaction.followUp({ content: "Unable to lose defense more than once." })
+                return
+            }
+            mods.push({ mod: 2, description: `${symbols.anger} All out Attack`})
+            defenceLostTo = `${symbols.anger} All out Attack`
         }
 
         const totalMod = Math.max(0, attackerDicePool + mods.reduce((sum, mod) => sum + mod.mod, 0))
@@ -63,7 +96,7 @@ export const AttackCommand: Command = {
         if (description) { embed.setDescription(description) }
 
         embed.addFields({
-            name: `🎲 ${name} rolled ${instantRoll.dicePool} dice and got ${successes} successes`,
+            name: `${symbols.die} ${name} rolled ${instantRoll.dicePool} dice and got ${successes} successes`,
             value: rollDescription
         })
 
@@ -86,7 +119,7 @@ export const AttackCommand: Command = {
         if (weaponDamage) {
             totalDamage += weaponDamage
             embed.addFields({
-                name: `💥 Weapon damage`,
+                name: `${symbols.damage} Weapon damage`,
                 value: weaponDamage.toString(),
                 inline: true
             })
@@ -94,8 +127,15 @@ export const AttackCommand: Command = {
         let weaponDamageDescription = weaponDamage ? `+ ${attackType.symbol} ${weaponDamage}` : ''
         embed.addFields({
             name: `${target} takes ${totalDamage} damage`,
-            value: `🎲 ${successes}${weaponDamageDescription}`,
+            value: `${symbols.die} ${successes}${weaponDamageDescription}`,
         })
+
+        if(defenceLostTo){
+            embed.addFields({
+                name: `${symbols.prohibited}${symbols.personRunning} ${name} loses their defence.`,
+                value: `${defenceLostTo}`,
+            })
+        }
 
         await interaction.followUp({
             embeds: [embed]
