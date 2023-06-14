@@ -201,8 +201,8 @@ export default attackTypes.map(at => ({
     name: `${at.id}`,
     description: `${at.symbol} ${at.name}: ${at.attribute} + ${at.skill}, minus target's ${[at.defense ? 'Defence' : undefined, at.armor ? 'Armor' : undefined].filter(Boolean).join(' and ')}`,
     "type": 1, // 1 is type SUB_COMMAND
-    "options": at.options
-})).concat(modsOptions as any)
+    "options": at.options.concat(modsOptions as any)
+}))
 
 
 
