@@ -239,7 +239,7 @@ export const AttackCommand: Command = {
             })
         }
 
-        await interaction.followUp({
+        await interaction.editReply({
             embeds: [embed]
         });
     }
