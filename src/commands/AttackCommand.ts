@@ -74,11 +74,6 @@ export const AttackCommand: Command = {
             defenceLostTo = `${symbols.anger} All out Attack`
         }
 
-        const dicePool = Math.max(0, attackerDicePool + mods.reduce((sum, mod) => sum + mod.mod, 0))
-
-        const instantRoll = new InstantRoll({ dicePool: dicePool, rote: rote, successThreshold: successThreshold, rerollThreshold: rerollThreshold })
-        const rollDescription = instantRoll.toString()
-        const successes = instantRoll.numberOfSuccesses()
 
         // let targets = Number(interaction.options.get('targets')?.value || 1)
 
@@ -144,6 +139,26 @@ export const AttackCommand: Command = {
 
         let readyToRoll = false
 
+        let attackOptions = [
+            {
+                option: 'all-out-attack',
+                actionComponent: new ButtonBuilder()
+                    .setCustomId('all-out-attack')
+                    .setStyle(ButtonStyle.Primary)
+                    .setLabel("All out Attack")
+                    .setEmoji(symbols.anger),
+                action: (embed: EmbedBuilder, mods: {mod: number, description: string}[]) => {
+                    mods.push({ mod: 2, description: `${symbols.anger} All out Attack` })
+                    embed.addFields({
+                        name: `${symbols.anger} All out Attack`,
+                        value: '+2',
+                        inline: true
+                    })
+                    
+                }
+            }
+        ]
+
         while (!readyToRoll) {
 
             // TODO elict more options here
@@ -156,17 +171,20 @@ export const AttackCommand: Command = {
                     new ButtonBuilder()
                         .setCustomId('roll')
                         .setStyle(ButtonStyle.Success)
-                        .setLabel("Roll it!"),
+                        .setLabel("Roll it!")
+                        .setEmoji(symbols.die),
+                        
 
-                    // new ButtonBuilder()
-                    //     .setCustomId('all-out-attack')
-                    //     .setStyle(ButtonStyle.Primary)
-                    //     .setLabel("All out Attack"),
+                    new ButtonBuilder()
+                        .setCustomId('all-out-attack')
+                        .setStyle(ButtonStyle.Primary)
+                        .setLabel("All out Attack"),
 
                     new ButtonBuilder()
                         .setCustomId('cancel')
                         .setStyle(ButtonStyle.Danger)
-                        .setLabel("Cancel!"),
+                        .setLabel("Cancel!")
+                        .setEmoji(symbols.prohibited),
                 )
             )
 
@@ -181,6 +199,8 @@ export const AttackCommand: Command = {
 
                 switch (response.customId) {
                     case 'all-out-attack':
+                        let attackOption = attackOptions.find(ao => ao.option === 'all-out-attack')
+                        attackOption?.action(embed, mods)
                         break
                     case 'roll':
                         readyToRoll = true
@@ -207,6 +227,12 @@ export const AttackCommand: Command = {
 
             // Finished getting all the mods
         }
+
+        const dicePool = Math.max(0, attackerDicePool + mods.reduce((sum, mod) => sum + mod.mod, 0))
+
+        const instantRoll = new InstantRoll({ dicePool: dicePool, rote: rote, successThreshold: successThreshold, rerollThreshold: rerollThreshold })
+        const rollDescription = instantRoll.toString()
+        const successes = instantRoll.numberOfSuccesses()
 
         embed.addFields({
             name: `${symbols.die} ${name} rolled ${dicePool} dice and got ${successes} successes`,
