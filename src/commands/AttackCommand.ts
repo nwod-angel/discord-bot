@@ -101,14 +101,15 @@ export const AttackCommand: Command = {
             })
         if (description) { embed.setDescription(description) }
 
-        embed.addFields({
+        let modifierFields = []
+        modifierFields.push({
             name: `${name}'s ${attackType.attribute} + ${attackType.skill}`,
             value: attackerDicePool.toString(),
             inline: true
         })
 
         mods.forEach(mod => {
-            embed.addFields({
+            modifierFields.push({
                 name: mod.description,
                 value: mod.mod.toString(),
                 inline: true
@@ -116,7 +117,7 @@ export const AttackCommand: Command = {
         })
 
         if (successThreshold) {
-            embed.addFields({
+            modifierFields.push({
                 name: `Successes on`,
                 value: successThreshold.toString(),
                 inline: true
@@ -124,7 +125,7 @@ export const AttackCommand: Command = {
         }
 
         if (rerollThreshold) {
-            embed.addFields({
+            modifierFields.push({
                 name: `Reroll on`,
                 value: rerollThreshold.toString(),
                 inline: true
@@ -132,12 +133,16 @@ export const AttackCommand: Command = {
         }
 
         if (rote) {
-            embed.addFields({
+            modifierFields.push({
                 name: `Rote Action`,
                 value: 'Rerolling failures once',
                 inline: true
             })
         }
+
+        // TODO elict more options here
+
+        embed.addFields(modifierFields)
 
         embed.addFields({
             name: `${symbols.die} ${name} rolled ${dicePool} dice and got ${successes} successes`,
