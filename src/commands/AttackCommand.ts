@@ -137,6 +137,11 @@ export const AttackCommand: Command = {
 
         embed.addFields(modifierFields)
 
+        // Send a follow up then add the interactions afterwards
+        interaction.followUp({
+            embeds: [embed]
+        })
+
         let readyToRoll = false
 
         let attackOptions = [
@@ -188,7 +193,7 @@ export const AttackCommand: Command = {
                 )
             )
 
-            const responseInteraction = await interaction.followUp({
+            const responseInteraction = await interaction.editReply({
                 embeds: [embed],
                 components: actionRows
             })
