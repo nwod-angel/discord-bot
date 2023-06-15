@@ -170,7 +170,7 @@ export const AttackCommand: Command = {
                 )
             )
 
-            const responseInteraction = await interaction.reply({
+            const responseInteraction = await interaction.followUp({
                 embeds: [embed],
                 components: actionRows
             })
