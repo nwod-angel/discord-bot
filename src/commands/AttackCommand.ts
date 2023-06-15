@@ -1,4 +1,4 @@
-import { Interaction, Client, ApplicationCommandType, CommandInteraction, EmbedBuilder } from "discord.js";
+import { Interaction, Client, ApplicationCommandType, CommandInteraction, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
 import { Command } from "../Command.js";
 import AttackAction from "./AttackAction.js";
 import AttackCommandOptions, { attackTypes, damageTypes } from "./AttackCommandOptions.js";
@@ -140,9 +140,74 @@ export const AttackCommand: Command = {
             })
         }
 
-        // TODO elict more options here
-
         embed.addFields(modifierFields)
+
+        let readyToRoll = false
+
+        while (!readyToRoll) {
+
+            // TODO elict more options here
+
+            let actionRows = new Array<ActionRowBuilder<ButtonBuilder>>()
+            const buttonsPerRow = 5
+
+            actionRows.push(new ActionRowBuilder<ButtonBuilder>()
+                .addComponents(
+                    new ButtonBuilder()
+                        .setCustomId('roll')
+                        .setStyle(ButtonStyle.Success)
+                        .setLabel("Roll it!"),
+
+                    // new ButtonBuilder()
+                    //     .setCustomId('all-out-attack')
+                    //     .setStyle(ButtonStyle.Primary)
+                    //     .setLabel("All out Attack"),
+
+                    new ButtonBuilder()
+                        .setCustomId('cancel')
+                        .setStyle(ButtonStyle.Danger)
+                        .setLabel("Cancel!"),
+                )
+            )
+
+            const responseInteraction = await interaction.followUp({
+                embeds: [embed],
+                components: actionRows,
+                ephemeral: true
+            })
+
+
+            try {
+                const response = await responseInteraction.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 60000 })
+
+                switch (response.customId) {
+                    case 'all-out-attack':
+                        break
+                    case 'roll':
+                        readyToRoll = true
+                        break
+                    case 'cancel':
+                        await interaction.editReply({
+                            content: "Cancelling.",
+                            embeds: [],
+                            components: []
+                        })
+                        setTimeout(() => { interaction.deleteReply() }, 10000);
+                        return null
+                }
+            } catch (e) {
+                // No response
+                await interaction.editReply({
+                    content: "No response after 60 seconds. Cancelling.",
+                    embeds: [],
+                    components: []
+                })
+                setTimeout(() => { interaction.deleteReply() }, 10000);
+                return null
+            }
+
+            // Finished getting all the mods
+        }
 
         embed.addFields({
             name: `${symbols.die} ${name} rolled ${dicePool} dice and got ${successes} successes`,
