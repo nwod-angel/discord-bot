@@ -170,10 +170,9 @@ export const AttackCommand: Command = {
                 )
             )
 
-            const responseInteraction = await interaction.followUp({
+            const responseInteraction = await interaction.reply({
                 embeds: [embed],
-                components: actionRows,
-                ephemeral: true
+                components: actionRows
             })
 
 
@@ -240,7 +239,8 @@ export const AttackCommand: Command = {
         }
 
         await interaction.editReply({
-            embeds: [embed]
-        });
+            embeds: [embed],
+            components: [],
+        })
     }
-};
+}
