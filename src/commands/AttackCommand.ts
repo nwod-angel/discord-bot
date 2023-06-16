@@ -181,8 +181,10 @@ export const AttackCommand: Command = {
                         }).then(() => {
                             setTimeout(() => { interaction.deleteReply() }, 10000);
                         })
+                        collector.dispose(response)
                     } else if (response.customId === 'roll') {
                         roll(interaction, embed, attack)
+                        collector.dispose(response)
                     } else {
                         let attackOption = attackOptions.find(ao => ao.option === 'all-out-attack')
                         attackOption?.action(embed, attack.mods)
