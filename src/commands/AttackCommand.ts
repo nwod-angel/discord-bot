@@ -1,4 +1,4 @@
-import { Interaction, Client, ApplicationCommandType, CommandInteraction, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
+import { Interaction, Client, ApplicationCommandType, CommandInteraction, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, Collector } from "discord.js";
 import { Command } from "../Command.js";
 import AttackAction from "./AttackAction.js";
 import AttackCommandOptions, { attackTypes, damageTypes } from "./AttackCommandOptions.js";
@@ -165,7 +165,7 @@ export const AttackCommand: Command = {
                 }
             }
         ]
-
+        let componentReponse = null
         while (!readyToRoll) {
 
             // TODO elict more options here
@@ -192,11 +192,24 @@ export const AttackCommand: Command = {
                 .addComponents(actions)
             )
 
+            // if(componentReponse){
+            //     componentReponse.update({
+            //         embeds: [embed],
+            //         components: actionRows
+            //     })
+            // }
+
             let responseInteraction = await interaction.editReply({
                 embeds: [embed],
                 components: actionRows
             })
 
+
+            let collector = responseInteraction.createMessageComponentCollector({ filter: i => i.user.id === interaction.user.id, time: 60000 })
+
+            collector.on('collect', i => {
+                i.reply(`${i.user.id} clicked on the ${i.customId} button.`)
+            })
 
             try {
                 const response = await responseInteraction.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 60000 })
