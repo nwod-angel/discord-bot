@@ -204,7 +204,10 @@ export const AttackCommand: Command = {
                         let attackOption = attackOptions.find(ao => ao.option === 'all-out-attack')
                         attackOption?.action(embed, mods)
                         attackOptions = attackOptions.filter(ao => ao.option !== attackOption?.option)
-                        response.update({})
+                        response.update({
+                            embeds: [embed],
+                            components: actionRows
+                        })
                         break
                     case 'roll':
                         readyToRoll = true
