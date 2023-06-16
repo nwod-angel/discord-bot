@@ -171,26 +171,23 @@ export const AttackCommand: Command = {
             let actionRows = new Array<ActionRowBuilder<ButtonBuilder>>()
             const buttonsPerRow = 5
 
-            actionRows.push(new ActionRowBuilder<ButtonBuilder>()
-                .addComponents(
-                    new ButtonBuilder()
+            let actions = [
+                new ButtonBuilder()
                         .setCustomId('roll')
                         .setStyle(ButtonStyle.Success)
                         .setLabel("Roll it!")
-                        .setEmoji(symbols.die),
-                        
-
-                    new ButtonBuilder()
-                        .setCustomId('all-out-attack')
-                        .setStyle(ButtonStyle.Primary)
-                        .setLabel("All out Attack"),
-
-                    new ButtonBuilder()
-                        .setCustomId('cancel')
-                        .setStyle(ButtonStyle.Danger)
-                        .setLabel("Cancel!")
-                        .setEmoji(symbols.prohibited),
-                )
+                        .setEmoji(symbols.die)
+            ].concat(attackOptions.map(ao => ao.actionComponent))
+            .concat([
+                new ButtonBuilder()
+                    .setCustomId('cancel')
+                    .setStyle(ButtonStyle.Danger)
+                    .setLabel("Cancel!")
+                    .setEmoji(symbols.prohibited)
+            ])
+            // TODO Split over action rows
+            actionRows.push(new ActionRowBuilder<ButtonBuilder>()
+                .addComponents(actions)
             )
 
             let responseInteraction = await interaction.editReply({
