@@ -3,6 +3,7 @@ import { Command } from "../Command.js";
 import AttackAction from "./AttackAction.js";
 import AttackCommandOptions, { attackTypes, damageTypes } from "./AttackCommandOptions.js";
 import { InstantRoll } from "@nwod-angel/nwod-roller";
+import Attack from "./Attack.js";
 
 const CANCEL_WAIT_TIME = 5000
 
@@ -35,45 +36,44 @@ export const AttackCommand: Command = {
     options: AttackCommandOptions,
     run: async (client: Client, interaction: CommandInteraction) => {
 
-
-        let name = interaction.options.get('name')?.value?.toString() || interaction.member?.user.username || 'A user'
-        let target = interaction.options.get('target')?.value?.toString() || 'their target'
-        let description = interaction.options.get('description')?.value?.toString() || undefined
+        let attack = new Attack()
+        attack.name = interaction.options.get('name')?.value?.toString() || interaction.member?.user.username || 'A user'
+        attack.target = interaction.options.get('target')?.value?.toString() || 'their target'
+        attack.description = interaction.options.get('description')?.value?.toString() || undefined
         let attackTypeId = interaction.options.get('attack-type')!.value!.toString()
-        let attackType = attackTypes.find(at => at.id === attackTypeId)!
+        attack.attackType = attackTypes.find(at => at.id === attackTypeId)!
 
-        let attackerDicePool = Number(interaction.options.get('attacker-dice-pool')!.value)
-        let weaponBonus = Number(interaction.options.get('weapon-bonus')?.value)
-        let weaponDamage = Number(interaction.options.get('weapon-damage')?.value)
+        attack.attackerDicePool = Number(interaction.options.get('attacker-dice-pool')!.value)
+        attack.weaponBonus = Number(interaction.options.get('weapon-bonus')?.value)
+        attack.weaponDamage = Number(interaction.options.get('weapon-damage')?.value)
         let damageTypeId = interaction.options.get('damage-type')?.value?.toString() || undefined
-        let damageType = damageTypeId ? damageTypes.find(dt => dt.id === damageTypeId) : undefined
-        let allOutAttack = Boolean(interaction.options.get('all-out')?.value || false)
+        attack.damageType = damageTypeId ? damageTypes.find(dt => dt.id === damageTypeId) : undefined
+        attack.allOutAttack = Boolean(interaction.options.get('all-out')?.value || false)
 
-        let successThreshold = Number(interaction.options.get('success-threshold')?.value) || undefined
-        let rerollThreshold = Number(interaction.options.get('reroll-threshold')?.value) || undefined
-        let rote = Boolean(interaction.options.get('rote')?.value) || undefined
+        attack.successThreshold = Number(interaction.options.get('success-threshold')?.value) || undefined
+        attack.rerollThreshold = Number(interaction.options.get('reroll-threshold')?.value) || undefined
+        attack.rote = Boolean(interaction.options.get('rote')?.value) || undefined
 
-        let defenceLostTo = ''
+        attack.defenceLostTo = ''
 
-        let mods = []
         // Generate the values mod-1 to mod-9 and lookup the interaction.  If the value exists add it to the mods array
         for (let i = 1; i <= 9; i++) {
             let modValue = interaction.options.get(`mod-${i}`)?.value?.toString()
             if (modValue) {
-                mods.push({ mod: parseInt(modValue), description: modValue.substring(modValue.indexOf(' ') + 1).trim() || `mod-${i}` })
+                attack.mods.push({ mod: parseInt(modValue), description: modValue.substring(modValue.indexOf(' ') + 1).trim() || `mod-${i}` })
             }
         }
 
-        if (weaponBonus) {
-            mods.push({ mod: weaponBonus, description: `${attackType.symbol} Weapon Bonus` })
+        if (attack.weaponBonus) {
+            attack.mods.push({ mod: attack.weaponBonus, description: `${attack.attackType.symbol} Weapon Bonus` })
         }
-        if (allOutAttack) {
-            if (defenceLostTo) {
+        if (attack.allOutAttack) {
+            if (attack.defenceLostTo) {
                 interaction.followUp({ content: "Unable to lose defense more than once." })
                 return
             }
-            mods.push({ mod: 2, description: `${symbols.anger} All out Attack` })
-            defenceLostTo = `${symbols.anger} All out Attack`
+            attack.mods.push({ mod: 2, description: `${symbols.anger} All out Attack` })
+            attack.defenceLostTo = `${symbols.anger} All out Attack`
         }
 
 
@@ -91,21 +91,21 @@ export const AttackCommand: Command = {
         // TODO Check for incompatible options. e.g. targets and radius
 
         let embed = new EmbedBuilder()
-            .setTitle(`${name} makes an ${attackType.symbol} ${attackType.name} ${attackType.symbol} attack against ${target}!`)
+            .setTitle(`${name} makes an ${attack.attackType.symbol} ${attack.attackType.name} ${attack.attackType.symbol} attack against ${attack.target}!`)
             .setFooter({
                 text: interaction.id,
                 // iconURL: 'https://i.imgur.com/AfFp7pu.png'
             })
-        if (description) { embed.setDescription(description) }
+        if (attack.description) { embed.setDescription(attack.description) }
 
         let modifierFields = []
         modifierFields.push({
-            name: `${name}'s ${attackType.attribute} + ${attackType.skill}`,
-            value: attackerDicePool.toString(),
+            name: `${name}'s ${attack.attackType.attribute} + ${attack.attackType.skill}`,
+            value: attack.attackerDicePool.toString(),
             inline: true
         })
 
-        mods.forEach(mod => {
+        attack.mods.forEach(mod => {
             modifierFields.push({
                 name: mod.description,
                 value: mod.mod.toString(),
@@ -113,23 +113,23 @@ export const AttackCommand: Command = {
             })
         })
 
-        if (successThreshold) {
+        if (attack.successThreshold) {
             modifierFields.push({
                 name: `Successes on`,
-                value: successThreshold.toString(),
+                value: attack.successThreshold.toString(),
                 inline: true
             })
         }
 
-        if (rerollThreshold) {
+        if (attack.rerollThreshold) {
             modifierFields.push({
                 name: `Reroll on`,
-                value: rerollThreshold.toString(),
+                value: attack.rerollThreshold.toString(),
                 inline: true
             })
         }
 
-        if (rote) {
+        if (attack.rote) {
             modifierFields.push({
                 name: `Rote Action`,
                 value: 'Rerolling failures once',
@@ -207,88 +207,111 @@ export const AttackCommand: Command = {
 
             let collector = responseInteraction.createMessageComponentCollector({ filter: i => i.user.id === interaction.user.id, time: 60000 })
 
-            collector.on('collect', i => {
-                i.reply(`${i.user.id} clicked on the ${i.customId} button.`)
+            collector.on('collect', response => {
+                if(response.customId === 'roll'){
+                    interaction.editReply({
+                        content: "Cancelling...",
+                        embeds: [],
+                        components: []
+                    }).then(() => {
+                        setTimeout(() => { interaction.deleteReply() }, 10000);
+                    })
+                }
+                if(response.customId === 'roll'){
+                    roll(interaction, embed, attack)
+                } else {
+                    let attackOption = attackOptions.find(ao => ao.option === 'all-out-attack')
+                    attackOption?.action(embed, attack.mods)
+                    attackOptions = attackOptions.filter(ao => ao.option !== attackOption?.option)
+                    response.update({
+                        embeds: [embed],
+                        components: actionRows
+                    })
+                }
             })
 
-            try {
-                const response = await responseInteraction.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 60000 })
+            // try {
+            //     const response = await responseInteraction.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 60000 })
 
-                switch (response.customId) {
-                    case 'all-out-attack':
-                        let attackOption = attackOptions.find(ao => ao.option === 'all-out-attack')
-                        attackOption?.action(embed, mods)
-                        attackOptions = attackOptions.filter(ao => ao.option !== attackOption?.option)
-                        response.update({
-                            embeds: [embed],
-                            components: actionRows
-                        })
-                        break
-                    case 'roll':
-                        readyToRoll = true
-                        break
-                    case 'cancel':
-                        await interaction.editReply({
-                            content: "Cancelling...",
-                            embeds: [],
-                            components: []
-                        })
-                        setTimeout(() => { interaction.deleteReply() }, 10000);
-                        return null
-                }
-            } catch (e) {
-                // No response
-                await interaction.editReply({
-                    content: "No response after 60 seconds. Cancelling.",
-                    embeds: [],
-                    components: []
-                })
-                setTimeout(() => { try { interaction.deleteReply() } catch { console.log(`${interaction.id} already deleted.`) } }, CANCEL_WAIT_TIME);
-                return null
-            }
+            //     switch (response.customId) {
+            //         case 'all-out-attack':
+            //             let attackOption = attackOptions.find(ao => ao.option === 'all-out-attack')
+            //             attackOption?.action(embed, mods)
+            //             attackOptions = attackOptions.filter(ao => ao.option !== attackOption?.option)
+            //             response.update({
+            //                 embeds: [embed],
+            //                 components: actionRows
+            //             })
+            //             break
+            //         case 'roll':
+            //             readyToRoll = true
+            //             break
+            //         case 'cancel':
+            //             await interaction.editReply({
+            //                 content: "Cancelling...",
+            //                 embeds: [],
+            //                 components: []
+            //             })
+            //             setTimeout(() => { interaction.deleteReply() }, 10000);
+            //             return null
+            //     }
+            // } catch (e) {
+            //     // No response
+            //     await interaction.editReply({
+            //         content: "No response after 60 seconds. Cancelling.",
+            //         embeds: [],
+            //         components: []
+            //     })
+            //     setTimeout(() => { try { interaction.deleteReply() } catch { console.log(`${interaction.id} already deleted.`) } }, CANCEL_WAIT_TIME);
+            //     return null
+            // }
 
             // Finished getting all the mods
         }
 
-        const dicePool = Math.max(0, attackerDicePool + mods.reduce((sum, mod) => sum + mod.mod, 0))
+    }
+}
 
-        const instantRoll = new InstantRoll({ dicePool: dicePool, rote: rote, successThreshold: successThreshold, rerollThreshold: rerollThreshold })
-        const rollDescription = instantRoll.toString()
-        const successes = instantRoll.numberOfSuccesses()
+function roll(interaction: CommandInteraction, embed: EmbedBuilder, attack: Attack): void {
 
+    const dicePool = Math.max(0, (attack.attackerDicePool || 0) + (attack.mods?.reduce((sum, mod) => sum + mod.mod, 0) || 0))
+
+    const instantRoll = new InstantRoll({ dicePool: dicePool, rote: attack.rote, successThreshold: attack.successThreshold, rerollThreshold: attack.rerollThreshold })
+    const rollDescription = instantRoll.toString()
+    const successes = instantRoll.numberOfSuccesses()
+
+    embed.addFields({
+        name: `${symbols.die} ${name} rolled ${dicePool} dice and got ${successes} successes`,
+        value: rollDescription
+    })
+
+    if (successes > 0) {
+        let totalDamage = successes
+
+        if (attack.weaponDamage) {
+            totalDamage += attack.weaponDamage
+            embed.addFields({
+                name: `${symbols.damage} Weapon damage`,
+                value: attack.weaponDamage.toString(),
+                inline: true
+            })
+        }
+        let weaponDamageDescription = attack.weaponDamage ? `+ ${attack.attackType?.symbol} ${attack.weaponDamage}` : ''
         embed.addFields({
-            name: `${symbols.die} ${name} rolled ${dicePool} dice and got ${successes} successes`,
-            value: rollDescription
-        })
-
-        if (successes > 0) {
-            let totalDamage = successes
-
-            if (weaponDamage) {
-                totalDamage += weaponDamage
-                embed.addFields({
-                    name: `${symbols.damage} Weapon damage`,
-                    value: weaponDamage.toString(),
-                    inline: true
-                })
-            }
-            let weaponDamageDescription = weaponDamage ? `+ ${attackType.symbol} ${weaponDamage}` : ''
-            embed.addFields({
-                name: `${target} takes ${totalDamage} ${damageType ? damageType.name + ' ' : ''}damage`,
-                value: `${symbols.die} ${successes}${weaponDamageDescription}${damageType ? '\n' + damageType.symbol.repeat(totalDamage) : ''}`,
-            })
-        }
-
-        if (defenceLostTo) {
-            embed.addFields({
-                name: `${symbols.personShrugging} ${name} loses their defence`,
-                value: `${defenceLostTo}`,
-            })
-        }
-
-        await interaction.editReply({
-            embeds: [embed],
-            components: [],
+            name: `${attack.target} takes ${totalDamage} ${attack.damageType ? attack.damageType.name + ' ' : ''}damage`,
+            value: `${symbols.die} ${successes}${weaponDamageDescription}${attack.damageType ? '\n' + attack.damageType.symbol.repeat(totalDamage) : ''}`,
         })
     }
+
+    if (attack.defenceLostTo) {
+        embed.addFields({
+            name: `${symbols.personShrugging} ${name} loses their defence`,
+            value: `${attack.defenceLostTo}`,
+        })
+    }
+
+    interaction.editReply({
+        embeds: [embed],
+        components: [],
+    })
 }
