@@ -4,6 +4,8 @@ import AttackAction from "./AttackAction.js";
 import AttackCommandOptions, { attackTypes, damageTypes } from "./AttackCommandOptions.js";
 import { InstantRoll } from "@nwod-angel/nwod-roller";
 
+const CANCEL_WAIT_TIME = 5000
+
 const symbols = {
     helmet: '🪖',
     blood: '🩸',
@@ -228,7 +230,7 @@ export const AttackCommand: Command = {
                     embeds: [],
                     components: []
                 })
-                setTimeout(() => { interaction.deleteReply() }, 10000);
+                setTimeout(() => { try { interaction.deleteReply() } catch { console.log(`${interaction.id} already deleted.`) } }, CANCEL_WAIT_TIME);
                 return null
             }
 
