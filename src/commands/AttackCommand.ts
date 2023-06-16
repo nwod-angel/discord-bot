@@ -162,8 +162,8 @@ export const AttackCommand: Command = {
                 }
             }
         ]
-        let componentReponse = null
-        while (!readyToRoll) {
+        // let componentReponse = null
+        // while (!readyToRoll) {
 
             // TODO elict more options here
 
@@ -264,7 +264,7 @@ export const AttackCommand: Command = {
             // }
 
             // Finished getting all the mods
-        }
+        // }
 
     }
 }
