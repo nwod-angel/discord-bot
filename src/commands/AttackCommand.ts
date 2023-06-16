@@ -206,6 +206,7 @@ export const AttackCommand: Command = {
                     case 'all-out-attack':
                         let attackOption = attackOptions.find(ao => ao.option === 'all-out-attack')
                         attackOption?.action(embed, mods)
+                        attackOptions = attackOptions.filter(ao => ao.option !== attackOption?.option)
                         break
                     case 'roll':
                         readyToRoll = true
