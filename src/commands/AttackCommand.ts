@@ -211,16 +211,12 @@ export const AttackCommand: Command = {
                         readyToRoll = true
                         break
                     case 'cancel':
-                        let reply = "Cancelling..."
-                        while(reply.length > 0){
-                            await interaction.editReply({
-                                content: reply,
-                                embeds: [],
-                                components: []
-                            })
-                            setTimeout(() => { reply = reply.slice(0, -1) }, 1000);
-                        }
-                        interaction.deleteReply()
+                        await interaction.editReply({
+                            content: "Cancelling...",
+                            embeds: [],
+                            components: []
+                        })
+                        setTimeout(() => { interaction.deleteReply() }, 10000);
                         return null
                 }
             } catch (e) {
