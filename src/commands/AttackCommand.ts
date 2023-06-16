@@ -193,10 +193,6 @@ export const AttackCommand: Command = {
                 )
             )
 
-            interaction.editReply({
-                embeds: [embed],
-            })
-
             let responseInteraction = await interaction.editReply({
                 embeds: [embed],
                 components: actionRows
@@ -211,6 +207,7 @@ export const AttackCommand: Command = {
                         let attackOption = attackOptions.find(ao => ao.option === 'all-out-attack')
                         attackOption?.action(embed, mods)
                         attackOptions = attackOptions.filter(ao => ao.option !== attackOption?.option)
+                        response.update({})
                         break
                     case 'roll':
                         readyToRoll = true
