@@ -193,7 +193,11 @@ export const AttackCommand: Command = {
                 )
             )
 
-            const responseInteraction = await interaction.editReply({
+            interaction.editReply({
+                embeds: [embed],
+            })
+
+            let responseInteraction = await interaction.editReply({
                 embeds: [embed],
                 components: actionRows
             })
