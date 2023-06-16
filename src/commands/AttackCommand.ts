@@ -91,7 +91,7 @@ export const AttackCommand: Command = {
         // TODO Check for incompatible options. e.g. targets and radius
 
         let embed = new EmbedBuilder()
-            .setTitle(`${name} makes an ${attack.attackType.symbol} ${attack.attackType.name} ${attack.attackType.symbol} attack against ${attack.target}!`)
+            .setTitle(`${attack.name} makes an ${attack.attackType.symbol} ${attack.attackType.name} ${attack.attackType.symbol} attack against ${attack.target}!`)
             .setFooter({
                 text: interaction.id,
                 // iconURL: 'https://i.imgur.com/AfFp7pu.png'
@@ -278,7 +278,7 @@ function roll(interaction: CommandInteraction, embed: EmbedBuilder, attack: Atta
     const successes = instantRoll.numberOfSuccesses()
 
     embed.addFields({
-        name: `${symbols.die} ${name} rolled ${dicePool} dice and got ${successes} successes`,
+        name: `${symbols.die} ${attack.name} rolled ${dicePool} dice and got ${successes} successes`,
         value: rollDescription
     })
 
@@ -302,7 +302,7 @@ function roll(interaction: CommandInteraction, embed: EmbedBuilder, attack: Atta
 
     if (attack.defenceLostTo) {
         embed.addFields({
-            name: `${symbols.personShrugging} ${name} loses their defence`,
+            name: `${symbols.personShrugging} ${attack.name} loses their defence`,
             value: `${attack.defenceLostTo}`,
         })
     }
