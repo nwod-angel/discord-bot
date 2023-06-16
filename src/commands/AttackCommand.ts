@@ -205,7 +205,7 @@ export const AttackCommand: Command = {
             let collector = responseInteraction.createMessageComponentCollector({ filter: i => i.user.id === interaction.user.id, time: 60000 })
 
             collector.on('collect', response => {
-                if(response.customId === 'roll'){
+                if(response.customId === 'cancel'){
                     interaction.editReply({
                         content: "Cancelling...",
                         embeds: [],
