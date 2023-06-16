@@ -201,8 +201,7 @@ export const AttackCommand: Command = {
 
             try {
                 const response = await responseInteraction.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 60000 })
-                response.deferReply()
-                
+
                 switch (response.customId) {
                     case 'all-out-attack':
                         let attackOption = attackOptions.find(ao => ao.option === 'all-out-attack')
@@ -212,12 +211,16 @@ export const AttackCommand: Command = {
                         readyToRoll = true
                         break
                     case 'cancel':
-                        await interaction.editReply({
-                            content: "Cancelling.",
-                            embeds: [],
-                            components: []
-                        })
-                        setTimeout(() => { interaction.deleteReply() }, 10000);
+                        let reply = "Cancelling..."
+                        while(reply.length > 0){
+                            await interaction.editReply({
+                                content: reply,
+                                embeds: [],
+                                components: []
+                            })
+                            setTimeout(() => { reply = reply.slice(0, -1) }, 1000);
+                        }
+                        interaction.deleteReply()
                         return null
                 }
             } catch (e) {
