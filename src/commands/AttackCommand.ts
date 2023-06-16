@@ -151,122 +151,92 @@ export const AttackCommand: Command = {
                     .setStyle(ButtonStyle.Primary)
                     .setLabel("All out Attack")
                     .setEmoji(symbols.anger),
-                action: (embed: EmbedBuilder, mods: {mod: number, description: string}[]) => {
+                action: (embed: EmbedBuilder, mods: { mod: number, description: string }[]) => {
                     mods.push({ mod: 2, description: `${symbols.anger} All out Attack` })
                     embed.addFields({
                         name: `${symbols.anger} All out Attack`,
                         value: '+2',
                         inline: true
                     })
-                    
+
                 }
             }
         ]
-        // let componentReponse = null
-        // while (!readyToRoll) {
 
-            // TODO elict more options here
 
-            let actionRows = new Array<ActionRowBuilder<ButtonBuilder>>()
-            const buttonsPerRow = 5
-
-            let actions = [
-                new ButtonBuilder()
-                        .setCustomId('roll')
-                        .setStyle(ButtonStyle.Success)
-                        .setLabel("Roll it!")
-                        .setEmoji(symbols.die)
-            ].concat(attackOptions.map(ao => ao.actionComponent))
-            .concat([
-                new ButtonBuilder()
-                    .setCustomId('cancel')
-                    .setStyle(ButtonStyle.Danger)
-                    .setLabel("Cancel!")
-                    .setEmoji(symbols.prohibited)
-            ])
-            // TODO Split over action rows
-            actionRows.push(new ActionRowBuilder<ButtonBuilder>()
-                .addComponents(actions)
-            )
-
-            // if(componentReponse){
-            //     componentReponse.update({
-            //         embeds: [embed],
-            //         components: actionRows
-            //     })
-            // }
-
-            let responseInteraction = await interaction.editReply({
-                embeds: [embed],
-                components: actionRows
+        interaction.editReply({
+            embeds: [embed],
+            components: createActionRows(attackOptions)
+        })
+            .then(message => {
+                return message.createMessageComponentCollector({ filter: i => i.user.id === interaction.user.id, time: 60000 })
+            })
+            .then(collector => {
+                collector.on('collect', response => {
+                    if (response.customId === 'cancel') {
+                        interaction.editReply({
+                            content: "Cancelling...",
+                            embeds: [],
+                            components: []
+                        }).then(() => {
+                            setTimeout(() => { interaction.deleteReply() }, 10000);
+                        })
+                    } else if (response.customId === 'roll') {
+                        roll(interaction, embed, attack)
+                    } else {
+                        let attackOption = attackOptions.find(ao => ao.option === 'all-out-attack')
+                        attackOption?.action(embed, attack.mods)
+                        attackOptions = attackOptions.filter(ao => ao.option !== attackOption?.option)
+                        interaction.editReply({
+                            embeds: [embed],
+                            components: createActionRows(attackOptions)
+                        })
+                    }
+                })
             })
 
+        // try {
+        //     const response = await responseInteraction.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 60000 })
 
-            let collector = responseInteraction.createMessageComponentCollector({ filter: i => i.user.id === interaction.user.id, time: 60000 })
+        //     switch (response.customId) {
+        //         case 'all-out-attack':
+        //             let attackOption = attackOptions.find(ao => ao.option === 'all-out-attack')
+        //             attackOption?.action(embed, mods)
+        //             attackOptions = attackOptions.filter(ao => ao.option !== attackOption?.option)
+        //             response.update({
+        //                 embeds: [embed],
+        //                 components: actionRows
+        //             })
+        //             break
+        //         case 'roll':
+        //             readyToRoll = true
+        //             break
+        //         case 'cancel':
+        //             await interaction.editReply({
+        //                 content: "Cancelling...",
+        //                 embeds: [],
+        //                 components: []
+        //             })
+        //             setTimeout(() => { interaction.deleteReply() }, 10000);
+        //             return null
+        //     }
+        // } catch (e) {
+        //     // No response
+        //     await interaction.editReply({
+        //         content: "No response after 60 seconds. Cancelling.",
+        //         embeds: [],
+        //         components: []
+        //     })
+        //     setTimeout(() => { try { interaction.deleteReply() } catch { console.log(`${interaction.id} already deleted.`) } }, CANCEL_WAIT_TIME);
+        //     return null
+        // }
 
-            collector.on('collect', response => {
-                if(response.customId === 'cancel'){
-                    interaction.editReply({
-                        content: "Cancelling...",
-                        embeds: [],
-                        components: []
-                    }).then(() => {
-                        setTimeout(() => { interaction.deleteReply() }, 10000);
-                    })
-                } else if(response.customId === 'roll'){
-                    roll(interaction, embed, attack)
-                } else {
-                    let attackOption = attackOptions.find(ao => ao.option === 'all-out-attack')
-                    attackOption?.action(embed, attack.mods)
-                    attackOptions = attackOptions.filter(ao => ao.option !== attackOption?.option)
-                    response.update({
-                        embeds: [embed],
-                        components: actionRows
-                    })
-                }
-            })
-
-            // try {
-            //     const response = await responseInteraction.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 60000 })
-
-            //     switch (response.customId) {
-            //         case 'all-out-attack':
-            //             let attackOption = attackOptions.find(ao => ao.option === 'all-out-attack')
-            //             attackOption?.action(embed, mods)
-            //             attackOptions = attackOptions.filter(ao => ao.option !== attackOption?.option)
-            //             response.update({
-            //                 embeds: [embed],
-            //                 components: actionRows
-            //             })
-            //             break
-            //         case 'roll':
-            //             readyToRoll = true
-            //             break
-            //         case 'cancel':
-            //             await interaction.editReply({
-            //                 content: "Cancelling...",
-            //                 embeds: [],
-            //                 components: []
-            //             })
-            //             setTimeout(() => { interaction.deleteReply() }, 10000);
-            //             return null
-            //     }
-            // } catch (e) {
-            //     // No response
-            //     await interaction.editReply({
-            //         content: "No response after 60 seconds. Cancelling.",
-            //         embeds: [],
-            //         components: []
-            //     })
-            //     setTimeout(() => { try { interaction.deleteReply() } catch { console.log(`${interaction.id} already deleted.`) } }, CANCEL_WAIT_TIME);
-            //     return null
-            // }
-
-            // Finished getting all the mods
+        // Finished getting all the mods
         // }
 
     }
 }
+
 
 function roll(interaction: CommandInteraction, embed: EmbedBuilder, attack: Attack): void {
 
@@ -311,3 +281,28 @@ function roll(interaction: CommandInteraction, embed: EmbedBuilder, attack: Atta
         components: [],
     })
 }
+function createActionRows(attackOptions: { option: string; actionComponent: ButtonBuilder; action: (embed: EmbedBuilder, mods: { mod: number; description: string; }[]) => void; }[]): ActionRowBuilder<ButtonBuilder>[] {
+
+    let actions = [
+        new ButtonBuilder()
+            .setCustomId('roll')
+            .setStyle(ButtonStyle.Success)
+            .setLabel("Roll it!")
+            .setEmoji(symbols.die)
+    ].concat(attackOptions.map(ao => ao.actionComponent))
+        .concat([
+            new ButtonBuilder()
+                .setCustomId('cancel')
+                .setStyle(ButtonStyle.Danger)
+                .setLabel("Cancel!")
+                .setEmoji(symbols.prohibited)
+        ])
+
+    let actionRows = new Array<ActionRowBuilder<ButtonBuilder>>()
+    const buttonsPerRow = 5
+    actionRows.push(new ActionRowBuilder<ButtonBuilder>()
+        .addComponents(actions)
+    )
+    return actionRows
+}
+
