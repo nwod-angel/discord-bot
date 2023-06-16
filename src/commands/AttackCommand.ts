@@ -98,15 +98,14 @@ export const AttackCommand: Command = {
             })
         if (attack.description) { embed.setDescription(attack.description) }
 
-        let modifierFields = []
-        modifierFields.push({
-            name: `${name}'s ${attack.attackType.attribute} + ${attack.attackType.skill}`,
+        embed.addFields({
+            name: `${attack.name}'s ${attack.attackType.attribute} + ${attack.attackType.skill}`,
             value: attack.attackerDicePool.toString(),
             inline: true
         })
 
         attack.mods.forEach(mod => {
-            modifierFields.push({
+            embed.addFields({
                 name: mod.description,
                 value: mod.mod.toString(),
                 inline: true
@@ -114,7 +113,7 @@ export const AttackCommand: Command = {
         })
 
         if (attack.successThreshold) {
-            modifierFields.push({
+            embed.addFields({
                 name: `Successes on`,
                 value: attack.successThreshold.toString(),
                 inline: true
@@ -122,7 +121,7 @@ export const AttackCommand: Command = {
         }
 
         if (attack.rerollThreshold) {
-            modifierFields.push({
+            embed.addFields({
                 name: `Reroll on`,
                 value: attack.rerollThreshold.toString(),
                 inline: true
@@ -130,14 +129,12 @@ export const AttackCommand: Command = {
         }
 
         if (attack.rote) {
-            modifierFields.push({
+            embed.addFields({
                 name: `Rote Action`,
                 value: 'Rerolling failures once',
                 inline: true
             })
         }
-
-        embed.addFields(modifierFields)
 
         // Send a follow up then add the interactions afterwards
         interaction.followUp({
