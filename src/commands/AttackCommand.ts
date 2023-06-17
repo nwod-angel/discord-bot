@@ -11,7 +11,7 @@ const symbols = {
     helmet: '🪖',
     blood: '🩸',
     bomb: '💣',
-    cancellation: '🗙',
+    crossMarkButton: '❎',
     damage: '💥',
     die: '🎲',
     firecracker: '🧨',
@@ -305,7 +305,7 @@ function createActionRows(attackOptions: { option: string; actionComponent: Butt
                 .setCustomId('cancel')
                 .setStyle(ButtonStyle.Danger)
                 .setLabel("Cancel!")
-                .setEmoji(symbols.cancellation)
+                .setEmoji(symbols.crossMarkButton)
         ])
 
     let actionRows = new Array<ActionRowBuilder<ButtonBuilder>>()
