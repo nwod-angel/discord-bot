@@ -11,6 +11,7 @@ const symbols = {
     helmet: '🪖',
     blood: '🩸',
     bomb: '💣',
+    cancellation: '🗙',
     damage: '💥',
     die: '🎲',
     firecracker: '🧨',
@@ -208,7 +209,7 @@ export const AttackCommand: Command = {
                         if (response.customId === 'cancel') {
                             cancelling = true
                             interaction.editReply({
-                                content: "Cancelling...",
+                                content: `Cancelling.  Message will be removed in ${CANCEL_WAIT_TIME / 1000} seconds.`,
                                 embeds: [],
                                 components: []
                             }).then(() => {
@@ -222,7 +223,7 @@ export const AttackCommand: Command = {
                             let attackOption = attackOptions.find(ao => ao.option === response.customId)
                             attackOption?.action(embed, attack.mods)
                             attackOptions = attackOptions.filter(ao => ao.option !== attackOption?.option)
-                            response.reply(`Adding option: ${attackOption?.option}`)
+                            response.reply({ content: `Adding option: ${attackOption?.option}`, ephemeral: true})
                                 .then(update => {
                                     setTimeout(() => { update.delete() }, CANCEL_WAIT_TIME)
                                 })
@@ -304,7 +305,7 @@ function createActionRows(attackOptions: { option: string; actionComponent: Butt
                 .setCustomId('cancel')
                 .setStyle(ButtonStyle.Danger)
                 .setLabel("Cancel!")
-                .setEmoji(symbols.prohibited)
+                .setEmoji(symbols.cancellation)
         ])
 
     let actionRows = new Array<ActionRowBuilder<ButtonBuilder>>()
