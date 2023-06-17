@@ -259,13 +259,15 @@ export const AttackCommand: Command = {
                         }
                     }
                 } catch (e) {
-                    // No response
-                    interaction.editReply({
-                        content: "No response after 60 seconds. Cancelling.",
-                        embeds: [],
-                        components: []
-                    })
-                    setTimeout(() => { try { interaction.deleteReply() } catch { console.log(`${interaction.id} already deleted.`) } }, CANCEL_WAIT_TIME);
+                    try {
+                        // No response
+                        interaction.editReply({
+                            content: "No response after 60 seconds. Cancelling.",
+                            embeds: [],
+                            components: []
+                        })
+                        setTimeout(() => { interaction.deleteReply() }, CANCEL_WAIT_TIME)
+                    } catch { console.log(`${interaction.id} already deleted.`) }
                     return null
                 }
             })
