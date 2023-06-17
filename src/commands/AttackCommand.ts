@@ -4,6 +4,7 @@ import AttackAction from "./AttackAction.js";
 import AttackCommandOptions, { attackTypes, damageTypes } from "./AttackCommandOptions.js";
 import { InstantRoll } from "@nwod-angel/nwod-roller";
 import Attack from "./Attack.js";
+import AttackOptions from "./AttackOptions.js";
 
 const CANCEL_WAIT_TIME = 5000
 
@@ -147,58 +148,76 @@ export const AttackCommand: Command = {
         let readyToRoll = false
         let cancelling = false
 
-        let attackOptions = [
-            {
-                option: 'all-out-attack',
+        let attackOptions =
+            AttackOptions.map((ao) => ({
+                option: ao.id,
                 actionComponent: new ButtonBuilder()
-                    .setCustomId('all-out-attack')
+                    .setCustomId(ao.id)
                     .setStyle(ButtonStyle.Primary)
-                    .setLabel("All out Attack")
-                    .setEmoji(symbols.anger),
-                action: (embed: EmbedBuilder, mods: { mod: number, description: string }[]) => {
-                    mods.push({ mod: 2, description: `${symbols.anger} All out Attack` })
+                    .setLabel(ao.name)
+                    .setEmoji(ao.symbol),
+                action: (embed: EmbedBuilder, attack: Attack) => {
+                    ao.apply(attack)
                     embed.addFields({
-                        name: `${symbols.anger} All out Attack`,
-                        value: '+2',
+                        name: ao.fancyName(),
+                        value: ao.summary,
                         inline: true
                     })
                 }
-            },            
-            {
-                option: 'willpower-attack',
-                actionComponent: new ButtonBuilder()
-                    .setCustomId('willpower-attack')
-                    .setStyle(ButtonStyle.Primary)
-                    .setLabel("Attack with Willpower")
-                    .setEmoji(symbols.angryFace),
-                action: (embed: EmbedBuilder, mods: { mod: number, description: string }[]) => {
-                    mods.push({ mod: 3, description: `${symbols.angryFace} Attack with Willpower` })
-                    embed.addFields({
-                        name: `${symbols.angryFace} Attack with Willpower`,
-                        value: '+3',
-                        inline: true
-                    })
+            }))
 
-                }
-            },            
-            {
-                option: 'willpower-defense',
-                actionComponent: new ButtonBuilder()
-                    .setCustomId('willpower-defense')
-                    .setStyle(ButtonStyle.Primary)
-                    .setLabel("Defend with Willpower")
-                    .setEmoji(symbols.perseveringFace),
-                action: (embed: EmbedBuilder, mods: { mod: number, description: string }[]) => {
-                    mods.push({ mod: -2, description: `${symbols.perseveringFace} Defend with Willpower` })
-                    embed.addFields({
-                        name: `${symbols.perseveringFace} Defend with Willpower`,
-                        value: '-2',
-                        inline: true
-                    })
+        // let attackOptions = [
+        //     {
+        //         option: 'all-out-attack',
+        //         actionComponent: new ButtonBuilder()
+        //             .setCustomId('all-out-attack')
+        //             .setStyle(ButtonStyle.Primary)
+        //             .setLabel("All out Attack")
+        //             .setEmoji(symbols.anger),
+        //         action: (embed: EmbedBuilder, mods: { mod: number, description: string }[]) => {
+        //             mods.push({ mod: 2, description: `${symbols.anger} All out Attack` })
+        //             embed.addFields({
+        //                 name: `${symbols.anger} All out Attack`,
+        //                 value: '+2',
+        //                 inline: true
+        //             })
+        //         }
+        //     },
+        //     {
+        //         option: 'willpower-attack',
+        //         actionComponent: new ButtonBuilder()
+        //             .setCustomId('willpower-attack')
+        //             .setStyle(ButtonStyle.Primary)
+        //             .setLabel("Attack with Willpower")
+        //             .setEmoji(symbols.angryFace),
+        //         action: (embed: EmbedBuilder, mods: { mod: number, description: string }[]) => {
+        //             mods.push({ mod: 3, description: `${symbols.angryFace} Attack with Willpower` })
+        //             embed.addFields({
+        //                 name: `${symbols.angryFace} Attack with Willpower`,
+        //                 value: '+3',
+        //                 inline: true
+        //             })
 
-                }
-            }
-        ]
+        //         }
+        //     },
+        //     {
+        //         option: 'willpower-defense',
+        //         actionComponent: new ButtonBuilder()
+        //             .setCustomId('willpower-defense')
+        //             .setStyle(ButtonStyle.Primary)
+        //             .setLabel("Defend with Willpower")
+        //             .setEmoji(symbols.perseveringFace),
+        //         action: (embed: EmbedBuilder, mods: { mod: number, description: string }[]) => {
+        //             mods.push({ mod: -2, description: `${symbols.perseveringFace} Defend with Willpower` })
+        //             embed.addFields({
+        //                 name: `${symbols.perseveringFace} Defend with Willpower`,
+        //                 value: '-2',
+        //                 inline: true
+        //             })
+
+        //         }
+        //     }
+        // ]
 
 
         interaction.editReply({
@@ -227,9 +246,9 @@ export const AttackCommand: Command = {
                             roll(interaction, embed, attack)
                         } else {
                             let attackOption = attackOptions.find(ao => ao.option === response.customId)
-                            attackOption?.action(embed, attack.mods)
+                            attackOption?.action(embed, attack)
                             attackOptions = attackOptions.filter(ao => ao.option !== attackOption?.option)
-                            response.reply({ content: `Adding option: ${attackOption?.option}`, ephemeral: true})
+                            response.reply({ content: `Adding option: ${attackOption?.option}`, ephemeral: true })
                                 .then(update => {
                                     setTimeout(() => { update.delete() }, CANCEL_WAIT_TIME)
                                 })
@@ -297,7 +316,7 @@ function roll(interaction: CommandInteraction, embed: EmbedBuilder, attack: Atta
         components: [],
     })
 }
-function createActionRows(attackOptions: { option: string; actionComponent: ButtonBuilder; action: (embed: EmbedBuilder, mods: { mod: number; description: string; }[]) => void; }[]): ActionRowBuilder<ButtonBuilder>[] {
+function createActionRows(attackOptions: { option: string; actionComponent: ButtonBuilder; action: (embed: EmbedBuilder, attack: Attack) => void; }[]): ActionRowBuilder<ButtonBuilder>[] {
 
     let actions = [
         new ButtonBuilder()
