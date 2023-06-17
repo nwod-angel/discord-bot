@@ -212,7 +212,7 @@ export const AttackCommand: Command = {
                                 embeds: [],
                                 components: []
                             }).then(() => {
-                                setTimeout(() => { interaction.deleteReply() }, 10000);
+                                setTimeout(() => { interaction.deleteReply() }, 10000)
                             })
                             return
                         } else if (response.customId === 'roll') {
@@ -222,6 +222,10 @@ export const AttackCommand: Command = {
                             let attackOption = attackOptions.find(ao => ao.option === response.customId)
                             attackOption?.action(embed, attack.mods)
                             attackOptions = attackOptions.filter(ao => ao.option !== attackOption?.option)
+                            response.reply(`Adding option: ${attackOption?.option}`)
+                                .then(update => {
+                                    setTimeout(() => { update.delete() }, CANCEL_WAIT_TIME)
+                                })
                             interaction.editReply({
                                 embeds: [embed],
                                 components: createActionRows(attackOptions)
