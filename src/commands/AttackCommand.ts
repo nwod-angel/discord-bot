@@ -166,60 +166,6 @@ export const AttackCommand: Command = {
                 }
             }))
 
-        // let attackOptions = [
-        //     {
-        //         option: 'all-out-attack',
-        //         actionComponent: new ButtonBuilder()
-        //             .setCustomId('all-out-attack')
-        //             .setStyle(ButtonStyle.Primary)
-        //             .setLabel("All out Attack")
-        //             .setEmoji(symbols.anger),
-        //         action: (embed: EmbedBuilder, mods: { mod: number, description: string }[]) => {
-        //             mods.push({ mod: 2, description: `${symbols.anger} All out Attack` })
-        //             embed.addFields({
-        //                 name: `${symbols.anger} All out Attack`,
-        //                 value: '+2',
-        //                 inline: true
-        //             })
-        //         }
-        //     },
-        //     {
-        //         option: 'willpower-attack',
-        //         actionComponent: new ButtonBuilder()
-        //             .setCustomId('willpower-attack')
-        //             .setStyle(ButtonStyle.Primary)
-        //             .setLabel("Attack with Willpower")
-        //             .setEmoji(symbols.angryFace),
-        //         action: (embed: EmbedBuilder, mods: { mod: number, description: string }[]) => {
-        //             mods.push({ mod: 3, description: `${symbols.angryFace} Attack with Willpower` })
-        //             embed.addFields({
-        //                 name: `${symbols.angryFace} Attack with Willpower`,
-        //                 value: '+3',
-        //                 inline: true
-        //             })
-
-        //         }
-        //     },
-        //     {
-        //         option: 'willpower-defense',
-        //         actionComponent: new ButtonBuilder()
-        //             .setCustomId('willpower-defense')
-        //             .setStyle(ButtonStyle.Primary)
-        //             .setLabel("Defend with Willpower")
-        //             .setEmoji(symbols.perseveringFace),
-        //         action: (embed: EmbedBuilder, mods: { mod: number, description: string }[]) => {
-        //             mods.push({ mod: -2, description: `${symbols.perseveringFace} Defend with Willpower` })
-        //             embed.addFields({
-        //                 name: `${symbols.perseveringFace} Defend with Willpower`,
-        //                 value: '-2',
-        //                 inline: true
-        //             })
-
-        //         }
-        //     }
-        // ]
-
-
         interaction.editReply({
             embeds: [embed],
             components: createActionRows(attackOptions)
@@ -310,6 +256,15 @@ function roll(interaction: CommandInteraction, embed: EmbedBuilder, attack: Atta
         embed.addFields({
             name: `${symbols.personShrugging} ${attack.name} loses their defence`,
             value: `${attack.defenceLostTo}`,
+            inline: true
+        })
+    }
+
+    if (attack.willpowerUsedOn) {
+        embed.addFields({
+            name: `⚫ ${attack.name} uses a point of willpower`,
+            value: `${attack.willpowerUsedOn}`,
+            inline: true
         })
     }
 

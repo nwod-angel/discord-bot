@@ -13,6 +13,7 @@ export default class Attack {
     description: string | undefined;
     target: string | undefined;
     name: string | undefined;
+    willpowerUsedOn: string;
 
     constructor (){
         this.mods = new Array<{ mod: number; description: string; }>()
