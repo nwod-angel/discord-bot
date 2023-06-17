@@ -142,6 +142,7 @@ export const AttackCommand: Command = {
         })
 
         let readyToRoll = false
+        let cancelling = false
 
         let attackOptions = [
             {
@@ -168,79 +169,76 @@ export const AttackCommand: Command = {
             embeds: [embed],
             components: createActionRows(attackOptions)
         })
-        // .then(message => {
-        //     return message.createMessageComponentCollector({ filter: i => i.user.id === interaction.user.id, time: 60000 })
-        // })
-        // .then(collector => {
-        //     collector.on('collect', response => {
-        //         if (response.customId === 'cancel') {
-        //             interaction.editReply({
-        //                 content: "Cancelling...",
-        //                 embeds: [],
-        //                 components: []
-        //             }).then(() => {
-        //                 setTimeout(() => { interaction.deleteReply() }, 10000);
-        //             })
-        //             collector.dispose(response)
-        //         } else if (response.customId === 'roll') {
-        //             roll(interaction, embed, attack)
-        //             collector.dispose(response)
-        //         } else {
-        //             let attackOption = attackOptions.find(ao => ao.option === 'all-out-attack')
-        //             attackOption?.action(embed, attack.mods)
-        //             attackOptions = attackOptions.filter(ao => ao.option !== attackOption?.option)
-        //             interaction.editReply({
-        //                 embeds: [embed],
-        //                 components: createActionRows(attackOptions)
-        //             })
-        //         }
-        //     })
-        // })
+            // .then(message => {
+            //     return message.createMessageComponentCollector({ filter: i => i.user.id === interaction.user.id, time: 60000 })
+            // })
+            // .then(collector => {
+            //     collector.on('collect', response => {
+            //         if (response.customId === 'cancel') {
+            //             interaction.editReply({
+            //                 content: "Cancelling...",
+            //                 embeds: [],
+            //                 components: []
+            //             }).then(() => {
+            //                 setTimeout(() => { interaction.deleteReply() }, 10000);
+            //             })
+            //             collector.dispose(response)
+            //         } else if (response.customId === 'roll') {
+            //             roll(interaction, embed, attack)
+            //             collector.dispose(response)
+            //         } else {
+            //             let attackOption = attackOptions.find(ao => ao.option === 'all-out-attack')
+            //             attackOption?.action(embed, attack.mods)
+            //             attackOptions = attackOptions.filter(ao => ao.option !== attackOption?.option)
+            //             interaction.editReply({
+            //                 embeds: [embed],
+            //                 components: createActionRows(attackOptions)
+            //             })
+            //         }
+            //     })
+            // })
 
-        .then(message => {
+            .then(async message => {
 
-            try {
-                while(!readyToRoll){
-                    
-                message.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 60000 })
-                    .then(response => {
+                try {
+                    while (!readyToRoll && !cancelling) {
 
-                        switch (response.customId) {
-                            case 'all-out-attack':
-                                let attackOption = attackOptions.find(ao => ao.option === 'all-out-attack')
-                                attackOption?.action(embed, attack.mods)
-                                attackOptions = attackOptions.filter(ao => ao.option !== attackOption?.option)
-                                interaction.editReply({
-                                    embeds: [embed],
-                                    components: createActionRows(attackOptions)
-                                })
-                                break
-                            case 'roll':
-                                readyToRoll = true
-                                roll(interaction, embed, attack)
-                                return
-                            case 'cancel':
-                                interaction.editReply({
-                                    content: "Cancelling...",
-                                    embeds: [],
-                                    components: []
-                                })
-                                setTimeout(() => { interaction.deleteReply() }, CANCEL_WAIT_TIME);
-                                return null
+                        let response = await message.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 60000 })
+
+                        if (response.customId === 'cancel') {
+                            cancelling = true
+                            interaction.editReply({
+                                content: "Cancelling...",
+                                embeds: [],
+                                components: []
+                            }).then(() => {
+                                setTimeout(() => { interaction.deleteReply() }, 10000);
+                            })
+                            return
+                        } else if (response.customId === 'roll') {
+                            readyToRoll = true
+                            roll(interaction, embed, attack)
+                        } else {
+                            let attackOption = attackOptions.find(ao => ao.option === response.customId)
+                            attackOption?.action(embed, attack.mods)
+                            attackOptions = attackOptions.filter(ao => ao.option !== attackOption?.option)
+                            interaction.editReply({
+                                embeds: [embed],
+                                components: createActionRows(attackOptions)
+                            })
                         }
+                    }
+                } catch (e) {
+                    // No response
+                    interaction.editReply({
+                        content: "No response after 60 seconds. Cancelling.",
+                        embeds: [],
+                        components: []
                     })
+                    setTimeout(() => { try { interaction.deleteReply() } catch { console.log(`${interaction.id} already deleted.`) } }, CANCEL_WAIT_TIME);
+                    return null
                 }
-            } catch (e) {
-                // No response
-                interaction.editReply({
-                    content: "No response after 60 seconds. Cancelling.",
-                    embeds: [],
-                    components: []
-                })
-                setTimeout(() => { try { interaction.deleteReply() } catch { console.log(`${interaction.id} already deleted.`) } }, CANCEL_WAIT_TIME);
-                return null
-            }
-        })
+            })
     }
 }
 
