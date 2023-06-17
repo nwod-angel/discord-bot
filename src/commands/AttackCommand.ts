@@ -141,7 +141,7 @@ export const AttackCommand: Command = {
         }
 
         // Send a follow up then add the interactions afterwards
-        interaction.followUp({
+        await interaction.followUp({
             embeds: [embed]
         })
 
