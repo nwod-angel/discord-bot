@@ -143,11 +143,11 @@ export default [
     //     minValue: 1,
     //     maxValue: 3
     // },
-    {
-        name: "all-out",
-        description: "All-Out Attack: +2 with Brawl or Weaponry attack; lose Defense",
-        type: 5, // Boolean
-    },
+    // {
+    //     name: "all-out",
+    //     description: "All-Out Attack: +2 with Brawl or Weaponry attack; lose Defense",
+    //     type: 5, // Boolean
+    // },
     // {
     //     name: "armor-piercing",
     //     description: "Armor Piercing: Ignores amount of target’s armor equal to item’s own rating",

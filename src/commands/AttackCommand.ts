@@ -28,6 +28,8 @@ const symbols = {
     anger: '💢',
     prohibited: '🚫',
     personShrugging: '🤷',
+    perseveringFace: '😣',
+    angryFace: '😠'
 }
 
 export const AttackCommand: Command = {
@@ -160,6 +162,39 @@ export const AttackCommand: Command = {
                         value: '+2',
                         inline: true
                     })
+                }
+            },            
+            {
+                option: 'willpower-attack',
+                actionComponent: new ButtonBuilder()
+                    .setCustomId('willpower-attack')
+                    .setStyle(ButtonStyle.Primary)
+                    .setLabel("Attack with Willpower")
+                    .setEmoji(symbols.angryFace),
+                action: (embed: EmbedBuilder, mods: { mod: number, description: string }[]) => {
+                    mods.push({ mod: 3, description: `${symbols.angryFace} Attack with Willpower` })
+                    embed.addFields({
+                        name: `${symbols.angryFace} Attack with Willpower`,
+                        value: '+3',
+                        inline: true
+                    })
+
+                }
+            },            
+            {
+                option: 'willpower-defense',
+                actionComponent: new ButtonBuilder()
+                    .setCustomId('willpower-defense')
+                    .setStyle(ButtonStyle.Primary)
+                    .setLabel("Defend with Willpower")
+                    .setEmoji(symbols.perseveringFace),
+                action: (embed: EmbedBuilder, mods: { mod: number, description: string }[]) => {
+                    mods.push({ mod: -2, description: `${symbols.perseveringFace} Defend with Willpower` })
+                    embed.addFields({
+                        name: `${symbols.perseveringFace} Defend with Willpower`,
+                        value: '-2',
+                        inline: true
+                    })
 
                 }
             }
@@ -170,35 +205,6 @@ export const AttackCommand: Command = {
             embeds: [embed],
             components: createActionRows(attackOptions)
         })
-            // .then(message => {
-            //     return message.createMessageComponentCollector({ filter: i => i.user.id === interaction.user.id, time: 60000 })
-            // })
-            // .then(collector => {
-            //     collector.on('collect', response => {
-            //         if (response.customId === 'cancel') {
-            //             interaction.editReply({
-            //                 content: "Cancelling...",
-            //                 embeds: [],
-            //                 components: []
-            //             }).then(() => {
-            //                 setTimeout(() => { interaction.deleteReply() }, 10000);
-            //             })
-            //             collector.dispose(response)
-            //         } else if (response.customId === 'roll') {
-            //             roll(interaction, embed, attack)
-            //             collector.dispose(response)
-            //         } else {
-            //             let attackOption = attackOptions.find(ao => ao.option === 'all-out-attack')
-            //             attackOption?.action(embed, attack.mods)
-            //             attackOptions = attackOptions.filter(ao => ao.option !== attackOption?.option)
-            //             interaction.editReply({
-            //                 embeds: [embed],
-            //                 components: createActionRows(attackOptions)
-            //             })
-            //         }
-            //     })
-            // })
-
             .then(async message => {
 
                 try {
