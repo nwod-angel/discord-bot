@@ -8,6 +8,7 @@ export default [
         symbol: '💢',
         summary: '+2 to attack, lose defense',
         description: 'description',
+        input: 'boolean',
         apply: (attack: Attack) => {
             attack.mods.push({ mod: 2, description: `💢 All out Attack` })
             attack.defenceLostTo = `💢 All out Attack`
@@ -24,6 +25,7 @@ export default [
         symbol: '😠',
         summary: '+3 to attack, -1 willpower',
         description: 'description',
+        input: 'boolean',
         apply: (attack: Attack) => {
             attack.mods.push({ mod: 3, description: `😠 Attack with Willpower` })
             attack.willpowerUsedOn = `😠 Attack with Willpower`
@@ -38,6 +40,7 @@ export default [
         symbol: '😣',
         summary: '-2 to attack',
         description: 'description',
+        input: 'boolean',
         apply: (attack: Attack) => {
             attack.mods.push({ mod: -2, description: `😣 Defend with Willpower` })
         }
@@ -48,6 +51,7 @@ export default [
         symbol: '🫲',
         summary: '-2 penalty',
         description: 'description',
+        input: 'boolean',
         apply: (attack: Attack) => {
             attack.mods.push({ mod: -2, description: `🫲 Offhand Attack` })
         }
@@ -58,6 +62,7 @@ export default [
     //     symbol: '🎯',
     //     summary: '+1 per turn to a +3 maximum',
     //     description: 'description',
+        // input: 'number',
     //     apply: (attack: Attack) => {
     //         attack.mods.push({ mod: -2, description: `🎯 Defend with Willpower` })
     //     },

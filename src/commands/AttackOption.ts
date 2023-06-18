@@ -12,6 +12,7 @@ export class AttackOption {
     symbol: string;
     summary: string;
     description: string;
+    input: string;
     apply: ApplyFunction;
     _filter?: FilterFunction;
 
@@ -21,6 +22,7 @@ export class AttackOption {
         symbol,
         summary,
         description,
+        input,
         apply,
         filter
     }: { 
@@ -29,6 +31,7 @@ export class AttackOption {
         symbol: string,
         summary: string,
         description: string,
+        input: string,
         apply: ApplyFunction,
         filter?: FilterFunction
     }) {
@@ -37,6 +40,7 @@ export class AttackOption {
         this.symbol = symbol
         this.summary = summary
         this.description = description
+        this.input = input
         this.apply = apply
         this._filter = filter || undefined
     }
