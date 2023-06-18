@@ -292,9 +292,22 @@ function createActionRows(attackOptions: { option: string; actionComponent: Butt
 
     let actionRows = new Array<ActionRowBuilder<ButtonBuilder>>()
     const buttonsPerRow = 5
+    const actionOptionRows = splitArray(actions, buttonsPerRow)
+    actionOptionRows.forEach(actionOptionRow => {
+        actionRows.push(new ActionRowBuilder<ButtonBuilder>()
+            .addComponents(actionOptionRow))
+    })
+
     actionRows.push(new ActionRowBuilder<ButtonBuilder>()
         .addComponents(actions)
     )
     return actionRows
+}
+
+
+function splitArray<T>(array: Array<T>, n: number) {
+    return Array.from({ length: Math.ceil(array.length / n) }, (_, index) =>
+        array.slice(index * n, index * n + n)
+    );
 }
 
