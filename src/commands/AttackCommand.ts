@@ -297,10 +297,7 @@ function createActionRows(attackOptions: { option: string; actionComponent: Butt
         actionRows.push(new ActionRowBuilder<ButtonBuilder>()
             .addComponents(actionOptionRow))
     })
-
-    actionRows.push(new ActionRowBuilder<ButtonBuilder>()
-        .addComponents(actions)
-    )
+    
     return actionRows
 }
 
