@@ -42,6 +42,16 @@ export default [
             attack.mods.push({ mod: -2, description: `😣 Defend with Willpower` })
         }
     }),
+    new AttackOption({
+        id: 'offhand',
+        name: 'Offhand Attack',
+        symbol: '🫲',
+        summary: '-2 penalty',
+        description: 'description',
+        apply: (attack: Attack) => {
+            attack.mods.push({ mod: -2, description: `🫲 Offhand Attack` })
+        }
+    }),
     // new AttackOption({
     //     id: 'aiming',
     //     name: 'Aiming',
