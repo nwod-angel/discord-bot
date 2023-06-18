@@ -5,6 +5,7 @@ import AttackCommandOptions, { attackTypes, damageTypes } from "./AttackCommandO
 import { InstantRoll } from "@nwod-angel/nwod-roller";
 import Attack from "./Attack.js";
 import AttackOptions from "./AttackOptions.js";
+import { AttackOptionComponentBuilder } from "./AttackOptionComponentBuilder.js";
 
 const CANCEL_WAIT_TIME = 5000
 
@@ -148,23 +149,8 @@ export const AttackCommand: Command = {
         let readyToRoll = false
         let cancelling = false
 
-        let attackOptions =
-            AttackOptions.map((ao) => ({
-                option: ao.id,
-                actionComponent: new ButtonBuilder()
-                    .setCustomId(ao.id)
-                    .setStyle(ButtonStyle.Primary)
-                    .setLabel(ao.name)
-                    .setEmoji(ao.symbol),
-                action: (embed: EmbedBuilder, attack: Attack) => {
-                    ao.apply(attack)
-                    embed.addFields({
-                        name: ao.fancyName(),
-                        value: ao.summary,
-                        inline: true
-                    })
-                }
-            }))
+        let attackOptions = new AttackOptionComponentBuilder()
+            .addAttackOptions(AttackOptions).attackOptions
 
         interaction.editReply({
             embeds: [embed],
@@ -220,7 +206,6 @@ export const AttackCommand: Command = {
     }
 }
 
-
 function roll(interaction: CommandInteraction, embed: EmbedBuilder, attack: Attack): void {
 
     const dicePool = Math.max(0, (attack.attackerDicePool || 0) + (attack.mods?.reduce((sum, mod) => sum + mod.mod, 0) || 0))
@@ -262,7 +247,7 @@ function roll(interaction: CommandInteraction, embed: EmbedBuilder, attack: Atta
 
     if (attack.willpowerUsedOn) {
         embed.addFields({
-            name: `⚫ ${attack.name} uses a point of willpower`,
+            name: `⬤ => ⭘ ${attack.name} uses a point of willpower`,
             value: `${attack.willpowerUsedOn}`,
             inline: true
         })
@@ -297,7 +282,7 @@ function createActionRows(attackOptions: { option: string; actionComponent: Butt
         actionRows.push(new ActionRowBuilder<ButtonBuilder>()
             .addComponents(actionOptionRow))
     })
-    
+
     return actionRows
 }
 
