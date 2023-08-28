@@ -102,7 +102,7 @@ export const ParadoxCommand: Command = {
     run: async (client: Client, interaction: CommandInteraction) => {
         await DiscordChannelLogger.setClient(client).logBaggage({ interaction: interaction, options: interaction.options })
 
-        let name = interaction.options.get('name')!.value?.toString() || interaction.member?.user.username || 'A user'
+        let name = interaction.options.get('name')?.value?.toString() || interaction.member?.user.username || 'A user'
         let description = interaction.options.get('description')?.value?.toString() || undefined
         let gnosis = Number(interaction.options.get('gnosis')!.value)
         let casts = Number(interaction.options.get('casts')?.value || 0)
