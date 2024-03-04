@@ -1,4 +1,4 @@
-import { EmbedBuilder, Client, ApplicationCommandType, CommandInteraction, ColorResolvable } from "discord.js";
+import { EmbedBuilder, Client, ApplicationCommandType, CommandInteraction, ColorResolvable, Colors } from "discord.js";
 import { Command } from "../Command";
 import { InstantRoll } from "@nwod-angel/nwod-roller";
 import { ExtendedRoll } from "@nwod-angel/nwod-roller";
@@ -119,24 +119,24 @@ export const Roll: Command = {
         }
 
         // Report Result
-        var colour = 'White'
+        let colour = Colors.Default as Number
         var actionResult = ''
 
         switch (result) {
             case RollResult.critical_failure:
-                colour = 'Black'
+                colour = Colors.NotQuiteBlack
                 actionResult = "💀 Critical Failure! "// + this.randomFromList(this.emojis.criticalFailure)
                 break
             case RollResult.exceptional_success:
-                colour = 'Yellow'
+                colour = Colors.Yellow
                 actionResult = "⭐ Exceptional Success! "// + this.randomFromList(this.emojis.exceptionalSuccess)
                 break
             case RollResult.failure:
-                colour = 'Red'
+                colour = Colors.Red
                 actionResult = "❌ Failure "// + this.randomFromList(this.emojis.failure)
                 break
             case RollResult.success:
-                colour = 'Green'
+                colour = Colors.Green
                 actionResult = "✅ Success "// + this.randomFromList(this.emojis.success) 
                 break
         }
