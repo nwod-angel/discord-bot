@@ -13,8 +13,9 @@ export default (client: Client): void => {
                 await handleAutoCompleteCommand(client, interaction as AutocompleteInteraction);
             }
             UpdateStatus.doSomethingRandom(client)
-        } catch {
+        } catch (ex) {
             console.log('errored')
+            console.log(ex)
         }
     });
 };
