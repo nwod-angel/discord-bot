@@ -70,7 +70,13 @@ export class UpdateStatus {
 
     static setStatus(client: Client, status: string) {
         if(client.user) {
-            client.user.setPresence({ activities: [{ name: status, type: ActivityType.Playing }] })
+            try{
+                client.user.setPresence({ activities: [{ name: status, type: ActivityType.Playing }] })
+            } catch (ex) {
+                console.log("Error calling 'client.user.setPresence'.")
+                console.log(ex)
+            }
+
         }
     }
 
