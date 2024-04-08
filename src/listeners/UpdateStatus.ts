@@ -5,12 +5,20 @@ export class UpdateStatus {
     // Playing ...
     static statuses = [
         'nWoD',
+        'World of Darkness',
+
         'with dice',
         'with new dice',
+        'with number rocks',
         'with a new character idea',
+        'with a new character concept',
+        'with a new story idea',
         'a new story',
         'a new story ideas',
+        'all the NPCs',
 
+        'Mage the Awakening',
+        'MtAw',
         'a mage',
         'a willworker',
         'an Acanthus',
@@ -26,6 +34,8 @@ export class UpdateStatus {
         'a Seer',
         'a Banisher',
 
+        'Vampire the Requiem',
+        'VtR',
         'a vampire',
         'a kindred',
         'a Daeva',
@@ -39,6 +49,8 @@ export class UpdateStatus {
         'a Lancea Sanctum',
         'an Ordo Dracul',
 
+        'Werewolf the Forsaken',
+        'WtF',
         'a werewolf',
         'a Cahalith',
         'an Elodoth',
@@ -53,11 +65,21 @@ export class UpdateStatus {
         'an Iron Master',
         'a Storm Lord',
 
+        'Hunter the Vigil',
+        'HtV',
         'a hunter',
+        
+        'Promethean the Created',
+        'PtC',
         'a promethean',
+
+        'Geist the Sin-Eaters',
+        'GtSE',
         'a giest',
-        'a mummy',
-        'all the NPCs'
+        
+        'Mummy the Cursed',
+        'MtC',
+        'a mummy'
     ]
 
     static doSomethingRandom(client: Client) {
