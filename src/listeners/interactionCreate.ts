@@ -14,7 +14,7 @@ export default (client: Client): void => {
             }
             UpdateStatus.doSomethingRandom(client)
         } catch (ex) {
-            console.log('errored')
+            console.log('Errored during interaction handler.')
             console.log(ex)
         }
     });
