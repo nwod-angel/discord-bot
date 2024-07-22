@@ -106,10 +106,14 @@ export const SpellCommand: Command = {
         } else {
             let spellsToDisplay = spells.slice(0,25)
             let spellTitles = spellsToDisplay.map(s => s.titleString()).join('\n')
-            let parameters = ''
+            let parameters = []
+            if(name) { parameters.push(`Name contains: ${name}`) }
+            if(description) { parameters.push(`Description contains: ${description}`) }
+            if(dots) { parameters.push(`Dots: ${dots}`) }
 
             embed
             .setTitle(`Showing ${spellsToDisplay.length} of ${spells.length}`)
+            .setDescription(parameters.join('\n'))
             .addFields(
                 { name: `Showing ${spellsToDisplay.length} of ${spells.length}`, value: spellTitles, inline: false },
             )
