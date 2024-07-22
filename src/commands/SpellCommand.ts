@@ -117,9 +117,11 @@ export const SpellCommand: Command = {
             .setTitle(`Showing ${spellsToDisplay.length} of ${spells.length} spells`)
             .setDescription(parameters.join('\n'))
             
-            for(let listedArcana in [...new Set(spells.map(s => s.primaryArcana.toString()))]){
+            let uniqArcana = [...new Set(spells.map(s => s.primaryArcana.toString()))];
+            for(let listedArcana in uniqArcana){
+                let arcanaSpellList = spells.filter(s => s.primaryArcana.toString() === listedArcana).map(s => s.titleString()).join('\n')
                 embed.addFields(
-                    { name: `${listedArcana}`, value: spells.filter(s => s.primaryArcana.toString() === listedArcana).map(s => s.titleString()).join('\n'), inline: false },
+                    { name: `${listedArcana}`, value: arcanaSpellList, inline: false },
                 )
             }
             
