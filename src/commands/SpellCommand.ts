@@ -121,7 +121,7 @@ export const SpellCommand: Command = {
             for(let listedArcana in uniqArcana){
                 let arcanaSpellList = spells.filter(s => s.primaryArcana.toString() === listedArcana).map(s => s.titleString()).join('\n')
                 embed.addFields(
-                    { name: `${listedArcana}`, value: arcanaSpellList, inline: false },
+                    { name: `${Arcana[listedArcana]}`, value: arcanaSpellList, inline: true },
                 )
             }
             
