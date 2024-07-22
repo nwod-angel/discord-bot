@@ -104,7 +104,7 @@ export const SpellCommand: Command = {
             })
             embed.addFields({ name: 'Sources', value: spell.sourcesString(), inline: false })
         } else {
-            let spellsToDisplay = spells.slice(0,50)
+            let spellsToDisplay = spells.slice(0, 25)
             // let spellTitles = spellsToDisplay.map(s => s.titleString()).join('\n')
             let parameters = []
             if(name) { parameters.push(`Name contains: ${name}`) }
