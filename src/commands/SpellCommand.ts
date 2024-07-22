@@ -104,8 +104,8 @@ export const SpellCommand: Command = {
             })
             embed.addFields({ name: 'Sources', value: spell.sourcesString(), inline: false })
         } else {
-            let spellsToDisplay = spells.slice(0,25)
-            let spellTitles = spellsToDisplay.map(s => s.titleString()).join('\n')
+            // let spellsToDisplay = spells.slice(0,25)
+            // let spellTitles = spellsToDisplay.map(s => s.titleString()).join('\n')
             let parameters = []
             if(name) { parameters.push(`Name contains: ${name}`) }
             if(description) { parameters.push(`Description contains: ${description}`) }
@@ -114,15 +114,26 @@ export const SpellCommand: Command = {
             if(practice) { parameters.push(`Practice: ${practice}`) }
 
             embed
-            .setTitle(`Showing ${spellsToDisplay.length} of ${spells.length} spells`)
+            .setTitle(`Showing ${spells.length} spells`)
             .setDescription(parameters.join('\n'))
             
-            let uniqArcana = [...new Set(spells.map(s => s.primaryArcana.toString()))];
+            let uniqArcana = [...new Set(spells.map(s => s.primaryArcana.toString()))]
             for(let listedArcana in uniqArcana){
-                let arcanaSpellList = spells.filter(s => s.primaryArcana.toString() === listedArcana).map(s => s.titleString()).join('\n')
-                embed.addFields(
-                    { name: `${Arcana[listedArcana]}`, value: arcanaSpellList, inline: true },
-                )
+                let arcanaSpellList = spells.filter(s => s.primaryArcana.toString() === listedArcana)
+                if(arcanaSpellList.length <= 25) {
+                    embed.addFields(
+                        { name: `${Arcana[listedArcana]}`, value: arcanaSpellList.map(s => s.titleString()).join('\n'), inline: false },
+                    )    
+                } else {
+                    let uniqDots = [...new Set(arcanaSpellList.map(s => s.dots))]
+                    for(let listedDots in uniqDots) {
+                        let dotSpellList = spells.filter(s => s.dots.toString() === listedDots)
+                        embed.addFields(
+                            { name: `${Arcana[listedArcana]} ${listedDots}`, value: dotSpellList.map(s => s.titleString()).join('\n'), inline: false },
+                        )    
+                    }
+                }
+                
             }
             
 
