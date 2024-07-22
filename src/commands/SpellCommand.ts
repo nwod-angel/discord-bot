@@ -109,14 +109,20 @@ export const SpellCommand: Command = {
             let parameters = []
             if(name) { parameters.push(`Name contains: ${name}`) }
             if(description) { parameters.push(`Description contains: ${description}`) }
+            if(arcana) { parameters.push(`Arcana: ${arcana}`) }
             if(dots) { parameters.push(`Dots: ${dots}`) }
+            if(practice) { parameters.push(`Practice: ${practice}`) }
 
             embed
-            .setTitle(`Showing ${spellsToDisplay.length} of ${spells.length}`)
+            .setTitle(`Showing ${spellsToDisplay.length} of ${spells.length} spells`)
             .setDescription(parameters.join('\n'))
-            .addFields(
-                { name: `Showing ${spellsToDisplay.length} of ${spells.length}`, value: spellTitles, inline: false },
-            )
+            
+            for(let listedArcana in [...new Set(spells.map(s => s.primaryArcana.toString()))]){
+                embed.addFields(
+                    { name: `${listedArcana}`, value: spells.filter(s => s.primaryArcana.toString() === listedArcana).map(s => s.titleString()).join('\n'), inline: false },
+                )
+            }
+            
 
         }
         
