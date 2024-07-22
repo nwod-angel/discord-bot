@@ -70,7 +70,7 @@ export const SpellCommand: Command = {
         }
 
         let spells = SpellProvider.getSpells(name, description, arcana, practice, dots)
-        if(spells.filter(spell => spell.name.toLowerCase() === name!.toLowerCase()).length === 1) {
+        if(name && spells.filter(spell => spell.name.toLowerCase() === name!.toLowerCase()).length === 1) {
             spells = spells.filter(spell => spell.name.toLowerCase() === name!.toLowerCase())
         }
 
