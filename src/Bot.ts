@@ -4,6 +4,7 @@ import ready from "./listeners/ready.js";
 import interactionCreate from "./listeners/interactionCreate.js";
 import unhandledRejection from "./listeners/unhandledRejection.js";
 import * as dotenv from 'dotenv'
+import unhandledException from "./listeners/unhandledException.js";
 dotenv.config(); //initialize dotenv
 
 const token = process.env['DISCORD_TOKEN']; // add your token here
@@ -28,6 +29,7 @@ const client = new Client({
 ready(client);
 interactionCreate(client);
 unhandledRejection(client);
+unhandledException(client);
 
 client.login(token);
 
