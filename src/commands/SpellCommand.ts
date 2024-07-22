@@ -104,7 +104,7 @@ export const SpellCommand: Command = {
             })
             embed.addFields({ name: 'Sources', value: spell.sourcesString(), inline: false })
         } else {
-            // let spellsToDisplay = spells.slice(0,25)
+            let spellsToDisplay = spells.slice(0,50)
             // let spellTitles = spellsToDisplay.map(s => s.titleString()).join('\n')
             let parameters = []
             if(name) { parameters.push(`Name contains: ${name}`) }
@@ -114,8 +114,9 @@ export const SpellCommand: Command = {
             if(practice) { parameters.push(`Practice: ${practice}`) }
 
             embed
-            .setTitle(`Showing ${spells.length} spells`)
+            .setTitle(`Showing ${spellsToDisplay.length} of ${spells.length} spells`)
             .setDescription(parameters.join('\n'))
+            spells = spellsToDisplay
             
             let uniqArcana = [...new Set(spells.map(s => s.primaryArcana.toString()))]
             for(let listedArcana in uniqArcana){
