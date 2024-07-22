@@ -43,5 +43,9 @@ const handleSlashCommand = async (client: Client, interaction: CommandInteractio
     } catch (ex) {
         console.log('Errored handling slash command.')
         console.log(ex)
+        await interaction.reply({
+            content: "There was an error while executing this command!",
+            ephemeral: true,
+        });
     }
 };
