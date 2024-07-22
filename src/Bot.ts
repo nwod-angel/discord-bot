@@ -1,4 +1,10 @@
 import { Client, ClientOptions } from "discord.js";
+
+process.on('unhandledRejection', error => {
+	console.error('Unhandled promise rejection:', error);
+});
+
+console.log("Bot is starting...");
 // import discord = require("discord.js")
 import ready from "./listeners/ready.js";
 import interactionCreate from "./listeners/interactionCreate.js";
@@ -9,22 +15,17 @@ dotenv.config(); //initialize dotenv
 
 const token = process.env['DISCORD_TOKEN']; // add your token here
 
-console.log("Bot is starting...");
-const splash = [
-    '                             ______  ____  ______',
-    '    ____ _      ______  ____/ / __ )/ __ \\/_  __/',
-    '   / __ \\ | /| / / __ \\/ __  / __  / / / / / /   ',
-    '  / / / / |/ |/ / /_/ / /_/ / /_/ / /_/ / / /    ',
-    ' /_/ /_/|__/|__/\\____/\\__,_/_____/\\____/ /_/     ',
-    '                                                 '
-]
-splash.forEach(line => {
-    console.log(line)
-});
+console.log(`    
+░   ░░░  ░░  ░░░░  ░░░      ░░░       ░░░       ░░░░      ░░░        ░
+▒    ▒▒  ▒▒  ▒  ▒  ▒▒  ▒▒▒▒  ▒▒  ▒▒▒▒  ▒▒  ▒▒▒▒  ▒▒  ▒▒▒▒  ▒▒▒▒▒  ▒▒▒▒
+▓  ▓  ▓  ▓▓        ▓▓  ▓▓▓▓  ▓▓  ▓▓▓▓  ▓▓       ▓▓▓  ▓▓▓▓  ▓▓▓▓▓  ▓▓▓▓
+█  ██    ██   ██   ██  ████  ██  ████  ██  ████  ██  ████  █████  ████
+█  ███   ██  ████  ███      ███       ███       ████      ██████  ████`
+)
 
 const client = new Client({
     intents: []
-});
+})
 
 ready(client);
 interactionCreate(client);
@@ -32,9 +33,5 @@ unhandledRejection(client);
 unhandledException(client);
 
 client.login(token);
-
-process.on('unhandledRejection', error => {
-	console.error('Unhandled promise rejection:', error);
-});
 
 // console.log(client);
