@@ -115,7 +115,9 @@ export const SpellCommand: Command = {
 
             embed
             .setTitle(`Showing ${spellsToDisplay.length} of ${spells.length} spells`)
-            .setDescription(parameters.join('\n'))
+            if(parameters.length > 0) {
+                embed.setDescription(parameters.join('\n'))
+            }
             spells = spellsToDisplay
             
             let uniqArcana = [...new Set(spells.map(s => s.primaryArcana.toString()))]
