@@ -129,14 +129,11 @@ export const SpellCommand: Command = {
                     for(let listedDots in uniqDots) {
                         let dotSpellList = spells.filter(s => s.dots.toString() === listedDots)
                         embed.addFields(
-                            { name: `${Arcana[listedArcana]} ${listedDots}`, value: dotSpellList.map(s => s.titleString()).join('\n'), inline: false },
+                            { name: `${Arcana[listedArcana]} ${listedDots}`, value: dotSpellList.map(s => s.name).join('\n'), inline: false },
                         )    
                     }
-                }
-                
+                }                
             }
-            
-
         }
         
         DiscordChannelLogger.setClient(client).logBaggage({interaction: interaction, embed: embed})
