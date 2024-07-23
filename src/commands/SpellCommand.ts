@@ -125,16 +125,20 @@ export const SpellCommand: Command = {
             for(let listedArcana in uniqArcana){
                 let arcanaSpellList = spells.filter(s => s.primaryArcana.toString() === listedArcana)
                 if(arcanaSpellList.length <= 25) {
-                    embed.addFields(
-                        { name: `${Arcana[listedArcana]}`, value: arcanaSpellList.map(s => s.titleString()).join('\n'), inline: false },
-                    )    
+                    let name = `${Arcana[listedArcana]}`
+                    let value = arcanaSpellList.map(s => s.titleString()).join('\n')
+                    if (name && value) {
+                        embed.addFields( { name: name, value: value, inline: false } )   
+                    }
                 } else {
                     let uniqDots = [...new Set(arcanaSpellList.map(s => s.dots))]
                     for(let listedDots in uniqDots) {
                         let dotSpellList = spells.filter(s => s.dots.toString() === listedDots)
-                        embed.addFields(
-                            { name: `${Arcana[listedArcana]} ${listedDots}`, value: dotSpellList.map(s => s.name).join('\n'), inline: false },
-                        )    
+                        let name = `${Arcana[listedArcana]} ${listedDots}`
+                        let value = dotSpellList.map(s => s.name).join('\n')
+                        if (name && value) {
+                            embed.addFields( { name: name, value: value, inline: false } )   
+                        } 
                     }
                 }                
             }
