@@ -4,6 +4,7 @@ import DiscordChannelLogger from "../DiscordChannelLogger.js";
 import SpellProvider from "../data/SpellProvider.js";
 import { Arcana, ArcanaType, Practice, PracticeType } from "@nwod-angel/nwod-core";
 import FeedbackController from "./FeedbackController.js";
+import { Console } from "console";
 
 export const SpellCommand: Command = {
     name: "spell",
@@ -138,6 +139,19 @@ export const SpellCommand: Command = {
                 }                
             }
         }
+
+        // Check embed limits
+        // Embed title is limited to 256 characters
+
+        if(embed.data.title){
+            console.debug(`Title length: ${embed.data.title.length}.`);
+        }
+        // Embed description is limited to 4096 characters
+        // An embed can contain a maximum of 25 fields
+        // A field name/title is limited to 256 character and the value of the field is limited to 1024 characters
+        // Embed footer is limited to 2048 characters
+        // Embed author name is limited to 256 characters
+        // The total of characters allowed in an embed is 6000
         
         DiscordChannelLogger.setClient(client).logBaggage({interaction: interaction, embed: embed})
         await interaction.followUp({
