@@ -138,6 +138,7 @@ export const SpellCommand: Command = {
                 } else {
                     let uniqDots = [...new Set(arcanaSpellList.map(s => s.dots))]
                     for(let listedDots in uniqDots) {
+                        console.debug(listedDots)
                         let dotSpellList = spells.filter(s => s.dots.toString() === listedDots)
                         let name = `${Arcana[listedArcana]} ${listedDots}`
                         let value = dotSpellList.map(s => s.name).join('\n')
