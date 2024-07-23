@@ -2,6 +2,7 @@ import { Interaction, Client, ApplicationCommandType, CommandInteraction, EmbedB
 import { Command } from "../Command.js";
 import DiscordChannelLogger from "../DiscordChannelLogger.js";
 import SpellProvider from "../data/SpellProvider.js";
+import arcanum from "../data/arcanum.js";
 import { Arcana, ArcanaType, Practice, PracticeType } from "@nwod-angel/nwod-core";
 import FeedbackController from "./FeedbackController.js";
 import { Console } from "console";
@@ -120,19 +121,19 @@ export const SpellCommand: Command = {
             if(parameters.length > 0) {
                 embed.setDescription(parameters.join('\n'))
             }
-            spells = spellsToDisplay
+            // spells = spellsToDisplay
             
             let uniqArcana = [...new Set(spells.map(s => s.primaryArcana.toString()))]
             for(let listedArcana in uniqArcana){
+                let icon = arcanum.filter(a => a.name.toLowerCase() === Arcana[listedArcana].toLowerCase())[0].icon
+                let name = `${icon} ${Arcana[listedArcana]}`
+                let spellEmbed = new EmbedBuilder()
+                    .setTitle(name)
                 let arcanaSpellList = spells.filter(s => s.primaryArcana.toString() === listedArcana)
                 if(arcanaSpellList.length <= 25) {
-                    let name = `${Arcana[listedArcana]}`
                     let value = arcanaSpellList.map(s => s.titleString()).join('\n')
                     if (name && value) {
-                        let spellEmbed = new EmbedBuilder()
-                        .setTitle(name)
-                        .setDescription(value)
-                        embeds.push(spellEmbed)
+                        spellEmbed.setDescription(value)
                     }
                 } else {
                     let uniqDots = [...new Set(arcanaSpellList.map(s => s.dots))]
@@ -141,10 +142,11 @@ export const SpellCommand: Command = {
                         let name = `${Arcana[listedArcana]} ${listedDots}`
                         let value = dotSpellList.map(s => s.name).join('\n')
                         if (name && value) {
-                            embed.addFields( { name: name, value: value, inline: false } )   
+                            spellEmbed.addFields( { name: name, value: value, inline: false } )   
                         } 
                     }
-                }                
+                }
+                embeds.push(spellEmbed)
             }
         }
         embeds.push(embed)
