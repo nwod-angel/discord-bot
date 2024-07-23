@@ -136,16 +136,16 @@ export const SpellCommand: Command = {
                         spellEmbed.setDescription(value)
                     }
                 } else {
-                    let uniqDots = [...new Set(arcanaSpellList.map(s => s.dots))]
-                    for(let listedDots in uniqDots) {
+                    let uniqDots = [...new Set(arcanaSpellList.map(s => s.dots() || 0))]
+                    uniqDots.forEach(listedDots => {
                         console.debug(listedDots)
-                        let dotSpellList = spells.filter(s => s.dots.toString() === listedDots)
+                        let dotSpellList = spells.filter(s => s.dots() === listedDots)
                         let name = `${Arcana[listedArcana]} ${listedDots}`
                         let value = dotSpellList.map(s => s.name).join('\n')
                         if (name && value) {
                             spellEmbed.addFields( { name: name, value: value, inline: false } )   
                         } 
-                    }
+                    })
                 }
                 embeds.push(spellEmbed)
             }
