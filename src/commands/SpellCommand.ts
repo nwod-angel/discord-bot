@@ -106,6 +106,7 @@ export const SpellCommand: Command = {
                 embed.addFields({ name: `Effect (${index + 1}/${descriptionChunks.length})`, value: chunk, inline: false })
             })
             embed.addFields({ name: 'Sources', value: spell.sourcesString(), inline: false })
+            embeds.push(embed)
         } else {
             let spellsToDisplay = spells.slice(0, 25)
             // let spellTitles = spellsToDisplay.map(s => s.titleString()).join('\n')
@@ -116,11 +117,10 @@ export const SpellCommand: Command = {
             if(dots) { parameters.push(`Dots: ${dots}`) }
             if(practice) { parameters.push(`Practice: ${practice}`) }
 
-            embed
-            .setTitle(`Showing ${spellsToDisplay.length} of ${spells.length} spells`)
-            if(parameters.length > 0) {
-                embed.setDescription(parameters.join('\n'))
-            }
+            // .setTitle(`Showing ${spellsToDisplay.length} of ${spells.length} spells`)
+            // if(parameters.length > 0) {
+            //     embed.setDescription(parameters.join('\n'))
+            // }
             // spells = spellsToDisplay
             
             let uniqArcana = [...new Set(spells.map(s => s.primaryArcana.toString()))]
@@ -149,42 +149,41 @@ export const SpellCommand: Command = {
                 embeds.push(spellEmbed)
             }
         }
-        embeds.push(embed)
 
         // Check embed limits
         // Embed title is limited to 256 characters
-        if(embed.data.title){
-            console.debug(`Debug: embed.data.title length: ${embed.data.title.length}.`);
-        }
-        // Embed description is limited to 4096 characters
-        if(embed.data.description){
-            console.debug(`Debug: embed.data.description length: ${embed.data.description.length}.`);
-        }
-        // An embed can contain a maximum of 25 fields
-        if(embed.data.fields){
-            console.debug(`Debug: embed.data.fields length: ${embed.data.fields.length}.`);
-        }
-        // A field name/title is limited to 256 character and the value of the field is limited to 1024 characters
-        if(embed.data.fields){
-            embed.data.fields.forEach(field => {
-                if(field.name){
-                    console.debug(`Debug: field.name: ${field.name}.`);
-                    console.debug(`Debug: field.name length: ${field.name.length}.`);
-                }
-                if(field.value){
-                    console.debug(`Debug: field.name length: ${field.value.length}.`);
-                }
-            });
-        }
-        // Embed footer is limited to 2048 characters
-        if(embed.data.footer){
-            console.debug(`Debug: embed.data.footer.text length: ${embed.data.footer.text}.`);
-        }
-        // Embed author name is limited to 256 characters
-        if(embed.data.author){
-            console.debug(`Debug: embed.data.author.name length: ${embed.data.author.name}.`);
-        }
-        // The total of characters allowed in an embed is 6000
+        // if(embed.data.title){
+        //     console.debug(`Debug: embed.data.title length: ${embed.data.title.length}.`);
+        // }
+        // // Embed description is limited to 4096 characters
+        // if(embed.data.description){
+        //     console.debug(`Debug: embed.data.description length: ${embed.data.description.length}.`);
+        // }
+        // // An embed can contain a maximum of 25 fields
+        // if(embed.data.fields){
+        //     console.debug(`Debug: embed.data.fields length: ${embed.data.fields.length}.`);
+        // }
+        // // A field name/title is limited to 256 character and the value of the field is limited to 1024 characters
+        // if(embed.data.fields){
+        //     embed.data.fields.forEach(field => {
+        //         if(field.name){
+        //             console.debug(`Debug: field.name: ${field.name}.`);
+        //             console.debug(`Debug: field.name length: ${field.name.length}.`);
+        //         }
+        //         if(field.value){
+        //             console.debug(`Debug: field.name length: ${field.value.length}.`);
+        //         }
+        //     });
+        // }
+        // // Embed footer is limited to 2048 characters
+        // if(embed.data.footer){
+        //     console.debug(`Debug: embed.data.footer.text length: ${embed.data.footer.text}.`);
+        // }
+        // // Embed author name is limited to 256 characters
+        // if(embed.data.author){
+        //     console.debug(`Debug: embed.data.author.name length: ${embed.data.author.name}.`);
+        // }
+        // // The total of characters allowed in an embed is 6000
 
         DiscordChannelLogger.setClient(client).logBaggage({interaction: interaction, embed: embed})
         await interaction.followUp({
