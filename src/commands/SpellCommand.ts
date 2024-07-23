@@ -75,6 +75,7 @@ export const SpellCommand: Command = {
             spells = spells.filter(spell => spell.name.toLowerCase() === name!.toLowerCase())
         }
 
+        let embeds = []
         let embed = new EmbedBuilder()
             .setFooter({ 
                 text: interaction.id, 
@@ -128,7 +129,10 @@ export const SpellCommand: Command = {
                     let name = `${Arcana[listedArcana]}`
                     let value = arcanaSpellList.map(s => s.titleString()).join('\n')
                     if (name && value) {
-                        embed.addFields( { name: name, value: value, inline: false } )   
+                        let spellEmbed = new EmbedBuilder()
+                        .setTitle(name)
+                        .setDescription(value)
+                        embeds.push(spellEmbed)
                     }
                 } else {
                     let uniqDots = [...new Set(arcanaSpellList.map(s => s.dots))]
@@ -143,6 +147,7 @@ export const SpellCommand: Command = {
                 }                
             }
         }
+        embeds.push(embed)
 
         // Check embed limits
         // Embed title is limited to 256 characters
@@ -178,11 +183,11 @@ export const SpellCommand: Command = {
             console.debug(`Debug: embed.data.author.name length: ${embed.data.author.name}.`);
         }
         // The total of characters allowed in an embed is 6000
-        
+
         DiscordChannelLogger.setClient(client).logBaggage({interaction: interaction, embed: embed})
         await interaction.followUp({
             ephemeral: true,
-            embeds: [embed]
+            embeds: embeds
         });
         // new FeedbackController(client, interaction).getFeedback()
 
