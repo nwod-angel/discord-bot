@@ -14,6 +14,9 @@ import unhandledException from "./listeners/unhandledException.js";
 dotenv.config(); //initialize dotenv
 
 const token = process.env['DISCORD_TOKEN']; // add your token here
+const db_host = process.env['DB_HOST']; // add your token here
+
+console.log(`DB HOST:${db_host}`)
 
 console.log(`    
 ░   ░░░  ░░  ░░░░  ░░░      ░░░       ░░░       ░░░░      ░░░        ░
