@@ -4,6 +4,8 @@ import { InstantRoll } from "@nwod-angel/nwod-roller";
 import { ExtendedRoll } from "@nwod-angel/nwod-roller";
 import { RollResult } from "@nwod-angel/nwod-roller";
 import DiscordChannelLogger from "../DiscordChannelLogger";
+import { getDataSource } from "../mysql/AppDataSource";
+import { SavedRoll } from "../mysql/entities/SavedRoll.entity";
 
 export const Roll: Command = {
     name: "roll",
@@ -167,5 +169,16 @@ export const Roll: Command = {
             embeds: [embed]
         });
         DiscordChannelLogger.setClient(client).logBaggage({interaction: interaction, embed: embed})
+        
+        const AppDataSource = await getDataSource();
+        const roll = new SavedRoll()
+        roll.interaction = JSON.stringify(interaction)
+        roll.result = JSON.stringify({
+            rollDescription: rollDescription,
+            successes: successes,
+            result: result,
+            embed: embed})
+        roll.userId = interaction.user.id
+        await AppDataSource.manager.save(roll)
     }
 };
