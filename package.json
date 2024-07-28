@@ -6,12 +6,14 @@
   "dependencies": {
     "@nwod-angel/nwod-core": "^1.1.0",
     "@nwod-angel/nwod-roller": "^1.1.4",
-    "@types/node": "^18.7.15",
     "ascii-table": "^0.0.9",
     "axios": "^0.27.2",
     "discord.js": "^14.11.0",
     "dotenv": "^16.0.2",
+    "mysql2": "^3.10.3",
+    "reflect-metadata": "^0.2.2",
     "ts-node": "^10.9.1",
+    "typeorm": "^0.3.20",
     "typescript": "^4.8.2"
   },
   "scripts": {
@@ -35,5 +37,8 @@
   "bugs": {
     "url": "https://github.com/nwod-angel/discord-bot/issues"
   },
-  "homepage": "https://github.com/nwod-angel/discord-bot#readme"
+  "homepage": "https://github.com/nwod-angel/discord-bot#readme",
+  "devDependencies": {
+    "@types/node": "^20.14.12"
+  }
 }

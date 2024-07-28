@@ -1,4 +1,5 @@
 import { Client, ClientOptions } from "discord.js";
+import "reflect-metadata"
 
 process.on('unhandledRejection', error => {
 	console.error('Unhandled promise rejection:', error);
@@ -11,12 +12,10 @@ import interactionCreate from "./listeners/interactionCreate.js";
 import unhandledRejection from "./listeners/unhandledRejection.js";
 import * as dotenv from 'dotenv'
 import unhandledException from "./listeners/unhandledException.js";
+import { DiscordBotDao } from "./mysql/DiscordBotDao.js";
 dotenv.config(); //initialize dotenv
 
 const token = process.env['DISCORD_TOKEN']; // add your token here
-const db_host = process.env['DB_HOST']; // add your token here
-
-console.log(`DB HOST:${db_host}`)
 
 console.log(`    
 ░   ░░░  ░░  ░░░░  ░░░      ░░░       ░░░       ░░░░      ░░░        ░
@@ -36,5 +35,8 @@ unhandledRejection(client);
 unhandledException(client);
 
 client.login(token);
+
+let dao = new DiscordBotDao();
+dao.basicTest();
 
 // console.log(client);
