@@ -1,5 +1,5 @@
 export default {
-    name: "Experience Point Costs",
+    name: "Mage: Experience Point Costs",
     prefix: "MtAw",
     sources: [
         {

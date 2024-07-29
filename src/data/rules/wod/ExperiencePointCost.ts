@@ -1,5 +1,5 @@
 export default {
-    name: "Experience Point Costs",
+    name: "Core: Experience Point Costs",
     prefix: "Core",
     sources: [
         {
