@@ -8,6 +8,7 @@ import CombatSurprise from "./rules/wod/CombatSurprise";
 import CombatUnarmed from "./rules/wod/CombatUnarmed";
 import CombatUnarmedGrapple from "./rules/wod/CombatUnarmedGrapple";
 import Defense from "./rules/wod/Defense";
+import ExperiencePointCost from "./rules/wod/ExperiencePointCost";
 import Health from "./rules/wod/Health";
 import Initiative from "./rules/wod/Initiative";
 import PoisonsAndToxins from "./rules/wod/PoisonsAndToxins";
@@ -18,6 +19,7 @@ import SkillRules from "./rules/wod/SkillRules";
 
 export default [
     Defense,
+    ExperiencePointCost,
     Health,
     Initiative,
     PoisonsAndToxins,

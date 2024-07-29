@@ -10,6 +10,7 @@ import BedlamDerangementSuspicionParanoia from "./BedlamDerangementSuspicionPara
 import BedlamDerangementVocalizationSchizophrenia from "./BedlamDerangementVocalizationSchizophrenia";
 import DrawbacksOfGnosis from "./DrawbacksOfGnosis";
 import EffectsOfGnosis from "./EffectsOfGnosis";
+import MageExperiencePointCost from "./MageExperiencePointCost";
 import MageSight from "./MageSight";
 import RoteSpecialties from "./RoteSpecialties";
 import ScrutinizingBeingsAndObjects from "./ScrutinizingBeingsAndObjects";
@@ -18,6 +19,10 @@ import UnvielingResonance from "./UnvielingResonance";
 
 export default [
     // MtAw
+    // Character
+    MageExperiencePointCost, 
+
+    // Spell Casting
     ScrutinizingBeingsAndObjects,
     UnvielingResonance,
     RoteSpecialties,
