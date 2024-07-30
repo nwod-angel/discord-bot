@@ -7,6 +7,9 @@ export class SavedRoll extends BaseEntity{
     
     @Column()
     userId: string
+
+    @VirtualColumn({ query: (alias) => `SELECT JSON_EXTRACT(interaction, "$.channelId") as channelId FROM "saved_roll" WHERE "id" = ${alias}.id` })
+    channelId: number;
     
     @Column("text")
     interaction: string

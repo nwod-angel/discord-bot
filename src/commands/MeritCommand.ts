@@ -71,6 +71,6 @@ export const MeritCommand: Command = {
         await interaction.followUp({
             embeds: [embed],
         })
-        new FeedbackController(client, interaction).getFeedback()
+        // new FeedbackController(client, interaction).getFeedback()
     }
 };

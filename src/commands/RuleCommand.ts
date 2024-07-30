@@ -88,6 +88,6 @@ export const RuleCommand: Command = {
             ephemeral: true,
             embeds: [embed],
         });
-        new FeedbackController(client, interaction).getFeedback()
+        // new FeedbackController(client, interaction).getFeedback()
     }
 };
