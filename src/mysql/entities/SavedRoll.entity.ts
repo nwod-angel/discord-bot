@@ -6,7 +6,7 @@ export class SavedRoll extends BaseEntity{
     @PrimaryGeneratedColumn()
     id: number
     
-    @Column({ default: () => 'now()' })
+    @Column({ type: 'timestamptz', default: () => 'now()' })
     timestamp: Date;
 
     @Column("text")
