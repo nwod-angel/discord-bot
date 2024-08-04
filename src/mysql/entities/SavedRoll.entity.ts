@@ -42,10 +42,10 @@ export class SavedRoll extends BaseEntity{
     @Column()
     interactionTimestamp: number;
 
-    @Column("string")
+    @Column("text")
     embed: string;
 
-    @Column("string")
+    @Column("text")
     rollDescription: string;
 
     @Column()
