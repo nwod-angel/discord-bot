@@ -38,9 +38,6 @@ export class SavedRoll extends BaseEntity{
 
     @Column("text")
     options: string
-    
-    @Column()
-    interactionTimestamp: number;
 
     @Column("text")
     embed: string;
@@ -60,7 +57,6 @@ export class SavedRoll extends BaseEntity{
         this.commandName = interaction.commandName
         this.commandId = interaction.commandId
         this.options = JSON.stringify(interaction.options)
-        this.interactionTimestamp = interaction.createdTimestamp
     }
 
 }
