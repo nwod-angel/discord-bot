@@ -173,11 +173,12 @@ export const Roll: Command = {
         const AppDataSource = await getDataSource();
         const roll = new SavedRoll()
         roll.interaction = JSON.stringify(interaction)
-        roll.result = JSON.stringify({
-            rollDescription: rollDescription,
-            successes: successes,
-            result: result,
-            embed: embed})
+        roll.parseInteraction(interaction)
+        roll.rollDescription = rollDescription
+        roll.successes = successes
+        roll.result = result as number
+        roll.embed = JSON.stringify(embed)
+        
         roll.userId = interaction.user.id
         await AppDataSource.manager.save(roll)
     }

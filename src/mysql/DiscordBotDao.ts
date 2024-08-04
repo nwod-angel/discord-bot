@@ -9,7 +9,7 @@ export class DiscordBotDao{
 
         const roll = new SavedRoll()
         roll.interaction = JSON.stringify({})
-        roll.result = JSON.stringify({})
+        roll.result = 1
         roll.userId = '417299509517877248'
 
         await AppDataSource.manager.save(roll)
