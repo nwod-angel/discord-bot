@@ -20,7 +20,11 @@
         ],
         "sourceMap": false,
         "baseUrl": "./",
-        "emitDecoratorMetadata": true,
+        "emitDecoratorMetadata": true
+    },
+    "ts-node": {
+        "esm": true,
+        "experimentalEsm": true
     },
     "files": [
         "src/Bot.ts"

@@ -1,5 +1,5 @@
-import { Client, ClientOptions } from "discord.js";
 import "reflect-metadata"
+import { Client, ClientOptions } from "discord.js";
 import "./typescript/BitInt"
 
 process.on('unhandledRejection', error => {

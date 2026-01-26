@@ -15,7 +15,7 @@ export class SavedRoll extends BaseEntity{
     @Column("text")
     interaction: string
 
-    @Column()
+    @Column({ type: 'int' })
     result: number
 
     @Column("text")
@@ -45,7 +45,7 @@ export class SavedRoll extends BaseEntity{
     @Column("text")
     rollDescription: string;
 
-    @Column()
+    @Column({ type: 'int' })
     successes: Number;
 
     parseInteraction(interaction: CommandInteraction) {
