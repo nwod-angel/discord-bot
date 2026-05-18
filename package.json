@@ -38,7 +38,10 @@
   },
   "homepage": "https://github.com/nwod-angel/discord-bot#readme",
   "devDependencies": {
+    "@types/jest": "^30.0.0",
     "@types/node": "^22.10.2",
+    "jest": "^30.4.2",
+    "ts-jest": "^29.4.9",
     "tsx": "^4.21.0"
   },
   "engines": {
