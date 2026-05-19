@@ -1,11 +1,6 @@
 import { DataSource } from "typeorm";
 import { SavedRoll } from "./entities/SavedRoll.entity";
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
-const __dirname = path.dirname(__filename); // get the name of the directory
-
+import { InitialSchema1746817800000 } from "./migrations/InitialSchema.js";
 
 export const AppDataSource = new DataSource({
     type: "mysql",
@@ -15,10 +10,11 @@ export const AppDataSource = new DataSource({
     password: process.env['DB_PSWD'],
     database: process.env['DB_NAME'],
     logging: JSON.parse(process.env['DB_LOGGING'] || "false"),
-    synchronize: true,
-    entities: [__dirname + '/../**/*.entity.{js,ts}'],
+    synchronize: false,
+    migrationsRun: true,
+    entities: [SavedRoll],
     subscribers: [],
-    migrations: [],
+    migrations: [InitialSchema1746817800000],
 })
 
 AppDataSource.initialize()
