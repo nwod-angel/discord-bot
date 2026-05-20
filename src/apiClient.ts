@@ -24,6 +24,8 @@ export interface RollApiParams {
   rote?: boolean;
   extendedRolls?: number;
   target?: number;
+  interactionId?: string;
+  guildId?: string;
 }
 
 export interface RollApiDie {

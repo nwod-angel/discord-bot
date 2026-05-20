@@ -188,6 +188,8 @@ export const Roll: Command = {
           rote,
           extendedRolls,
           target,
+          interactionId: interaction.id,
+          guildId: interaction.guildId || undefined,
         });
 
         const { label, colour } = resultPresentation(apiResult.resultCode);
