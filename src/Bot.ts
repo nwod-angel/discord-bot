@@ -1,4 +1,3 @@
-import "reflect-metadata"
 import { Client, ClientOptions } from "discord.js";
 import "./typescript/BitInt"
 

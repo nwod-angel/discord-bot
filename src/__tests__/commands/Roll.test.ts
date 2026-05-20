@@ -56,36 +56,6 @@ jest.mock('@nwod-angel/nwod-roller', () => {
   };
 });
 
-jest.mock('../../mysql/AppDataSource.js', () => ({
-  getDataSource: jest.fn().mockResolvedValue({
-    manager: { save: jest.fn().mockResolvedValue(undefined) },
-    isInitialized: true,
-  }),
-  AppDataSource: {
-    isInitialized: true,
-    manager: { save: jest.fn().mockResolvedValue(undefined) },
-  },
-}));
-
-jest.mock('../../mysql/entities/SavedRoll.entity.js', () => ({
-  SavedRoll: jest.fn().mockImplementation(() => ({
-    interaction: '',
-    userId: '',
-    interactionId: '',
-    channelId: '',
-    applicationId: '',
-    guildId: '',
-    commandName: '',
-    commandId: '',
-    options: '',
-    embed: '',
-    rollDescription: '',
-    successes: 0,
-    result: 0,
-    parseInteraction: jest.fn(),
-  })),
-}));
-
 import { Roll } from '../../commands/Roll.js';
 import { createMockInteraction, createMockClient } from './helpers.js';
 
@@ -206,13 +176,4 @@ describe('Roll', () => {
     });
   });
 
-  it('saves roll to database', async () => {
-    const interaction = createMockInteraction({ 'dice-pool': 5 });
-    const client = createMockClient() as any;
-
-    await Roll.run(client, interaction as any);
-
-    const { getDataSource } = require('../../mysql/AppDataSource.js');
-    expect(getDataSource).toHaveBeenCalled();
-  });
 });

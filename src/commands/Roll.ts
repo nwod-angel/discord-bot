@@ -8,8 +8,6 @@ import {
 } from "discord.js";
 import { Command } from "../Command.js";
 import DiscordChannelLogger from "../DiscordChannelLogger.js";
-import { getDataSource } from "../mysql/AppDataSource.js";
-import { SavedRoll } from "../mysql/entities/SavedRoll.entity.js";
 import {
   rollViaApi,
   USE_API_ROLL,
@@ -135,7 +133,7 @@ export const Roll: Command = {
 
     const dicePool = Number(interaction.options.get("dice-pool")!.value);
 
-    let name = interaction.member?.user.username;
+    let name = interaction.member?.user.username ?? "Unknown";
     if (interaction.options.get("name")) {
       name = `*${interaction.options.get("name")!.value?.toString()!}*`;
     }
@@ -284,21 +282,5 @@ export const Roll: Command = {
       interaction: interaction,
       embed: embed,
     });
-
-    // ── Persist locally (fallback path) ────────────────────────
-    try {
-      const AppDataSource = await getDataSource();
-      const roll = new SavedRoll();
-      roll.interaction = JSON.stringify(interaction);
-      roll.parseInteraction(interaction);
-      roll.rollDescription = rollDescription;
-      roll.successes = successes;
-      roll.result = result;
-      roll.embed = JSON.stringify(embed);
-      roll.userId = interaction.user.id;
-      await AppDataSource.manager.save(roll);
-    } catch (dbErr) {
-      console.error("Failed to persist roll locally:", dbErr);
-    }
   },
 };

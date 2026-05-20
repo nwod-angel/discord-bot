@@ -7,7 +7,6 @@
         "strict": true,
         "moduleResolution": "node",
         "importHelpers": true,
-        "experimentalDecorators": true,
         "strictPropertyInitialization": false,
         "esModuleInterop": true,
         "skipLibCheck": true,
@@ -20,7 +19,6 @@
         ],
         "sourceMap": false,
         "baseUrl": "./",
-        "emitDecoratorMetadata": true
     },
     "ts-node": {
         "esm": true,
