@@ -175,6 +175,7 @@ export const Roll: Command = {
     // ── Try API path (when feature flag is on) ─────────────────
 
     if (USE_API_ROLL) {
+      const rollStart = performance.now();
       try {
         const apiResult = await rollViaApi({
           dicePool,
@@ -191,6 +192,7 @@ export const Roll: Command = {
           guildId: interaction.guildId || undefined,
         });
 
+        const elapsedMs = Math.round(performance.now() - rollStart);
         const { label, colour } = resultPresentation(apiResult.resultCode);
 
         const embed = buildRollEmbed({
@@ -201,7 +203,9 @@ export const Roll: Command = {
           successes: apiResult.successes,
           rollDescription: apiResult.rollDescription,
           colour,
-          footerText: apiResult.id ? `roll-${apiResult.id}` : interaction.id,
+          footerText: apiResult.id
+            ? `roll-${apiResult.id} · ${elapsedMs}ms`
+            : `${interaction.id} · ${elapsedMs}ms`,
         });
 
         await interaction.followUp({ embeds: [embed] });
