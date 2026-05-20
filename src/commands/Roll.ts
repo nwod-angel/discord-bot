@@ -1,185 +1,302 @@
-import { EmbedBuilder, Client, ApplicationCommandType, CommandInteraction, ColorResolvable, Colors } from "discord.js";
-import { Command } from "../Command";
-import { InstantRoll } from "@nwod-angel/nwod-roller";
-import { ExtendedRoll } from "@nwod-angel/nwod-roller";
-import { RollResult } from "@nwod-angel/nwod-roller";
-import DiscordChannelLogger from "../DiscordChannelLogger";
-import { getDataSource } from "../mysql/AppDataSource";
-import { SavedRoll } from "../mysql/entities/SavedRoll.entity";
+import {
+  EmbedBuilder,
+  Client,
+  ApplicationCommandType,
+  CommandInteraction,
+  ColorResolvable,
+  Colors,
+} from "discord.js";
+import { Command } from "../Command.js";
+import DiscordChannelLogger from "../DiscordChannelLogger.js";
+import { getDataSource } from "../mysql/AppDataSource.js";
+import { SavedRoll } from "../mysql/entities/SavedRoll.entity.js";
+import {
+  rollViaApi,
+  USE_API_ROLL,
+  RollApiResponse,
+} from "../apiClient.js";
+
+// ── Embed helpers (shared by API and direct paths) ─────────────
+
+/**
+ * Map a RollResult code to a display label and Discord colour.
+ */
+function resultPresentation(
+  resultCode: number,
+): { label: string; colour: ColorResolvable } {
+  switch (resultCode) {
+    case 1:
+      return { label: "💀 Critical Failure!", colour: Colors.NotQuiteBlack };
+    case 2:
+      return { label: "❌ Failure", colour: Colors.Red };
+    case 3:
+      return { label: "✅ Success", colour: Colors.Green };
+    case 4:
+      return { label: "⭐ Exceptional Success!", colour: Colors.Yellow };
+    default:
+      return { label: "🎲 Roll", colour: Colors.Default };
+  }
+}
+
+/**
+ * Build the roll embed from common result data.
+ */
+function buildRollEmbed(params: {
+  actionResult: string;
+  description: string;
+  name: string;
+  dicePool: number;
+  successes: number;
+  rollDescription: string;
+  colour: ColorResolvable;
+  footerText: string;
+}): EmbedBuilder {
+  const embed = new EmbedBuilder()
+    .setTitle([params.actionResult, params.description].join(" "))
+    .setColor(params.colour)
+    .setFooter({ text: params.footerText });
+
+  const descriptionChunks =
+    params.rollDescription.match(
+      /(?:(?:.){1,1000}(?:$|\n)|(?:.){1,1000}(?: |$|\n))/sgm,
+    ) || [];
+
+  descriptionChunks.forEach((chunk: string, index: number) => {
+    embed.addFields({
+      name:
+        index === 0
+          ? `${params.name} rolled ${params.dicePool} dice and got __${params.successes} success${params.successes === 1 ? "" : "es"}__.`
+          : "(continued)",
+      value: chunk,
+      inline: false,
+    });
+  });
+
+  return embed;
+}
+
+// ── Command ────────────────────────────────────────────────────
 
 export const Roll: Command = {
-    name: "roll",
-    description: "Rolls dice",
-    type: ApplicationCommandType.ChatInput,
-    options: [
-        {
-            "name": "dice-pool",
-            "description": "This number of dice will be rolled",
-            "type": 4, // Integer
-            "required": true,
-            "minValue": 0
-        },
-        {
-            "name": "name",
-            "description": "The name of the entity rolling [optional]",
-            "type": 3 // String
-        },
-        {
-            "name": "description",
-            "description": "The description of the roll [optional]",
-            "type": 3 // String
-        },
-        {
-            "name": "success-threshold",
-            "description": "The lowest number on the die representing a success (default: 8)",
-            "type": 4 // Integer
-        },
-        {
-            "name": "reroll-threshold",
-            "description": "The lowest number on the die representing a reroll (default: 10)",
-            "type": 4 // Integer
-        },
-        {
-            "name": "extended-rolls",
-            "description": "If defined the roll will be extended and rolled this many times",
-            "type": 4 // Integer
-        },
-        {
-            "name": "target",
-            "description": "If defined an extended roll will stop after this many successes [optional]",
-            "type": 4 // Integer
-        },
-        {
-            "name": "rote",
-            "description": "Rote actions re-roll failures once (default: false)",
-            "type": 5 // Boolean
-        }
-    ],
-    run: async (client: Client, interaction: CommandInteraction) => {
+  name: "roll",
+  description: "Rolls dice",
+  type: ApplicationCommandType.ChatInput,
+  options: [
+    {
+      name: "dice-pool",
+      description: "This number of dice will be rolled",
+      type: 4, // Integer
+      required: true,
+      minValue: 0,
+    },
+    {
+      name: "name",
+      description: "The name of the entity rolling [optional]",
+      type: 3, // String
+    },
+    {
+      name: "description",
+      description: "The description of the roll [optional]",
+      type: 3, // String
+    },
+    {
+      name: "success-threshold",
+      description: "The lowest number on the die representing a success (default: 8)",
+      type: 4, // Integer
+    },
+    {
+      name: "reroll-threshold",
+      description: "The lowest number on the die representing a reroll (default: 10)",
+      type: 4, // Integer
+    },
+    {
+      name: "extended-rolls",
+      description: "If defined the roll will be extended and rolled this many times",
+      type: 4, // Integer
+    },
+    {
+      name: "target",
+      description: "If defined an extended roll will stop after this many successes [optional]",
+      type: 4, // Integer
+    },
+    {
+      name: "rote",
+      description: "Rote actions re-roll failures once (default: false)",
+      type: 5, // Boolean
+    },
+  ],
+  run: async (client: Client, interaction: CommandInteraction) => {
+    DiscordChannelLogger.setClient(client).logBaggage({
+      interaction: interaction,
+      options: interaction.options,
+    });
 
-        DiscordChannelLogger.setClient(client).logBaggage({interaction: interaction, options: interaction.options})
-        
-        let dicePool = Number(interaction.options.get('dice-pool')!.value)
+    // ── Parse common options ───────────────────────────────────
 
-        let name = interaction.member?.user.username
-        if(interaction.options.get('name')){
-            name = `*${interaction.options.get('name')!.value?.toString()!}*`
-        }
+    const dicePool = Number(interaction.options.get("dice-pool")!.value);
 
-        var description = ''
-        if(interaction.options.get('description')){
-            description = `*${interaction.options.get('description')!.value?.toString()!}*`
-        }
-
-        var successThreshold = undefined
-        if(interaction.options.get('success-threshold')){
-            successThreshold = Number(interaction.options.get('success-threshold')!.value)
-        }
-
-        var rerollThreshold = undefined
-        if(interaction.options.get('reroll-threshold')){
-            rerollThreshold = Number(interaction.options.get('reroll-threshold')!.value)
-        }
-
-        var extendedRolls = undefined
-        if(interaction.options.get('extended-rolls')){
-            extendedRolls = Number(interaction.options.get('extended-rolls')!.value)
-        }
-
-        var target = undefined
-        if(interaction.options.get('target')){
-            target = Number(interaction.options.get('target')!.value)
-        }
-
-        var action = 'instant'
-        if(extendedRolls !== undefined){
-            action = 'extended'
-        }
-
-        var rote = false
-        if(interaction.options.get('rote')){
-            rote = Boolean(interaction.options.get('rote')!.value)
-        }
-
-        var rollDescription = ''
-        var result = new Number()
-        var successes = new Number()
-
-        switch (action) {
-            case 'instant':
-                var instantRoll = new InstantRoll({dicePool: dicePool, rote: rote, successThreshold: successThreshold, rerollThreshold: rerollThreshold})
-                rollDescription = instantRoll.toString()
-                successes = instantRoll.numberOfSuccesses()
-                result = instantRoll.result()
-                break
-            case 'extended':
-                var extendedRoll = new ExtendedRoll({dicePool: dicePool, rote: rote, successThreshold: successThreshold, rerollThreshold: rerollThreshold, extendedRolls: extendedRolls, target: target})
-                rollDescription = extendedRoll.toString()
-                successes = extendedRoll.numberOfSuccesses()
-                result = extendedRoll.result()
-                break
-        }
-
-        // Report Result
-        let colour = Colors.Default as Number
-        var actionResult = ''
-
-        switch (result) {
-            case RollResult.critical_failure:
-                colour = Colors.NotQuiteBlack
-                actionResult = "💀 Critical Failure! "// + this.randomFromList(this.emojis.criticalFailure)
-                break
-            case RollResult.exceptional_success:
-                colour = Colors.Yellow
-                actionResult = "⭐ Exceptional Success! "// + this.randomFromList(this.emojis.exceptionalSuccess)
-                break
-            case RollResult.failure:
-                colour = Colors.Red
-                actionResult = "❌ Failure "// + this.randomFromList(this.emojis.failure)
-                break
-            case RollResult.success:
-                colour = Colors.Green
-                actionResult = "✅ Success "// + this.randomFromList(this.emojis.success) 
-                break
-        }
-
-		// https://discordjs.guide/popular-topics/embeds.html#using-the-embed-constructor
-		let embed = new EmbedBuilder()
-
-        .setTitle([actionResult, description].join(' '))
-        .setColor(colour as ColorResolvable)
-        // .addFields(
-        //     {
-        //         name: `${name} rolled ${dicePool} dice and got __${successes} success${(successes === 1 ? '' : 'es')}__.`,
-        //         value: rollDescription.slice(0, 1023)
-        //     }
-        // )
-	    .setFooter({ 
-            text: interaction.id, 
-            // iconURL: 'https://i.imgur.com/AfFp7pu.png'
-        });
-
-        // https://regex101.com/r/mk5e6E/1
-        let descriptionChunks = rollDescription.match(/(?:(?:.){1,1000}(?:$|\n)|(?:.){1,1000}(?: |$|\n))/sgm) || []
-        descriptionChunks.forEach((chunk: string, index: number) => {
-            embed.addFields({ name: index == 0 ? `${name} rolled ${dicePool} dice and got __${successes} success${(successes === 1 ? '' : 'es')}__.` : `(continued)`, value: chunk, inline: false })
-        })
-
-        await interaction.followUp({
-            embeds: [embed]
-        });
-        DiscordChannelLogger.setClient(client).logBaggage({interaction: interaction, embed: embed})
-        
-        const AppDataSource = await getDataSource();
-        const roll = new SavedRoll()
-        roll.interaction = JSON.stringify(interaction)
-        roll.parseInteraction(interaction)
-        roll.rollDescription = rollDescription
-        roll.successes = successes
-        roll.result = result as number
-        roll.embed = JSON.stringify(embed)
-        
-        roll.userId = interaction.user.id
-        await AppDataSource.manager.save(roll)
+    let name = interaction.member?.user.username;
+    if (interaction.options.get("name")) {
+      name = `*${interaction.options.get("name")!.value?.toString()!}*`;
     }
+
+    let description = "";
+    if (interaction.options.get("description")) {
+      description = `*${interaction.options.get("description")!.value?.toString()!}*`;
+    }
+
+    let successThreshold: number | undefined;
+    if (interaction.options.get("success-threshold")) {
+      successThreshold = Number(
+        interaction.options.get("success-threshold")!.value,
+      );
+    }
+
+    let rerollThreshold: number | undefined;
+    if (interaction.options.get("reroll-threshold")) {
+      rerollThreshold = Number(
+        interaction.options.get("reroll-threshold")!.value,
+      );
+    }
+
+    let extendedRolls: number | undefined;
+    if (interaction.options.get("extended-rolls")) {
+      extendedRolls = Number(interaction.options.get("extended-rolls")!.value);
+    }
+
+    let target: number | undefined;
+    if (interaction.options.get("target")) {
+      target = Number(interaction.options.get("target")!.value);
+    }
+
+    let rote = false;
+    if (interaction.options.get("rote")) {
+      rote = Boolean(interaction.options.get("rote")!.value);
+    }
+
+    // ── Try API path (when feature flag is on) ─────────────────
+
+    if (USE_API_ROLL) {
+      try {
+        const apiResult = await rollViaApi({
+          dicePool,
+          userId: interaction.user.id,
+          characterName: name,
+          description,
+          successThreshold,
+          rerollThreshold,
+          rote,
+          extendedRolls,
+          target,
+        });
+
+        const { label, colour } = resultPresentation(apiResult.resultCode);
+        const embed = buildRollEmbed({
+          actionResult: label,
+          description,
+          name: apiResult.characterName || name,
+          dicePool: apiResult.dicePool,
+          successes: apiResult.successes,
+          rollDescription: apiResult.rollDescription,
+          colour,
+          footerText: interaction.id,
+        });
+
+        await interaction.followUp({ embeds: [embed] });
+        DiscordChannelLogger.setClient(client).logBaggage({
+          interaction: interaction,
+          embed: embed,
+          apiResult,
+        });
+
+        // API handled persistence — nothing more to do
+        return;
+      } catch (apiErr) {
+        console.error("API roll failed, falling back to direct roll:", apiErr);
+        // Fall through to direct path below
+      }
+    }
+
+    // ── Direct path (fallback or USE_API_ROLL not set) ─────────
+
+    // Lazy-import roller library only when needed (avoids loading
+    // the ESM module on every command invocation if API is preferred)
+    const { InstantRoll, ExtendedRoll, RollResult } = await (async () => {
+      const mod = await import("@nwod-angel/nwod-roller");
+      return mod as {
+        InstantRoll: new (opts: any) => any;
+        ExtendedRoll: new (opts: any) => any;
+        RollResult: { critical_failure: number; failure: number; success: number; exceptional_success: number };
+      };
+    })();
+
+    const action = extendedRolls !== undefined ? "extended" : "instant";
+
+    let rollDescription = "";
+    let result: number;
+    let successes: number;
+
+    switch (action) {
+      case "instant": {
+        const instantRoll = new InstantRoll({
+          dicePool,
+          rote,
+          successThreshold,
+          rerollThreshold,
+        });
+        rollDescription = instantRoll.toString();
+        successes = instantRoll.numberOfSuccesses();
+        result = instantRoll.result() as number;
+        break;
+      }
+      case "extended": {
+        const extendedRoll = new ExtendedRoll({
+          dicePool,
+          rote,
+          successThreshold,
+          rerollThreshold,
+          extendedRolls,
+          target,
+        });
+        rollDescription = extendedRoll.toString();
+        successes = extendedRoll.numberOfSuccesses();
+        result = extendedRoll.result() as number;
+        break;
+      }
+    }
+
+    const { label, colour } = resultPresentation(result);
+    const embed = buildRollEmbed({
+      actionResult: label,
+      description,
+      name,
+      dicePool,
+      successes,
+      rollDescription,
+      colour,
+      footerText: interaction.id,
+    });
+
+    await interaction.followUp({ embeds: [embed] });
+    DiscordChannelLogger.setClient(client).logBaggage({
+      interaction: interaction,
+      embed: embed,
+    });
+
+    // ── Persist locally (fallback path) ────────────────────────
+    try {
+      const AppDataSource = await getDataSource();
+      const roll = new SavedRoll();
+      roll.interaction = JSON.stringify(interaction);
+      roll.parseInteraction(interaction);
+      roll.rollDescription = rollDescription;
+      roll.successes = successes;
+      roll.result = result;
+      roll.embed = JSON.stringify(embed);
+      roll.userId = interaction.user.id;
+      await AppDataSource.manager.save(roll);
+    } catch (dbErr) {
+      console.error("Failed to persist roll locally:", dbErr);
+    }
+  },
 };
