@@ -25,6 +25,7 @@ export interface RollApiParams {
   extendedRolls?: number;
   target?: number;
   interactionId?: string;
+  channelId?: string;
   guildId?: string;
 }
 

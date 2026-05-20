@@ -187,6 +187,7 @@ export const Roll: Command = {
           extendedRolls,
           target,
           interactionId: interaction.id,
+          channelId: interaction.channelId,
           guildId: interaction.guildId || undefined,
         });
 
