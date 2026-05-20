@@ -192,6 +192,12 @@ export const Roll: Command = {
         });
 
         const { label, colour } = resultPresentation(apiResult.resultCode);
+
+        // Footer: link to the roll on the web (or fall back to interaction ID)
+        const rollUrl = apiResult.id
+          ? `https://nwod-angel.vercel.app/roll/${apiResult.id}`
+          : undefined;
+
         const embed = buildRollEmbed({
           actionResult: label,
           description,
@@ -200,7 +206,7 @@ export const Roll: Command = {
           successes: apiResult.successes,
           rollDescription: apiResult.rollDescription,
           colour,
-          footerText: interaction.id,
+          footerText: rollUrl || interaction.id,
         });
 
         await interaction.followUp({ embeds: [embed] });
