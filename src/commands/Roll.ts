@@ -91,6 +91,7 @@ export const Roll: Command = {
       name: "name",
       description: "The name of the entity rolling [optional]",
       type: 3, // String
+      autocomplete: true,
     },
     {
       name: "description",

@@ -2,5 +2,5 @@ import { Client, AutocompleteInteraction, BaseApplicationCommandData, Applicatio
 
 export interface AutoCompleteCommand extends BaseApplicationCommandData {
     maxResponses: 25
-    autocomplete: (client: Client, interaction: AutocompleteInteraction) => ApplicationCommandOptionChoiceData<string | string>[];
+    autocomplete: (client: Client, interaction: AutocompleteInteraction) => ApplicationCommandOptionChoiceData<string | string>[] | Promise<ApplicationCommandOptionChoiceData<string | string>[]>;
 }

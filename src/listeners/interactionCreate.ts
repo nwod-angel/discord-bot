@@ -26,7 +26,7 @@ const handleAutoCompleteCommand = async (client: Client, interaction: Autocomple
         console.log(`No registered Autocomplete Command for ${interaction.commandName}`)
         return;
     }
-    interaction.respond(command.autocomplete(client, interaction))
+    interaction.respond(await command.autocomplete(client, interaction))
 };
 
 const handleSlashCommand = async (client: Client, interaction: CommandInteraction): Promise<void> => {

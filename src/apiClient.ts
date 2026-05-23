@@ -88,4 +88,26 @@ export async function rollViaApi(
   return (await res.json()) as RollApiResponse;
 }
 
+// ── Character names (for autocomplete) ─────────────────────────
+
+export interface CharacterNamesResponse {
+  data: string[];
+}
+
+/**
+ * Fetch a user's character names for autocomplete.
+ * Returns an empty array on any error (fail gracefully for autocomplete).
+ */
+export async function fetchCharacterNames(userId: string): Promise<string[]> {
+  const url = `${API_BASE_URL}/users/${encodeURIComponent(userId)}/character-names`.replace(/\/+$/, "");
+  try {
+    const res = await fetch(url);
+    if (!res.ok) return [];
+    const body = await res.json() as CharacterNamesResponse;
+    return body.data;
+  } catch {
+    return []; // Fail gracefully — return empty on error
+  }
+}
+
 export { API_BASE_URL, USE_API_ROLL };
