@@ -1,5 +1,4 @@
 import { Requirement, Source } from "@nwod-angel/nwod-core"
-import { stringify } from "querystring";
 import tables from "./tables";
 import { TableDefinition } from "./TableDefinition";
 import { Table } from "./Table";

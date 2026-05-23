@@ -1,5 +1,4 @@
 import { Requirement, Source } from "@nwod-angel/nwod-core"
-import { stringify } from "querystring";
 import rules from "./rules";
 import { RuleParagraph } from "./RuleParagraph";
 import { RuleDefinition } from "./RuleDefinition";

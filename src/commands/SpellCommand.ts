@@ -5,7 +5,6 @@ import SpellProvider from "../data/SpellProvider.js";
 import arcanum from "../data/arcanum.js";
 import { Arcana, ArcanaType, Practice, PracticeType } from "@nwod-angel/nwod-core";
 import FeedbackController from "./FeedbackController.js";
-import { Console } from "console";
 
 export const SpellCommand: Command = {
     name: "spell",
