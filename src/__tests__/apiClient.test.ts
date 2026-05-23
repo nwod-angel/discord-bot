@@ -221,6 +221,67 @@ describe("USE_API_ROLL", () => {
   });
 });
 
+describe("fetchCharacterPortraits", () => {
+  beforeEach(() => {
+    mockFetch.mockClear();
+  });
+
+  it("fetches portraits from the API endpoint", async () => {
+    mockFetch.mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        data: [
+          { name: "Alice", portrait: "https://example.com/alice.png" },
+          { name: "Bob", portrait: null },
+        ],
+      }),
+    });
+
+    const { fetchCharacterPortraits } = await import("../apiClient.js");
+    const result = await fetchCharacterPortraits("user-1");
+
+    expect(result).toEqual([
+      { name: "Alice", portrait: "https://example.com/alice.png" },
+      { name: "Bob", portrait: null },
+    ]);
+    expect(mockFetch).toHaveBeenCalledWith(
+      "http://localhost:3001/users/user-1/character-portraits",
+    );
+  });
+
+  it("returns empty array on non-ok response", async () => {
+    mockFetch.mockResolvedValue({ ok: false, status: 404 });
+
+    const { fetchCharacterPortraits } = await import("../apiClient.js");
+    const result = await fetchCharacterPortraits("user-1");
+
+    expect(result).toEqual([]);
+  });
+
+  it("returns empty array on network error", async () => {
+    mockFetch.mockRejectedValue(new Error("Network failure"));
+
+    const { fetchCharacterPortraits } = await import("../apiClient.js");
+    const result = await fetchCharacterPortraits("user-1");
+
+    expect(result).toEqual([]);
+  });
+
+  it("encodes the userId in the URL", async () => {
+    mockFetch.mockResolvedValue({
+      ok: true,
+      json: async () => ({ data: [] }),
+    });
+
+    const { fetchCharacterPortraits } = await import("../apiClient.js");
+    await fetchCharacterPortraits("user/id with spaces");
+
+    expect(mockFetch).toHaveBeenCalledWith(
+      "http://localhost:3001/users/user%2Fid%20with%20spaces/character-portraits",
+    );
+  });
+});
+
 describe("API_BASE_URL", () => {
   it("uses env var when set", async () => {
     process.env["API_BASE_URL"] = "https://api.example.com";

@@ -7,6 +7,7 @@ jest.mock('discord.js', () => ({
       setDescription: jest.fn(function (this: any, desc: string) { data.description = desc; return this; }),
       setFooter: jest.fn(function (this: any, footer: any) { data.footer = footer; return this; }),
       setColor: jest.fn(function (this: any, color: any) { data.color = color; return this; }),
+      setThumbnail: jest.fn(function (this: any, url: string) { data.thumbnail = url; return this; }),
       addFields: jest.fn(function (this: any, field: any) {
         if (Array.isArray(field)) { data.fields.push(...field); }
         else { data.fields.push(field); }
@@ -218,6 +219,32 @@ describe('Roll', () => {
 
       expect(interaction.followUp).toHaveBeenCalled();
     });
+
+    it('sets thumbnail when portrait lookup finds a matching character', async () => {
+      // Mock global.fetch for portrait lookup
+      const originalFetch = global.fetch;
+      global.fetch = jest.fn().mockResolvedValue({
+        ok: true,
+        json: async () => ({
+          data: [
+            { name: 'Alice', portrait: 'https://example.com/alice.png' },
+          ],
+        }),
+      });
+
+      const interaction = createMockInteraction({
+        'dice-pool': 5,
+        'name': 'Alice',
+      });
+      const client = createMockClient() as any;
+
+      await Roll.run(client, interaction as any);
+
+      const callArg = interaction.followUp.mock.calls[0][0];
+      expect(callArg.embeds[0].data.thumbnail).toBe('https://example.com/alice.png');
+
+      global.fetch = originalFetch;
+    });
   });
 
   // ── API path tests (USE_API_ROLL = true) ─────────────────────
@@ -385,6 +412,26 @@ describe('Roll', () => {
       const callArg = interaction.followUp.mock.calls[0][0];
       const field = callArg.embeds[0].data.fields[0];
       expect(field.name).toContain('*Alice*');
+    });
+
+    it('sets thumbnail from characterPortrait in API response', async () => {
+      mockRollViaApi.mockResolvedValue({
+        id: 42,
+        resultCode: 3,
+        characterName: '*Alice*',
+        characterPortrait: 'https://example.com/portrait.png',
+        successes: 3,
+        rollDescription: 'Rolled 5 dice...',
+        postedToDiscord: false,
+      });
+
+      const interaction = createMockInteraction({ 'dice-pool': 5 });
+      const client = createMockClient() as any;
+
+      await RollWithApi.run(client, interaction as any);
+
+      const callArg = interaction.followUp.mock.calls[0][0];
+      expect(callArg.embeds[0].data.thumbnail).toBe('https://example.com/portrait.png');
     });
   });
 });

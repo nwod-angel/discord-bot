@@ -40,6 +40,7 @@ export interface RollApiResponse {
   timestamp: string;
   dicePool: number;
   characterName?: string;
+  characterPortrait?: string;
   description?: string;
   successThreshold: number;
   rerollThreshold: number;
@@ -104,6 +105,33 @@ export async function fetchCharacterNames(userId: string): Promise<string[]> {
     const res = await fetch(url);
     if (!res.ok) return [];
     const body = await res.json() as CharacterNamesResponse;
+    return body.data;
+  } catch {
+    return []; // Fail gracefully — return empty on error
+  }
+}
+
+// ── Character portraits (for embed thumbnails) ─────────────────
+
+export interface CharacterPortraitEntry {
+  name: string;
+  portrait: string | null;
+}
+
+export interface CharacterPortraitsResponse {
+  data: CharacterPortraitEntry[];
+}
+
+/**
+ * Fetch a user's character portraits for embed thumbnails.
+ * Returns an empty array on any error (fail gracefully).
+ */
+export async function fetchCharacterPortraits(userId: string): Promise<CharacterPortraitEntry[]> {
+  const url = `${API_BASE_URL}/users/${encodeURIComponent(userId)}/character-portraits`.replace(/\/+$/, "");
+  try {
+    const res = await fetch(url);
+    if (!res.ok) return [];
+    const body = await res.json() as CharacterPortraitsResponse;
     return body.data;
   } catch {
     return []; // Fail gracefully — return empty on error

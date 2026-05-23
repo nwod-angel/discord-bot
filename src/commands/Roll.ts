@@ -12,6 +12,7 @@ import {
   rollViaApi,
   USE_API_ROLL,
   RollApiResponse,
+  fetchCharacterPortraits,
 } from "../apiClient.js";
 
 // ── Embed helpers (shared by API and direct paths) ─────────────
@@ -48,11 +49,16 @@ function buildRollEmbed(params: {
   rollDescription: string;
   colour: ColorResolvable;
   footerText: string;
+  thumbnailUrl?: string;
 }): EmbedBuilder {
   const embed = new EmbedBuilder()
     .setTitle([params.actionResult, params.description].join(" "))
     .setColor(params.colour)
     .setFooter({ text: params.footerText });
+
+  if (params.thumbnailUrl) {
+    embed.setThumbnail(params.thumbnailUrl);
+  }
 
   const descriptionChunks =
     params.rollDescription.match(
@@ -207,6 +213,7 @@ export const Roll: Command = {
           footerText: apiResult.id
             ? `roll-${apiResult.id} · ${elapsedMs}ms`
             : `${interaction.id} · ${elapsedMs}ms`,
+          thumbnailUrl: apiResult.characterPortrait,
         });
 
         await interaction.followUp({ embeds: [embed] });
@@ -272,6 +279,21 @@ export const Roll: Command = {
       }
     }
 
+    // ── Character portrait lookup (direct path) ───────────────────
+    let thumbnailUrl: string | undefined;
+    const cleanName = name.replace(/^\*+|\*+$/g, "").trim();
+    if (cleanName && cleanName !== interaction.member?.user.username) {
+      try {
+        const portraits = await fetchCharacterPortraits(interaction.user.id);
+        const match = portraits.find((p) => p.name === cleanName);
+        if (match?.portrait) {
+          thumbnailUrl = match.portrait;
+        }
+      } catch {
+        // Graceful degradation — thumbnails are optional
+      }
+    }
+
     const { label, colour } = resultPresentation(result);
     const embed = buildRollEmbed({
       actionResult: label,
@@ -282,6 +304,7 @@ export const Roll: Command = {
       rollDescription,
       colour,
       footerText: interaction.id,
+      thumbnailUrl,
     });
 
     await interaction.followUp({ embeds: [embed] });
