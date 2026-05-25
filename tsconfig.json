@@ -2,10 +2,10 @@
     "compilerOptions": {
         "target": "ES2022",
         "module": "ESNext",
+        "moduleResolution": "bundler",
         "rootDir": "./src/",
         "outDir": "./dist/",
         "strict": true,
-        "moduleResolution": "node",
         "importHelpers": true,
         "strictPropertyInitialization": false,
         "esModuleInterop": true,
@@ -13,25 +13,21 @@
         "allowSyntheticDefaultImports": true,
         "resolveJsonModule": true,
         "forceConsistentCasingInFileNames": true,
+        "isolatedModules": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitReturns": false,
         "removeComments": true,
         "typeRoots": [
             "node_modules/@types"
         ],
         "sourceMap": false,
-        "baseUrl": "./",
+        "baseUrl": "./"
     },
-    "ts-node": {
-        "esm": true,
-        "experimentalEsm": true
-    },
-    "files": [
-        "src/Bot.ts"
-    ],
     "include": [
-        "./**/*.ts"
+        "src/**/*.ts"
     ],
     "exclude": [
         "node_modules",
         "dist"
-    ],
+    ]
 }
