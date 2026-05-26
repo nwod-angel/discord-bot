@@ -41,4 +41,11 @@ DISCORD_TOKEN, DISCORD_CLIENT_ID, DISCORD_LOGGING_CHANNEL_ID, DISCORD_FEEDBACK_C
 
 ## Testing
 
-`npm test` lists `jest` but no jest config or test files exist. Tests are not wired up.
+Tests are run with Jest (configured in `jest.config.ts`): `npm test`
+
+Test files live in `src/__tests__/`, mirroring the source structure:
+- `src/__tests__/listeners/` — interaction dispatcher and bot lifecycle tests
+- `src/__tests__/commands/` — individual command tests
+- `src/__tests__/apiClient.test.ts` — API client tests
+
+Run `npm test` to execute all test suites. No lint/format CI in place.

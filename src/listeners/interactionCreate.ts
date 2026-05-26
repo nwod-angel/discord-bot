@@ -9,7 +9,7 @@ export default (client: Client): void => {
             UpdateStatus.startThinking(client)
             if (interaction.isCommand() || interaction.isContextMenuCommand()) {
                 await handleSlashCommand(client, interaction);
-            } else if (interaction.isCommand() || interaction.isAutocomplete()) {
+            } else if (interaction.isAutocomplete()) {
                 await handleAutoCompleteCommand(client, interaction as AutocompleteInteraction);
             }
             UpdateStatus.doSomethingRandom(client)
@@ -26,7 +26,7 @@ const handleAutoCompleteCommand = async (client: Client, interaction: Autocomple
         console.log(`No registered Autocomplete Command for ${interaction.commandName}`)
         return;
     }
-    interaction.respond(await command.autocomplete(client, interaction))
+    await interaction.respond(await command.autocomplete(client, interaction))
 };
 
 const handleSlashCommand = async (client: Client, interaction: CommandInteraction): Promise<void> => {

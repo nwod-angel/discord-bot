@@ -193,6 +193,43 @@ describe('interactionCreate', () => {
     logSpy.mockRestore();
   });
 
+  it('handles autocomplete respond() rejection gracefully', async () => {
+    const mockAutocomplete = jest.fn().mockResolvedValue([
+      { name: 'Result A', value: 'a' },
+    ]);
+    mockAutoCompleteArray.push({
+      name: 'test-autocomplete',
+      maxResponses: 25,
+      autocomplete: mockAutocomplete,
+    });
+
+    // Simulate DiscordAPIError 10062 (Unknown interaction)
+    const discordError = new Error('Unknown interaction');
+    (discordError as any).code = 10062;
+    const respond = jest.fn().mockRejectedValue(discordError);
+
+    const interaction: any = {
+      isCommand: () => false,
+      isContextMenuCommand: () => false,
+      isAutocomplete: () => true,
+      commandName: 'test-autocomplete',
+      respond,
+    };
+
+    // Spy on console to suppress error logging in test output
+    const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+
+    // Must NOT throw — the error is caught by the outer try/catch
+    await expect(callback(interaction)).resolves.toBeUndefined();
+
+    // Verify the error was logged by the catch handler
+    expect(logSpy).toHaveBeenCalledWith(
+      'Errored during interaction handler.',
+    );
+
+    logSpy.mockRestore();
+  });
+
   // ── UpdateStatus calls ────────────────────────────────────────
 
   it('calls UpdateStatus.startThinking and doSomethingRandom', async () => {
