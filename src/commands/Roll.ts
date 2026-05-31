@@ -129,6 +129,11 @@ export const Roll: Command = {
       description: "Rote actions re-roll failures once (default: false)",
       type: 5, // Boolean
     },
+    {
+      name: "use-willpower",
+      description: "Spend 1 willpower for +3 dice (default: false)",
+      type: 5, // Boolean
+    },
   ],
   run: async (client: Client, interaction: CommandInteraction) => {
     DiscordChannelLogger.setClient(client).logBaggage({
@@ -179,13 +184,31 @@ export const Roll: Command = {
       rote = Boolean(interaction.options.get("rote")!.value);
     }
 
+    let useWillpower = false;
+    if (interaction.options.get("use-willpower")) {
+      useWillpower = Boolean(interaction.options.get("use-willpower")!.value);
+    }
+
+    // ── Willpower bonus ───────────────────────────────────────
+    // Spending 1 willpower grants +3 dice to a single roll.
+    let willpowerApplied = false;
+    if (useWillpower) {
+      willpowerApplied = true;
+    }
+
+    const finalDicePool = dicePool + (willpowerApplied ? 3 : 0);
+    if (willpowerApplied) {
+      const wpSuffix = " (Spending Willpower +3)";
+      description = description ? description + wpSuffix : wpSuffix.trim();
+    }
+
     // ── Try API path (when feature flag is on) ─────────────────
 
     if (USE_API_ROLL) {
       const rollStart = performance.now();
       try {
         const apiResult = await rollViaApi({
-          dicePool,
+          dicePool: finalDicePool,
           userId: interaction.user.id,
           characterName: name,
           description,
@@ -253,7 +276,7 @@ export const Roll: Command = {
     switch (action) {
       case "instant": {
         const instantRoll = new InstantRoll({
-          dicePool,
+          dicePool: finalDicePool,
           rote,
           successThreshold,
           rerollThreshold,
@@ -265,7 +288,7 @@ export const Roll: Command = {
       }
       case "extended": {
         const extendedRoll = new ExtendedRoll({
-          dicePool,
+          dicePool: finalDicePool,
           rote,
           successThreshold,
           rerollThreshold,
@@ -299,7 +322,7 @@ export const Roll: Command = {
       actionResult: label,
       description,
       name,
-      dicePool,
+      dicePool: finalDicePool,
       successes,
       rollDescription,
       colour,
