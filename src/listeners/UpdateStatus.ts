@@ -28,7 +28,7 @@ export class UpdateStatus {
         'a Thyrsus',
         'a Silver Ladder',
         'an Adamantine Arrow',
-        'a Gaurdian of the Veil',
+        'a Guardian of the Veil',
         'a Free Councillor',
         'a Mystagog',
         'a Seer',
