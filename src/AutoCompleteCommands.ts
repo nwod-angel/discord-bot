@@ -4,6 +4,7 @@ import { RollAutocomplete } from "./autoCompleteCommands/RollAutocomplete.js";
 import { RuleAutocomplete } from "./autoCompleteCommands/RuleAutocomplete.js";
 import { SpellAutocomplete } from "./autoCompleteCommands/SpellAutocomplete.js";
 import { TableAutocomplete } from "./autoCompleteCommands/TableAutocomplete.js";
+import { PostAutocomplete } from "./autoCompleteCommands/PostAutocomplete.js";
 
 export const AutoCompleteCommands: AutoCompleteCommand[] = [
     SpellAutocomplete,
@@ -11,4 +12,5 @@ export const AutoCompleteCommands: AutoCompleteCommand[] = [
     RuleAutocomplete,
     TableAutocomplete,
     RollAutocomplete,
+    PostAutocomplete,
 ];

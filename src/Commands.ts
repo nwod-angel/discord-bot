@@ -9,6 +9,7 @@ import { TableCommand } from "./commands/TableCommand.js";
 import { ParadoxCommand } from "./commands/ParadoxCommand.js";
 import { CastCommand } from "./commands/CastCommand.js";
 import { AttackCommand } from "./commands/AttackCommand.js";
+import { Post } from "./commands/Post.js";
 
 export const Commands: Command[] = [
     Hello,
@@ -20,5 +21,6 @@ export const Commands: Command[] = [
     TableCommand,
     ParadoxCommand,
     CastCommand,
-    AttackCommand
+    AttackCommand,
+    Post,
 ];

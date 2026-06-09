@@ -138,4 +138,83 @@ export async function fetchCharacterPortraits(userId: string): Promise<Character
   }
 }
 
+// ── Character autocomplete (for /post) ──────────────────────────
+
+export interface CharacterAutocompleteEntry {
+  id: number;
+  name: string;
+  concept: string | null;
+}
+
+export interface CharacterAutocompleteResponse {
+  data: CharacterAutocompleteEntry[];
+}
+
+/**
+ * Fetch a user's character autocomplete data (id, name, concept).
+ * Returns an empty array on any error (fail gracefully for autocomplete).
+ */
+export async function fetchCharacterAutocomplete(userId: string): Promise<CharacterAutocompleteEntry[]> {
+  const url = `${API_BASE_URL}/users/${encodeURIComponent(userId)}/character-autocomplete`.replace(/\/+$/, "");
+  try {
+    const res = await fetch(url);
+    if (!res.ok) return [];
+    const body = await res.json() as CharacterAutocompleteResponse;
+    return body.data;
+  } catch {
+    return []; // Fail gracefully — return empty on error
+  }
+}
+
+// ── Post as character (via /post) ──────────────────────────────
+
+export interface PostAsCharacterParams {
+  userId: string;
+  characterId?: number;
+  characterName?: string;
+  content: string;
+  imageUrl?: string;
+  channelId: string;
+  threadId?: string;
+}
+
+export interface PostAsCharacterResponse {
+  posted: boolean;
+  characterName?: string;
+  error?: string;
+}
+
+/**
+ * Post a message to a Discord channel as a character via the REST API.
+ * Uses Authorization: Bot <DISCORD_TOKEN> shared secret.
+ * Throws on network error or non-2xx response.
+ */
+export async function postAsCharacterViaApi(
+  params: PostAsCharacterParams,
+): Promise<PostAsCharacterResponse> {
+  const botToken = process.env["DISCORD_TOKEN"];
+  const url = `${API_BASE_URL}/discord/post`.replace(/\/+$/, "");
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bot ${botToken}`,
+    },
+    body: JSON.stringify(params),
+  });
+
+  if (!res.ok) {
+    let detail = `Post failed (${res.status})`;
+    try {
+      const body = await res.json();
+      if (body.message) detail = body.message;
+    } catch {
+      // ignore parse failure, use default detail
+    }
+    throw new Error(detail);
+  }
+
+  return (await res.json()) as PostAsCharacterResponse;
+}
+
 export { API_BASE_URL, USE_API_ROLL };

@@ -317,3 +317,194 @@ describe("API_BASE_URL", () => {
     );
   });
 });
+
+describe("fetchCharacterAutocomplete", () => {
+  beforeEach(() => {
+    mockFetch.mockClear();
+  });
+
+  it("fetches autocomplete data from the API endpoint", async () => {
+    mockFetch.mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        data: [
+          { id: 1, name: "Alice", concept: "Mage" },
+          { id: 2, name: "Bob", concept: null },
+        ],
+      }),
+    });
+
+    const { fetchCharacterAutocomplete } = await import("../apiClient.js");
+    const result = await fetchCharacterAutocomplete("user-1");
+
+    expect(result).toEqual([
+      { id: 1, name: "Alice", concept: "Mage" },
+      { id: 2, name: "Bob", concept: null },
+    ]);
+    expect(mockFetch).toHaveBeenCalledWith(
+      "http://localhost:3001/users/user-1/character-autocomplete",
+    );
+  });
+
+  it("returns empty array on non-ok response", async () => {
+    mockFetch.mockResolvedValue({ ok: false, status: 404 });
+
+    const { fetchCharacterAutocomplete } = await import("../apiClient.js");
+    const result = await fetchCharacterAutocomplete("user-1");
+
+    expect(result).toEqual([]);
+  });
+
+  it("returns empty array on network error", async () => {
+    mockFetch.mockRejectedValue(new Error("Network failure"));
+
+    const { fetchCharacterAutocomplete } = await import("../apiClient.js");
+    const result = await fetchCharacterAutocomplete("user-1");
+
+    expect(result).toEqual([]);
+  });
+
+  it("encodes the userId in the URL", async () => {
+    mockFetch.mockResolvedValue({
+      ok: true,
+      json: async () => ({ data: [] }),
+    });
+
+    const { fetchCharacterAutocomplete } = await import("../apiClient.js");
+    await fetchCharacterAutocomplete("user/id with spaces");
+
+    expect(mockFetch).toHaveBeenCalledWith(
+      "http://localhost:3001/users/user%2Fid%20with%20spaces/character-autocomplete",
+    );
+  });
+});
+
+describe("postAsCharacterViaApi", () => {
+  beforeEach(() => {
+    mockFetch.mockClear();
+    process.env["DISCORD_TOKEN"] = "test-bot-token";
+  });
+
+  it("sends POST request with Authorization: Bot header", async () => {
+    mockFetch.mockResolvedValue({
+      ok: true,
+      json: async () => ({ posted: true }),
+    });
+
+    const { postAsCharacterViaApi } = await import("../apiClient.js");
+    await postAsCharacterViaApi({
+      userId: "user-1",
+      characterId: 42,
+      content: "Hello",
+      channelId: "channel-1",
+    });
+
+    expect(mockFetch).toHaveBeenCalledWith(
+      "http://localhost:3001/discord/post",
+      expect.objectContaining({
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bot test-bot-token",
+        },
+      }),
+    );
+  });
+
+  it("sends all params in the request body", async () => {
+    const sentBody: any = {};
+    mockFetch.mockImplementation(async (_url: string, opts: any) => {
+      Object.assign(sentBody, JSON.parse(opts.body));
+      return {
+        ok: true,
+        json: async () => ({ posted: true }),
+      };
+    });
+
+    const { postAsCharacterViaApi } = await import("../apiClient.js");
+    await postAsCharacterViaApi({
+      userId: "user-1",
+      characterId: 42,
+      content: "Hello world",
+      channelId: "channel-1",
+      imageUrl: "https://example.com/img.png",
+      threadId: "thread-1",
+    });
+
+    expect(sentBody.userId).toBe("user-1");
+    expect(sentBody.characterId).toBe(42);
+    expect(sentBody.content).toBe("Hello world");
+    expect(sentBody.channelId).toBe("channel-1");
+    expect(sentBody.imageUrl).toBe("https://example.com/img.png");
+    expect(sentBody.threadId).toBe("thread-1");
+  });
+
+  it("returns { posted: true } on success", async () => {
+    mockFetch.mockResolvedValue({
+      ok: true,
+      json: async () => ({ posted: true }),
+    });
+
+    const { postAsCharacterViaApi } = await import("../apiClient.js");
+    const result = await postAsCharacterViaApi({
+      userId: "user-1",
+      characterId: 42,
+      content: "Hello",
+      channelId: "channel-1",
+    });
+
+    expect(result).toEqual({ posted: true });
+  });
+
+  it("throws on 400 with API error message", async () => {
+    mockFetch.mockResolvedValue({
+      ok: false,
+      status: 400,
+      json: async () => ({ message: "Character not found" }),
+    });
+
+    const { postAsCharacterViaApi } = await import("../apiClient.js");
+    await expect(
+      postAsCharacterViaApi({
+        userId: "user-1",
+        characterId: 999,
+        content: "Hello",
+        channelId: "channel-1",
+      }),
+    ).rejects.toThrow("Character not found");
+  });
+
+  it("throws with status code when no message body", async () => {
+    mockFetch.mockResolvedValue({
+      ok: false,
+      status: 500,
+      json: async () => {
+        throw new Error("no body");
+      },
+    });
+
+    const { postAsCharacterViaApi } = await import("../apiClient.js");
+    await expect(
+      postAsCharacterViaApi({
+        userId: "user-1",
+        characterId: 42,
+        content: "Hello",
+        channelId: "channel-1",
+      }),
+    ).rejects.toThrow("Post failed (500)");
+  });
+
+  it("throws on network error", async () => {
+    mockFetch.mockRejectedValue(new Error("Network failure"));
+
+    const { postAsCharacterViaApi } = await import("../apiClient.js");
+    await expect(
+      postAsCharacterViaApi({
+        userId: "user-1",
+        characterId: 42,
+        content: "Hello",
+        channelId: "channel-1",
+      }),
+    ).rejects.toThrow("Network failure");
+  });
+});
