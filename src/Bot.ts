@@ -1,3 +1,6 @@
+import * as dotenv from 'dotenv'
+dotenv.config(); //initialize dotenv — MUST be before instrumentation import
+
 import { Client, ClientOptions } from "discord.js";
 import "./typescript/BitInt"
 
@@ -16,10 +19,7 @@ logger.info("Bot is starting...");
 import ready from "./listeners/ready.js";
 import interactionCreate from "./listeners/interactionCreate.js";
 import unhandledRejection from "./listeners/unhandledRejection.js";
-import * as dotenv from 'dotenv'
 import unhandledException from "./listeners/unhandledException.js";
-
-dotenv.config(); //initialize dotenv
 
 const token = process.env['DISCORD_TOKEN']; // add your token here
 
