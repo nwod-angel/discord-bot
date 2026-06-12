@@ -45,10 +45,53 @@ const isTestEnv =
   process.env["JEST_WORKER_ID"] !== undefined;
 
 if (!isTestEnv) {
+  // ── Determine exporters based on env vars ────────────────────────
+  const otlpEndpoint = process.env["OTEL_EXPORTER_OTLP_ENDPOINT"];
+  const otlpHeaders = process.env["OTEL_EXPORTER_OTLP_HEADERS"];
+
+  let spanExporter: any;
+  let logExporter: any;
+  let metricExporter: any;
+
+  if (otlpEndpoint) {
+    // OTLP exporters for Honeycomb
+    const { OTLPTraceExporter } = await import(
+      "@opentelemetry/exporter-trace-otlp-http"
+    );
+    const { OTLPLogExporter } = await import(
+      "@opentelemetry/exporter-logs-otlp-http"
+    );
+    const { OTLPMetricExporter } = await import(
+      "@opentelemetry/exporter-metrics-otlp-http"
+    );
+
+    const headers: Record<string, string> = {};
+    if (otlpHeaders) {
+      headers["x-honeycomb-team"] = otlpHeaders;
+    }
+
+    spanExporter = new OTLPTraceExporter({
+      url: `${otlpEndpoint}/v1/traces`,
+      headers,
+    });
+    logExporter = new OTLPLogExporter({
+      url: `${otlpEndpoint}/v1/logs`,
+      headers,
+    });
+    metricExporter = new OTLPMetricExporter({
+      url: `${otlpEndpoint}/v1/metrics`,
+      headers,
+    });
+  } else {
+    // Console exporters (stdout) — fallback when Honeycomb not configured
+    spanExporter = new ConsoleSpanExporter();
+    logExporter = new ConsoleLogRecordExporter();
+    metricExporter = new ConsoleMetricExporter();
+  }
+
   // ── Metrics Provider ─────────────────────────────────────────────
-  // Periodic exporter writes metrics to stdout every 30 seconds.
   const metricReader = new PeriodicExportingMetricReader({
-    exporter: new ConsoleMetricExporter(),
+    exporter: metricExporter,
     exportIntervalMillis: 30_000,
   });
 
@@ -63,31 +106,23 @@ if (!isTestEnv) {
     }),
 
     // ── Trace Processor ────────────────────────────────────────────
-    // Use ConsoleSpanExporter as default (stdout).
-    // When Honeycomb is configured, replace with OTLPExporter.
-    spanProcessors: [new SimpleSpanProcessor(new ConsoleSpanExporter())],
+    spanProcessors: [new SimpleSpanProcessor(spanExporter)],
 
     // ── Log Processor ──────────────────────────────────────────────
-    // PinoInstrumentation captures pino logs and routes them here.
-    logRecordProcessor: new SimpleLogRecordProcessor(
-      new ConsoleLogRecordExporter(),
-    ),
+    logRecordProcessor: new SimpleLogRecordProcessor(logExporter),
 
     // ── Metrics Provider ──────────────────────────────────────────
-    // Exports metrics to stdout via ConsoleMetricExporter.
-    // When Honeycomb is configured, replace with OTLPMetricExporter.
     meterProvider,
 
     // ── Instrumentations (explicit registrations) ─────────────────
-    // NOT using auto-instrumentation — these are static imports that nft can trace.
-    // ExpressInstrumentation not needed for bot (no Express).
     instrumentations: [new HttpInstrumentation(), new PinoInstrumentation()],
   });
 
   // Wrap in try-catch for best-effort observability (ADR-0019: never crash the app)
   try {
     sdk.start();
-    console.log("[otel] OpenTelemetry SDK initialised (stdout exporter)");
+    const exporterType = otlpEndpoint ? "Honeycomb OTLP" : "stdout";
+    console.log(`[otel] OpenTelemetry SDK initialised (${exporterType} exporter)`);
   } catch (err) {
     console.error("[otel] Failed to initialise OpenTelemetry SDK:", err);
     console.log(
