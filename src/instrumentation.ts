@@ -57,16 +57,18 @@ if (!isTestEnv) {
   }
 
   // Select exporters based on env vars
+  // Note: OTLP exporters auto-append /v1/traces, /v1/logs, /v1/metrics
+  // so we pass the base URL only (e.g., https://api.honeycomb.io)
   const spanExporter = otlpEndpoint
-    ? new OTLPTraceExporter({ url: `${otlpEndpoint}/v1/traces`, headers })
+    ? new OTLPTraceExporter({ url: otlpEndpoint, headers })
     : new ConsoleSpanExporter();
 
   const logExporter = otlpEndpoint
-    ? new OTLPLogExporter({ url: `${otlpEndpoint}/v1/logs`, headers })
+    ? new OTLPLogExporter({ url: otlpEndpoint, headers })
     : new ConsoleLogRecordExporter();
 
   const metricExporter = otlpEndpoint
-    ? new OTLPMetricExporter({ url: `${otlpEndpoint}/v1/metrics`, headers })
+    ? new OTLPMetricExporter({ url: otlpEndpoint, headers })
     : new ConsoleMetricExporter();
 
   // ── Metrics Provider ─────────────────────────────────────────────
