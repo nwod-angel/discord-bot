@@ -1,11 +1,17 @@
 import { Client, ClientOptions } from "discord.js";
 import "./typescript/BitInt"
 
+// OTel instrumentation MUST be imported before any other module.
+// This initialises the tracing SDK and pino log bridge.
+import "./instrumentation.js";
+
+import { logger } from "./logger.js";
+
 process.on('unhandledRejection', error => {
-	console.error('Unhandled promise rejection:', error);
+	logger.error({ err: error }, 'Unhandled promise rejection');
 });
 
-console.log("Bot is starting...");
+logger.info("Bot is starting...");
 // import discord = require("discord.js")
 import ready from "./listeners/ready.js";
 import interactionCreate from "./listeners/interactionCreate.js";
@@ -24,29 +30,29 @@ const API_BASE_URL = (process.env["API_BASE_URL"] || "http://localhost:3001").re
 
 async function checkApiHealth(): Promise<void> {
   if (!USE_API_ROLL) {
-    console.log("  USE_API_ROLL is off — API delegation disabled.");
+    logger.debug("USE_API_ROLL is off — API delegation disabled.");
     return;
   }
 
   const healthUrl = `${API_BASE_URL}/health`;
-  console.log(`  USE_API_ROLL is ON — checking API at ${healthUrl} …`);
+  logger.debug({ healthUrl }, "USE_API_ROLL is ON — checking API");
 
   try {
     const res = await fetch(healthUrl, { method: "GET", signal: AbortSignal.timeout(10_000) });
     if (res.ok) {
-      console.log(`  ✅ API reachable (HTTP ${res.status}) — rolls will be delegated.`);
+      logger.info({ status: res.status }, "API reachable — rolls will be delegated.");
     } else {
-      console.log(`  ⚠️  API returned HTTP ${res.status} — will fall back to local rolls.`);
+      logger.warn({ status: res.status }, "API returned non-OK status — will fall back to local rolls.");
     }
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : String(err);
-    console.log(`  ❌ API unreachable (${msg}) — will fall back to local rolls.`);
+    logger.warn({ err }, "API unreachable — will fall back to local rolls.");
   }
 }
 
 checkApiHealth();
 
-console.log(`    
+logger.info(`    
 ░   ░░░  ░░  ░░░░  ░░░      ░░░       ░░░       ░░░░      ░░░        ░
 ▒    ▒▒  ▒▒  ▒  ▒  ▒▒  ▒▒▒▒  ▒▒  ▒▒▒▒  ▒▒  ▒▒▒▒  ▒▒  ▒▒▒▒  ▒▒▒▒▒  ▒▒▒▒
 ▓  ▓  ▓  ▓▓        ▓▓  ▓▓▓▓  ▓▓  ▓▓▓▓  ▓▓       ▓▓▓  ▓▓▓▓  ▓▓▓▓▓  ▓▓▓▓
@@ -65,4 +71,4 @@ unhandledException(client);
 
 client.login(token);
 
-// console.log(client);
+// logger.debug(client);

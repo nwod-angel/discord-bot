@@ -1,6 +1,6 @@
 import { Interaction, Client, ApplicationCommandType, CommandInteraction, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js"
 import { Command } from "../Command.js"
-import DiscordChannelLogger from "../DiscordChannelLogger.js"
+import { logger } from "../logger.js"
 import TableProvider from "../data/TableProvider.js"
 import { NwodSymbols } from "@nwod-angel/nwod-core"
 import AsciiTable from 'ascii-table'
@@ -25,7 +25,16 @@ export const TableCommand: Command = {
         }
     ],
     run: async (client: Client, interaction: CommandInteraction) => {
-        await DiscordChannelLogger.setClient(client).logBaggage({ interaction: interaction, options: interaction.options })
+        logger.info({
+            user_id: interaction.user.id,
+            guild_id: interaction.guildId,
+            endpoint: '/table',
+            interaction_id: interaction.id,
+            options: {
+                name: interaction.options.get('name')?.value,
+                description: interaction.options.get('description')?.value,
+            },
+        }, '/table command invoked');
 
         let name: string | undefined = undefined
         if (interaction.options.get('name')) {

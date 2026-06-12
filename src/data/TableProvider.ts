@@ -2,6 +2,7 @@ import { Requirement, Source } from "@nwod-angel/nwod-core"
 import tables from "./tables";
 import { TableDefinition } from "./TableDefinition";
 import { Table } from "./Table";
+import { logger } from "../logger.js";
 
 export default class TableProvider {
     static tables: Array<TableDefinition>
@@ -14,7 +15,7 @@ export default class TableProvider {
     }
 
     private static _initialize = (() => {
-        console.log("Reading tables...")
+        logger.debug("Reading tables...")
         TableProvider.tables =
             tables.map(table => new TableDefinition(
                 table.name,
@@ -25,7 +26,7 @@ export default class TableProvider {
 
         // Health Checks
         // TableProvider.tables.filter(table => table.description === '').forEach(table => {
-        //     console.log(`Table has no description: ${table.name} [${table.sourcesString()}]`)
+        //     logger.debug(`Table has no description: ${table.name} [${table.sourcesString()}]`)
         // })
 
     })()

@@ -1,6 +1,6 @@
 import { Interaction, Client, ApplicationCommandType, CommandInteraction, EmbedBuilder } from "discord.js";
 import { Command } from "../Command.js";
-import DiscordChannelLogger from "../DiscordChannelLogger.js";
+import { logger } from "../logger.js";
 import SpellProvider from "../data/SpellProvider.js";
 import arcanum from "../data/arcanum.js";
 import { Arcana, ArcanaType, Practice, PracticeType } from "@nwod-angel/nwod-core";
@@ -43,7 +43,19 @@ export const SpellCommand: Command = {
         }
     ],
     run: async (client: Client, interaction: CommandInteraction) => {
-        DiscordChannelLogger.setClient(client).logBaggage({interaction: interaction, options: interaction.options})
+        logger.info({
+            user_id: interaction.user.id,
+            guild_id: interaction.guildId,
+            endpoint: '/spell',
+            interaction_id: interaction.id,
+            options: {
+                name: interaction.options.get('name')?.value,
+                description: interaction.options.get('description')?.value,
+                arcana: interaction.options.get('arcana')?.value,
+                dots: interaction.options.get('dots')?.value,
+                practice: interaction.options.get('practice')?.value,
+            },
+        }, '/spell command invoked');
 
         let name: string | undefined = undefined
         if(interaction.options.get('name')){
@@ -176,7 +188,13 @@ export const SpellCommand: Command = {
         // }
         // // The total of characters allowed in an embed is 6000
 
-        DiscordChannelLogger.setClient(client).logBaggage({interaction: interaction, embed: embed})
+        logger.debug({
+            user_id: interaction.user.id,
+            guild_id: interaction.guildId,
+            endpoint: '/spell',
+            interaction_id: interaction.id,
+            embed_title: embed.data.title,
+        }, '/spell embed built');
         await interaction.followUp({
             ephemeral: true,
             embeds: embeds

@@ -1,7 +1,6 @@
 import { Client, CommandInteraction, Interaction } from "discord.js"
 import AsciiTable from 'ascii-table'
 import { TableDefinition } from "../data/TableDefinition"
-import DiscordChannelLogger from "../DiscordChannelLogger"
 
 export const TableViewController = {
 

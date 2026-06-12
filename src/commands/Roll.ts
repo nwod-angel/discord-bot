@@ -7,7 +7,7 @@ import {
   Colors,
 } from "discord.js";
 import { Command } from "../Command.js";
-import DiscordChannelLogger from "../DiscordChannelLogger.js";
+import { logger } from "../logger.js";
 import {
   rollViaApi,
   USE_API_ROLL,
@@ -136,10 +136,23 @@ export const Roll: Command = {
     },
   ],
   run: async (client: Client, interaction: CommandInteraction) => {
-    DiscordChannelLogger.setClient(client).logBaggage({
-      interaction: interaction,
-      options: interaction.options,
-    });
+    logger.info({
+      user_id: interaction.user.id,
+      guild_id: interaction.guildId,
+      endpoint: '/roll',
+      interaction_id: interaction.id,
+      options: {
+        dice_pool: interaction.options.get('dice-pool')?.value,
+        name: interaction.options.get('name')?.value,
+        description: interaction.options.get('description')?.value,
+        success_threshold: interaction.options.get('success-threshold')?.value,
+        reroll_threshold: interaction.options.get('reroll-threshold')?.value,
+        extended_rolls: interaction.options.get('extended-rolls')?.value,
+        target: interaction.options.get('target')?.value,
+        rote: interaction.options.get('rote')?.value,
+        use_willpower: interaction.options.get('use-willpower')?.value,
+      },
+    }, '/roll command invoked');
 
     // ── Parse common options ───────────────────────────────────
 
@@ -240,16 +253,25 @@ export const Roll: Command = {
         });
 
         await interaction.followUp({ embeds: [embed] });
-        DiscordChannelLogger.setClient(client).logBaggage({
-          interaction: interaction,
-          embed: embed,
-          apiResult,
-        });
+        logger.debug({
+          user_id: interaction.user.id,
+          guild_id: interaction.guildId,
+          endpoint: '/roll',
+          interaction_id: interaction.id,
+          api_result: {
+            id: apiResult.id,
+            dice_pool: apiResult.dicePool,
+            successes: apiResult.successes,
+            result: apiResult.result,
+            posted_to_discord: apiResult.postedToDiscord,
+          },
+          elapsed_ms: elapsedMs,
+        }, '/roll API path succeeded');
 
         // API handled persistence — nothing more to do
         return;
       } catch (apiErr) {
-        console.error("API roll failed, falling back to direct roll:", apiErr);
+        logger.error({ err: apiErr }, "API roll failed, falling back to direct roll");
         // Fall through to direct path below
       }
     }
@@ -331,9 +353,14 @@ export const Roll: Command = {
     });
 
     await interaction.followUp({ embeds: [embed] });
-    DiscordChannelLogger.setClient(client).logBaggage({
-      interaction: interaction,
-      embed: embed,
-    });
+    logger.debug({
+      user_id: interaction.user.id,
+      guild_id: interaction.guildId,
+      endpoint: '/roll',
+      interaction_id: interaction.id,
+      dice_pool: finalDicePool,
+      successes,
+      result,
+    }, '/roll direct path succeeded');
   },
 };

@@ -1,6 +1,6 @@
 import { Interaction, Client, ApplicationCommandType, CommandInteraction, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js"
 import { Command } from "../Command.js"
-import DiscordChannelLogger from "../DiscordChannelLogger.js"
+import { logger } from "../logger.js"
 import { InstantRoll } from "@nwod-angel/nwod-roller"
 import paths from "../data/paths.js"
 
@@ -100,7 +100,29 @@ export const ParadoxCommand: Command = {
         },
     ],
     run: async (client: Client, interaction: CommandInteraction) => {
-        await DiscordChannelLogger.setClient(client).logBaggage({ interaction: interaction, options: interaction.options })
+        logger.info({
+            user_id: interaction.user.id,
+            guild_id: interaction.guildId,
+            endpoint: '/paradox',
+            interaction_id: interaction.id,
+            options: {
+                gnosis: interaction.options.get('gnosis')?.value,
+                wisdom: interaction.options.get('wisdom')?.value,
+                arcanum_dots: interaction.options.get('arcanum-dots')?.value,
+                path: interaction.options.get('path')?.value,
+                name: interaction.options.get('name')?.value,
+                description: interaction.options.get('description')?.value,
+                casts: interaction.options.get('casts')?.value,
+                rote: interaction.options.get('rote')?.value,
+                tool: interaction.options.get('tool')?.value,
+                in_shadow: interaction.options.get('in-shadow')?.value,
+                sleepers: interaction.options.get('sleepers')?.value,
+                mitigation: interaction.options.get('mitigation')?.value,
+                backlash: interaction.options.get('backlash')?.value,
+                other_mods: interaction.options.get('other-mods')?.value,
+                other_mods_description: interaction.options.get('other-mods-description')?.value,
+            },
+        }, '/paradox command invoked');
 
         let name = interaction.options.get('name')?.value?.toString() || interaction.member?.user.username || 'A user'
         let description = interaction.options.get('description')?.value?.toString() || undefined
@@ -334,8 +356,13 @@ export const ParadoxCommand: Command = {
                 break
         }
 
-        await DiscordChannelLogger.setClient(client).logBaggage({ interaction: interaction, embed: embed })
-
+        logger.debug({
+            user_id: interaction.user.id,
+            guild_id: interaction.guildId,
+            endpoint: '/paradox',
+            interaction_id: interaction.id,
+            embed_title: embed.data.title,
+        }, '/paradox embed built');
         await interaction.followUp({
             embeds: [embed],
         })

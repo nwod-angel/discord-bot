@@ -1,6 +1,6 @@
 import { Interaction, Client, ApplicationCommandType, CommandInteraction, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js"
 import { Command } from "../Command.js"
-import DiscordChannelLogger from "../DiscordChannelLogger.js"
+import { logger } from "../logger.js"
 import MeritProvider from "../data/MeritProvider.js"
 import { MeritEmbedBuilder } from "../embedBuilders/MeritEmbedBuilder.js"
 import FeedbackController from "./FeedbackController.js"
@@ -23,8 +23,16 @@ export const MeritCommand: Command = {
         }
     ],
     run: async (client: Client, interaction: CommandInteraction) => {
-        await DiscordChannelLogger.setClient(client).logBaggage({ interaction: interaction, options: interaction.options })
-
+        logger.info({
+            user_id: interaction.user.id,
+            guild_id: interaction.guildId,
+            endpoint: '/merit',
+            interaction_id: interaction.id,
+            options: {
+                name: interaction.options.get('name')?.value,
+                description: interaction.options.get('description')?.value,
+            },
+        }, '/merit command invoked');
 
         let name: string | undefined = undefined
         if (interaction.options.get('name')) {
@@ -66,8 +74,13 @@ export const MeritCommand: Command = {
                 )
         }
 
-        await DiscordChannelLogger.setClient(client).logBaggage({ interaction: interaction, embed: embed })
-
+        logger.debug({
+            user_id: interaction.user.id,
+            guild_id: interaction.guildId,
+            endpoint: '/merit',
+            interaction_id: interaction.id,
+            embed_title: embed.data.title,
+        }, '/merit embed built');
         await interaction.followUp({
             embeds: [embed],
         })

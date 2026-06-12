@@ -2,6 +2,7 @@ import { AutocompleteInteraction, Client, CommandInteraction, Interaction } from
 import { Commands } from "../Commands.js";
 import { AutoCompleteCommands } from '../AutoCompleteCommands.js';
 import { UpdateStatus } from "./UpdateStatus";
+import { logger } from "../logger.js";
 
 export default (client: Client): void => {
     client.on("interactionCreate", async (interaction: Interaction) => {
@@ -14,8 +15,7 @@ export default (client: Client): void => {
             }
             UpdateStatus.doSomethingRandom(client)
         } catch (ex) {
-            console.log('Errored during interaction handler.')
-            console.log(ex)
+            logger.error({ err: ex }, 'Errored during interaction handler.')
         }
     });
 };
@@ -23,7 +23,7 @@ export default (client: Client): void => {
 const handleAutoCompleteCommand = async (client: Client, interaction: AutocompleteInteraction): Promise<void> => {
     const command = AutoCompleteCommands.find(c => c.name === interaction.commandName);
     if (!command) {
-        console.log(`No registered Autocomplete Command for ${interaction.commandName}`)
+        logger.debug({ commandName: interaction.commandName }, 'No registered Autocomplete Command')
         return;
     }
     await interaction.respond(await command.autocomplete(client, interaction))
@@ -41,8 +41,7 @@ const handleSlashCommand = async (client: Client, interaction: CommandInteractio
 
         slashCommand.run(client, interaction);
     } catch (ex) {
-        console.log('Errored handling slash command.')
-        console.log(ex)
+        logger.error({ err: ex }, 'Errored handling slash command.')
         await interaction.reply({
             content: "There was an error while executing this command!",
             ephemeral: true,

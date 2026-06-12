@@ -1,5 +1,6 @@
 import { MeritDefinition, NwodSymbols } from "@nwod-angel/nwod-core";
 import { EmbedBuilder } from "discord.js";
+import { logger } from "../logger.js";
 
 const symbols = new NwodSymbols()
 
@@ -25,9 +26,7 @@ export const MeritEmbedBuilder = {
                 })
             })
         } catch (error) {
-            console.error('An error occurred while adding fields to the embed:', error)
-            console.log("Merit:")
-            console.log(merit)
+            logger.error({ err: error, merit }, 'An error occurred while adding fields to the embed')
         }
 
         embed.addFields({ name: 'Sources', value: merit.sourcesString(), inline: false })
