@@ -16,9 +16,10 @@ const level = process.env["LOG_LEVEL"] || "info";
 
 export const logger = pino({
   level,
-  // Pretty-print in development, JSON in production
+  // Pretty-print only when explicitly in development mode (pino-pretty is a devDependency)
+  // In production or when NODE_ENV is unset, output structured JSON
   transport:
-    process.env["NODE_ENV"] !== "production"
+    process.env["NODE_ENV"] === "development"
       ? { target: "pino-pretty", options: { colorize: true } }
       : undefined,
 });
