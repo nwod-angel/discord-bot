@@ -53,12 +53,20 @@ jest.mock('discord-api-types/v9', () => ({
 }));
 
 // ── Mock local modules with heavy data or side effects ──────────
-jest.mock('../../DiscordChannelLogger.js', () => ({
-  __esModule: true,
-  default: {
-    setClient: jest.fn().mockReturnThis(),
-    logBaggage: jest.fn(),
+jest.mock('../../logger.js', () => ({
+  logger: {
+    info: jest.fn(),
+    debug: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    child: jest.fn().mockReturnThis(),
   },
+  createChildLogger: jest.fn().mockReturnValue({
+    info: jest.fn(),
+    debug: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+  }),
 }));
 
 jest.mock('../../data/SpellProvider.js', () => ({

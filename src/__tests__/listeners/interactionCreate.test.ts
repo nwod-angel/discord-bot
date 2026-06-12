@@ -1,3 +1,20 @@
+// ── Mock logger ─────────────────────────────────────────────────
+jest.mock('../../logger.js', () => ({
+  logger: {
+    info: jest.fn(),
+    debug: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    child: jest.fn().mockReturnThis(),
+  },
+  createChildLogger: jest.fn().mockReturnValue({
+    info: jest.fn(),
+    debug: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+  }),
+}));
+
 // ── Mutable module-level references for mock flexibility ──────────
 // These arrays are intentionally `const` (the reference is fixed) but
 // their *contents* are mutated between test cases via push/length=0.
@@ -27,6 +44,7 @@ jest.mock('../../listeners/UpdateStatus.js', () => ({
 // ── Imports (resolved AFTER hoisted mocks) ──────────────────────
 import interactionCreate from '../../listeners/interactionCreate.js';
 import { UpdateStatus } from '../../listeners/UpdateStatus.js';
+import { logger } from '../../logger.js';
 
 // ── Tests ───────────────────────────────────────────────────────
 describe('interactionCreate', () => {
@@ -129,17 +147,12 @@ describe('interactionCreate', () => {
       reply,
     };
 
-    // Spy on console to suppress error logging in test output
-    const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
-
     await callback(interaction);
 
     expect(reply).toHaveBeenCalledWith({
       content: 'There was an error while executing this command!',
       ephemeral: true,
     });
-
-    logSpy.mockRestore();
   });
 
   // ── Autocomplete handling ─────────────────────────────────────
@@ -175,7 +188,6 @@ describe('interactionCreate', () => {
 
   it('handles unknown autocomplete command', async () => {
     // mockAutoCompleteArray is intentionally empty (reset in beforeEach)
-    const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
     const interaction: any = {
       isCommand: () => false,
       isContextMenuCommand: () => false,
@@ -186,11 +198,10 @@ describe('interactionCreate', () => {
 
     await callback(interaction);
 
-    expect(logSpy).toHaveBeenCalledWith(
-      'No registered Autocomplete Command for unknown-autocomplete',
+    expect(logger.debug).toHaveBeenCalledWith(
+      { commandName: 'unknown-autocomplete' },
+      'No registered Autocomplete Command',
     );
-
-    logSpy.mockRestore();
   });
 
   it('handles autocomplete respond() rejection gracefully', async () => {
@@ -216,18 +227,14 @@ describe('interactionCreate', () => {
       respond,
     };
 
-    // Spy on console to suppress error logging in test output
-    const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
-
     // Must NOT throw — the error is caught by the outer try/catch
     await expect(callback(interaction)).resolves.toBeUndefined();
 
     // Verify the error was logged by the catch handler
-    expect(logSpy).toHaveBeenCalledWith(
+    expect(logger.error).toHaveBeenCalledWith(
+      { err: discordError },
       'Errored during interaction handler.',
     );
-
-    logSpy.mockRestore();
   });
 
   // ── UpdateStatus calls ────────────────────────────────────────

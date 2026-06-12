@@ -1,3 +1,20 @@
+// ── Mock logger ─────────────────────────────────────────────────
+jest.mock('../logger.js', () => ({
+  logger: {
+    info: jest.fn(),
+    debug: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    child: jest.fn().mockReturnThis(),
+  },
+  createChildLogger: jest.fn().mockReturnValue({
+    info: jest.fn(),
+    debug: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+  }),
+}));
+
 // ── Mock side-effect modules before importing Bot.ts ─────────────
 
 const mockConfig = jest.fn();
@@ -43,6 +60,12 @@ jest.mock('../listeners/unhandledException.js', () => ({
 
 // Mock the BitInt polyfill (side-effect import)
 jest.mock('../typescript/BitInt', () => ({}));
+
+// Mock instrumentation to prevent side effects
+jest.mock('../instrumentation.js', () => ({}));
+
+// ── Imports ─────────────────────────────────────────────────────
+import { logger } from '../logger.js';
 
 // ── Tests ───────────────────────────────────────────────────────
 describe('Bot', () => {
@@ -120,15 +143,12 @@ describe('Bot', () => {
 
   it('logs API delegation disabled when USE_API_ROLL is off', () => {
     process.env['USE_API_ROLL'] = 'false';
-    const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
 
     loadBot();
 
-    expect(logSpy).toHaveBeenCalledWith(
-      expect.stringContaining('USE_API_ROLL is off'),
+    expect(logger.debug).toHaveBeenCalledWith(
+      'USE_API_ROLL is off — API delegation disabled.',
     );
-
-    logSpy.mockRestore();
   });
 
   it('checks API health when USE_API_ROLL is true', async () => {
@@ -137,8 +157,6 @@ describe('Bot', () => {
 
     const mockFetch = jest.fn().mockResolvedValue({ ok: true, status: 200 });
     global.fetch = mockFetch;
-
-    const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
 
     loadBot();
 
@@ -150,7 +168,6 @@ describe('Bot', () => {
       expect.objectContaining({ method: 'GET' }),
     );
 
-    logSpy.mockRestore();
     delete (global as any).fetch;
   });
 
@@ -161,18 +178,16 @@ describe('Bot', () => {
     const mockFetch = jest.fn().mockRejectedValue(new Error('ECONNREFUSED'));
     global.fetch = mockFetch;
 
-    const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
-
     loadBot();
 
     // Wait for async checkApiHealth to complete
     await new Promise((r) => setTimeout(r, 50));
 
-    expect(logSpy).toHaveBeenCalledWith(
-      expect.stringContaining('API unreachable'),
+    expect(logger.warn).toHaveBeenCalledWith(
+      expect.objectContaining({ err: expect.any(Error) }),
+      'API unreachable — will fall back to local rolls.',
     );
 
-    logSpy.mockRestore();
     delete (global as any).fetch;
   });
 });

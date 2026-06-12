@@ -1,5 +1,23 @@
+// ── Mock logger ─────────────────────────────────────────────────
+jest.mock('../../logger.js', () => ({
+  logger: {
+    info: jest.fn(),
+    debug: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    child: jest.fn().mockReturnThis(),
+  },
+  createChildLogger: jest.fn().mockReturnValue({
+    info: jest.fn(),
+    debug: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+  }),
+}));
+
 // ── Imports ─────────────────────────────────────────────────────
 import unhandledException from '../../listeners/unhandledException.js';
+import { logger } from '../../logger.js';
 
 // ── Tests ───────────────────────────────────────────────────────
 describe('unhandledException', () => {
@@ -8,10 +26,6 @@ describe('unhandledException', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-
-    // Suppress console output during tests
-    jest.spyOn(console, 'log').mockImplementation(() => {});
-    jest.spyOn(console, 'error').mockImplementation(() => {});
 
     // Create a minimal mock client that captures the registered callback
     client = { on: jest.fn() };
@@ -22,10 +36,6 @@ describe('unhandledException', () => {
     });
 
     unhandledException(client);
-  });
-
-  afterEach(() => {
-    jest.restoreAllMocks();
   });
 
   // ── Listener registration ──────────────────────────────────────
@@ -44,14 +54,9 @@ describe('unhandledException', () => {
 
     callback(error);
 
-    expect(console.error).toHaveBeenCalledWith('Unhandled exception:', error);
-  });
-
-  it('logs Date.now() when unhandledException fires', () => {
-    const error = new Error('Test error');
-
-    callback(error);
-
-    expect(console.log).toHaveBeenCalledWith(expect.any(Number));
+    expect(logger.error).toHaveBeenCalledWith(
+      { err: error },
+      'Unhandled exception',
+    );
   });
 });

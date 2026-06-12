@@ -1,5 +1,6 @@
 import { Requirement, Source, MeritDefinition } from "@nwod-angel/nwod-core"
 import merits from "./merits";
+import { logger } from "../logger.js";
 
 
 export default class MeritProvider {
@@ -13,7 +14,7 @@ export default class MeritProvider {
     }
 
     private static _initialize = (() => {
-        console.log("Reading merits...")
+        logger.debug("Reading merits...")
         MeritProvider.merits = 
         merits.map(merit => new MeritDefinition(
                         merit.name,
@@ -33,10 +34,10 @@ export default class MeritProvider {
         
         // Health Checks
         MeritProvider.merits.filter(merit => merit.description === '').forEach(merit => {
-            console.log(`Merit has no description: ${merit.name} [${merit.sourcesString()}]`)
+            logger.debug({ merit: merit.name, sources: merit.sourcesString() }, 'Merit has no description')
         })
         MeritProvider.merits.filter(merit => merit.requirements.filter(r => r.name === "").length > 0).forEach(merit => {
-            console.log(`Merit has blank requirements: ${merit.name} [${merit.sourcesString()}]`)
+            logger.debug({ merit: merit.name, sources: merit.sourcesString() }, 'Merit has blank requirements')
         })
     })()
 }

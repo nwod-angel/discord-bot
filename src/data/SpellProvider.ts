@@ -1,5 +1,6 @@
 import { Arcana, ArcanaType, Practice, PracticeType, Requirement, Source, Spell } from "@nwod-angel/nwod-core"
 import spells from "./spells";
+import { logger } from "../logger.js";
 
 export default class SpellProvider {
     static spells: Array<Spell>
@@ -15,7 +16,7 @@ export default class SpellProvider {
     }
 
     private static _initialize = (() => {
-        console.log("Reading spells...")
+        logger.debug("Reading spells...")
         SpellProvider.spells = 
         spells.map(spell => new Spell(
                         spell.name,

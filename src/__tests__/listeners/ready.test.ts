@@ -1,3 +1,20 @@
+// ── Mock logger ─────────────────────────────────────────────────
+jest.mock('../../logger.js', () => ({
+  logger: {
+    info: jest.fn(),
+    debug: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    child: jest.fn().mockReturnThis(),
+  },
+  createChildLogger: jest.fn().mockReturnValue({
+    info: jest.fn(),
+    debug: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+  }),
+}));
+
 // ── Mock Commands and UpdateStatus at module level ───────────────
 jest.mock('../../Commands.js', () => ({
   Commands: [
@@ -15,6 +32,7 @@ jest.mock('../../listeners/UpdateStatus.js', () => ({
 // ── Imports (resolved AFTER hoisted mocks) ──────────────────────
 import ready from '../../listeners/ready.js';
 import { UpdateStatus } from '../../listeners/UpdateStatus.js';
+import { logger } from '../../logger.js';
 
 // ── Tests ───────────────────────────────────────────────────────
 describe('ready', () => {
@@ -62,39 +80,32 @@ describe('ready', () => {
   });
 
   it('logs the bot username when ready fires', async () => {
-    const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
-
     await callback();
 
-    expect(logSpy).toHaveBeenCalledWith('TestBot is online');
-
-    logSpy.mockRestore();
+    expect(logger.info).toHaveBeenCalledWith(
+      { username: 'TestBot' },
+      'Bot is online',
+    );
   });
 
   // ── Early return guards ────────────────────────────────────────
 
   it('early returns when client.user is null', async () => {
-    const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
     client.user = null;
 
     await callback();
 
     expect(client.application.commands.set).not.toHaveBeenCalled();
-    expect(logSpy).not.toHaveBeenCalled();
-
-    logSpy.mockRestore();
+    expect(logger.info).not.toHaveBeenCalled();
   });
 
   it('early returns when client.application is null', async () => {
-    const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
     client.application = null;
 
     await callback();
 
     // Cannot assert commands.set when application is null (no such property)
-    expect(logSpy).not.toHaveBeenCalled();
-
-    logSpy.mockRestore();
+    expect(logger.info).not.toHaveBeenCalled();
   });
 
   // ── UpdateStatus calls ─────────────────────────────────────────

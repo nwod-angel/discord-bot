@@ -2,6 +2,7 @@ import { Requirement, Source } from "@nwod-angel/nwod-core"
 import rules from "./rules";
 import { RuleParagraph } from "./RuleParagraph";
 import { RuleDefinition } from "./RuleDefinition";
+import { logger } from "../logger.js";
 
 export default class RuleProvider {
     static rules: Array<RuleDefinition>
@@ -15,7 +16,7 @@ export default class RuleProvider {
     }
 
     private static _initialize = (() => {
-        console.log("Reading rules...")
+        logger.debug("Reading rules...")
         RuleProvider.rules =
             rules.map(rule => new RuleDefinition(
                 rule.name,
@@ -37,10 +38,10 @@ export default class RuleProvider {
 
         // Health Checks
         // RuleProvider.rules.filter(rule => rule.description === '').forEach(rule => {
-        //     console.log(`Rule has no description: ${rule.name} [${rule.sourcesString()}]`)
+        //     logger.debug(`Rule has no description: ${rule.name} [${rule.sourcesString()}]`)
         // })
         RuleProvider.rules.filter(rule => rule.paragraphs.some(p => p.text.length > 1024)).forEach(rule => {
-            console.log(`Rule has a long paragraph: ${rule.name} [${rule.sourcesString()}]`)
+            logger.debug({ rule: rule.name, sources: rule.sourcesString() }, 'Rule has a long paragraph')
         })
 
     })()

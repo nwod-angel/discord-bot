@@ -1,5 +1,5 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, CacheType, Client, CommandInteraction } from "discord.js";
-import DiscordChannelLogger from "../DiscordChannelLogger";
+import { logger } from "../logger.js";
 
 export default class FeedbackController {
 
@@ -37,12 +37,18 @@ export default class FeedbackController {
             const response = await responseInteraction.awaitMessageComponent({ filter: i => i.user.id === this.interaction.user.id, time: 30000 })
             switch (response.customId) {
                 case 'unhappy':
-                    let unhappy = `${this.interaction.user.username} is unhappy with interaction ${this.interaction.id}.`
-                    DiscordChannelLogger.setClient(this.client).logFeedback(unhappy)
+                    logger.info({
+                        user_id: this.interaction.user.id,
+                        interaction_id: this.interaction.id,
+                        feedback: 'unhappy',
+                    }, 'User feedback: unhappy');
                     break
                 case 'happy':
-                    let happy = `${this.interaction.user.username} is happy with interaction ${this.interaction.id}.`
-                    DiscordChannelLogger.setClient(this.client).logFeedback(happy)
+                    logger.info({
+                        user_id: this.interaction.user.id,
+                        interaction_id: this.interaction.id,
+                        feedback: 'happy',
+                    }, 'User feedback: happy');
                     break
             }
             await response.editReply({ components: [] })

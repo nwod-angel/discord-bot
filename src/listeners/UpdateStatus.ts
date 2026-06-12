@@ -1,4 +1,5 @@
 import { ActivityType, Client } from "discord.js";
+import { logger } from "../logger.js";
 
 export class UpdateStatus {
 
@@ -95,8 +96,7 @@ export class UpdateStatus {
             try{
                 client.user.setPresence({ activities: [{ name: status, type: ActivityType.Playing }] })
             } catch (ex) {
-                console.log("Error calling 'client.user.setPresence'.")
-                console.log(ex)
+                logger.error({ err: ex }, "Error calling 'client.user.setPresence'.")
             }
 
         }

@@ -3,6 +3,7 @@ import { Command } from "../Command";
 import { REST } from '@discordjs/rest'
 import { Routes } from 'discord-api-types/v9'
 import * as dotenv from 'dotenv'
+import { logger } from "../logger.js";
 dotenv.config(); //initialize dotenv
 
 const discordToken = process.env['DISCORD_TOKEN']
@@ -17,7 +18,7 @@ export const Goodbye: Command = {
         const rest = new REST({ version: '9' }).setToken(discordToken!);
 
         rest.put(Routes.applicationGuildCommands(clientId!, interaction.guildId!), { body: [] })
-            .catch(console.error);
+            .catch(err => logger.error({ err }, 'Failed to remove slash commands'));
 
     }
 };

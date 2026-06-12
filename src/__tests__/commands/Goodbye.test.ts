@@ -1,8 +1,17 @@
-jest.mock('../../DiscordChannelLogger.js', () => ({
-  default: {
-    setClient: jest.fn().mockReturnThis(),
-    logBaggage: jest.fn(),
+jest.mock('../../logger.js', () => ({
+  logger: {
+    info: jest.fn(),
+    debug: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    child: jest.fn().mockReturnThis(),
   },
+  createChildLogger: jest.fn().mockReturnValue({
+    info: jest.fn(),
+    debug: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+  }),
 }));
 
 jest.mock('@discordjs/rest', () => ({
