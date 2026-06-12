@@ -1,6 +1,10 @@
 import { Client, ClientOptions } from "discord.js";
 import "./typescript/BitInt"
 
+// OTel instrumentation MUST be imported before any other module.
+// This initialises the tracing SDK and pino log bridge.
+import "./instrumentation.js";
+
 process.on('unhandledRejection', error => {
 	console.error('Unhandled promise rejection:', error);
 });
