@@ -4,9 +4,9 @@ dotenv.config(); //initialize dotenv — MUST be before instrumentation import
 import { Client, ClientOptions } from "discord.js";
 import "./typescript/BitInt"
 
-// OTel instrumentation MUST be imported before any other module.
-// This initialises the tracing SDK and pino log bridge.
-import "./instrumentation.js";
+// OTel instrumentation MUST be imported after dotenv.config() so env vars are available.
+// Using dynamic import() to ensure execution order (ESM hoists static imports).
+await import("./instrumentation.js");
 
 import { logger } from "./logger.js";
 
