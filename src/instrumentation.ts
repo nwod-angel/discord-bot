@@ -33,6 +33,11 @@ import {
   SimpleLogRecordProcessor,
   ConsoleLogRecordExporter,
 } from "@opentelemetry/sdk-logs";
+import {
+  MeterProvider,
+  PeriodicExportingMetricReader,
+  ConsoleMetricExporter,
+} from "@opentelemetry/sdk-metrics";
 
 // Only initialise OTel if not in test environment
 const isTestEnv =
@@ -40,6 +45,17 @@ const isTestEnv =
   process.env["JEST_WORKER_ID"] !== undefined;
 
 if (!isTestEnv) {
+  // ── Metrics Provider ─────────────────────────────────────────────
+  // Periodic exporter writes metrics to stdout every 30 seconds.
+  const metricReader = new PeriodicExportingMetricReader({
+    exporter: new ConsoleMetricExporter(),
+    exportIntervalMillis: 30_000,
+  });
+
+  const meterProvider = new MeterProvider({
+    readers: [metricReader],
+  });
+
   const sdk = new NodeSDK({
     resource: resourceFromAttributes({
       [ATTR_SERVICE_NAME]: process.env["OTEL_SERVICE_NAME"] || "nwod-bot",
@@ -56,6 +72,11 @@ if (!isTestEnv) {
     logRecordProcessor: new SimpleLogRecordProcessor(
       new ConsoleLogRecordExporter(),
     ),
+
+    // ── Metrics Provider ──────────────────────────────────────────
+    // Exports metrics to stdout via ConsoleMetricExporter.
+    // When Honeycomb is configured, replace with OTLPMetricExporter.
+    meterProvider,
 
     // ── Instrumentations (explicit registrations) ─────────────────
     // NOT using auto-instrumentation — these are static imports that nft can trace.
