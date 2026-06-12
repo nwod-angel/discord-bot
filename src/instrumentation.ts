@@ -14,7 +14,6 @@
  *   OTEL_SERVICE_NAME          — service name (default: "nwod-bot")
  *   OTEL_EXPORTER_OTLP_ENDPOINT — Honeycomb OTLP endpoint (optional, falls back to stdout)
  *   OTEL_EXPORTER_OTLP_HEADERS  — Honeycomb API key header (optional)
- *   OTEL_LOG_LEVEL              — minimum log level for OTel log processor (default: inherits from LOG_LEVEL)
  */
 
 import { NodeSDK } from "@opentelemetry/sdk-node";
@@ -38,6 +37,9 @@ import {
   PeriodicExportingMetricReader,
   ConsoleMetricExporter,
 } from "@opentelemetry/sdk-metrics";
+import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-http";
+import { OTLPLogExporter } from "@opentelemetry/exporter-logs-otlp-http";
+import { OTLPMetricExporter } from "@opentelemetry/exporter-metrics-otlp-http";
 
 // Only initialise OTel if not in test environment
 const isTestEnv =
@@ -45,49 +47,27 @@ const isTestEnv =
   process.env["JEST_WORKER_ID"] !== undefined;
 
 if (!isTestEnv) {
-  // ── Determine exporters based on env vars ────────────────────────
   const otlpEndpoint = process.env["OTEL_EXPORTER_OTLP_ENDPOINT"];
   const otlpHeaders = process.env["OTEL_EXPORTER_OTLP_HEADERS"];
 
-  let spanExporter: any;
-  let logExporter: any;
-  let metricExporter: any;
-
-  if (otlpEndpoint) {
-    // OTLP exporters for Honeycomb
-    const { OTLPTraceExporter } = await import(
-      "@opentelemetry/exporter-trace-otlp-http"
-    );
-    const { OTLPLogExporter } = await import(
-      "@opentelemetry/exporter-logs-otlp-http"
-    );
-    const { OTLPMetricExporter } = await import(
-      "@opentelemetry/exporter-metrics-otlp-http"
-    );
-
-    const headers: Record<string, string> = {};
-    if (otlpHeaders) {
-      headers["x-honeycomb-team"] = otlpHeaders;
-    }
-
-    spanExporter = new OTLPTraceExporter({
-      url: `${otlpEndpoint}/v1/traces`,
-      headers,
-    });
-    logExporter = new OTLPLogExporter({
-      url: `${otlpEndpoint}/v1/logs`,
-      headers,
-    });
-    metricExporter = new OTLPMetricExporter({
-      url: `${otlpEndpoint}/v1/metrics`,
-      headers,
-    });
-  } else {
-    // Console exporters (stdout) — fallback when Honeycomb not configured
-    spanExporter = new ConsoleSpanExporter();
-    logExporter = new ConsoleLogRecordExporter();
-    metricExporter = new ConsoleMetricExporter();
+  // Build headers object for OTLP exporters
+  const headers: Record<string, string> = {};
+  if (otlpHeaders) {
+    headers["x-honeycomb-team"] = otlpHeaders;
   }
+
+  // Select exporters based on env vars
+  const spanExporter = otlpEndpoint
+    ? new OTLPTraceExporter({ url: `${otlpEndpoint}/v1/traces`, headers })
+    : new ConsoleSpanExporter();
+
+  const logExporter = otlpEndpoint
+    ? new OTLPLogExporter({ url: `${otlpEndpoint}/v1/logs`, headers })
+    : new ConsoleLogRecordExporter();
+
+  const metricExporter = otlpEndpoint
+    ? new OTLPMetricExporter({ url: `${otlpEndpoint}/v1/metrics`, headers })
+    : new ConsoleMetricExporter();
 
   // ── Metrics Provider ─────────────────────────────────────────────
   const metricReader = new PeriodicExportingMetricReader({
@@ -104,33 +84,20 @@ if (!isTestEnv) {
       [ATTR_SERVICE_NAME]: process.env["OTEL_SERVICE_NAME"] || "nwod-bot",
       [ATTR_SERVICE_VERSION]: process.env["npm_package_version"] || "0.0.0",
     }),
-
-    // ── Trace Processor ────────────────────────────────────────────
     spanProcessors: [new SimpleSpanProcessor(spanExporter)],
-
-    // ── Log Processor ──────────────────────────────────────────────
     logRecordProcessor: new SimpleLogRecordProcessor(logExporter),
-
-    // ── Metrics Provider ──────────────────────────────────────────
     meterProvider,
-
-    // ── Instrumentations (explicit registrations) ─────────────────
     instrumentations: [new HttpInstrumentation(), new PinoInstrumentation()],
   });
 
-  // Wrap in try-catch for best-effort observability (ADR-0019: never crash the app)
   try {
     sdk.start();
     const exporterType = otlpEndpoint ? "Honeycomb OTLP" : "stdout";
     console.log(`[otel] OpenTelemetry SDK initialised (${exporterType} exporter)`);
   } catch (err) {
     console.error("[otel] Failed to initialise OpenTelemetry SDK:", err);
-    console.log(
-      "[otel] Continuing without observability — logs will go to stdout only",
-    );
   }
 
-  // Graceful shutdown
   process.on("SIGTERM", () => {
     sdk.shutdown().catch((err) => {
       console.error("[otel] Error during SDK shutdown:", err);
