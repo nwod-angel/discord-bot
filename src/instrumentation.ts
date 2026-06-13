@@ -53,9 +53,17 @@ if (!isTestEnv) {
   console.log("  OTEL_SERVICE_NAME:", process.env["OTEL_SERVICE_NAME"] || "(not set)");
 
   // Build headers for OTLP exporters
+  // OTEL_EXPORTER_OTLP_HEADERS format: "x-honeycomb-team=API_KEY"
+  // We need to parse out the actual API key value
   const headers: Record<string, string> = {};
   if (otlpHeaders) {
-    headers["x-honeycomb-team"] = otlpHeaders;
+    const eqIndex = otlpHeaders.indexOf("=");
+    if (eqIndex !== -1) {
+      headers["x-honeycomb-team"] = otlpHeaders.substring(eqIndex + 1);
+    } else {
+      // Assume it's just the API key without the header name prefix
+      headers["x-honeycomb-team"] = otlpHeaders;
+    }
   }
 
   // When OTLP endpoint is set, use OTLP exporters with full paths
