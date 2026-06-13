@@ -4,51 +4,52 @@
  * The Post command calls postAsCharacterViaApi from apiClient.
  * We use jest.isolateModules to provide a mocked apiClient
  * so the command never makes real HTTP requests.
+ *
+ * The POST_COMMAND_FEEDBACK env var controls whether the command
+ * sends confirmation/error responses. It is off by default.
  */
 
 import { createMockInteraction, createMockClient } from './helpers.js';
 
-describe('Post command', () => {
-  const mockPostAsCharacterViaApi = jest.fn();
+function loadPostWithMock() {
   let PostWithMock: {
     name: string;
     description: string;
     options?: any[];
     run: (client: any, interaction: any) => Promise<void>;
   };
+  const mockPostAsCharacterViaApi = jest.fn();
 
-  beforeAll(() => {
-    jest.isolateModules(() => {
-      jest.mock('../../apiClient.js', () => ({
-        postAsCharacterViaApi: mockPostAsCharacterViaApi,
-        PostError: class PostError extends Error {
-          readonly kind: string;
-          readonly status?: number;
-          constructor(opts: { kind: string; message: string; status?: number; cause?: unknown }) {
-            super(opts.message);
-            this.name = 'PostError';
-            this.kind = opts.kind;
-            this.status = opts.status;
-          }
-        },
-      }));
-      const PostMod = require('../../commands/Post.js');
-      PostWithMock = PostMod.Post;
-    });
+  jest.isolateModules(() => {
+    jest.mock('../../apiClient.js', () => ({
+      postAsCharacterViaApi: mockPostAsCharacterViaApi,
+      PostError: class PostError extends Error {
+        readonly kind: string;
+        readonly status?: number;
+        constructor(opts: { kind: string; message: string; status?: number; cause?: unknown }) {
+          super(opts.message);
+          this.name = 'PostError';
+          this.kind = opts.kind;
+          this.status = opts.status;
+        }
+      },
+    }));
+    const PostMod = require('../../commands/Post.js');
+    PostWithMock = PostMod.Post;
   });
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
+  return { PostWithMock: PostWithMock!, mockPostAsCharacterViaApi };
+}
 
+describe('Post command', () => {
   describe('command metadata', () => {
+    const { PostWithMock } = loadPostWithMock();
+
     it('has correct name and description', () => {
       expect(PostWithMock.name).toBe('post');
       expect(PostWithMock.description).toBe('Posts a message as a character');
     });
-  });
 
-  describe('command options', () => {
     it('has the right options', () => {
       expect(PostWithMock.options).toBeDefined();
       expect(PostWithMock.options).toHaveLength(3);
@@ -75,8 +76,14 @@ describe('Post command', () => {
     });
   });
 
-  describe('happy path', () => {
-    it('calls postAsCharacterViaApi with correct params and uses editReply with success message', async () => {
+  describe('POST_COMMAND_FEEDBACK off (default)', () => {
+    const { PostWithMock, mockPostAsCharacterViaApi } = loadPostWithMock();
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it('calls deleteReply on success (no visible response)', async () => {
       mockPostAsCharacterViaApi.mockResolvedValue({ posted: true, characterName: 'Alice' });
 
       const interaction = createMockInteraction({
@@ -98,9 +105,8 @@ describe('Post command', () => {
         threadId: undefined,
       });
 
-      expect(interaction.editReply).toHaveBeenCalledWith({
-        content: '✅ Posted as Alice',
-      });
+      expect(interaction.editReply).not.toHaveBeenCalled();
+      expect(interaction.deleteReply).toHaveBeenCalled();
     });
 
     it('does not include imageUrl when not provided', async () => {
@@ -122,6 +128,9 @@ describe('Post command', () => {
         channelId: 'test-channel',
         threadId: undefined,
       });
+
+      expect(interaction.editReply).not.toHaveBeenCalled();
+      expect(interaction.deleteReply).toHaveBeenCalled();
     });
 
     it('uses characterName when character option value is non-numeric (free-text NPC)', async () => {
@@ -144,14 +153,83 @@ describe('Post command', () => {
         threadId: undefined,
       });
 
-      expect(interaction.editReply).toHaveBeenCalledWith({
-        content: '✅ Posted as Bob the NPC',
+      expect(interaction.editReply).not.toHaveBeenCalled();
+      expect(interaction.deleteReply).toHaveBeenCalled();
+    });
+
+    it('calls deleteReply on API error', async () => {
+      mockPostAsCharacterViaApi.mockResolvedValue({ posted: false, error: 'Some error' });
+
+      const interaction = createMockInteraction({
+        'character': '42',
+        'content': 'Hello world',
       });
+      const client = createMockClient() as any;
+
+      await PostWithMock.run(client, interaction as any);
+
+      expect(interaction.editReply).not.toHaveBeenCalled();
+      expect(interaction.deleteReply).toHaveBeenCalled();
+    });
+
+    it('calls deleteReply on thrown exception', async () => {
+      mockPostAsCharacterViaApi.mockRejectedValue(new Error('Network error'));
+
+      const interaction = createMockInteraction({
+        'character': '42',
+        'content': 'Hello world',
+      });
+      const client = createMockClient() as any;
+
+      await PostWithMock.run(client, interaction as any);
+
+      expect(interaction.editReply).not.toHaveBeenCalled();
+      expect(interaction.deleteReply).toHaveBeenCalled();
     });
   });
 
-  describe('handles API error', () => {
-    it('when postAsCharacterViaApi returns posted:false with error, uses editReply with error message', async () => {
+  describe('POST_COMMAND_FEEDBACK on', () => {
+    let PostWithMock: {
+      name: string;
+      description: string;
+      options?: any[];
+      run: (client: any, interaction: any) => Promise<void>;
+    };
+    let mockPostAsCharacterViaApi: jest.Mock;
+
+    beforeAll(() => {
+      process.env.POST_COMMAND_FEEDBACK = 'true';
+    });
+
+    afterAll(() => {
+      delete process.env.POST_COMMAND_FEEDBACK;
+    });
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+      const loaded = loadPostWithMock();
+      PostWithMock = loaded.PostWithMock;
+      mockPostAsCharacterViaApi = loaded.mockPostAsCharacterViaApi;
+    });
+
+    it('calls editReply with success message', async () => {
+      mockPostAsCharacterViaApi.mockResolvedValue({ posted: true, characterName: 'Alice' });
+
+      const interaction = createMockInteraction({
+        'character': '42',
+        'content': 'Hello world',
+        'image_url': 'https://example.com/img.png',
+      });
+      const client = createMockClient() as any;
+
+      await PostWithMock.run(client, interaction as any);
+
+      expect(interaction.editReply).toHaveBeenCalledWith({
+        content: '✅ Posted as Alice',
+      });
+    });
+
+    it('calls editReply with error message when API returns posted:false', async () => {
       mockPostAsCharacterViaApi.mockResolvedValue({ posted: false, error: 'Some error' });
 
       const interaction = createMockInteraction({
@@ -167,7 +245,7 @@ describe('Post command', () => {
       });
     });
 
-    it('when postAsCharacterViaApi returns posted:false with no error, uses editReply with Unknown error', async () => {
+    it('calls editReply with Unknown error when API returns posted:false with no error', async () => {
       mockPostAsCharacterViaApi.mockResolvedValue({ posted: false });
 
       const interaction = createMockInteraction({
@@ -182,10 +260,8 @@ describe('Post command', () => {
         content: '❌ Failed to post: Unknown error',
       });
     });
-  });
 
-  describe('handles thrown exception', () => {
-    it('when postAsCharacterViaApi throws, catches and reports via editReply', async () => {
+    it('calls editReply with error message on thrown exception', async () => {
       mockPostAsCharacterViaApi.mockRejectedValue(new Error('Network error'));
 
       const interaction = createMockInteraction({
