@@ -130,6 +130,10 @@ if (!isTestEnv) {
     testSpan.setAttribute("test.type", "diagnostics");
     testSpan.end();
     console.log("[otel-diagnostics] Test span created and ended");
+
+    // Test pino log bridging — if PinoInstrumentation works, this should trigger a log export
+    const { logger } = await import("./logger.js");
+    logger.info({ test: true }, "[otel-diagnostics] Test pino log — should trigger OTel log export");
   } catch (err) {
     console.error("[otel] Failed to initialise OpenTelemetry SDK:", err);
   }
