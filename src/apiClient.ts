@@ -14,6 +14,15 @@ import { logger } from "./logger.js";
 const API_BASE_URL = process.env["API_BASE_URL"] || "http://localhost:3001";
 const USE_API_ROLL = process.env["USE_API_ROLL"] === "true";
 
+// ── Startup validation ─────────────────────────────────────────
+if (!process.env["API_BASE_URL"]) {
+  logger.warn(
+    { API_BASE_URL },
+    "[apiClient] API_BASE_URL is not set — defaulting to localhost:3001. " +
+    "Set API_BASE_URL in your environment to point to the deployed API.",
+  );
+}
+
 // ── Types ──────────────────────────────────────────────────────
 
 export interface RollApiParams {
@@ -231,7 +240,25 @@ function classifyNetworkError(err: unknown): PostError {
       return new PostError({ kind: "network", message: "Request timed out", cause: err });
     }
     // TypeError from native fetch — network-level failure
-    if (err.name === "TypeError" && err.message === "fetch failed") {
+    if (err.name === "TypeError" && err.message.startsWith("fetch failed")) {
+      // Check the cause for specific OS-level errors
+      const cause = err.cause as any;
+      if (cause?.code === "ECONNREFUSED") {
+        logger.error({ err, cause: err.cause }, "[apiClient] Post fetch failed — connection refused");
+        return new PostError({
+          kind: "network",
+          message: `API server refused connection at ${API_BASE_URL}. Check that API_BASE_URL is correct and the API is running.`,
+          cause: err,
+        });
+      }
+      if (cause?.code === "ENOTFOUND") {
+        logger.error({ err, cause: err.cause }, "[apiClient] Post fetch failed — DNS lookup failed");
+        return new PostError({
+          kind: "network",
+          message: `Could not resolve API server hostname. Check that API_BASE_URL is correct.`,
+          cause: err,
+        });
+      }
       logger.error({ err, cause: err.cause }, "[apiClient] Post fetch failed — network error");
       return new PostError({ kind: "network", message: "Could not reach the API server", cause: err });
     }
