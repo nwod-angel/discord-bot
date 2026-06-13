@@ -9,6 +9,7 @@
  *   OTEL_EXPORTER_OTLP_HEADERS  — Honeycomb API key header (optional)
  */
 
+import { diag, DiagConsoleLogger, DiagLogLevel } from "@opentelemetry/api";
 import { NodeSDK } from "@opentelemetry/sdk-node";
 import { resourceFromAttributes } from "@opentelemetry/resources";
 import {
@@ -39,8 +40,17 @@ const isTestEnv =
   process.env["JEST_WORKER_ID"] !== undefined;
 
 if (!isTestEnv) {
+  // Enable OTel diagnostic logging to see SDK internals
+  diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.DEBUG);
+
   const otlpEndpoint = process.env["OTEL_EXPORTER_OTLP_ENDPOINT"];
   const otlpHeaders = process.env["OTEL_EXPORTER_OTLP_HEADERS"];
+
+  // Log actual env var values (mask API key)
+  console.log("[otel-diagnostics] env check:");
+  console.log("  OTEL_EXPORTER_OTLP_ENDPOINT:", otlpEndpoint || "(not set)");
+  console.log("  OTEL_EXPORTER_OTLP_HEADERS:", otlpHeaders ? "SET (masked)" : "(not set)");
+  console.log("  OTEL_SERVICE_NAME:", process.env["OTEL_SERVICE_NAME"] || "(not set)");
 
   // Build headers for OTLP exporters
   const headers: Record<string, string> = {};
@@ -64,6 +74,21 @@ if (!isTestEnv) {
   const metricExporter = useOtlp
     ? new OTLPMetricExporter({ url: `${baseUrl}/v1/metrics`, headers })
     : new ConsoleMetricExporter();
+
+  // Intercept export calls to verify data is actually being sent
+  if (useOtlp) {
+    const originalSpanExport = spanExporter.export.bind(spanExporter);
+    spanExporter.export = (spans, resultCallback) => {
+      console.log(`[otel-diagnostics] EXPORTING ${spans.length} SPANS to ${baseUrl}/v1/traces`);
+      return originalSpanExport(spans, resultCallback);
+    };
+
+    const originalLogExport = logExporter.export.bind(logExporter);
+    logExporter.export = (logs, resultCallback) => {
+      console.log(`[otel-diagnostics] EXPORTING ${logs.length} LOG RECORDS to ${baseUrl}/v1/logs`);
+      return originalLogExport(logs, resultCallback);
+    };
+  }
 
   const metricReader = new PeriodicExportingMetricReader({
     exporter: metricExporter,
@@ -89,6 +114,14 @@ if (!isTestEnv) {
     if (useOtlp) {
       console.log(`[otel] Endpoint: ${baseUrl}`);
     }
+
+    // Create a test span to verify spans are being created and exported
+    const { trace } = await import("@opentelemetry/api");
+    const tracer = trace.getTracer("diagnostics");
+    const testSpan = tracer.startSpan("diagnostics-startup-test");
+    testSpan.setAttribute("test.type", "diagnostics");
+    testSpan.end();
+    console.log("[otel-diagnostics] Test span created and ended");
   } catch (err) {
     console.error("[otel] Failed to initialise OpenTelemetry SDK:", err);
   }
