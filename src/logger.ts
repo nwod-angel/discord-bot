@@ -73,12 +73,6 @@ const otelBridgeStream = new PassThrough({
   },
 });
 
-// Build pino destinations: stdout + OTel bridge
-const destinations = [
-  pino.destination({ dest: 1, sync: false }), // stdout
-  pino.destination({ dest: otelBridgeStream, sync: false }),
-];
-
 export const logger = pino(
   {
     level,
@@ -89,7 +83,10 @@ export const logger = pino(
         ? { target: "pino-pretty", options: { colorize: true } }
         : undefined,
   },
-  pino.multistream(destinations),
+  pino.multistream([
+    { level, stream: process.stdout },
+    { level, stream: otelBridgeStream },
+  ]),
 );
 
 /**
