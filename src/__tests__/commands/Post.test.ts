@@ -21,6 +21,16 @@ describe('Post command', () => {
     jest.isolateModules(() => {
       jest.mock('../../apiClient.js', () => ({
         postAsCharacterViaApi: mockPostAsCharacterViaApi,
+        PostError: class PostError extends Error {
+          readonly kind: string;
+          readonly status?: number;
+          constructor(opts: { kind: string; message: string; status?: number; cause?: unknown }) {
+            super(opts.message);
+            this.name = 'PostError';
+            this.kind = opts.kind;
+            this.status = opts.status;
+          }
+        },
       }));
       const PostMod = require('../../commands/Post.js');
       PostWithMock = PostMod.Post;

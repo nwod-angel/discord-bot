@@ -411,6 +411,25 @@ describe("postAsCharacterViaApi", () => {
     );
   });
 
+  it("sends a timeout signal in the fetch options", async () => {
+    mockFetch.mockResolvedValue({
+      ok: true,
+      json: async () => ({ posted: true }),
+    });
+
+    const { postAsCharacterViaApi } = await import("../apiClient.js");
+    await postAsCharacterViaApi({
+      userId: "user-1",
+      characterId: 42,
+      content: "Hello",
+      channelId: "channel-1",
+    });
+
+    const fetchOpts = mockFetch.mock.calls[0][1];
+    expect(fetchOpts.signal).toBeDefined();
+    expect(typeof fetchOpts.signal.addEventListener).toBe("function");
+  });
+
   it("sends all params in the request body", async () => {
     const sentBody: any = {};
     mockFetch.mockImplementation(async (_url: string, opts: any) => {
@@ -456,14 +475,14 @@ describe("postAsCharacterViaApi", () => {
     expect(result).toEqual({ posted: true });
   });
 
-  it("throws on 400 with API error message", async () => {
+  it("throws PostError with kind 'api' on 400 with API error message", async () => {
     mockFetch.mockResolvedValue({
       ok: false,
       status: 400,
       json: async () => ({ message: "Character not found" }),
     });
 
-    const { postAsCharacterViaApi } = await import("../apiClient.js");
+    const { postAsCharacterViaApi, PostError } = await import("../apiClient.js");
     await expect(
       postAsCharacterViaApi({
         userId: "user-1",
@@ -471,10 +490,15 @@ describe("postAsCharacterViaApi", () => {
         content: "Hello",
         channelId: "channel-1",
       }),
-    ).rejects.toThrow("Character not found");
+    ).rejects.toThrow(expect.objectContaining({
+      name: "PostError",
+      kind: "api",
+      message: "Character not found",
+      status: 400,
+    }));
   });
 
-  it("throws with status code when no message body", async () => {
+  it("throws PostError with kind 'api' when no message body", async () => {
     mockFetch.mockResolvedValue({
       ok: false,
       status: 500,
@@ -483,7 +507,7 @@ describe("postAsCharacterViaApi", () => {
       },
     });
 
-    const { postAsCharacterViaApi } = await import("../apiClient.js");
+    const { postAsCharacterViaApi, PostError } = await import("../apiClient.js");
     await expect(
       postAsCharacterViaApi({
         userId: "user-1",
@@ -491,11 +515,125 @@ describe("postAsCharacterViaApi", () => {
         content: "Hello",
         channelId: "channel-1",
       }),
-    ).rejects.toThrow("Post failed (500)");
+    ).rejects.toThrow(expect.objectContaining({
+      name: "PostError",
+      kind: "api",
+      status: 500,
+    }));
   });
 
-  it("throws on network error", async () => {
-    mockFetch.mockRejectedValue(new Error("Network failure"));
+  it("throws PostError with kind 'auth' on 401", async () => {
+    mockFetch.mockResolvedValue({
+      ok: false,
+      status: 401,
+      json: async () => ({ message: "Invalid bot token" }),
+    });
+
+    const { postAsCharacterViaApi, PostError } = await import("../apiClient.js");
+    await expect(
+      postAsCharacterViaApi({
+        userId: "user-1",
+        characterId: 42,
+        content: "Hello",
+        channelId: "channel-1",
+      }),
+    ).rejects.toThrow(expect.objectContaining({
+      name: "PostError",
+      kind: "auth",
+      message: "Invalid bot token",
+      status: 401,
+    }));
+  });
+
+  it("throws PostError with kind 'auth' on 403", async () => {
+    mockFetch.mockResolvedValue({
+      ok: false,
+      status: 403,
+      json: async () => ({ message: "Missing Permissions" }),
+    });
+
+    const { postAsCharacterViaApi, PostError } = await import("../apiClient.js");
+    await expect(
+      postAsCharacterViaApi({
+        userId: "user-1",
+        characterId: 42,
+        content: "Hello",
+        channelId: "channel-1",
+      }),
+    ).rejects.toThrow(expect.objectContaining({
+      name: "PostError",
+      kind: "auth",
+      status: 403,
+    }));
+  });
+
+  it("throws PostError with kind 'network' on fetch TypeError", async () => {
+    const fetchError = new TypeError("fetch failed");
+    mockFetch.mockRejectedValue(fetchError);
+
+    const { postAsCharacterViaApi, PostError } = await import("../apiClient.js");
+    await expect(
+      postAsCharacterViaApi({
+        userId: "user-1",
+        characterId: 42,
+        content: "Hello",
+        channelId: "channel-1",
+      }),
+    ).rejects.toThrow(expect.objectContaining({
+      name: "PostError",
+      kind: "network",
+      message: "Could not reach the API server",
+    }));
+  });
+
+  it("retries on network error and succeeds on second attempt", async () => {
+    const fetchError = new TypeError("fetch failed");
+    mockFetch
+      .mockRejectedValueOnce(fetchError)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ posted: true, characterName: "Alice" }),
+      });
+
+    const { postAsCharacterViaApi } = await import("../apiClient.js");
+    const result = await postAsCharacterViaApi({
+      userId: "user-1",
+      characterId: 42,
+      content: "Hello",
+      channelId: "channel-1",
+    });
+
+    expect(mockFetch).toHaveBeenCalledTimes(2);
+    expect(result).toEqual({ posted: true, characterName: "Alice" });
+  });
+
+  it("retries up to MAX_RETRIES then throws", async () => {
+    const fetchError = new TypeError("fetch failed");
+    mockFetch.mockRejectedValue(fetchError);
+
+    const { postAsCharacterViaApi, PostError } = await import("../apiClient.js");
+    await expect(
+      postAsCharacterViaApi({
+        userId: "user-1",
+        characterId: 42,
+        content: "Hello",
+        channelId: "channel-1",
+      }),
+    ).rejects.toThrow(expect.objectContaining({
+      name: "PostError",
+      kind: "network",
+    }));
+
+    // 1 initial + 2 retries = 3 total calls
+    expect(mockFetch).toHaveBeenCalledTimes(3);
+  });
+
+  it("does NOT retry on auth error (401)", async () => {
+    mockFetch.mockResolvedValue({
+      ok: false,
+      status: 401,
+      json: async () => ({ message: "Invalid bot token" }),
+    });
 
     const { postAsCharacterViaApi } = await import("../apiClient.js");
     await expect(
@@ -505,6 +643,60 @@ describe("postAsCharacterViaApi", () => {
         content: "Hello",
         channelId: "channel-1",
       }),
-    ).rejects.toThrow("Network failure");
+    ).rejects.toThrow();
+
+    // Only 1 call — no retry
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+  });
+
+  it("does NOT retry on API error (500)", async () => {
+    mockFetch.mockResolvedValue({
+      ok: false,
+      status: 500,
+      json: async () => ({ message: "Internal error" }),
+    });
+
+    const { postAsCharacterViaApi } = await import("../apiClient.js");
+    await expect(
+      postAsCharacterViaApi({
+        userId: "user-1",
+        characterId: 42,
+        content: "Hello",
+        channelId: "channel-1",
+      }),
+    ).rejects.toThrow();
+
+    // Only 1 call — no retry
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("PostError", () => {
+  it("has correct properties for network kind", async () => {
+    const { PostError } = await import("../apiClient.js");
+    const err = new PostError({ kind: "network", message: "Could not reach the API server" });
+
+    expect(err.name).toBe("PostError");
+    expect(err.kind).toBe("network");
+    expect(err.message).toBe("Could not reach the API server");
+    expect(err.status).toBeUndefined();
+    expect(err.cause).toBeUndefined();
+    expect(err instanceof Error).toBe(true);
+  });
+
+  it("has correct properties for auth kind with status", async () => {
+    const { PostError } = await import("../apiClient.js");
+    const err = new PostError({ kind: "auth", message: "Invalid token", status: 401 });
+
+    expect(err.kind).toBe("auth");
+    expect(err.status).toBe(401);
+  });
+
+  it("preserves cause chain", async () => {
+    const { PostError } = await import("../apiClient.js");
+    const original = new TypeError("fetch failed");
+    const err = new PostError({ kind: "network", message: "Failed", cause: original });
+
+    expect(err.cause).toBe(original);
   });
 });

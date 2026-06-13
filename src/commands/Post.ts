@@ -4,7 +4,7 @@ import {
   ApplicationCommandType,
 } from "discord.js";
 import { Command } from "../Command.js";
-import { postAsCharacterViaApi, type PostAsCharacterParams } from "../apiClient.js";
+import { postAsCharacterViaApi, PostError, type PostAsCharacterParams } from "../apiClient.js";
 
 export const Post: Command = {
   name: "post",
@@ -70,7 +70,22 @@ export const Post: Command = {
         });
       }
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Unknown error";
+      let message: string;
+      if (err instanceof PostError) {
+        switch (err.kind) {
+          case "network":
+            message = "Could not reach the API server. Please try again.";
+            break;
+          case "auth":
+            message = "Bot authentication failed. Check DISCORD_TOKEN configuration.";
+            break;
+          case "api":
+            message = err.message;
+            break;
+        }
+      } else {
+        message = err instanceof Error ? err.message : "Unknown error";
+      }
       await interaction.editReply({
         content: `❌ Failed to post: ${message}`,
       });

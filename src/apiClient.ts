@@ -185,36 +185,133 @@ export interface PostAsCharacterResponse {
 }
 
 /**
+ * Discriminated error from `postAsCharacterViaApi`.
+ *
+ * - `network` — connection failed (DNS, TLS, timeout, fetch abort)
+ * - `auth` — bot token rejected (401/403 from requireBotAuth)
+ * - `api` — API returned an error response (4xx/5xx)
+ */
+export class PostError extends Error {
+  readonly kind: "network" | "auth" | "api";
+  /** HTTP status code, only present when kind is "auth" or "api". */
+  readonly status?: number;
+  /** Original error, if any (e.g. the native fetch TypeError). */
+  readonly cause?: unknown;
+
+  constructor(opts: { kind: PostError["kind"]; message: string; status?: number; cause?: unknown }) {
+    super(opts.message);
+    this.name = "PostError";
+    this.kind = opts.kind;
+    this.status = opts.status;
+    this.cause = opts.cause;
+  }
+}
+
+/** Maximum number of attempts for transient network errors. */
+const POST_MAX_RETRIES = 2;
+/** Base delay (ms) for exponential backoff between retries. */
+const POST_RETRY_BASE_MS = 1_000;
+/** Timeout (ms) for the fetch call. */
+const POST_TIMEOUT_MS = 30_000;
+
+/**
+ * Classify a thrown error from native fetch into a PostError kind.
+ *
+ * Native fetch throws TypeError for network failures (DNS, TLS, connection
+ * refused, etc.) and AbortError for timeouts. Everything else is treated
+ * as an unexpected error.
+ */
+function classifyNetworkError(err: unknown): PostError {
+  if (err instanceof Error) {
+    // AbortError from AbortSignal.timeout()
+    if (err.name === "AbortError" || err.name === "TimeoutError") {
+      return new PostError({ kind: "network", message: "Request timed out", cause: err });
+    }
+    // TypeError from native fetch — network-level failure
+    if (err.name === "TypeError" && err.message === "fetch failed") {
+      return new PostError({ kind: "network", message: "Could not reach the API server", cause: err });
+    }
+    // Other TypeError variants (e.g. "fetch aborted")
+    if (err.name === "TypeError") {
+      return new PostError({ kind: "network", message: `Network error: ${err.message}`, cause: err });
+    }
+  }
+  return new PostError({ kind: "network", message: "Unexpected network error", cause: err });
+}
+
+/**
  * Post a message to a Discord channel as a character via the REST API.
  * Uses Authorization: Bot <DISCORD_TOKEN> shared secret.
- * Throws on network error or non-2xx response.
+ *
+ * Retries up to `POST_MAX_RETRIES` times on transient network errors
+ * (connection failure, timeout). Non-retryable errors (auth, API) are
+ * thrown immediately.
+ *
+ * Throws `PostError` on failure.
  */
 export async function postAsCharacterViaApi(
   params: PostAsCharacterParams,
 ): Promise<PostAsCharacterResponse> {
   const botToken = process.env["DISCORD_TOKEN"];
   const url = `${API_BASE_URL}/discord/post`.replace(/\/+$/, "");
-  const res = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bot ${botToken}`,
-    },
-    body: JSON.stringify(params),
-  });
 
-  if (!res.ok) {
-    let detail = `Post failed (${res.status})`;
+  let lastError: PostError | undefined;
+
+  for (let attempt = 0; attempt <= POST_MAX_RETRIES; attempt++) {
     try {
-      const body = await res.json();
-      if (body.message) detail = body.message;
-    } catch {
-      // ignore parse failure, use default detail
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bot ${botToken}`,
+        },
+        body: JSON.stringify(params),
+        signal: AbortSignal.timeout(POST_TIMEOUT_MS),
+      });
+
+      // ── HTTP-level errors ────────────────────────────────────
+      if (!res.ok) {
+        let detail = `Post failed (${res.status})`;
+        try {
+          const body = await res.json();
+          if (body.message) detail = body.message;
+        } catch {
+          // ignore parse failure, use default detail
+        }
+
+        // 401/403 from requireBotAuth — not retryable
+        if (res.status === 401 || res.status === 403) {
+          throw new PostError({ kind: "auth", message: detail, status: res.status });
+        }
+
+        // Other API errors — not retryable
+        throw new PostError({ kind: "api", message: detail, status: res.status });
+      }
+
+      return (await res.json()) as PostAsCharacterResponse;
+    } catch (err) {
+      // Already a PostError — only retry network errors
+      if (err instanceof PostError) {
+        if (err.kind !== "network" || attempt >= POST_MAX_RETRIES) {
+          throw err;
+        }
+        lastError = err;
+      } else {
+        // Raw fetch error — classify it
+        lastError = classifyNetworkError(err);
+        if (lastError.kind !== "network" || attempt >= POST_MAX_RETRIES) {
+          throw lastError;
+        }
+      }
+
+      // Exponential backoff: 1s, 2s, ...
+      const delayMs = POST_RETRY_BASE_MS * Math.pow(2, attempt);
+      await new Promise((r) => setTimeout(r, delayMs));
     }
-    throw new Error(detail);
   }
 
-  return (await res.json()) as PostAsCharacterResponse;
+  // Should never reach here, but satisfy TypeScript
+  throw lastError ?? new PostError({ kind: "network", message: "Max retries exceeded" });
 }
 
 export { API_BASE_URL, USE_API_ROLL };
