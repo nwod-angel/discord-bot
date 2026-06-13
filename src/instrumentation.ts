@@ -111,7 +111,7 @@ if (!isTestEnv) {
       [ATTR_SERVICE_VERSION]: process.env["npm_package_version"] || "0.0.0",
     }),
     spanProcessors: [new SimpleSpanProcessor(spanExporter)],
-    logRecordProcessor: new SimpleLogRecordProcessor(logExporter),
+    logRecordProcessors: [new SimpleLogRecordProcessor(logExporter)],
     meterProvider,
     instrumentations: [new HttpInstrumentation(), new PinoInstrumentation()],
   });
