@@ -2,17 +2,10 @@
  * OpenTelemetry instrumentation for the Discord Bot.
  *
  * This file MUST be imported before any other module in the application.
- * It initialises the OTel SDK with explicit registrations (not auto-instrumentation)
- * to avoid esbuild/nft dynamic require issues (see ADR-0019).
- *
- * Usage:
- *   npx tsx --import ./src/instrumentation.ts src/Bot.ts
- *
- * Or imported at the top of src/Bot.ts.
  *
  * Configuration via env vars:
  *   OTEL_SERVICE_NAME          — service name (default: "nwod-bot")
- *   OTEL_EXPORTER_OTLP_ENDPOINT — Honeycomb OTLP endpoint (optional, falls back to stdout)
+ *   OTEL_EXPORTER_OTLP_ENDPOINT — Honeycomb OTLP endpoint (optional)
  *   OTEL_EXPORTER_OTLP_HEADERS  — Honeycomb API key header (optional)
  */
 
@@ -41,7 +34,6 @@ import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-http";
 import { OTLPLogExporter } from "@opentelemetry/exporter-logs-otlp-http";
 import { OTLPMetricExporter } from "@opentelemetry/exporter-metrics-otlp-http";
 
-// Only initialise OTel if not in test environment
 const isTestEnv =
   process.env["VITEST"] !== undefined ||
   process.env["JEST_WORKER_ID"] !== undefined;
@@ -50,35 +42,35 @@ if (!isTestEnv) {
   const otlpEndpoint = process.env["OTEL_EXPORTER_OTLP_ENDPOINT"];
   const otlpHeaders = process.env["OTEL_EXPORTER_OTLP_HEADERS"];
 
-  // Build headers object for OTLP exporters
+  // Build headers for OTLP exporters
   const headers: Record<string, string> = {};
   if (otlpHeaders) {
     headers["x-honeycomb-team"] = otlpHeaders;
   }
 
-  // Select exporters based on env vars
-  // Honeycomb requires full path when setting URL in code
-  const spanExporter = otlpEndpoint
-    ? new OTLPTraceExporter({ url: `${otlpEndpoint}/v1/traces`, headers })
+  // When OTLP endpoint is set, use OTLP exporters with full paths
+  // When not set, fall back to console (stdout)
+  const useOtlp = !!otlpEndpoint;
+  const baseUrl = otlpEndpoint || "";
+
+  const spanExporter = useOtlp
+    ? new OTLPTraceExporter({ url: `${baseUrl}/v1/traces`, headers })
     : new ConsoleSpanExporter();
 
-  const logExporter = otlpEndpoint
-    ? new OTLPLogExporter({ url: `${otlpEndpoint}/v1/logs`, headers })
+  const logExporter = useOtlp
+    ? new OTLPLogExporter({ url: `${baseUrl}/v1/logs`, headers })
     : new ConsoleLogRecordExporter();
 
-  const metricExporter = otlpEndpoint
-    ? new OTLPMetricExporter({ url: `${otlpEndpoint}/v1/metrics`, headers })
+  const metricExporter = useOtlp
+    ? new OTLPMetricExporter({ url: `${baseUrl}/v1/metrics`, headers })
     : new ConsoleMetricExporter();
 
-  // ── Metrics Provider ─────────────────────────────────────────────
   const metricReader = new PeriodicExportingMetricReader({
     exporter: metricExporter,
     exportIntervalMillis: 30_000,
   });
 
-  const meterProvider = new MeterProvider({
-    readers: [metricReader],
-  });
+  const meterProvider = new MeterProvider({ readers: [metricReader] });
 
   const sdk = new NodeSDK({
     resource: resourceFromAttributes({
@@ -93,8 +85,10 @@ if (!isTestEnv) {
 
   try {
     sdk.start();
-    const exporterType = otlpEndpoint ? "Honeycomb OTLP" : "stdout";
-    console.log(`[otel] OpenTelemetry SDK initialised (${exporterType} exporter)`);
+    console.log(`[otel] OpenTelemetry SDK initialised (${useOtlp ? "Honeycomb OTLP" : "stdout"} exporter)`);
+    if (useOtlp) {
+      console.log(`[otel] Endpoint: ${baseUrl}`);
+    }
   } catch (err) {
     console.error("[otel] Failed to initialise OpenTelemetry SDK:", err);
   }
