@@ -6,6 +6,8 @@ import {
 import { Command } from "../Command.js";
 import { postAsCharacterViaApi, PostError, type PostAsCharacterParams } from "../apiClient.js";
 
+const POST_COMMAND_FEEDBACK = process.env.POST_COMMAND_FEEDBACK === "true";
+
 export const Post: Command = {
   name: "post",
   description: "Posts a message as a character",
@@ -59,36 +61,40 @@ export const Post: Command = {
 
       const result = await postAsCharacterViaApi(params);
 
-      if (result.posted) {
-        const name = result.characterName || params.characterName || raw;
-        await interaction.editReply({
-          content: `✅ Posted as ${name}`,
-        });
-      } else {
-        await interaction.editReply({
-          content: `❌ Failed to post: ${result.error || "Unknown error"}`,
-        });
+      if (POST_COMMAND_FEEDBACK) {
+        if (result.posted) {
+          const name = result.characterName || params.characterName || raw;
+          await interaction.editReply({
+            content: `✅ Posted as ${name}`,
+          });
+        } else {
+          await interaction.editReply({
+            content: `❌ Failed to post: ${result.error || "Unknown error"}`,
+          });
+        }
       }
     } catch (err) {
-      let message: string;
-      if (err instanceof PostError) {
-        switch (err.kind) {
-          case "network":
-            message = "Could not reach the API server. Please try again.";
-            break;
-          case "auth":
-            message = "Bot authentication failed. Check DISCORD_TOKEN configuration.";
-            break;
-          case "api":
-            message = err.message;
-            break;
+      if (POST_COMMAND_FEEDBACK) {
+        let message: string;
+        if (err instanceof PostError) {
+          switch (err.kind) {
+            case "network":
+              message = "Could not reach the API server. Please try again.";
+              break;
+            case "auth":
+              message = "Bot authentication failed. Check DISCORD_TOKEN configuration.";
+              break;
+            case "api":
+              message = err.message;
+              break;
+          }
+        } else {
+          message = err instanceof Error ? err.message : "Unknown error";
         }
-      } else {
-        message = err instanceof Error ? err.message : "Unknown error";
+        await interaction.editReply({
+          content: `❌ Failed to post: ${message}`,
+        });
       }
-      await interaction.editReply({
-        content: `❌ Failed to post: ${message}`,
-      });
     }
   },
 };
