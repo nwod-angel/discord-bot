@@ -14,6 +14,7 @@
  */
 
 import pino from "pino";
+import { PassThrough } from "node:stream";
 import { logs, type Logger as OtelLogger, SeverityNumber } from "@opentelemetry/api-logs";
 
 const level = process.env["LOG_LEVEL"] || "info";
@@ -22,7 +23,6 @@ const level = process.env["LOG_LEVEL"] || "info";
 // the LoggerProvider won't be registered until sdk.start() in instrumentation.ts.
 let _otelLogger: OtelLogger | undefined;
 function otelLogger(): OtelLogger | undefined {
-  // Only bridge when OTel SDK has been started (LoggerProvider is registered)
   if (!_otelLogger) {
     try {
       _otelLogger = logs.getLogger("nwod-bot");
@@ -42,31 +42,55 @@ const SEVERITY_MAP: Record<string, SeverityNumber> = {
   fatal: SeverityNumber.FATAL,
 };
 
-function bridgeToOtel(bindings: Record<string, unknown>, method: string) {
-  const otel = otelLogger();
-  if (!otel) return;
+/**
+ * Writable stream that bridges pino output to OTel log records.
+ * Pino sends newline-delimited JSON strings to stream.write().
+ */
+const otelBridgeStream = new PassThrough({
+  write(chunk: Buffer, _encoding: BufferEncoding, callback: () => void) {
+    try {
+      const otel = otelLogger();
+      if (otel) {
+        const parsed = JSON.parse(chunk.toString());
+        const { msg, level: _lvl, time: _time, pid: _pid, hostname: _host, trace_id, span_id, ...rest } = parsed;
+        const severity = SEVERITY_MAP[_lvl] ?? SeverityNumber.INFO;
 
-  // Extract the message and known pino fields
-  const { msg, level: _lvl, time: _time, pid: _pid, hostname: _host, ...rest } = bindings;
-  const severity = SEVERITY_MAP[method] ?? SeverityNumber.INFO;
+        // Re-include trace context if PinoInstrumentation added it
+        if (trace_id) rest["trace_id"] = trace_id;
+        if (span_id) rest["span_id"] = span_id;
 
-  otel.emit({
-    severityNumber: severity,
-    severityText: method.toUpperCase(),
-    body: typeof msg === "string" ? msg : "",
-    attributes: Object.keys(rest).length > 0 ? rest : undefined,
-  });
-}
+        otel.emit({
+          severityNumber: severity,
+          severityText: String(_lvl).toUpperCase(),
+          body: typeof msg === "string" ? msg : "",
+          attributes: Object.keys(rest).length > 0 ? rest : undefined,
+        });
+      }
+    } catch {
+      // Swallow — never let OTel bridge break pino
+    }
+    callback();
+  },
+});
 
-export const logger = pino({
-  level,
-  // Pretty-print only when explicitly in development mode (pino-pretty is a devDependency)
-  // In production or when NODE_ENV is unset, output structured JSON
-  transport:
-    process.env["NODE_ENV"] === "development"
-      ? { target: "pino-pretty", options: { colorize: true } }
-      : undefined,
-}, bridgeToOtel);
+// Build pino destinations: stdout + OTel bridge
+const destinations = [
+  pino.destination({ dest: 1, sync: false }), // stdout
+  pino.destination({ dest: otelBridgeStream, sync: false }),
+];
+
+export const logger = pino(
+  {
+    level,
+    // Pretty-print only when explicitly in development mode (pino-pretty is a devDependency)
+    // In production or when NODE_ENV is unset, output structured JSON
+    transport:
+      process.env["NODE_ENV"] === "development"
+        ? { target: "pino-pretty", options: { colorize: true } }
+        : undefined,
+  },
+  pino.multistream(destinations),
+);
 
 /**
  * Create a child logger with request-scoped context.
