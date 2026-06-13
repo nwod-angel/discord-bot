@@ -9,6 +9,8 @@
  *   (unset or any other value) — use the direct path only
  */
 
+import { logger } from "./logger.js";
+
 const API_BASE_URL = process.env["API_BASE_URL"] || "http://localhost:3001";
 const USE_API_ROLL = process.env["USE_API_ROLL"] === "true";
 
@@ -225,17 +227,21 @@ function classifyNetworkError(err: unknown): PostError {
   if (err instanceof Error) {
     // AbortError from AbortSignal.timeout()
     if (err.name === "AbortError" || err.name === "TimeoutError") {
+      logger.error({ err, cause: err.cause }, "[apiClient] Post request timed out");
       return new PostError({ kind: "network", message: "Request timed out", cause: err });
     }
     // TypeError from native fetch — network-level failure
     if (err.name === "TypeError" && err.message === "fetch failed") {
+      logger.error({ err, cause: err.cause }, "[apiClient] Post fetch failed — network error");
       return new PostError({ kind: "network", message: "Could not reach the API server", cause: err });
     }
     // Other TypeError variants (e.g. "fetch aborted")
     if (err.name === "TypeError") {
+      logger.error({ err, cause: err.cause }, "[apiClient] Post network error");
       return new PostError({ kind: "network", message: `Network error: ${err.message}`, cause: err });
     }
   }
+  logger.error({ err }, "[apiClient] Post unexpected network error");
   return new PostError({ kind: "network", message: "Unexpected network error", cause: err });
 }
 
@@ -306,6 +312,7 @@ export async function postAsCharacterViaApi(
 
       // Exponential backoff: 1s, 2s, ...
       const delayMs = POST_RETRY_BASE_MS * Math.pow(2, attempt);
+      logger.warn({ attempt: attempt + 1, maxRetries: POST_MAX_RETRIES, delayMs }, "[apiClient] Retrying post after network error");
       await new Promise((r) => setTimeout(r, delayMs));
     }
   }
