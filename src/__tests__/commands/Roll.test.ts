@@ -271,8 +271,8 @@ describe('Roll', () => {
       jest.isolateModules(() => {
         jest.mock('../../apiClient.js', () => ({
           rollViaApi: mockRollViaApi,
-          USE_API_ROLL: true,
-          API_BASE_URL: 'http://localhost:3001',
+          isUseApiRoll: () => true,
+          getApiBaseUrl: () => 'http://localhost:3001',
         }));
         // Dynamic import picks up the mock above
         const RollMod = require('../../commands/Roll.js');

@@ -10,7 +10,7 @@ import { Command } from "../Command.js";
 import { logger } from "../logger.js";
 import {
   rollViaApi,
-  USE_API_ROLL,
+  isUseApiRoll,
   RollApiResponse,
   fetchCharacterPortraits,
 } from "../apiClient.js";
@@ -217,7 +217,7 @@ export const Roll: Command = {
 
     // ── Try API path (when feature flag is on) ─────────────────
 
-    if (USE_API_ROLL) {
+    if (isUseApiRoll()) {
       const rollStart = performance.now();
       try {
         const apiResult = await rollViaApi({

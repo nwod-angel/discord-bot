@@ -9,6 +9,10 @@ import "./typescript/BitInt"
 await import("./instrumentation.js");
 
 import { logger } from "./logger.js";
+import { validateApiConfig } from "./apiClient.js";
+
+// Validate API config now that dotenv.config() has run
+validateApiConfig();
 
 process.on('unhandledRejection', error => {
 	logger.error({ err: error }, 'Unhandled promise rejection');

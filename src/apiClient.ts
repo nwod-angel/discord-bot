@@ -11,16 +11,31 @@
 
 import { logger } from "./logger.js";
 
-const API_BASE_URL = process.env["API_BASE_URL"] || "http://localhost:3001";
-const USE_API_ROLL = process.env["USE_API_ROLL"] === "true";
+// ── Lazy env reads ─────────────────────────────────────────────
+// ESM hoists static imports, so process.env is not populated when
+// this module's top-level code runs. Read env vars lazily at call
+// time instead of capturing them as constants at import time.
+
+/** Resolved API base URL — read lazily to survive ESM import hoisting. */
+function getApiBaseUrl(): string {
+  return (process.env["API_BASE_URL"] || "http://localhost:3001").replace(/\/+$/, "");
+}
+
+/** Whether API roll delegation is enabled — read lazily. */
+function isUseApiRoll(): boolean {
+  return process.env["USE_API_ROLL"] === "true";
+}
 
 // ── Startup validation ─────────────────────────────────────────
-if (!process.env["API_BASE_URL"]) {
-  logger.warn(
-    { API_BASE_URL },
-    "[apiClient] API_BASE_URL is not set — defaulting to localhost:3001. " +
-    "Set API_BASE_URL in your environment to point to the deployed API.",
-  );
+// Deferred: runs after dotenv.config() in Bot.ts.
+export function validateApiConfig(): void {
+  if (!process.env["API_BASE_URL"]) {
+    logger.warn(
+      { API_BASE_URL: "http://localhost:3001 (default)" },
+      "[apiClient] API_BASE_URL is not set — defaulting to localhost:3001. " +
+      "Set API_BASE_URL in your environment to point to the deployed API.",
+    );
+  }
 }
 
 // ── Types ──────────────────────────────────────────────────────
@@ -79,7 +94,7 @@ export interface RollApiResponse {
 export async function rollViaApi(
   params: RollApiParams,
 ): Promise<RollApiResponse> {
-  const url = `${API_BASE_URL}/roll`.replace(/\/+$/, "");
+  const url = `${getApiBaseUrl()}/roll`;
   const res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -111,7 +126,7 @@ export interface CharacterNamesResponse {
  * Returns an empty array on any error (fail gracefully for autocomplete).
  */
 export async function fetchCharacterNames(userId: string): Promise<string[]> {
-  const url = `${API_BASE_URL}/users/${encodeURIComponent(userId)}/character-names`.replace(/\/+$/, "");
+  const url = `${getApiBaseUrl()}/users/${encodeURIComponent(userId)}/character-names`;
   try {
     const res = await fetch(url);
     if (!res.ok) return [];
@@ -138,7 +153,7 @@ export interface CharacterPortraitsResponse {
  * Returns an empty array on any error (fail gracefully).
  */
 export async function fetchCharacterPortraits(userId: string): Promise<CharacterPortraitEntry[]> {
-  const url = `${API_BASE_URL}/users/${encodeURIComponent(userId)}/character-portraits`.replace(/\/+$/, "");
+  const url = `${getApiBaseUrl()}/users/${encodeURIComponent(userId)}/character-portraits`;
   try {
     const res = await fetch(url);
     if (!res.ok) return [];
@@ -166,7 +181,7 @@ export interface CharacterAutocompleteResponse {
  * Returns an empty array on any error (fail gracefully for autocomplete).
  */
 export async function fetchCharacterAutocomplete(userId: string): Promise<CharacterAutocompleteEntry[]> {
-  const url = `${API_BASE_URL}/users/${encodeURIComponent(userId)}/character-autocomplete`.replace(/\/+$/, "");
+  const url = `${getApiBaseUrl()}/users/${encodeURIComponent(userId)}/character-autocomplete`;
   try {
     const res = await fetch(url);
     if (!res.ok) return [];
@@ -247,7 +262,7 @@ function classifyNetworkError(err: unknown): PostError {
         logger.error({ err, cause: err.cause }, "[apiClient] Post fetch failed — connection refused");
         return new PostError({
           kind: "network",
-          message: `API server refused connection at ${API_BASE_URL}. Check that API_BASE_URL is correct and the API is running.`,
+          message: `API server refused connection at ${getApiBaseUrl()}. Check that API_BASE_URL is correct and the API is running.`,
           cause: err,
         });
       }
@@ -286,7 +301,7 @@ export async function postAsCharacterViaApi(
   params: PostAsCharacterParams,
 ): Promise<PostAsCharacterResponse> {
   const botToken = process.env["DISCORD_TOKEN"];
-  const url = `${API_BASE_URL}/discord/post`.replace(/\/+$/, "");
+  const url = `${getApiBaseUrl()}/discord/post`;
 
   let lastError: PostError | undefined;
 
@@ -348,4 +363,4 @@ export async function postAsCharacterViaApi(
   throw lastError ?? new PostError({ kind: "network", message: "Max retries exceeded" });
 }
 
-export { API_BASE_URL, USE_API_ROLL };
+export { getApiBaseUrl, isUseApiRoll, validateApiConfig };
