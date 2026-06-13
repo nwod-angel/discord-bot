@@ -6,7 +6,10 @@ import "./typescript/BitInt"
 
 // OTel instrumentation MUST be imported after dotenv.config() so env vars are available.
 // Using dynamic import() to ensure execution order (ESM hoists static imports).
-await import("./instrumentation.js");
+// No top-level await — avoids CJS compatibility issues on some runtimes.
+import("./instrumentation.js").catch(err => {
+  console.error("Failed to load OTel instrumentation:", err);
+});
 
 import { logger } from "./logger.js";
 import { validateApiConfig } from "./apiClient.js";
