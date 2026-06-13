@@ -363,4 +363,4 @@ export async function postAsCharacterViaApi(
   throw lastError ?? new PostError({ kind: "network", message: "Max retries exceeded" });
 }
 
-export { getApiBaseUrl, isUseApiRoll, validateApiConfig };
+export { getApiBaseUrl, isUseApiRoll };
