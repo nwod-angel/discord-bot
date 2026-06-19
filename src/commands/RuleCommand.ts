@@ -4,6 +4,7 @@ import { logger } from "../logger.js"
 import RuleProvider from "../data/RuleProvider"
 import { NwodSymbols } from "@nwod-angel/nwod-core"
 import AsciiTable from 'ascii-table'
+import { RuleEmbedBuilder } from "../embedBuilders/RuleEmbedBuilder.js"
 
 export const RuleCommand: Command = {
     name: "rule",
@@ -63,32 +64,9 @@ export const RuleCommand: Command = {
             })
         } else if (rules.length === 1) {
             let rule = rules[0]
-            embed.setTitle(rule.name)
-
-            rule.paragraphs.forEach(paragraph => {
-                if (paragraph.example) {
-                    embed.addFields({ name: 'Example', value: `*${paragraph.text.slice(0, 1022)}*`, inline: false })
-                } else if (paragraph.prefix) {
-                    embed.addFields({ name: paragraph.prefix, value: paragraph.text.slice(0, 1024), inline: false })
-                } else if (paragraph.text) {
-                    embed.addFields({ name: '\u200b', value: paragraph.text.slice(0, 1024), inline: false })
-                }
-            })
-
-            embed.addFields({ name: 'Sources', value: rule.sourcesString(), inline: false })
+            RuleEmbedBuilder.buildSingleRuleEmbed(rule, embed)
         } else {
-            let rulesToDisplay = rules.slice(0, 25)
-            let ruleTitles = rulesToDisplay.map(s => s.name).join('\n')
-            let searchTerms = [name ? `Name: ${name}` : null, search ? `Search: ${search}` : null].join('\n')
-
-            embed
-                .setTitle(`Showing ${rulesToDisplay.length} of ${rules.length}`)
-                .addFields(
-                    { name: `Search`, value: searchTerms, inline: false },
-                )
-                .addFields(
-                    { name: `Showing ${rulesToDisplay.length} of ${rules.length}`, value: ruleTitles, inline: false },
-                )
+            RuleEmbedBuilder.buildMultipleRulesEmbed(rules, name, search, embed)
         }
 
         logger.debug({

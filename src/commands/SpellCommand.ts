@@ -4,6 +4,7 @@ import { logger } from "../logger.js";
 import SpellProvider from "../data/SpellProvider.js";
 import arcanum from "../data/arcanum.js";
 import { Arcana, ArcanaType, Practice, PracticeType } from "@nwod-angel/nwod-core";
+import { SpellEmbedBuilder } from "../embedBuilders/SpellEmbedBuilder.js";
 
 export const SpellCommand: Command = {
     name: "spell",
@@ -100,22 +101,7 @@ export const SpellCommand: Command = {
             })
         } else if(spells.length === 1){
             let spell = spells[0]
-            embed
-            .setTitle(spell.titleString())
-            .addFields(
-                { name: 'Requirements', value: spell.requirementsString(), inline: false },
-                { name: 'Practice', value: spell.practiceString(), inline: true },
-                { name: 'Action', value: spell.action, inline: true },
-                { name: 'Duration', value: spell.duration, inline: true },
-                { name: 'Aspect', value: spell.aspect, inline: true },
-                { name: 'Cost', value: spell.cost, inline: true },
-                // { name: 'Effect', value: spell.description, inline: false },
-            )
-            let descriptionChunks = spell.description.match(/.{1,1000}/g) || []
-            descriptionChunks.forEach((chunk: string, index: number) => {
-                embed.addFields({ name: `Effect (${index + 1}/${descriptionChunks.length})`, value: chunk, inline: false })
-            })
-            embed.addFields({ name: 'Sources', value: spell.sourcesString(), inline: false })
+            SpellEmbedBuilder.buildSpellEmbed(spell, embed)
             embeds.push(embed)
         } else {
             let parameters = []
