@@ -4,7 +4,6 @@ import { logger } from "../logger.js"
 import TableProvider from "../data/TableProvider.js"
 import { NwodSymbols } from "@nwod-angel/nwod-core"
 import AsciiTable from 'ascii-table'
-import FeedbackController from "./FeedbackController.js"
 import { TableViewController as TableViewController } from "../ViewControllers/TableViewController.js"
 
 export const TableCommand: Command = {
@@ -53,7 +52,6 @@ export const TableCommand: Command = {
                 ephemeral: true,
                 content: `No tables found.`
             })
-            new FeedbackController(client, interaction).getFeedback()
         } else if (tables.length === 1) {
             let table = tables[0]
             TableViewController.displayTable(table, client, interaction)
@@ -77,8 +75,6 @@ export const TableCommand: Command = {
 
             message += `Multiple tables found`
             await interaction.followUp(message)
-            new FeedbackController(client, interaction).getFeedback()
-
             // embed
             //     .setTitle(`Showing ${tablesToDisplay.length} of ${tables.length}`)
             //     .addFields(

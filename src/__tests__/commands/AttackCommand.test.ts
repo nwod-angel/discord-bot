@@ -16,11 +16,6 @@ vi.mock('../../logger.js', () => ({
   }),
 }));
 
-vi.mock('../../commands/AttackAction.js', () => ({
-  __esModule: true,
-  default: vi.fn().mockImplementation(() => ({})),
-}));
-
 vi.mock('../../commands/Attack.js', () => {
   const mockAttack = {
     mods: [],

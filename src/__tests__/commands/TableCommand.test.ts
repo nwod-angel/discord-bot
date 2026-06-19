@@ -65,13 +65,6 @@ vi.mock('../../ViewControllers/TableViewController.js', () => ({
   },
 }));
 
-vi.mock('../../commands/FeedbackController.js', () => ({
-  __esModule: true,
-  default: vi.fn().mockImplementation(() => ({
-    getFeedback: vi.fn(),
-  })),
-}));
-
 import { TableCommand } from '../../commands/TableCommand.js';
 import TableProvider from '../../data/TableProvider.js';
 import { TableViewController } from '../../ViewControllers/TableViewController.js';

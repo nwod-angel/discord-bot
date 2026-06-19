@@ -3,7 +3,6 @@ import { Command } from "../Command.js"
 import { logger } from "../logger.js"
 import MeritProvider from "../data/MeritProvider.js"
 import { MeritEmbedBuilder } from "../embedBuilders/MeritEmbedBuilder.js"
-import FeedbackController from "./FeedbackController.js"
 
 export const MeritCommand: Command = {
     name: "merit",

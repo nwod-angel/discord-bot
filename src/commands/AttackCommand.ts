@@ -1,7 +1,6 @@
 import { Interaction, Client, ApplicationCommandType, CommandInteraction, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, Collector } from "discord.js";
 import { Command } from "../Command.js";
 import { logger } from "../logger.js";
-import AttackAction from "./AttackAction.js";
 import AttackCommandOptions, { attackTypes, damageTypes } from "./AttackCommandOptions.js";
 import { InstantRoll } from "@nwod-angel/nwod-roller";
 import Attack from "./Attack.js";

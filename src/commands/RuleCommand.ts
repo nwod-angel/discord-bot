@@ -4,7 +4,6 @@ import { logger } from "../logger.js"
 import RuleProvider from "../data/RuleProvider"
 import { NwodSymbols } from "@nwod-angel/nwod-core"
 import AsciiTable from 'ascii-table'
-import FeedbackController from "./FeedbackController.js"
 
 export const RuleCommand: Command = {
     name: "rule",
