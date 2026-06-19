@@ -5,9 +5,11 @@
  * environment variable handling.
  */
 
+import { vi } from 'vitest';
+
 // ── Mock fetch before imports ──────────────────────────────────
 
-const mockFetch = jest.fn();
+const mockFetch = vi.fn();
 global.fetch = mockFetch as any;
 
 // ── Mock environment ───────────────────────────────────────────
@@ -15,7 +17,7 @@ global.fetch = mockFetch as any;
 const OLD_ENV = process.env;
 
 beforeEach(() => {
-  jest.resetModules();
+  vi.resetModules();
   process.env = { ...OLD_ENV };
 });
 

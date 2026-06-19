@@ -2,48 +2,49 @@
  * Unit tests for the /post command.
  *
  * The Post command calls postAsCharacterViaApi from apiClient.
- * We use jest.isolateModules to provide a mocked apiClient
+ * We use vi.doMock + vi.resetModules to provide a mocked apiClient
  * so the command never makes real HTTP requests.
  *
  * The POST_COMMAND_FEEDBACK env var controls whether the command
  * sends confirmation/error responses. It is off by default.
  */
 
+import { vi } from 'vitest';
 import { createMockInteraction, createMockClient } from './helpers.js';
 
-function loadPostWithMock() {
-  let PostWithMock: {
-    name: string;
-    description: string;
-    options?: any[];
-    run: (client: any, interaction: any) => Promise<void>;
-  };
-  const mockPostAsCharacterViaApi = jest.fn();
+async function loadPostWithMock() {
+  const mockPostAsCharacterViaApi = vi.fn();
 
-  jest.isolateModules(() => {
-    jest.mock('../../apiClient.js', () => ({
-      postAsCharacterViaApi: mockPostAsCharacterViaApi,
-      PostError: class PostError extends Error {
-        readonly kind: string;
-        readonly status?: number;
-        constructor(opts: { kind: string; message: string; status?: number; cause?: unknown }) {
-          super(opts.message);
-          this.name = 'PostError';
-          this.kind = opts.kind;
-          this.status = opts.status;
-        }
-      },
-    }));
-    const PostMod = require('../../commands/Post.js');
-    PostWithMock = PostMod.Post;
-  });
+  vi.resetModules();
+  vi.doMock('../../apiClient.js', () => ({
+    postAsCharacterViaApi: mockPostAsCharacterViaApi,
+    PostError: class PostError extends Error {
+      readonly kind: string;
+      readonly status?: number;
+      constructor(opts: { kind: string; message: string; status?: number; cause?: unknown }) {
+        super(opts.message);
+        this.name = 'PostError';
+        this.kind = opts.kind;
+        this.status = opts.status;
+      }
+    },
+  }));
+
+  // Dynamic import picks up the doMock above
+  const PostMod = await import('../../commands/Post.js');
+  const PostWithMock = PostMod.Post;
 
   return { PostWithMock: PostWithMock!, mockPostAsCharacterViaApi };
 }
 
 describe('Post command', () => {
   describe('command metadata', () => {
-    const { PostWithMock } = loadPostWithMock();
+    let PostWithMock: any;
+
+    beforeAll(async () => {
+      const loaded = await loadPostWithMock();
+      PostWithMock = loaded.PostWithMock;
+    });
 
     it('has correct name and description', () => {
       expect(PostWithMock.name).toBe('post');
@@ -77,10 +78,17 @@ describe('Post command', () => {
   });
 
   describe('POST_COMMAND_FEEDBACK off (default)', () => {
-    const { PostWithMock, mockPostAsCharacterViaApi } = loadPostWithMock();
+    let PostWithMock: any;
+    let mockPostAsCharacterViaApi: any;
+
+    beforeAll(async () => {
+      const loaded = await loadPostWithMock();
+      PostWithMock = loaded.PostWithMock;
+      mockPostAsCharacterViaApi = loaded.mockPostAsCharacterViaApi;
+    });
 
     beforeEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it('calls deleteReply on success (no visible response)', async () => {
@@ -195,7 +203,7 @@ describe('Post command', () => {
       options?: any[];
       run: (client: any, interaction: any) => Promise<void>;
     };
-    let mockPostAsCharacterViaApi: jest.Mock;
+    let mockPostAsCharacterViaApi: vi.Mock;
 
     beforeAll(() => {
       process.env.POST_COMMAND_FEEDBACK = 'true';
@@ -205,9 +213,9 @@ describe('Post command', () => {
       delete process.env.POST_COMMAND_FEEDBACK;
     });
 
-    beforeEach(() => {
-      jest.clearAllMocks();
-      const loaded = loadPostWithMock();
+    beforeEach(async () => {
+      vi.clearAllMocks();
+      const loaded = await loadPostWithMock();
       PostWithMock = loaded.PostWithMock;
       mockPostAsCharacterViaApi = loaded.mockPostAsCharacterViaApi;
     });

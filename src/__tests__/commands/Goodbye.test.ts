@@ -1,38 +1,44 @@
-jest.mock('../../logger.js', () => ({
+import { vi } from 'vitest';
+
+vi.hoisted(() => {
+  process.env['DISCORD_TOKEN'] = 'test-token';
+  process.env['DISCORD_CLIENT_ID'] = 'test-client-id';
+});
+
+vi.mock('../../logger.js', () => ({
   logger: {
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
-    child: jest.fn().mockReturnThis(),
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
+    child: vi.fn().mockReturnThis(),
   },
-  createChildLogger: jest.fn().mockReturnValue({
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
+  createChildLogger: vi.fn().mockReturnValue({
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
   }),
 }));
 
-jest.mock('@discordjs/rest', () => ({
-  REST: jest.fn().mockImplementation(() => ({
-    setToken: jest.fn().mockReturnThis(),
-    put: jest.fn().mockResolvedValue(undefined),
+vi.mock('@discordjs/rest', () => ({
+  REST: vi.fn().mockImplementation(() => ({
+    setToken: vi.fn().mockReturnThis(),
+    put: vi.fn().mockResolvedValue(undefined),
   })),
 }));
 
-jest.mock('discord-api-types/v9', () => ({
+vi.mock('discord-api-types/v9', () => ({
   Routes: {
-    applicationGuildCommands: jest.fn((clientId, guildId) =>
+    applicationGuildCommands: vi.fn((clientId, guildId) =>
       `/applications/${clientId}/guilds/${guildId}/commands`
     ),
   },
 }));
 
-process.env['DISCORD_TOKEN'] = 'test-token';
-process.env['DISCORD_CLIENT_ID'] = 'test-client-id';
-
 import { Goodbye } from '../../commands/Goodbye.js';
+import { REST } from '@discordjs/rest';
+import { Routes } from 'discord-api-types/v9';
 import { createMockInteraction, createMockClient } from './helpers.js';
 
 describe('Goodbye', () => {
@@ -47,9 +53,8 @@ describe('Goodbye', () => {
 
     await Goodbye.run(client, interaction as any);
 
-    const { REST } = require('@discordjs/rest');
-    const { Routes } = require('discord-api-types/v9');
-    const rest = REST.mock.results[0].value;
+    const mockedRest = vi.mocked(REST);
+    const rest = mockedRest.mock.results[0].value;
     expect(rest.put).toHaveBeenCalledWith(
       Routes.applicationGuildCommands('test-client-id', 'test-guild'),
       { body: [] }

@@ -1,61 +1,65 @@
-jest.mock('discord.js', () => ({
-  EmbedBuilder: jest.fn().mockImplementation(() => {
+import { vi } from 'vitest';
+
+vi.mock('discord.js', () => ({
+  EmbedBuilder: vi.fn().mockImplementation(() => {
     const data: any = { fields: [], title: '', description: '', footer: { text: '' } };
     return {
       data,
-      setTitle: jest.fn(function (this: any, title: string) { data.title = title; return this; }),
-      setDescription: jest.fn(function (this: any, desc: string) { data.description = desc; return this; }),
-      setFooter: jest.fn(function (this: any, footer: any) { data.footer = footer; return this; }),
-      setColor: jest.fn(function (this: any, color: any) { data.color = color; return this; }),
-      addFields: jest.fn(function (this: any, field: any) {
+      setTitle: vi.fn(function (this: any, title: string) { data.title = title; return this; }),
+      setDescription: vi.fn(function (this: any, desc: string) { data.description = desc; return this; }),
+      setFooter: vi.fn(function (this: any, footer: any) { data.footer = footer; return this; }),
+      setColor: vi.fn(function (this: any, color: any) { data.color = color; return this; }),
+      addFields: vi.fn(function (this: any, field: any) {
         if (Array.isArray(field)) { data.fields.push(...field); }
         else { data.fields.push(field); }
         return this;
       }),
-      toJSON: jest.fn().mockReturnValue({}),
+      toJSON: vi.fn().mockReturnValue({}),
     };
   }),
   ApplicationCommandType: { ChatInput: 1 },
   Colors: { Default: 0 },
 }));
 
-jest.mock('../../logger.js', () => ({
+vi.mock('../../logger.js', () => ({
   logger: {
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
-    child: jest.fn().mockReturnThis(),
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
+    child: vi.fn().mockReturnThis(),
   },
-  createChildLogger: jest.fn().mockReturnValue({
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
+  createChildLogger: vi.fn().mockReturnValue({
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
   }),
 }));
 
-jest.mock('../../data/MeritProvider.js', () => ({
+vi.mock('../../data/MeritProvider.js', () => ({
   __esModule: true,
   default: {
     merits: [],
-    getMerits: jest.fn(),
+    getMerits: vi.fn(),
     _initialize: undefined,
   },
 }));
 
-jest.mock('../../embedBuilders/MeritEmbedBuilder.js', () => ({
+vi.mock('../../embedBuilders/MeritEmbedBuilder.js', () => ({
   MeritEmbedBuilder: {
-    buildMeritEmbed: jest.fn(),
+    buildMeritEmbed: vi.fn(),
   },
 }));
 
 import { MeritCommand } from '../../commands/MeritCommand.js';
+import MeritProvider from '../../data/MeritProvider.js';
+import { MeritEmbedBuilder } from '../../embedBuilders/MeritEmbedBuilder.js';
 import { createMockInteraction, createMockClient } from './helpers.js';
 
 describe('MeritCommand', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('has correct name and description', () => {
@@ -64,8 +68,7 @@ describe('MeritCommand', () => {
   });
 
   it('shows no merits found when no matches', async () => {
-    const MeritProvider = require('../../data/MeritProvider.js').default;
-    MeritProvider.getMerits.mockReturnValue([]);
+    vi.mocked(MeritProvider.getMerits).mockReturnValue([]);
 
     const interaction = createMockInteraction({ name: 'nonexistent' });
     const client = createMockClient() as any;
@@ -78,41 +81,38 @@ describe('MeritCommand', () => {
   });
 
   it('shows single merit embed when exactly one match', async () => {
-    const MeritProvider = require('../../data/MeritProvider.js').default;
-    const MeritEmbedBuilder = require('../../embedBuilders/MeritEmbedBuilder.js').MeritEmbedBuilder;
     const mockMerit = {
       name: 'Ambidextrous',
-      titleString: jest.fn().mockReturnValue('Ambidextrous (•)'),
+      titleString: vi.fn().mockReturnValue('Ambidextrous (•)'),
     };
     Object.defineProperty(mockMerit, 'name', { value: 'Ambidextrous' });
 
-    MeritProvider.getMerits.mockReturnValue([mockMerit]);
+    vi.mocked(MeritProvider.getMerits).mockReturnValue([mockMerit]);
 
     const interaction = createMockInteraction({ name: 'Ambidextrous' });
     const client = createMockClient() as any;
 
     await MeritCommand.run(client, interaction as any);
 
-    expect(MeritEmbedBuilder.buildMeritEmbed).toHaveBeenCalledWith(
+    expect(vi.mocked(MeritEmbedBuilder.buildMeritEmbed)).toHaveBeenCalledWith(
       mockMerit,
       expect.any(Object)
     );
   });
 
   it('shows listing for multiple matches', async () => {
-    const MeritProvider = require('../../data/MeritProvider.js').default;
     const mockMerit1 = {
       name: 'Ambidextrous',
-      titleString: jest.fn().mockReturnValue('Ambidextrous (•)'),
+      titleString: vi.fn().mockReturnValue('Ambidextrous (•)'),
     };
     const mockMerit2 = {
       name: 'Fighting Style',
-      titleString: jest.fn().mockReturnValue('Fighting Style (••)'),
+      titleString: vi.fn().mockReturnValue('Fighting Style (••)'),
     };
     Object.defineProperty(mockMerit1, 'name', { value: 'Ambidextrous' });
     Object.defineProperty(mockMerit2, 'name', { value: 'Fighting Style' });
 
-    MeritProvider.getMerits.mockReturnValue([mockMerit1, mockMerit2]);
+    vi.mocked(MeritProvider.getMerits).mockReturnValue([mockMerit1, mockMerit2]);
 
     const interaction = createMockInteraction({ name: 'F' });
     const client = createMockClient() as any;

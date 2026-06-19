@@ -1,71 +1,75 @@
-jest.mock('../../logger.js', () => ({
+import { vi } from 'vitest';
+
+vi.mock('../../logger.js', () => ({
   logger: {
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
-    child: jest.fn().mockReturnThis(),
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
+    child: vi.fn().mockReturnThis(),
   },
-  createChildLogger: jest.fn().mockReturnValue({
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
+  createChildLogger: vi.fn().mockReturnValue({
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
   }),
 }));
 
-jest.mock('../../data/paths.js', () => [
-  { pathId: 'acanthus', fancyName: 'Acanthus', realm: 'Time', anomalyDescription: 'Time anomalies' },
-  { pathId: 'mastigos', fancyName: 'Mastigos', realm: 'Space', anomalyDescription: 'Space anomalies' },
-  { pathId: 'moros', fancyName: 'Moros', realm: 'Death', anomalyDescription: 'Death anomalies' },
-  { pathId: 'obrimos', fancyName: 'Obrimos', realm: 'Prime', anomalyDescription: 'Prime anomalies' },
-  { pathId: 'thyrsus', fancyName: 'Thyrsus', realm: 'Life', anomalyDescription: 'Life anomalies' },
-]);
+vi.mock('../../data/paths.js', () => ({
+  default: [
+    { pathId: 'acanthus', fancyName: 'Acanthus', realm: 'Time', anomalyDescription: 'Time anomalies' },
+    { pathId: 'mastigos', fancyName: 'Mastigos', realm: 'Space', anomalyDescription: 'Space anomalies' },
+    { pathId: 'moros', fancyName: 'Moros', realm: 'Death', anomalyDescription: 'Death anomalies' },
+    { pathId: 'obrimos', fancyName: 'Obrimos', realm: 'Prime', anomalyDescription: 'Prime anomalies' },
+    { pathId: 'thyrsus', fancyName: 'Thyrsus', realm: 'Life', anomalyDescription: 'Life anomalies' },
+  ],
+}));
 
-jest.mock('@nwod-angel/nwod-roller', () => {
+vi.mock('@nwod-angel/nwod-roller', () => {
   const makeMockRoll = (opts: any = {}) => ({
     dicePool: opts.dicePool ?? 5,
-    toString: jest.fn().mockReturnValue('5 dice: results'),
-    numberOfSuccesses: jest.fn().mockReturnValue(opts.successes ?? 1),
-    result: jest.fn().mockReturnValue(1),
-    isCriticalFailure: jest.fn().mockReturnValue(opts.isCritFail ?? false),
-    isFailure: jest.fn().mockReturnValue(opts.isFail ?? false),
-    isExceptionalSuccess: jest.fn().mockReturnValue(opts.isExceptSuccess ?? false),
-    isSuccess: jest.fn().mockReturnValue(opts.isSuccess ?? true),
+    toString: vi.fn().mockReturnValue('5 dice: results'),
+    numberOfSuccesses: vi.fn().mockReturnValue(opts.successes ?? 1),
+    result: vi.fn().mockReturnValue(1),
+    isCriticalFailure: vi.fn().mockReturnValue(opts.isCritFail ?? false),
+    isFailure: vi.fn().mockReturnValue(opts.isFail ?? false),
+    isExceptionalSuccess: vi.fn().mockReturnValue(opts.isExceptSuccess ?? false),
+    isSuccess: vi.fn().mockReturnValue(opts.isSuccess ?? true),
   });
 
-  const InstantRoll = jest.fn().mockImplementation((opts: any) => makeMockRoll({ ...opts, successes: Math.min(opts.dicePool, 5) }));
+  const InstantRoll = vi.fn().mockImplementation((opts: any) => makeMockRoll({ ...opts, successes: Math.min(opts.dicePool, 5) }));
 
   return { InstantRoll };
 });
 
-jest.mock('discord.js', () => ({
-  EmbedBuilder: jest.fn().mockImplementation(() => {
+vi.mock('discord.js', () => ({
+  EmbedBuilder: vi.fn().mockImplementation(() => {
     const data: any = { fields: [], title: '', description: '', footer: { text: '' } };
     return {
       data,
-      setTitle: jest.fn(function (this: any, title: string) { data.title = title; return this; }),
-      setDescription: jest.fn(function (this: any, desc: string) { data.description = desc; return this; }),
-      setFooter: jest.fn(function (this: any, footer: any) { data.footer = footer; return this; }),
-      setColor: jest.fn(function (this: any, color: any) { data.color = color; return this; }),
-      addFields: jest.fn(function (this: any, field: any) {
+      setTitle: vi.fn(function (this: any, title: string) { data.title = title; return this; }),
+      setDescription: vi.fn(function (this: any, desc: string) { data.description = desc; return this; }),
+      setFooter: vi.fn(function (this: any, footer: any) { data.footer = footer; return this; }),
+      setColor: vi.fn(function (this: any, color: any) { data.color = color; return this; }),
+      addFields: vi.fn(function (this: any, field: any) {
         if (Array.isArray(field)) { data.fields.push(...field); }
         else { data.fields.push(field); }
         return this;
       }),
-      toJSON: jest.fn().mockReturnValue({}),
+      toJSON: vi.fn().mockReturnValue({}),
     };
   }),
   ApplicationCommandType: { ChatInput: 1 },
-  ButtonBuilder: jest.fn().mockImplementation(() => ({
-    setCustomId: jest.fn().mockReturnThis(),
-    setStyle: jest.fn().mockReturnThis(),
-    setLabel: jest.fn().mockReturnThis(),
-    setEmoji: jest.fn().mockReturnThis(),
+  ButtonBuilder: vi.fn().mockImplementation(() => ({
+    setCustomId: vi.fn().mockReturnThis(),
+    setStyle: vi.fn().mockReturnThis(),
+    setLabel: vi.fn().mockReturnThis(),
+    setEmoji: vi.fn().mockReturnThis(),
   })),
   ButtonStyle: { Primary: 1, Success: 3, Danger: 4 },
-  ActionRowBuilder: jest.fn().mockImplementation(() => ({
-    addComponents: jest.fn().mockReturnThis(),
+  ActionRowBuilder: vi.fn().mockImplementation(() => ({
+    addComponents: vi.fn().mockReturnThis(),
   })),
   Colors: { Default: 0, NotQuiteBlack: 0x23272a, Yellow: 0xffff00, Red: 0xff0000, Green: 0x00ff00 },
 }));
@@ -75,7 +79,7 @@ import { createMockInteraction, createMockClient } from './helpers.js';
 
 describe('ParadoxCommand', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('has correct name and description', () => {

@@ -1,17 +1,19 @@
+import { vi } from 'vitest';
+
 // ── Mock logger ─────────────────────────────────────────────────
-jest.mock('../../logger.js', () => ({
+vi.mock('../../logger.js', () => ({
   logger: {
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
-    child: jest.fn().mockReturnThis(),
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
+    child: vi.fn().mockReturnThis(),
   },
-  createChildLogger: jest.fn().mockReturnValue({
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
+  createChildLogger: vi.fn().mockReturnValue({
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
   }),
 }));
 
@@ -25,10 +27,10 @@ describe('unhandledRejection', () => {
   let callback: Function;
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 
     // Create a minimal mock client that captures the registered callback
-    client = { on: jest.fn() };
+    client = { on: vi.fn() };
     client.on.mockImplementation((event: string, cb: Function) => {
       if (event === 'unhandledRejection') {
         callback = cb;

@@ -1,17 +1,19 @@
+import { vi } from 'vitest';
+
 // ── Mock logger ─────────────────────────────────────────────────
-jest.mock('../../logger.js', () => ({
+vi.mock('../../logger.js', () => ({
   logger: {
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
-    child: jest.fn().mockReturnThis(),
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
+    child: vi.fn().mockReturnThis(),
   },
-  createChildLogger: jest.fn().mockReturnValue({
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
+  createChildLogger: vi.fn().mockReturnValue({
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
   }),
 }));
 
@@ -22,22 +24,22 @@ jest.mock('../../logger.js', () => ({
 const mockCommandsArray: any[] = [];
 const mockAutoCompleteArray: any[] = [];
 
-jest.mock('../../Commands.js', () => ({
+vi.mock('../../Commands.js', () => ({
   get Commands() {
     return mockCommandsArray;
   },
 }));
 
-jest.mock('../../AutoCompleteCommands.js', () => ({
+vi.mock('../../AutoCompleteCommands.js', () => ({
   get AutoCompleteCommands() {
     return mockAutoCompleteArray;
   },
 }));
 
-jest.mock('../../listeners/UpdateStatus.js', () => ({
+vi.mock('../../listeners/UpdateStatus.js', () => ({
   UpdateStatus: {
-    startThinking: jest.fn(),
-    doSomethingRandom: jest.fn(),
+    startThinking: vi.fn(),
+    doSomethingRandom: vi.fn(),
   },
 }));
 
@@ -52,14 +54,14 @@ describe('interactionCreate', () => {
   let callback: Function;
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 
     // Reset mutable arrays to empty for each test
     mockCommandsArray.length = 0;
     mockAutoCompleteArray.length = 0;
 
     // Create a minimal mock client that captures the registered callback
-    client = { on: jest.fn() };
+    client = { on: vi.fn() };
     client.on.mockImplementation((event: string, cb: Function) => {
       if (event === 'interactionCreate') {
         callback = cb;
@@ -82,22 +84,22 @@ describe('interactionCreate', () => {
   // ── Slash command handling ────────────────────────────────────
 
   it('handles a slash command interaction', async () => {
-    const mockRun = jest.fn();
+    const mockRun = vi.fn();
     mockCommandsArray.push({
       name: 'test-cmd',
       description: 'A test command',
       run: mockRun,
     });
 
-    const deferReply = jest.fn().mockResolvedValue(undefined);
+    const deferReply = vi.fn().mockResolvedValue(undefined);
     const interaction: any = {
       isCommand: () => true,
       isContextMenuCommand: () => false,
       isAutocomplete: () => false,
       commandName: 'test-cmd',
       deferReply,
-      followUp: jest.fn().mockResolvedValue(undefined),
-      reply: jest.fn().mockResolvedValue(undefined),
+      followUp: vi.fn().mockResolvedValue(undefined),
+      reply: vi.fn().mockResolvedValue(undefined),
     };
 
     await callback(interaction);
@@ -108,15 +110,15 @@ describe('interactionCreate', () => {
 
   it('handles unknown slash command', async () => {
     // mockCommandsArray is intentionally empty (reset in beforeEach)
-    const followUp = jest.fn().mockResolvedValue(undefined);
+    const followUp = vi.fn().mockResolvedValue(undefined);
     const interaction: any = {
       isCommand: () => true,
       isContextMenuCommand: () => false,
       isAutocomplete: () => false,
       commandName: 'no-such-command',
-      deferReply: jest.fn(),
+      deferReply: vi.fn(),
       followUp,
-      reply: jest.fn(),
+      reply: vi.fn(),
     };
 
     await callback(interaction);
@@ -127,7 +129,7 @@ describe('interactionCreate', () => {
   });
 
   it('handles slash command error gracefully', async () => {
-    const mockRun = jest.fn().mockImplementation(() => {
+    const mockRun = vi.fn().mockImplementation(() => {
       throw new Error('Intentional command failure');
     });
     mockCommandsArray.push({
@@ -136,14 +138,14 @@ describe('interactionCreate', () => {
       run: mockRun,
     });
 
-    const reply = jest.fn().mockResolvedValue(undefined);
+    const reply = vi.fn().mockResolvedValue(undefined);
     const interaction: any = {
       isCommand: () => true,
       isContextMenuCommand: () => false,
       isAutocomplete: () => false,
       commandName: 'broken-cmd',
-      deferReply: jest.fn().mockResolvedValue(undefined),
-      followUp: jest.fn(),
+      deferReply: vi.fn().mockResolvedValue(undefined),
+      followUp: vi.fn(),
       reply,
     };
 
@@ -158,7 +160,7 @@ describe('interactionCreate', () => {
   // ── Autocomplete handling ─────────────────────────────────────
 
   it('handles autocomplete interaction', async () => {
-    const mockAutocomplete = jest.fn().mockResolvedValue([
+    const mockAutocomplete = vi.fn().mockResolvedValue([
       { name: 'Result A', value: 'a' },
       { name: 'Result B', value: 'b' },
     ]);
@@ -168,7 +170,7 @@ describe('interactionCreate', () => {
       autocomplete: mockAutocomplete,
     });
 
-    const respond = jest.fn().mockResolvedValue(undefined);
+    const respond = vi.fn().mockResolvedValue(undefined);
     const interaction: any = {
       isCommand: () => false,
       isContextMenuCommand: () => false,
@@ -193,7 +195,7 @@ describe('interactionCreate', () => {
       isContextMenuCommand: () => false,
       isAutocomplete: () => true,
       commandName: 'unknown-autocomplete',
-      respond: jest.fn(),
+      respond: vi.fn(),
     };
 
     await callback(interaction);
@@ -205,7 +207,7 @@ describe('interactionCreate', () => {
   });
 
   it('handles autocomplete respond() rejection gracefully', async () => {
-    const mockAutocomplete = jest.fn().mockResolvedValue([
+    const mockAutocomplete = vi.fn().mockResolvedValue([
       { name: 'Result A', value: 'a' },
     ]);
     mockAutoCompleteArray.push({
@@ -217,7 +219,7 @@ describe('interactionCreate', () => {
     // Simulate DiscordAPIError 10062 (Unknown interaction)
     const discordError = new Error('Unknown interaction');
     (discordError as any).code = 10062;
-    const respond = jest.fn().mockRejectedValue(discordError);
+    const respond = vi.fn().mockRejectedValue(discordError);
 
     const interaction: any = {
       isCommand: () => false,
@@ -246,9 +248,9 @@ describe('interactionCreate', () => {
       isContextMenuCommand: () => false,
       isAutocomplete: () => false,
       commandName: 'no-such-cmd',
-      deferReply: jest.fn(),
-      followUp: jest.fn().mockResolvedValue(undefined),
-      reply: jest.fn(),
+      deferReply: vi.fn(),
+      followUp: vi.fn().mockResolvedValue(undefined),
+      reply: vi.fn(),
     };
 
     await callback(interaction);

@@ -1,19 +1,21 @@
-jest.mock('discord.js', () => ({
-  EmbedBuilder: jest.fn().mockImplementation(() => {
+import { vi } from 'vitest';
+
+vi.mock('discord.js', () => ({
+  EmbedBuilder: vi.fn().mockImplementation(() => {
     const data: any = { fields: [], title: '', description: '', footer: { text: '' } };
     return {
       data,
-      setTitle: jest.fn(function (this: any, title: string) { data.title = title; return this; }),
-      setDescription: jest.fn(function (this: any, desc: string) { data.description = desc; return this; }),
-      setFooter: jest.fn(function (this: any, footer: any) { data.footer = footer; return this; }),
-      setColor: jest.fn(function (this: any, color: any) { data.color = color; return this; }),
-      setThumbnail: jest.fn(function (this: any, url: string) { data.thumbnail = url; return this; }),
-      addFields: jest.fn(function (this: any, field: any) {
+      setTitle: vi.fn(function (this: any, title: string) { data.title = title; return this; }),
+      setDescription: vi.fn(function (this: any, desc: string) { data.description = desc; return this; }),
+      setFooter: vi.fn(function (this: any, footer: any) { data.footer = footer; return this; }),
+      setColor: vi.fn(function (this: any, color: any) { data.color = color; return this; }),
+      setThumbnail: vi.fn(function (this: any, url: string) { data.thumbnail = url; return this; }),
+      addFields: vi.fn(function (this: any, field: any) {
         if (Array.isArray(field)) { data.fields.push(...field); }
         else { data.fields.push(field); }
         return this;
       }),
-      toJSON: jest.fn().mockReturnValue({}),
+      toJSON: vi.fn().mockReturnValue({}),
     };
   }),
   ApplicationCommandType: { ChatInput: 1 },
@@ -21,40 +23,40 @@ jest.mock('discord.js', () => ({
   ColorResolvable: {},
 }));
 
-jest.mock('../../logger.js', () => ({
+vi.mock('../../logger.js', () => ({
   logger: {
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
-    child: jest.fn().mockReturnThis(),
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
+    child: vi.fn().mockReturnThis(),
   },
-  createChildLogger: jest.fn().mockReturnValue({
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
+  createChildLogger: vi.fn().mockReturnValue({
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
   }),
 }));
 
-jest.mock('@nwod-angel/nwod-roller', () => {
+vi.mock('@nwod-angel/nwod-roller', () => {
   const mockResult = {
     dicePool: 5,
-    toString: jest.fn().mockReturnValue('Rolled 5 dice: 8, 2, 7, 9, 3'),
-    numberOfSuccesses: jest.fn().mockReturnValue(3),
-    result: jest.fn().mockReturnValue(1),
-    isCriticalFailure: jest.fn().mockReturnValue(false),
-    isFailure: jest.fn().mockReturnValue(false),
-    isExceptionalSuccess: jest.fn().mockReturnValue(false),
-    isSuccess: jest.fn().mockReturnValue(true),
+    toString: vi.fn().mockReturnValue('Rolled 5 dice: 8, 2, 7, 9, 3'),
+    numberOfSuccesses: vi.fn().mockReturnValue(3),
+    result: vi.fn().mockReturnValue(1),
+    isCriticalFailure: vi.fn().mockReturnValue(false),
+    isFailure: vi.fn().mockReturnValue(false),
+    isExceptionalSuccess: vi.fn().mockReturnValue(false),
+    isSuccess: vi.fn().mockReturnValue(true),
   };
 
   return {
-    InstantRoll: jest.fn().mockImplementation(() => ({ ...mockResult })),
-    ExtendedRoll: jest.fn().mockImplementation(() => ({
+    InstantRoll: vi.fn().mockImplementation(() => ({ ...mockResult })),
+    ExtendedRoll: vi.fn().mockImplementation(() => ({
       ...mockResult,
       dicePool: 5,
-      toString: jest.fn().mockReturnValue('Extended roll results...'),
+      toString: vi.fn().mockReturnValue('Extended roll results...'),
     })),
     RollResult: {
       critical_failure: -1,
@@ -93,11 +95,12 @@ function mockApiResponse(overrides: any = {}) {
 }
 
 import { Roll } from '../../commands/Roll.js';
+import { InstantRoll, ExtendedRoll } from '@nwod-angel/nwod-roller';
 import { createMockInteraction, createMockClient } from './helpers.js';
 
 describe('Roll', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('command metadata', () => {
@@ -116,7 +119,6 @@ describe('Roll', () => {
 
       await Roll.run(client, interaction as any);
 
-      const { InstantRoll } = require('@nwod-angel/nwod-roller');
       expect(InstantRoll).toHaveBeenCalledWith({
         dicePool: 5,
         rote: false,
@@ -139,7 +141,6 @@ describe('Roll', () => {
 
       await Roll.run(client, interaction as any);
 
-      const { ExtendedRoll } = require('@nwod-angel/nwod-roller');
       expect(ExtendedRoll).toHaveBeenCalledWith({
         dicePool: 7,
         rote: false,
@@ -190,7 +191,6 @@ describe('Roll', () => {
 
       await Roll.run(client, interaction as any);
 
-      const { InstantRoll } = require('@nwod-angel/nwod-roller');
       expect(InstantRoll).toHaveBeenCalledWith({
         dicePool: 5,
         rote: false,
@@ -208,7 +208,6 @@ describe('Roll', () => {
 
       await Roll.run(client, interaction as any);
 
-      const { InstantRoll } = require('@nwod-angel/nwod-roller');
       expect(InstantRoll).toHaveBeenCalledWith({
         dicePool: 5,
         rote: true,
@@ -231,7 +230,7 @@ describe('Roll', () => {
     it('sets thumbnail when portrait lookup finds a matching character', async () => {
       // Mock global.fetch for portrait lookup
       const originalFetch = global.fetch;
-      global.fetch = jest.fn().mockResolvedValue({
+      global.fetch = vi.fn().mockResolvedValue({
         ok: true,
         json: async () => ({
           data: [
@@ -262,26 +261,20 @@ describe('Roll', () => {
 
   describe('API path (USE_API_ROLL=true)', () => {
     let RollWithApi: typeof Roll;
-    const mockRollViaApi = jest.fn();
+    const mockRollViaApi = vi.fn();
 
-    beforeAll(() => {
-      // We need a fresh module scope where apiClient is mocked.
-      // Jest isolates run in a separate function scope so mocks
-      // defined inside don't leak to other tests.
-      jest.isolateModules(() => {
-        jest.mock('../../apiClient.js', () => ({
-          rollViaApi: mockRollViaApi,
-          isUseApiRoll: () => true,
-          getApiBaseUrl: () => 'http://localhost:3001',
-        }));
-        // Dynamic import picks up the mock above
-        const RollMod = require('../../commands/Roll.js');
-        RollWithApi = RollMod.Roll;
-      });
-    });
+    beforeEach(async () => {
+      vi.clearAllMocks();
+      vi.resetModules();
+      vi.doMock('../../apiClient.js', () => ({
+        rollViaApi: mockRollViaApi,
+        isUseApiRoll: () => true,
+        getApiBaseUrl: () => 'http://localhost:3001',
+      }));
+      // Dynamic import picks up the mock above
+      const RollMod = await import('../../commands/Roll.js');
+      RollWithApi = RollMod.Roll;
 
-    beforeEach(() => {
-      jest.clearAllMocks();
       mockRollViaApi.mockResolvedValue({
         id: 42,
         timestamp: new Date().toISOString(),
@@ -307,7 +300,6 @@ describe('Roll', () => {
       await RollWithApi.run(client, interaction as any);
 
       // Should NOT have used the direct roller
-      const { InstantRoll } = require('@nwod-angel/nwod-roller');
       expect(InstantRoll).not.toHaveBeenCalled();
 
       // Should have called the API client
@@ -377,7 +369,6 @@ describe('Roll', () => {
       await RollWithApi.run(client, interaction as any);
 
       // Should have fallen back to direct roller
-      const { InstantRoll } = require('@nwod-angel/nwod-roller');
       expect(InstantRoll).toHaveBeenCalled();
       // Should still reply to the interaction
       expect(interaction.followUp).toHaveBeenCalled();

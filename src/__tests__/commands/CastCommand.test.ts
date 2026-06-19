@@ -1,18 +1,20 @@
-jest.mock('discord.js', () => ({
-  EmbedBuilder: jest.fn().mockImplementation(() => {
+import { vi } from 'vitest';
+
+vi.mock('discord.js', () => ({
+  EmbedBuilder: vi.fn().mockImplementation(() => {
     const data: any = { fields: [], title: '', description: '', footer: { text: '' } };
     return {
       data,
-      setTitle: jest.fn(function (this: any, title: string) { data.title = title; return this; }),
-      setDescription: jest.fn(function (this: any, desc: string) { data.description = desc; return this; }),
-      setFooter: jest.fn(function (this: any, footer: any) { data.footer = footer; return this; }),
-      setColor: jest.fn(function (this: any, color: any) { data.color = color; return this; }),
-      addFields: jest.fn(function (this: any, field: any) {
+      setTitle: vi.fn(function (this: any, title: string) { data.title = title; return this; }),
+      setDescription: vi.fn(function (this: any, desc: string) { data.description = desc; return this; }),
+      setFooter: vi.fn(function (this: any, footer: any) { data.footer = footer; return this; }),
+      setColor: vi.fn(function (this: any, color: any) { data.color = color; return this; }),
+      addFields: vi.fn(function (this: any, field: any) {
         if (Array.isArray(field)) { data.fields.push(...field); }
         else { data.fields.push(field); }
         return this;
       }),
-      toJSON: jest.fn().mockReturnValue({}),
+      toJSON: vi.fn().mockReturnValue({}),
     };
   }),
   ApplicationCommandType: { ChatInput: 1 },
@@ -24,7 +26,7 @@ import { createMockInteraction, createMockClient } from './helpers.js';
 
 describe('CastCommand', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('has correct name and description', () => {

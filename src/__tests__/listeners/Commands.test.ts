@@ -1,5 +1,7 @@
-// ── Mock external ESM packages that Jest cannot parse ───────────
-jest.mock('@nwod-angel/nwod-core', () => {
+import { vi } from 'vitest';
+
+// ── Mock external ESM packages that cannot parse ───────────
+vi.mock('@nwod-angel/nwod-core', () => {
   // Rule must be a real (extendable) class because RuleDefinition extends it
   class Rule {
     constructor(sources?: any[]) {}
@@ -9,12 +11,12 @@ jest.mock('@nwod-angel/nwod-core', () => {
     ArcanaType: {},
     Practice: {},
     PracticeType: {},
-    Requirement: jest.fn(),
-    Source: jest.fn(),
-    MeritDefinition: jest.fn(),
-    Spell: jest.fn().mockImplementation(() => ({ dots: () => 1 })),
+    Requirement: vi.fn(),
+    Source: vi.fn(),
+    MeritDefinition: vi.fn(),
+    Spell: vi.fn().mockImplementation(() => ({ dots: () => 1 })),
     Rule,
-    NwodSymbols: jest.fn().mockImplementation(() => ({
+    NwodSymbols: vi.fn().mockImplementation(() => ({
       SpellArcanaDots: '●',
       Dot: '●',
       DotLarge: '⬤',
@@ -25,9 +27,9 @@ jest.mock('@nwod-angel/nwod-core', () => {
   };
 });
 
-jest.mock('@nwod-angel/nwod-roller', () => ({
-  InstantRoll: jest.fn(),
-  ExtendedRoll: jest.fn(),
+vi.mock('@nwod-angel/nwod-roller', () => ({
+  InstantRoll: vi.fn(),
+  ExtendedRoll: vi.fn(),
   RollResult: {
     critical_failure: -1,
     failure: 0,
@@ -36,16 +38,16 @@ jest.mock('@nwod-angel/nwod-roller', () => ({
   },
 }));
 
-jest.mock('@discordjs/rest', () => ({
-  REST: jest.fn().mockImplementation(() => ({
-    setToken: jest.fn().mockReturnThis(),
-    put: jest.fn().mockResolvedValue(undefined),
+vi.mock('@discordjs/rest', () => ({
+  REST: vi.fn().mockImplementation(() => ({
+    setToken: vi.fn().mockReturnThis(),
+    put: vi.fn().mockResolvedValue(undefined),
   })),
 }));
 
-jest.mock('discord-api-types/v9', () => ({
+vi.mock('discord-api-types/v9', () => ({
   Routes: {
-    applicationGuildCommands: jest.fn(
+    applicationGuildCommands: vi.fn(
       (clientId: string, guildId: string) =>
         `/applications/${clientId}/guilds/${guildId}/commands`,
     ),
@@ -53,36 +55,36 @@ jest.mock('discord-api-types/v9', () => ({
 }));
 
 // ── Mock local modules with heavy data or side effects ──────────
-jest.mock('../../logger.js', () => ({
+vi.mock('../../logger.js', () => ({
   logger: {
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
-    child: jest.fn().mockReturnThis(),
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
+    child: vi.fn().mockReturnThis(),
   },
-  createChildLogger: jest.fn().mockReturnValue({
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
+  createChildLogger: vi.fn().mockReturnValue({
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
   }),
 }));
 
-jest.mock('../../data/SpellProvider.js', () => ({
+vi.mock('../../data/SpellProvider.js', () => ({
   __esModule: true,
   default: {
     spells: [],
-    getSpells: jest.fn(),
+    getSpells: vi.fn(),
     _initialize: undefined,
   },
 }));
 
-jest.mock('../../data/MeritProvider.js', () => ({
+vi.mock('../../data/MeritProvider.js', () => ({
   __esModule: true,
   default: {
     merits: [],
-    getMerits: jest.fn(),
+    getMerits: vi.fn(),
     _initialize: undefined,
   },
 }));

@@ -1,68 +1,70 @@
+import { vi } from 'vitest';
+
 // ── Mock logger ─────────────────────────────────────────────────
-jest.mock('../logger.js', () => ({
+vi.mock('../logger.js', () => ({
   logger: {
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
-    child: jest.fn().mockReturnThis(),
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
+    child: vi.fn().mockReturnThis(),
   },
-  createChildLogger: jest.fn().mockReturnValue({
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
+  createChildLogger: vi.fn().mockReturnValue({
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
   }),
 }));
 
 // ── Mock side-effect modules before importing Bot.ts ─────────────
 
-const mockConfig = jest.fn();
-jest.mock('dotenv', () => ({
+const mockConfig = vi.fn();
+vi.mock('dotenv', () => ({
   config: mockConfig,
 }));
 
-const mockLogin = jest.fn().mockResolvedValue(undefined);
+const mockLogin = vi.fn().mockResolvedValue(undefined);
 const mockClientInstance = {
   login: mockLogin,
-  on: jest.fn(),
-  once: jest.fn(),
+  on: vi.fn(),
+  once: vi.fn(),
   user: null,
   application: null,
 };
 
-jest.mock('discord.js', () => ({
-  Client: jest.fn().mockImplementation(() => mockClientInstance),
+vi.mock('discord.js', () => ({
+  Client: vi.fn().mockImplementation(() => mockClientInstance),
 }));
 
 // Mock listener modules — capture the function each exports as default
-const mockReady = jest.fn();
-const mockInteractionCreate = jest.fn();
-const mockUnhandledRejection = jest.fn();
-const mockUnhandledException = jest.fn();
+const mockReady = vi.fn();
+const mockInteractionCreate = vi.fn();
+const mockUnhandledRejection = vi.fn();
+const mockUnhandledException = vi.fn();
 
-jest.mock('../listeners/ready.js', () => ({
+vi.mock('../listeners/ready.js', () => ({
   __esModule: true,
   default: mockReady,
 }));
-jest.mock('../listeners/interactionCreate.js', () => ({
+vi.mock('../listeners/interactionCreate.js', () => ({
   __esModule: true,
   default: mockInteractionCreate,
 }));
-jest.mock('../listeners/unhandledRejection.js', () => ({
+vi.mock('../listeners/unhandledRejection.js', () => ({
   __esModule: true,
   default: mockUnhandledRejection,
 }));
-jest.mock('../listeners/unhandledException.js', () => ({
+vi.mock('../listeners/unhandledException.js', () => ({
   __esModule: true,
   default: mockUnhandledException,
 }));
 
 // Mock the BitInt polyfill (side-effect import)
-jest.mock('../typescript/BitInt', () => ({}));
+vi.mock('../typescript/BitInt', () => ({}));
 
 // Mock instrumentation to prevent side effects
-jest.mock('../instrumentation.js', () => ({}));
+vi.mock('../instrumentation.js', () => ({}));
 
 // ── Imports ─────────────────────────────────────────────────────
 import { logger } from '../logger.js';
@@ -72,7 +74,7 @@ describe('Bot', () => {
   let originalEnv: NodeJS.ProcessEnv;
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     originalEnv = { ...process.env };
 
     // Set required env vars
@@ -89,62 +91,61 @@ describe('Bot', () => {
    * Import Bot.ts in isolation so its top-level side effects run
    * against our mocks. Each test gets a fresh module evaluation.
    */
-  function loadBot() {
-    jest.isolateModules(() => {
-      require('../Bot.js');
-    });
+  async function loadBot() {
+    vi.resetModules();
+    await import('../Bot.js');
   }
 
   // ── dotenv initialization ─────────────────────────────────────
 
-  it('calls dotenv.config() on startup', () => {
-    loadBot();
+  it('calls dotenv.config() on startup', async () => {
+    await loadBot();
     expect(mockConfig).toHaveBeenCalledTimes(1);
   });
 
   // ── Client creation ───────────────────────────────────────────
 
-  it('creates a Discord Client with empty intents', () => {
-    const { Client } = require('discord.js');
-    loadBot();
+  it('creates a Discord Client with empty intents', async () => {
+    const { Client } = await import('discord.js');
+    await loadBot();
     expect(Client).toHaveBeenCalledWith({ intents: [] });
   });
 
   // ── Listener registration ─────────────────────────────────────
 
-  it('registers the ready listener with the client', () => {
-    loadBot();
+  it('registers the ready listener with the client', async () => {
+    await loadBot();
     expect(mockReady).toHaveBeenCalledWith(mockClientInstance);
   });
 
-  it('registers the interactionCreate listener with the client', () => {
-    loadBot();
+  it('registers the interactionCreate listener with the client', async () => {
+    await loadBot();
     expect(mockInteractionCreate).toHaveBeenCalledWith(mockClientInstance);
   });
 
-  it('registers the unhandledRejection listener with the client', () => {
-    loadBot();
+  it('registers the unhandledRejection listener with the client', async () => {
+    await loadBot();
     expect(mockUnhandledRejection).toHaveBeenCalledWith(mockClientInstance);
   });
 
-  it('registers the unhandledException listener with the client', () => {
-    loadBot();
+  it('registers the unhandledException listener with the client', async () => {
+    await loadBot();
     expect(mockUnhandledException).toHaveBeenCalledWith(mockClientInstance);
   });
 
   // ── Login ─────────────────────────────────────────────────────
 
-  it('calls client.login with the DISCORD_TOKEN', () => {
-    loadBot();
+  it('calls client.login with the DISCORD_TOKEN', async () => {
+    await loadBot();
     expect(mockLogin).toHaveBeenCalledWith('test-token-123');
   });
 
   // ── checkApiHealth ────────────────────────────────────────────
 
-  it('logs API delegation disabled when USE_API_ROLL is off', () => {
+  it('logs API delegation disabled when USE_API_ROLL is off', async () => {
     process.env['USE_API_ROLL'] = 'false';
 
-    loadBot();
+    await loadBot();
 
     expect(logger.debug).toHaveBeenCalledWith(
       'USE_API_ROLL is off — API delegation disabled.',
@@ -155,10 +156,10 @@ describe('Bot', () => {
     process.env['USE_API_ROLL'] = 'true';
     process.env['API_BASE_URL'] = 'http://localhost:3001';
 
-    const mockFetch = jest.fn().mockResolvedValue({ ok: true, status: 200 });
+    const mockFetch = vi.fn().mockResolvedValue({ ok: true, status: 200 });
     global.fetch = mockFetch;
 
-    loadBot();
+    await loadBot();
 
     // checkApiHealth is async — wait for it to complete
     await new Promise((r) => setTimeout(r, 50));
@@ -175,10 +176,10 @@ describe('Bot', () => {
     process.env['USE_API_ROLL'] = 'true';
     process.env['API_BASE_URL'] = 'http://localhost:3001';
 
-    const mockFetch = jest.fn().mockRejectedValue(new Error('ECONNREFUSED'));
+    const mockFetch = vi.fn().mockRejectedValue(new Error('ECONNREFUSED'));
     global.fetch = mockFetch;
 
-    loadBot();
+    await loadBot();
 
     // Wait for async checkApiHealth to complete
     await new Promise((r) => setTimeout(r, 50));

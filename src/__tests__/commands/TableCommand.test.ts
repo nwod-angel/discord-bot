@@ -1,81 +1,85 @@
-jest.mock('@nwod-angel/nwod-core', () => ({
-  NwodSymbols: jest.fn().mockImplementation(() => ({
+import { vi } from 'vitest';
+
+vi.mock('@nwod-angel/nwod-core', () => ({
+  NwodSymbols: vi.fn().mockImplementation(() => ({
     MeritDot: '•',
   })),
 }));
 
-jest.mock('discord.js', () => ({
-  EmbedBuilder: jest.fn().mockImplementation(() => {
+vi.mock('discord.js', () => ({
+  EmbedBuilder: vi.fn().mockImplementation(() => {
     const data: any = { fields: [], title: '', description: '', footer: { text: '' } };
     return {
       data,
-      setTitle: jest.fn(function (this: any, title: string) { data.title = title; return this; }),
-      setDescription: jest.fn(function (this: any, desc: string) { data.description = desc; return this; }),
-      setFooter: jest.fn(function (this: any, footer: any) { data.footer = footer; return this; }),
-      setColor: jest.fn(function (this: any, color: any) { data.color = color; return this; }),
-      addFields: jest.fn(function (this: any, field: any) {
+      setTitle: vi.fn(function (this: any, title: string) { data.title = title; return this; }),
+      setDescription: vi.fn(function (this: any, desc: string) { data.description = desc; return this; }),
+      setFooter: vi.fn(function (this: any, footer: any) { data.footer = footer; return this; }),
+      setColor: vi.fn(function (this: any, color: any) { data.color = color; return this; }),
+      addFields: vi.fn(function (this: any, field: any) {
         if (Array.isArray(field)) { data.fields.push(...field); }
         else { data.fields.push(field); }
         return this;
       }),
-      toJSON: jest.fn().mockReturnValue({}),
+      toJSON: vi.fn().mockReturnValue({}),
     };
   }),
   ApplicationCommandType: { ChatInput: 1 },
-  ActionRowBuilder: jest.fn().mockImplementation(() => ({
-    addComponents: jest.fn().mockReturnThis(),
+  ActionRowBuilder: vi.fn().mockImplementation(() => ({
+    addComponents: vi.fn().mockReturnThis(),
   })),
-  ButtonBuilder: jest.fn().mockImplementation(() => ({
-    setCustomId: jest.fn().mockReturnThis(),
-    setStyle: jest.fn().mockReturnThis(),
-    setLabel: jest.fn().mockReturnThis(),
-    setEmoji: jest.fn().mockReturnThis(),
+  ButtonBuilder: vi.fn().mockImplementation(() => ({
+    setCustomId: vi.fn().mockReturnThis(),
+    setStyle: vi.fn().mockReturnThis(),
+    setLabel: vi.fn().mockReturnThis(),
+    setEmoji: vi.fn().mockReturnThis(),
   })),
   ButtonStyle: { Primary: 1, Success: 3, Danger: 4 },
 }));
 
-jest.mock('../../logger.js', () => ({
+vi.mock('../../logger.js', () => ({
   logger: {
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
-    child: jest.fn().mockReturnThis(),
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
+    child: vi.fn().mockReturnThis(),
   },
-  createChildLogger: jest.fn().mockReturnValue({
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
+  createChildLogger: vi.fn().mockReturnValue({
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
   }),
 }));
 
-jest.mock('../../data/TableProvider.js', () => ({
+vi.mock('../../data/TableProvider.js', () => ({
   __esModule: true,
   default: {
-    getTables: jest.fn(),
+    getTables: vi.fn(),
   },
 }));
 
-jest.mock('../../ViewControllers/TableViewController.js', () => ({
+vi.mock('../../ViewControllers/TableViewController.js', () => ({
   TableViewController: {
-    displayTable: jest.fn(),
+    displayTable: vi.fn(),
   },
 }));
 
-jest.mock('../../commands/FeedbackController.js', () => ({
+vi.mock('../../commands/FeedbackController.js', () => ({
   __esModule: true,
-  default: jest.fn().mockImplementation(() => ({
-    getFeedback: jest.fn(),
+  default: vi.fn().mockImplementation(() => ({
+    getFeedback: vi.fn(),
   })),
 }));
 
 import { TableCommand } from '../../commands/TableCommand.js';
+import TableProvider from '../../data/TableProvider.js';
+import { TableViewController } from '../../ViewControllers/TableViewController.js';
 import { createMockInteraction, createMockClient } from './helpers.js';
 
 describe('TableCommand', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('has correct name and description', () => {
@@ -84,8 +88,7 @@ describe('TableCommand', () => {
   });
 
   it('shows no tables found when no matches', async () => {
-    const TableProvider = require('../../data/TableProvider.js').default;
-    TableProvider.getTables.mockReturnValue([]);
+    vi.mocked(TableProvider.getTables).mockReturnValue([]);
 
     const interaction = createMockInteraction({ name: 'nonexistent' });
     const client = createMockClient() as any;
@@ -99,22 +102,20 @@ describe('TableCommand', () => {
   });
 
   it('displays single table via TableViewController', async () => {
-    const TableProvider = require('../../data/TableProvider.js').default;
-    const TableViewController = require('../../ViewControllers/TableViewController.js').TableViewController;
     const mockTable = {
       name: 'Damage',
       table: { headers: ['Roll', 'Result'], rows: [['1-3', 'Bruised']] },
-      sourcesString: jest.fn().mockReturnValue('Core p.100'),
+      sourcesString: vi.fn().mockReturnValue('Core p.100'),
     };
 
-    TableProvider.getTables.mockReturnValue([mockTable]);
+    vi.mocked(TableProvider.getTables).mockReturnValue([mockTable]);
 
     const interaction = createMockInteraction({ name: 'Damage' });
     const client = createMockClient() as any;
 
     await TableCommand.run(client, interaction as any);
 
-    expect(TableViewController.displayTable).toHaveBeenCalledWith(
+    expect(vi.mocked(TableViewController.displayTable)).toHaveBeenCalledWith(
       mockTable,
       client,
       interaction
@@ -122,11 +123,10 @@ describe('TableCommand', () => {
   });
 
   it('shows multiple tables message when multiple matches', async () => {
-    const TableProvider = require('../../data/TableProvider.js').default;
     const mockTable1 = { name: 'Table One', table: { headers: [], rows: [] } };
     const mockTable2 = { name: 'Table Two', table: { headers: [], rows: [] } };
 
-    TableProvider.getTables.mockReturnValue([mockTable1, mockTable2]);
+    vi.mocked(TableProvider.getTables).mockReturnValue([mockTable1, mockTable2]);
 
     const interaction = createMockInteraction({ name: 'Table' });
     const client = createMockClient() as any;

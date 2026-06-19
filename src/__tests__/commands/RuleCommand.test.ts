@@ -1,69 +1,72 @@
-jest.mock('@nwod-angel/nwod-core', () => ({
-  NwodSymbols: jest.fn().mockImplementation(() => ({
+import { vi } from 'vitest';
+
+vi.mock('@nwod-angel/nwod-core', () => ({
+  NwodSymbols: vi.fn().mockImplementation(() => ({
     MeritDot: '•',
   })),
 }));
 
-jest.mock('discord.js', () => ({
-  EmbedBuilder: jest.fn().mockImplementation(() => {
+vi.mock('discord.js', () => ({
+  EmbedBuilder: vi.fn().mockImplementation(() => {
     const data: any = { fields: [], title: '', description: '', footer: { text: '' } };
     return {
       data,
-      setTitle: jest.fn(function (this: any, title: string) { data.title = title; return this; }),
-      setDescription: jest.fn(function (this: any, desc: string) { data.description = desc; return this; }),
-      setFooter: jest.fn(function (this: any, footer: any) { data.footer = footer; return this; }),
-      setColor: jest.fn(function (this: any, color: any) { data.color = color; return this; }),
-      addFields: jest.fn(function (this: any, field: any) {
+      setTitle: vi.fn(function (this: any, title: string) { data.title = title; return this; }),
+      setDescription: vi.fn(function (this: any, desc: string) { data.description = desc; return this; }),
+      setFooter: vi.fn(function (this: any, footer: any) { data.footer = footer; return this; }),
+      setColor: vi.fn(function (this: any, color: any) { data.color = color; return this; }),
+      addFields: vi.fn(function (this: any, field: any) {
         if (Array.isArray(field)) { data.fields.push(...field); }
         else { data.fields.push(field); }
         return this;
       }),
-      toJSON: jest.fn().mockReturnValue({}),
+      toJSON: vi.fn().mockReturnValue({}),
     };
   }),
   ApplicationCommandType: { ChatInput: 1 },
   Colors: { Default: 0 },
-  ActionRowBuilder: jest.fn().mockImplementation(() => ({
-    addComponents: jest.fn().mockReturnThis(),
+  ActionRowBuilder: vi.fn().mockImplementation(() => ({
+    addComponents: vi.fn().mockReturnThis(),
   })),
-  ButtonBuilder: jest.fn().mockImplementation(() => ({
-    setCustomId: jest.fn().mockReturnThis(),
-    setStyle: jest.fn().mockReturnThis(),
-    setLabel: jest.fn().mockReturnThis(),
-    setEmoji: jest.fn().mockReturnThis(),
+  ButtonBuilder: vi.fn().mockImplementation(() => ({
+    setCustomId: vi.fn().mockReturnThis(),
+    setStyle: vi.fn().mockReturnThis(),
+    setLabel: vi.fn().mockReturnThis(),
+    setEmoji: vi.fn().mockReturnThis(),
   })),
   ButtonStyle: { Primary: 1, Success: 3, Danger: 4 },
 }));
 
-jest.mock('../../logger.js', () => ({
+vi.mock('../../logger.js', () => ({
   logger: {
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
-    child: jest.fn().mockReturnThis(),
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
+    child: vi.fn().mockReturnThis(),
   },
-  createChildLogger: jest.fn().mockReturnValue({
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
+  createChildLogger: vi.fn().mockReturnValue({
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
   }),
 }));
 
-jest.mock('../../data/RuleProvider.js', () => ({
+vi.mock('../../data/RuleProvider.js', () => ({
   __esModule: true,
   default: {
-    getRules: jest.fn(),
+    getRules: vi.fn(),
   },
 }));
 
 import { RuleCommand } from '../../commands/RuleCommand.js';
+import RuleProvider from '../../data/RuleProvider.js';
 import { createMockInteraction, createMockClient } from './helpers.js';
 
 describe('RuleCommand', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('has correct name and description', () => {
@@ -72,8 +75,7 @@ describe('RuleCommand', () => {
   });
 
   it('shows no rules found when no matches', async () => {
-    const RuleProvider = require('../../data/RuleProvider.js').default;
-    RuleProvider.getRules.mockReturnValue([]);
+    vi.mocked(RuleProvider.getRules).mockReturnValue([]);
 
     const interaction = createMockInteraction({ name: 'nonexistent' });
     const client = createMockClient() as any;
@@ -87,17 +89,16 @@ describe('RuleCommand', () => {
   });
 
   it('shows single rule embed when exactly one match', async () => {
-    const RuleProvider = require('../../data/RuleProvider.js').default;
     const mockRule = {
       name: 'Willpower',
       paragraphs: [
         { text: 'Willpower is a measure of determination.', prefix: 'Definition', example: undefined },
         { text: 'Example: spending willpower.', prefix: undefined, example: true },
       ],
-      sourcesString: jest.fn().mockReturnValue('Core Rulebook p.50'),
+      sourcesString: vi.fn().mockReturnValue('Core Rulebook p.50'),
     };
 
-    RuleProvider.getRules.mockReturnValue([mockRule]);
+    vi.mocked(RuleProvider.getRules).mockReturnValue([mockRule]);
 
     const interaction = createMockInteraction({ name: 'Willpower' });
     const client = createMockClient() as any;
@@ -111,11 +112,10 @@ describe('RuleCommand', () => {
   });
 
   it('shows listing for multiple rule matches', async () => {
-    const RuleProvider = require('../../data/RuleProvider.js').default;
-    const mockRule1 = { name: 'Rule One', paragraphs: [], sourcesString: jest.fn() };
-    const mockRule2 = { name: 'Rule Two', paragraphs: [], sourcesString: jest.fn() };
+    const mockRule1 = { name: 'Rule One', paragraphs: [], sourcesString: vi.fn() };
+    const mockRule2 = { name: 'Rule Two', paragraphs: [], sourcesString: vi.fn() };
 
-    RuleProvider.getRules.mockReturnValue([mockRule1, mockRule2]);
+    vi.mocked(RuleProvider.getRules).mockReturnValue([mockRule1, mockRule2]);
 
     const interaction = createMockInteraction({ name: 'Rule' });
     const client = createMockClient() as any;
@@ -128,8 +128,7 @@ describe('RuleCommand', () => {
   });
 
   it('passes search parameter to provider', async () => {
-    const RuleProvider = require('../../data/RuleProvider.js').default;
-    RuleProvider.getRules.mockReturnValue([]);
+    vi.mocked(RuleProvider.getRules).mockReturnValue([]);
 
     const interaction = createMockInteraction({ search: 'willpower' });
     const client = createMockClient() as any;

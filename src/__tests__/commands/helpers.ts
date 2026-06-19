@@ -1,9 +1,11 @@
-export function createMockInteraction(options: Record<string, any> = {}) {
-  const followUp = jest.fn().mockResolvedValue(undefined);
-  const editReply = jest.fn().mockResolvedValue(undefined);
-  const deleteReply = jest.fn().mockResolvedValue(undefined);
+import { vi } from 'vitest';
 
-  const mockGet = jest.fn((name: string) => {
+export function createMockInteraction(options: Record<string, any> = {}) {
+  const followUp = vi.fn().mockResolvedValue(undefined);
+  const editReply = vi.fn().mockResolvedValue(undefined);
+  const deleteReply = vi.fn().mockResolvedValue(undefined);
+
+  const mockGet = vi.fn((name: string) => {
     const value = options[name];
     return value !== undefined ? { value } : null;
   });
@@ -27,9 +29,9 @@ export function createMockInteraction(options: Record<string, any> = {}) {
 export function createMockClient() {
   return {
     user: { username: 'TestBot' },
-    application: { commands: { set: jest.fn() } },
-    channels: { fetch: jest.fn() },
-    on: jest.fn(),
-    login: jest.fn(),
+    application: { commands: { set: vi.fn() } },
+    channels: { fetch: vi.fn() },
+    on: vi.fn(),
+    login: vi.fn(),
   };
 }

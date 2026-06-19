@@ -1,25 +1,27 @@
-jest.mock('../../logger.js', () => ({
+import { vi } from 'vitest';
+
+vi.mock('../../logger.js', () => ({
   logger: {
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
-    child: jest.fn().mockReturnThis(),
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
+    child: vi.fn().mockReturnThis(),
   },
-  createChildLogger: jest.fn().mockReturnValue({
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
+  createChildLogger: vi.fn().mockReturnValue({
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
   }),
 }));
 
-jest.mock('../../commands/AttackAction.js', () => ({
+vi.mock('../../commands/AttackAction.js', () => ({
   __esModule: true,
-  default: jest.fn().mockImplementation(() => ({})),
+  default: vi.fn().mockImplementation(() => ({})),
 }));
 
-jest.mock('../../commands/Attack.js', () => {
+vi.mock('../../commands/Attack.js', () => {
   const mockAttack = {
     mods: [],
     name: 'TestUser',
@@ -38,20 +40,20 @@ jest.mock('../../commands/Attack.js', () => {
   };
   return {
     __esModule: true,
-    default: jest.fn().mockImplementation(() => ({ ...mockAttack })),
+    default: vi.fn().mockImplementation(() => ({ ...mockAttack })),
   };
 });
 
-jest.mock('../../commands/AttackOptions.js', () => []);
+vi.mock('../../commands/AttackOptions.js', () => ({ default: [] }));
 
-jest.mock('../../commands/AttackOptionComponentBuilder.js', () => ({
-  AttackOptionComponentBuilder: jest.fn().mockImplementation(() => ({
-    addAttackOptions: jest.fn().mockReturnThis(),
+vi.mock('../../commands/AttackOptionComponentBuilder.js', () => ({
+  AttackOptionComponentBuilder: vi.fn().mockImplementation(() => ({
+    addAttackOptions: vi.fn().mockReturnThis(),
     attackOptions: [],
   })),
 }));
 
-jest.mock('../../commands/AttackCommandOptions.js', () => {
+vi.mock('../../commands/AttackCommandOptions.js', () => {
   const attackTypes = [
     { id: 'melee', name: 'Melee', symbol: '⚔️', attribute: 'Strength', skill: 'Weaponry', defense: true, armor: false },
     { id: 'brawl', name: 'Brawl', symbol: '✊', attribute: 'Strength', skill: 'Brawl', defense: true, armor: false },
@@ -64,46 +66,46 @@ jest.mock('../../commands/AttackCommandOptions.js', () => {
   return { default: [], attackTypes, damageTypes };
 });
 
-jest.mock('@nwod-angel/nwod-roller', () => ({
-  InstantRoll: jest.fn().mockImplementation(() => ({
+vi.mock('@nwod-angel/nwod-roller', () => ({
+  InstantRoll: vi.fn().mockImplementation(() => ({
     dicePool: 5,
-    toString: jest.fn().mockReturnValue('Rolled 5 dice: 8, 2, 7, 9, 3'),
-    numberOfSuccesses: jest.fn().mockReturnValue(3),
-    result: jest.fn().mockReturnValue(1),
-    isCriticalFailure: jest.fn().mockReturnValue(false),
-    isFailure: jest.fn().mockReturnValue(false),
-    isExceptionalSuccess: jest.fn().mockReturnValue(false),
-    isSuccess: jest.fn().mockReturnValue(true),
+    toString: vi.fn().mockReturnValue('Rolled 5 dice: 8, 2, 7, 9, 3'),
+    numberOfSuccesses: vi.fn().mockReturnValue(3),
+    result: vi.fn().mockReturnValue(1),
+    isCriticalFailure: vi.fn().mockReturnValue(false),
+    isFailure: vi.fn().mockReturnValue(false),
+    isExceptionalSuccess: vi.fn().mockReturnValue(false),
+    isSuccess: vi.fn().mockReturnValue(true),
   })),
 }));
 
-jest.mock('discord.js', () => ({
-  EmbedBuilder: jest.fn().mockImplementation(() => {
+vi.mock('discord.js', () => ({
+  EmbedBuilder: vi.fn().mockImplementation(() => {
     const data: any = { fields: [], title: '', description: '', footer: { text: '' } };
     return {
       data,
-      setTitle: jest.fn(function (this: any, title: string) { data.title = title; return this; }),
-      setDescription: jest.fn(function (this: any, desc: string) { data.description = desc; return this; }),
-      setFooter: jest.fn(function (this: any, footer: any) { data.footer = footer; return this; }),
-      setColor: jest.fn(function (this: any, color: any) { data.color = color; return this; }),
-      addFields: jest.fn(function (this: any, field: any) {
+      setTitle: vi.fn(function (this: any, title: string) { data.title = title; return this; }),
+      setDescription: vi.fn(function (this: any, desc: string) { data.description = desc; return this; }),
+      setFooter: vi.fn(function (this: any, footer: any) { data.footer = footer; return this; }),
+      setColor: vi.fn(function (this: any, color: any) { data.color = color; return this; }),
+      addFields: vi.fn(function (this: any, field: any) {
         if (Array.isArray(field)) { data.fields.push(...field); }
         else { data.fields.push(field); }
         return this;
       }),
-      toJSON: jest.fn().mockReturnValue({}),
+      toJSON: vi.fn().mockReturnValue({}),
     };
   }),
   ApplicationCommandType: { ChatInput: 1 },
-  ButtonBuilder: jest.fn().mockImplementation(() => ({
-    setCustomId: jest.fn().mockReturnThis(),
-    setStyle: jest.fn().mockReturnThis(),
-    setLabel: jest.fn().mockReturnThis(),
-    setEmoji: jest.fn().mockReturnThis(),
+  ButtonBuilder: vi.fn().mockImplementation(() => ({
+    setCustomId: vi.fn().mockReturnThis(),
+    setStyle: vi.fn().mockReturnThis(),
+    setLabel: vi.fn().mockReturnThis(),
+    setEmoji: vi.fn().mockReturnThis(),
   })),
   ButtonStyle: { Primary: 1, Success: 3, Danger: 4 },
-  ActionRowBuilder: jest.fn().mockImplementation(() => ({
-    addComponents: jest.fn().mockReturnThis(),
+  ActionRowBuilder: vi.fn().mockImplementation(() => ({
+    addComponents: vi.fn().mockReturnThis(),
   })),
   Colors: {
     Default: 0,
@@ -120,7 +122,7 @@ import { createMockInteraction, createMockClient } from './helpers.js';
 
 describe('AttackCommand', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('has correct name and description', () => {
