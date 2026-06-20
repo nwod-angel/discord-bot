@@ -104,10 +104,13 @@ describe('Bot', () => {
   /**
    * Import Bot.ts in isolation so its top-level side effects run
    * against our mocks. Each test gets a fresh module evaluation.
+   * Waits for async main() to complete (fire-and-forget pattern).
    */
   async function loadBot() {
     vi.resetModules();
     await import('../Bot.js');
+    // main() is async and called without await — wait for it to complete
+    await new Promise((r) => setTimeout(r, 100));
   }
 
   // ── dotenv initialization ─────────────────────────────────────
