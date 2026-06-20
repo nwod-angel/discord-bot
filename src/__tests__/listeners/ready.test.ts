@@ -19,10 +19,10 @@ vi.mock('../../logger.js', () => ({
 
 // ── Mock Commands and UpdateStatus at module level ───────────────
 vi.mock('../../Commands.js', () => ({
-  Commands: [
+  loadCommands: vi.fn().mockResolvedValue([
     { name: 'hello', description: 'Returns a greeting' },
     { name: 'roll', description: 'Rolls dice' },
-  ],
+  ]),
 }));
 
 vi.mock('../../listeners/UpdateStatus.js', () => ({

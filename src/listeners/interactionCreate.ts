@@ -1,6 +1,6 @@
 import { AutocompleteInteraction, Client, CommandInteraction, Interaction } from "discord.js";
-import { Commands } from "../Commands.js";
-import { AutoCompleteCommands } from '../AutoCompleteCommands.js';
+import { getCommands } from "../Commands.js";
+import { getAutoCompleteCommands } from '../AutoCompleteCommands.js';
 import { UpdateStatus } from "./UpdateStatus";
 import { logger } from "../logger.js";
 
@@ -21,7 +21,7 @@ export default (client: Client): void => {
 };
 
 const handleAutoCompleteCommand = async (client: Client, interaction: AutocompleteInteraction): Promise<void> => {
-    const command = AutoCompleteCommands.find(c => c.name === interaction.commandName);
+    const command = getAutoCompleteCommands().find(c => c.name === interaction.commandName);
     if (!command) {
         logger.debug({ commandName: interaction.commandName }, 'No registered Autocomplete Command')
         return;
@@ -31,7 +31,7 @@ const handleAutoCompleteCommand = async (client: Client, interaction: Autocomple
 
 const handleSlashCommand = async (client: Client, interaction: CommandInteraction): Promise<void> => {
     try{
-        const slashCommand = Commands.find(c => c.name === interaction.commandName);
+        const slashCommand = getCommands().find(c => c.name === interaction.commandName);
         if (!slashCommand) {
             interaction.followUp({ content: "An error has occurred" });
             return;

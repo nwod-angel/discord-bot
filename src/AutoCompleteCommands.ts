@@ -17,8 +17,29 @@ function isAutoCompleteCommand(mod: unknown): mod is AutoCompleteCommand {
   );
 }
 
-export const AutoCompleteCommands: AutoCompleteCommand[] = await discoverModules(
-  join(__dirname, "autoCompleteCommands"),
-  isAutoCompleteCommand,
-  "autocomplete command",
-);
+let _autoCompleteCommands: AutoCompleteCommand[] | null = null;
+
+/**
+ * Load all autocomplete handler modules from the autoCompleteCommands directory.
+ * Results are cached after the first call.
+ */
+export async function loadAutoCompleteCommands(): Promise<AutoCompleteCommand[]> {
+  if (_autoCompleteCommands === null) {
+    _autoCompleteCommands = await discoverModules(
+      join(__dirname, "autoCompleteCommands"),
+      isAutoCompleteCommand,
+      "autocomplete command",
+    );
+  }
+  return _autoCompleteCommands;
+}
+
+/**
+ * Get the cached autocomplete commands array. Throws if loadAutoCompleteCommands() has not been called yet.
+ */
+export function getAutoCompleteCommands(): AutoCompleteCommand[] {
+  if (_autoCompleteCommands === null) {
+    throw new Error("AutoCompleteCommands not loaded yet. Call loadAutoCompleteCommands() first.");
+  }
+  return _autoCompleteCommands;
+}

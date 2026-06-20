@@ -90,17 +90,19 @@ vi.mock('../../data/MeritProvider.js', () => ({
 }));
 
 // ── Imports (resolved AFTER hoisted mocks) ──────────────────────
-import { Commands } from '../../Commands.js';
+import { loadCommands } from '../../Commands.js';
 
 // ── Tests ───────────────────────────────────────────────────────
 describe('Commands', () => {
-  it('exports a non-empty array', () => {
-    expect(Array.isArray(Commands)).toBe(true);
-    expect(Commands.length).toBeGreaterThan(0);
+  it('loads a non-empty array', async () => {
+    const commands = await loadCommands();
+    expect(Array.isArray(commands)).toBe(true);
+    expect(commands.length).toBeGreaterThan(0);
   });
 
-  it('each command has required properties', () => {
-    Commands.forEach((cmd, index) => {
+  it('each command has required properties', async () => {
+    const commands = await loadCommands();
+    commands.forEach((cmd) => {
       expect(cmd).toHaveProperty('name');
       expect(typeof cmd.name).toBe('string');
       expect(cmd.name.length).toBeGreaterThan(0);
@@ -113,8 +115,9 @@ describe('Commands', () => {
     });
   });
 
-  it('contains expected commands by name', () => {
-    const names = Commands.map((c) => c.name);
+  it('contains expected commands by name', async () => {
+    const commands = await loadCommands();
+    const names = commands.map((c) => c.name);
     expect(names).toContain('hello');
     expect(names).toContain('roll');
     expect(names).toContain('goodbye');

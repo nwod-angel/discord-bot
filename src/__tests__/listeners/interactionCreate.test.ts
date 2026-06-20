@@ -18,22 +18,15 @@ vi.mock('../../logger.js', () => ({
 }));
 
 // ── Mutable module-level references for mock flexibility ──────────
-// These arrays are intentionally `const` (the reference is fixed) but
-// their *contents* are mutated between test cases via push/length=0.
-// The mock factories use getters so every access returns the live array.
 const mockCommandsArray: any[] = [];
 const mockAutoCompleteArray: any[] = [];
 
 vi.mock('../../Commands.js', () => ({
-  get Commands() {
-    return mockCommandsArray;
-  },
+  getCommands: () => mockCommandsArray,
 }));
 
 vi.mock('../../AutoCompleteCommands.js', () => ({
-  get AutoCompleteCommands() {
-    return mockAutoCompleteArray;
-  },
+  getAutoCompleteCommands: () => mockAutoCompleteArray,
 }));
 
 vi.mock('../../listeners/UpdateStatus.js', () => ({

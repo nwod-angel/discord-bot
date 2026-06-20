@@ -16,8 +16,29 @@ function isCommand(mod: unknown): mod is Command {
   );
 }
 
-export const Commands: Command[] = await discoverModules(
-  join(__dirname, "commands"),
-  isCommand,
-  "command",
-);
+let _commands: Command[] | null = null;
+
+/**
+ * Load all command modules from the commands directory.
+ * Results are cached after the first call.
+ */
+export async function loadCommands(): Promise<Command[]> {
+  if (_commands === null) {
+    _commands = await discoverModules(
+      join(__dirname, "commands"),
+      isCommand,
+      "command",
+    );
+  }
+  return _commands;
+}
+
+/**
+ * Get the cached commands array. Throws if loadCommands() has not been called yet.
+ */
+export function getCommands(): Command[] {
+  if (_commands === null) {
+    throw new Error("Commands not loaded yet. Call loadCommands() first.");
+  }
+  return _commands;
+}

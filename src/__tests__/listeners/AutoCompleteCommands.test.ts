@@ -59,17 +59,19 @@ vi.mock('../../data/spells.js', () => ({
 }));
 
 // ── Imports (resolved AFTER hoisted mocks) ──────────────────────
-import { AutoCompleteCommands } from '../../AutoCompleteCommands.js';
+import { loadAutoCompleteCommands } from '../../AutoCompleteCommands.js';
 
 // ── Tests ───────────────────────────────────────────────────────
 describe('AutoCompleteCommands', () => {
-  it('exports a non-empty array', () => {
-    expect(Array.isArray(AutoCompleteCommands)).toBe(true);
-    expect(AutoCompleteCommands.length).toBeGreaterThan(0);
+  it('loads a non-empty array', async () => {
+    const commands = await loadAutoCompleteCommands();
+    expect(Array.isArray(commands)).toBe(true);
+    expect(commands.length).toBeGreaterThan(0);
   });
 
-  it('each command has required properties', () => {
-    AutoCompleteCommands.forEach((cmd) => {
+  it('each command has required properties', async () => {
+    const commands = await loadAutoCompleteCommands();
+    commands.forEach((cmd) => {
       expect(cmd).toHaveProperty('name');
       expect(typeof cmd.name).toBe('string');
       expect(cmd.name.length).toBeGreaterThan(0);
@@ -82,8 +84,9 @@ describe('AutoCompleteCommands', () => {
     });
   });
 
-  it('contains expected autocomplete handlers by name', () => {
-    const names = AutoCompleteCommands.map((c) => c.name);
+  it('contains expected autocomplete handlers by name', async () => {
+    const commands = await loadAutoCompleteCommands();
+    const names = commands.map((c) => c.name);
     expect(names).toContain('spell');
     expect(names).toContain('merit');
     expect(names).toContain('rule');
