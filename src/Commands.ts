@@ -1,26 +1,23 @@
 import { Command } from "./Command.js";
-import { Hello } from "./commands/Hello.js";
-import { Roll } from "./commands/Roll.js";
-import { Goodbye } from "./commands/Goodbye.js";
-import { SpellCommand } from "./commands/SpellCommand.js";
-import { MeritCommand } from "./commands/MeritCommand.js";
-import { RuleCommand } from "./commands/RuleCommand.js";
-import { TableCommand } from "./commands/TableCommand.js";
-import { ParadoxCommand } from "./commands/ParadoxCommand.js";
-import { CastCommand } from "./commands/CastCommand.js";
-import { AttackCommand } from "./commands/AttackCommand.js";
-import { Post } from "./commands/Post.js";
+import { discoverModules } from "./utils/loadCommands.js";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 
-export const Commands: Command[] = [
-    Hello,
-    Roll,
-    Goodbye,
-    SpellCommand,
-    MeritCommand,
-    RuleCommand,
-    TableCommand,
-    ParadoxCommand,
-    CastCommand,
-    AttackCommand,
-    Post,
-];
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+function isCommand(mod: unknown): mod is Command {
+  return (
+    typeof mod === "object" &&
+    mod !== null &&
+    "name" in mod &&
+    "description" in mod &&
+    "run" in mod &&
+    typeof (mod as Command).run === "function"
+  );
+}
+
+export const Commands: Command[] = await discoverModules(
+  join(__dirname, "commands"),
+  isCommand,
+  "command",
+);
