@@ -3,9 +3,14 @@
 ## Run
 
 ```bash
-npm start          # tsx src/Bot.ts (dev)
+npm start          # node --import tsx/esm src/Bot.ts
 npm run startnot   # tsc && node dist/Bot.js (prod)
 ```
+
+> **⚠️ DO NOT change `npm start` to bare `tsx src/Bot.ts`.** Pterodactyl's tsx
+> defaults to CJS output which does not support top-level `await` (used for
+> OTel instrumentation import). The `--import tsx/esm` flag forces ESM mode.
+> See the comment at the top of `src/Bot.ts` for details.
 
 Requires Node >=22 and a `.env` file with:
 

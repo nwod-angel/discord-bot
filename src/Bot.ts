@@ -1,3 +1,11 @@
+// ── Entry Point ──────────────────────────────────────────────────
+// CRITICAL: This file uses top-level await (line 10: await import()).
+// The start script MUST use "node --import tsx/esm" (NOT bare "tsx")
+// because Pterodactyl's tsx defaults to CJS output which does not
+// support top-level await. If you see "Top-level await is currently
+// not supported with the cjs output format", the start script has
+// been regressed. Restore it to: node --import tsx/esm src/Bot.ts
+
 import * as dotenv from 'dotenv'
 dotenv.config(); //initialize dotenv — MUST be before instrumentation import
 
