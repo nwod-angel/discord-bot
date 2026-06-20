@@ -112,7 +112,7 @@ export const SpellCommand: Command = {
             if(practice) { parameters.push(`Practice: ${practice}`) }
             
             let uniqArcana = [...new Set(spells.map(s => s.primaryArcana.toString()))]
-            for(let listedArcana in uniqArcana){
+            for(let listedArcana of uniqArcana){
                 let icon = arcanum.filter(a => a.name.toLowerCase() === Arcana[listedArcana].toLowerCase())[0].icon
                 let name = `${icon} ${Arcana[listedArcana]}`
                 let spellEmbed = new EmbedBuilder()
@@ -126,7 +126,7 @@ export const SpellCommand: Command = {
                 } else {
                     let uniqDots = [...new Set(arcanaSpellList.map(s => s.dots() || 0))]
                     uniqDots.forEach(listedDots => {
-                        let dotSpellList = spells.filter(s => s.dots() === listedDots)
+                        let dotSpellList = arcanaSpellList.filter(s => s.dots() === listedDots)
                         let name = `${Arcana[listedArcana]} ${listedDots}`
                         let value = dotSpellList.map(s => s.name).join('\n')
                         if (name && value) {
