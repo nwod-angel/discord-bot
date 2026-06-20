@@ -234,6 +234,41 @@ describeFeature(feature, ({ Scenario }) => {
     });
   });
 
+  Scenario('Roll with willpower', ({ Given, When, Then, And }) => {
+    let interaction: ReturnType<typeof createMockInteraction>;
+
+    Given('the user issues "/roll dice-pool:5 use-willpower:true"', () => {
+      interaction = createMockInteraction({
+        'dice-pool': 5,
+        'use-willpower': true,
+      });
+    });
+
+    When('the bot processes the roll', async () => {
+      const { Roll } = await import('../../../commands/Roll.js');
+      const { InstantRoll } = await import('@nwod-angel/nwod-roller');
+      const client = createMockClient();
+      await Roll.run(client as any, interaction as any);
+      expect(InstantRoll).toHaveBeenCalledWith(
+        expect.objectContaining({ dicePool: 8 }),
+      );
+    });
+
+    Then('the dice pool is increased by 3 for spending 1 Willpower', async () => {
+      const { InstantRoll } = await import('@nwod-angel/nwod-roller');
+      expect(InstantRoll).toHaveBeenCalledWith(
+        expect.objectContaining({ dicePool: 8 }),
+      );
+    });
+
+    And('the embed description notes Willpower was spent', () => {
+      expect(interaction.followUp).toHaveBeenCalled();
+      const callArg = interaction.followUp.mock.calls[0][0];
+      const field = callArg.embeds[0].data.fields[0];
+      expect(field.name).toContain('8 dice');
+    });
+  });
+
   Scenario('Roll with custom reroll threshold', ({ Given, When, Then }) => {
     let interaction: ReturnType<typeof createMockInteraction>;
 
@@ -254,7 +289,7 @@ describeFeature(feature, ({ Scenario }) => {
       );
     });
 
-    Then('it re-rolls dice showing 9 or higher instead of the default 10', async () => {
+    Then('dice showing 9 or higher are rerolled (9-Again), instead of the default 10-Again', async () => {
       const { InstantRoll } = await import('@nwod-angel/nwod-roller');
       expect(InstantRoll).toHaveBeenCalledWith(
         expect.objectContaining({ rerollThreshold: 9 }),

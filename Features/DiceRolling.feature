@@ -31,10 +31,16 @@ Feature: Dice Rolling
     When the bot processes the roll
     Then it re-rolls dice that failed on the first attempt
 
+  Scenario: Roll with willpower
+    Given the user issues "/roll dice-pool:5 use-willpower:true"
+    When the bot processes the roll
+    Then the dice pool is increased by 3 for spending 1 Willpower
+    And the embed description notes Willpower was spent
+
   Scenario: Roll with custom reroll threshold
     Given the user issues "/roll dice-pool:5 reroll-threshold:9"
     When the bot processes the roll
-    Then it re-rolls dice showing 9 or higher instead of the default 10
+    Then dice showing 9 or higher are rerolled (9-Again), instead of the default 10-Again
 
   Scenario: Named roll
     Given the user issues "/roll dice-pool:5 name:Marcus"
