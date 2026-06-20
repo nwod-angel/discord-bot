@@ -17,10 +17,6 @@ import { validateApiConfig } from "./apiClient.js";
 // Validate API config now that dotenv.config() has run
 validateApiConfig();
 
-process.on('unhandledRejection', error => {
-	logger.error({ err: error }, 'Unhandled promise rejection');
-});
-
 logger.info("Bot is starting...");
 // import discord = require("discord.js")
 import ready from "./listeners/ready.js";
@@ -78,4 +74,39 @@ unhandledException(client);
 
 client.login(token);
 
-// logger.debug(client);
+// ── Graceful Shutdown ───────────────────────────────────────────
+// Adapted from Rawon's shutdown pattern (research report 02, Section 9).
+// Ensures clean disconnect from Discord gateway on process termination.
+
+let isShuttingDown = false;
+
+function gracefulShutdown(signal: string): void {
+    if (isShuttingDown) return;
+    isShuttingDown = true;
+
+    logger.info({ signal }, "Received shutdown signal — cleaning up...");
+
+    try {
+        client.destroy();
+        logger.info("Discord client destroyed.");
+    } catch (err) {
+        logger.error({ err }, "Error during client.destroy()");
+    }
+
+    process.exit(0);
+}
+
+process.on("SIGINT", () => gracefulShutdown("SIGINT"));
+process.on("SIGTERM", () => gracefulShutdown("SIGTERM"));
+
+// Process-level exception handlers (complement the discord.js client handlers)
+process.on("uncaughtException", (err) => {
+    logger.fatal({ err }, "Uncaught exception — shutting down");
+    try { client.destroy(); } catch { /* best-effort */ }
+    process.exit(1);
+});
+
+process.on("unhandledRejection", (reason) => {
+    logger.error({ err: reason }, "Unhandled promise rejection (process-level)");
+    // Log but don't exit — let the process continue (matches current behavior)
+});

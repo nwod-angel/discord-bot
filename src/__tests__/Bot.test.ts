@@ -7,6 +7,7 @@ vi.mock('../logger.js', () => ({
     debug: vi.fn(),
     warn: vi.fn(),
     error: vi.fn(),
+    fatal: vi.fn(),
     child: vi.fn().mockReturnThis(),
   },
   createChildLogger: vi.fn().mockReturnValue({
@@ -14,6 +15,7 @@ vi.mock('../logger.js', () => ({
     debug: vi.fn(),
     warn: vi.fn(),
     error: vi.fn(),
+    fatal: vi.fn(),
   }),
 }));
 
@@ -29,6 +31,7 @@ const mockClientInstance = {
   login: mockLogin,
   on: vi.fn(),
   once: vi.fn(),
+  destroy: vi.fn(),
   user: null,
   application: null,
 };
@@ -72,10 +75,20 @@ import { logger } from '../logger.js';
 // ── Tests ───────────────────────────────────────────────────────
 describe('Bot', () => {
   let originalEnv: NodeJS.ProcessEnv;
+  let originalProcessOn: typeof process.on;
+  let processHandlers: Record<string, Function>;
 
   beforeEach(() => {
     vi.clearAllMocks();
     originalEnv = { ...process.env };
+    processHandlers = {};
+
+    // Intercept process.on to capture registered handlers
+    originalProcessOn = process.on.bind(process);
+    process.on = vi.fn((event: string, handler: Function) => {
+      processHandlers[event] = handler;
+      return process;
+    }) as any;
 
     // Set required env vars
     process.env['DISCORD_TOKEN'] = 'test-token-123';
@@ -85,6 +98,7 @@ describe('Bot', () => {
 
   afterEach(() => {
     process.env = originalEnv;
+    process.on = originalProcessOn;
   });
 
   /**
@@ -190,5 +204,119 @@ describe('Bot', () => {
     );
 
     delete (global as any).fetch;
+  });
+
+  // ── Graceful Shutdown ──────────────────────────────────────────
+
+  it('registers SIGINT handler', async () => {
+    await loadBot();
+    expect(processHandlers['SIGINT']).toBeDefined();
+  });
+
+  it('registers SIGTERM handler', async () => {
+    await loadBot();
+    expect(processHandlers['SIGTERM']).toBeDefined();
+  });
+
+  it('registers process-level uncaughtException handler', async () => {
+    await loadBot();
+    expect(processHandlers['uncaughtException']).toBeDefined();
+  });
+
+  it('registers process-level unhandledRejection handler', async () => {
+    await loadBot();
+    expect(processHandlers['unhandledRejection']).toBeDefined();
+  });
+
+  it('SIGINT calls client.destroy() and process.exit(0)', async () => {
+    const mockExit = vi.spyOn(process, 'exit').mockImplementation(() => undefined as never);
+    await loadBot();
+
+    processHandlers['SIGINT']();
+
+    expect(mockClientInstance.destroy).toHaveBeenCalledTimes(1);
+    expect(logger.info).toHaveBeenCalledWith(
+      { signal: 'SIGINT' },
+      'Received shutdown signal — cleaning up...',
+    );
+    expect(mockExit).toHaveBeenCalledWith(0);
+
+    mockExit.mockRestore();
+  });
+
+  it('SIGTERM calls client.destroy() and process.exit(0)', async () => {
+    const mockExit = vi.spyOn(process, 'exit').mockImplementation(() => undefined as never);
+    await loadBot();
+
+    processHandlers['SIGTERM']();
+
+    expect(mockClientInstance.destroy).toHaveBeenCalledTimes(1);
+    expect(logger.info).toHaveBeenCalledWith(
+      { signal: 'SIGTERM' },
+      'Received shutdown signal — cleaning up...',
+    );
+    expect(mockExit).toHaveBeenCalledWith(0);
+
+    mockExit.mockRestore();
+  });
+
+  it('double signal is idempotent (isShuttingDown guard)', async () => {
+    const mockExit = vi.spyOn(process, 'exit').mockImplementation(() => undefined as never);
+    await loadBot();
+
+    processHandlers['SIGINT']();
+    processHandlers['SIGINT']();
+
+    expect(mockClientInstance.destroy).toHaveBeenCalledTimes(1);
+    expect(mockExit).toHaveBeenCalledTimes(1);
+
+    mockExit.mockRestore();
+  });
+
+  it('uncaughtException destroys client and exits with code 1', async () => {
+    const mockExit = vi.spyOn(process, 'exit').mockImplementation(() => undefined as never);
+    await loadBot();
+
+    const testError = new Error('test uncaught');
+    processHandlers['uncaughtException'](testError);
+
+    expect(mockClientInstance.destroy).toHaveBeenCalledTimes(1);
+    expect(logger.fatal).toHaveBeenCalledWith(
+      { err: testError },
+      'Uncaught exception — shutting down',
+    );
+    expect(mockExit).toHaveBeenCalledWith(1);
+
+    mockExit.mockRestore();
+  });
+
+  it('process-level unhandledRejection logs but does not exit', async () => {
+    const mockExit = vi.spyOn(process, 'exit').mockImplementation(() => undefined as never);
+    await loadBot();
+
+    const testReason = new Error('test rejection');
+    processHandlers['unhandledRejection'](testReason);
+
+    expect(logger.error).toHaveBeenCalledWith(
+      { err: testReason },
+      'Unhandled promise rejection (process-level)',
+    );
+    expect(mockExit).not.toHaveBeenCalled();
+
+    mockExit.mockRestore();
+  });
+
+  it('uncaughtException handles destroy() failure gracefully', async () => {
+    const mockExit = vi.spyOn(process, 'exit').mockImplementation(() => undefined as never);
+    mockClientInstance.destroy.mockImplementationOnce(() => { throw new Error('destroy failed'); });
+    await loadBot();
+
+    const testError = new Error('test uncaught');
+    processHandlers['uncaughtException'](testError);
+
+    // Should still exit even if destroy() throws
+    expect(mockExit).toHaveBeenCalledWith(1);
+
+    mockExit.mockRestore();
   });
 });
