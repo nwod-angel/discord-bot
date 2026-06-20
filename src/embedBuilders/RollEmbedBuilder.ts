@@ -3,6 +3,7 @@ import {
   ColorResolvable,
   Colors,
 } from "discord.js";
+import { chunkText } from "./chunkText.js";
 
 /**
  * Map a RollResult code to a display label and Discord colour.
@@ -25,43 +26,66 @@ export function resultPresentation(
 }
 
 /**
- * Build the roll embed from common result data.
+ * Fluent builder for roll embeds.
+ *
+ * Usage:
+ *   new RollEmbed({
+ *     actionResult: label,
+ *     description,
+ *     name,
+ *     dicePool,
+ *     successes,
+ *     rollDescription,
+ *     colour,
+ *     footerText,
+ *   })
+ *     .withThumbnail(url)
+ *     .build();
  */
-export function buildRollEmbed(params: {
-  actionResult: string;
-  description: string;
-  name: string;
-  dicePool: number;
-  successes: number;
-  rollDescription: string;
-  colour: ColorResolvable;
-  footerText: string;
-  thumbnailUrl?: string;
-}): EmbedBuilder {
-  const embed = new EmbedBuilder()
-    .setTitle([params.actionResult, params.description].join(" "))
-    .setColor(params.colour)
-    .setFooter({ text: params.footerText });
+export class RollEmbed {
+    private embed: EmbedBuilder;
+    private name: string;
+    private dicePool: number;
+    private successes: number;
 
-  if (params.thumbnailUrl) {
-    embed.setThumbnail(params.thumbnailUrl);
-  }
+    constructor(params: {
+        actionResult: string;
+        description: string;
+        name: string;
+        dicePool: number;
+        successes: number;
+        rollDescription: string;
+        colour: ColorResolvable;
+        footerText: string;
+    }) {
+        this.name = params.name;
+        this.dicePool = params.dicePool;
+        this.successes = params.successes;
 
-  const descriptionChunks =
-    params.rollDescription.match(
-      /(?:(?:.){1,1000}(?:$|\n)|(?:.){1,1000}(?: |$|\n))/sgm,
-    ) || [];
+        this.embed = new EmbedBuilder()
+            .setTitle([params.actionResult, params.description].join(" "))
+            .setColor(params.colour)
+            .setFooter({ text: params.footerText });
 
-  descriptionChunks.forEach((chunk: string, index: number) => {
-    embed.addFields({
-      name:
-        index === 0
-          ? `${params.name} rolled ${params.dicePool} dice and got __${params.successes} success${params.successes === 1 ? "" : "es"}__.`
-          : "(continued)",
-      value: chunk,
-      inline: false,
-    });
-  });
+        const descriptionChunks = chunkText(params.rollDescription);
+        descriptionChunks.forEach((chunk: string, index: number) => {
+            this.embed.addFields({
+                name:
+                    index === 0
+                        ? `${this.name} rolled ${this.dicePool} dice and got __${this.successes} success${this.successes === 1 ? "" : "es"}__.`
+                        : "(continued)",
+                value: chunk,
+                inline: false,
+            });
+        });
+    }
 
-  return embed;
+    withThumbnail(url: string): this {
+        this.embed.setThumbnail(url);
+        return this;
+    }
+
+    build(): EmbedBuilder {
+        return this.embed;
+    }
 }

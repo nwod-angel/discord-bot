@@ -46,15 +46,38 @@ vi.mock('../../data/MeritProvider.js', () => ({
   },
 }));
 
+const { MeritEmbed } = vi.hoisted(() => {
+  const mockEmbed = {
+    data: { fields: [], title: '', description: '', footer: { text: '' } },
+    setTitle: vi.fn(function (this: any, title: string) { this.data.title = title; return this; }),
+    setFooter: vi.fn(function (this: any, footer: any) { this.data.footer = footer; return this; }),
+    addFields: vi.fn(function (this: any, ...args: any[]) {
+      for (const field of args) {
+        if (Array.isArray(field)) { this.data.fields.push(...field); }
+        else { this.data.fields.push(field); }
+      }
+      return this;
+    }),
+  };
+  const chain: Record<string, any> = {
+    withRequirements: vi.fn(),
+    withDescription: vi.fn(),
+    withLevels: vi.fn(),
+    withSources: vi.fn(),
+    build: vi.fn().mockReturnValue({ ...mockEmbed }),
+  };
+  for (const key of ['withRequirements', 'withDescription', 'withLevels', 'withSources']) {
+    chain[key].mockReturnValue(chain);
+  }
+  return { MeritEmbed: vi.fn().mockImplementation(() => ({ ...chain })) };
+});
+
 vi.mock('../../embedBuilders/MeritEmbedBuilder.js', () => ({
-  MeritEmbedBuilder: {
-    buildMeritEmbed: vi.fn(),
-  },
+  MeritEmbed,
 }));
 
 import { MeritCommand } from '../../commands/MeritCommand.js';
 import MeritProvider from '../../data/MeritProvider.js';
-import { MeritEmbedBuilder } from '../../embedBuilders/MeritEmbedBuilder.js';
 import { createMockInteraction, createMockClient } from './helpers.js';
 
 describe('MeritCommand', () => {
@@ -94,9 +117,8 @@ describe('MeritCommand', () => {
 
     await MeritCommand.run(client, interaction as any);
 
-    expect(vi.mocked(MeritEmbedBuilder.buildMeritEmbed)).toHaveBeenCalledWith(
-      mockMerit,
-      expect.any(Object)
+    expect(vi.mocked(MeritEmbed)).toHaveBeenCalledWith(
+      mockMerit
     );
   });
 

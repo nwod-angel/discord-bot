@@ -21,8 +21,7 @@ vi.mock('discord.js', () => ({
   }),
 }));
 
-import { SpellEmbedBuilder } from '../../embedBuilders/SpellEmbedBuilder.js';
-import { EmbedBuilder } from 'discord.js';
+import { SpellEmbed } from '../../embedBuilders/SpellEmbedBuilder.js';
 
 function createMockSpell(overrides: any = {}) {
   return {
@@ -42,23 +41,22 @@ function createMockSpell(overrides: any = {}) {
   };
 }
 
-describe('SpellEmbedBuilder', () => {
-  let embed: EmbedBuilder;
-
+describe('SpellEmbed', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    embed = new EmbedBuilder();
   });
 
   it('sets title via spell.titleString()', () => {
     const spell = createMockSpell();
-    SpellEmbedBuilder.buildSpellEmbed(spell as any, embed);
+    const embed = new SpellEmbed(spell as any).build();
     expect(embed.data.title).toBe('Fireball (Forces 3)');
   });
 
   it('adds Requirements field when spell has requirements', () => {
     const spell = createMockSpell();
-    SpellEmbedBuilder.buildSpellEmbed(spell as any, embed);
+    const embed = new SpellEmbed(spell as any)
+      .withRequirements()
+      .build();
     const reqField = embed.data.fields.find((f: any) => f.name === 'Requirements');
     expect(reqField).toBeDefined();
     expect(reqField.value).toBe('Forces •••');
@@ -66,14 +64,18 @@ describe('SpellEmbedBuilder', () => {
 
   it('does not add Requirements field when spell has no requirements', () => {
     const spell = createMockSpell({ requirements: [], requirementsString: vi.fn().mockReturnValue('') });
-    SpellEmbedBuilder.buildSpellEmbed(spell as any, embed);
+    const embed = new SpellEmbed(spell as any)
+      .withRequirements()
+      .build();
     const reqField = embed.data.fields.find((f: any) => f.name === 'Requirements');
     expect(reqField).toBeUndefined();
   });
 
   it('adds Practice, Action, Duration, Aspect, Cost fields', () => {
     const spell = createMockSpell();
-    SpellEmbedBuilder.buildSpellEmbed(spell as any, embed);
+    const embed = new SpellEmbed(spell as any)
+      .withDetails()
+      .build();
     const fieldNames = embed.data.fields.map((f: any) => f.name);
     expect(fieldNames).toContain('Practice');
     expect(fieldNames).toContain('Action');
@@ -84,7 +86,9 @@ describe('SpellEmbedBuilder', () => {
 
   it('chunks long description', () => {
     const spell = createMockSpell({ description: 'A'.repeat(2500) });
-    SpellEmbedBuilder.buildSpellEmbed(spell as any, embed);
+    const embed = new SpellEmbed(spell as any)
+      .withDescription()
+      .build();
     const effectFields = embed.data.fields.filter((f: any) => f.name.startsWith('Effect'));
     expect(effectFields.length).toBe(3);
     expect(effectFields[0].name).toBe('Effect (1/3)');
@@ -93,9 +97,23 @@ describe('SpellEmbedBuilder', () => {
 
   it('adds Sources field', () => {
     const spell = createMockSpell();
-    SpellEmbedBuilder.buildSpellEmbed(spell as any, embed);
+    const embed = new SpellEmbed(spell as any)
+      .withSources()
+      .build();
     const srcField = embed.data.fields.find((f: any) => f.name === 'Sources');
     expect(srcField).toBeDefined();
     expect(srcField.value).toBe('Core Rulebook p.123');
+  });
+
+  it('supports fluent chaining', () => {
+    const spell = createMockSpell();
+    const embed = new SpellEmbed(spell as any)
+      .withRequirements()
+      .withDetails()
+      .withDescription()
+      .withSources()
+      .build();
+    expect(embed.data.title).toBe('Fireball (Forces 3)');
+    expect(embed.data.fields.length).toBeGreaterThan(0);
   });
 });

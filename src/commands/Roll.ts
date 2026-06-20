@@ -14,7 +14,7 @@ import {
   RollApiResponse,
   fetchCharacterPortraits,
 } from "../apiClient.js";
-import { resultPresentation, buildRollEmbed } from "../embedBuilders/RollEmbedBuilder.js";
+import { resultPresentation, RollEmbed } from "../embedBuilders/RollEmbedBuilder.js";
 
 // ── Command ────────────────────────────────────────────────────
 
@@ -175,7 +175,7 @@ export const Roll: Command = {
         const elapsedMs = Math.round(performance.now() - rollStart);
         const { label, colour } = resultPresentation(apiResult.resultCode);
 
-        const embed = buildRollEmbed({
+        const embedBuilder = new RollEmbed({
           actionResult: label,
           description,
           name: apiResult.characterName || name,
@@ -186,8 +186,13 @@ export const Roll: Command = {
           footerText: apiResult.id
             ? `roll-${apiResult.id} · ${elapsedMs}ms`
             : `${interaction.id} · ${elapsedMs}ms`,
-          thumbnailUrl: apiResult.characterPortrait,
         });
+
+        if (apiResult.characterPortrait) {
+          embedBuilder.withThumbnail(apiResult.characterPortrait);
+        }
+
+        const embed = embedBuilder.build();
 
         await interaction.followUp({ embeds: [embed] });
         logger.debug({
@@ -277,7 +282,7 @@ export const Roll: Command = {
     }
 
     const { label, colour } = resultPresentation(result);
-    const embed = buildRollEmbed({
+    const embedBuilder = new RollEmbed({
       actionResult: label,
       description,
       name,
@@ -286,8 +291,13 @@ export const Roll: Command = {
       rollDescription,
       colour,
       footerText: interaction.id,
-      thumbnailUrl,
     });
+
+    if (thumbnailUrl) {
+      embedBuilder.withThumbnail(thumbnailUrl);
+    }
+
+    const embed = embedBuilder.build();
 
     await interaction.followUp({ embeds: [embed] });
     logger.debug({

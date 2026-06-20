@@ -21,8 +21,7 @@ vi.mock('discord.js', () => ({
   }),
 }));
 
-import { RuleEmbedBuilder } from '../../embedBuilders/RuleEmbedBuilder.js';
-import { EmbedBuilder } from 'discord.js';
+import { RuleEmbed } from '../../embedBuilders/RuleEmbedBuilder.js';
 
 function createMockRule(overrides: any = {}) {
   return {
@@ -36,24 +35,23 @@ function createMockRule(overrides: any = {}) {
   };
 }
 
-describe('RuleEmbedBuilder', () => {
-  let embed: EmbedBuilder;
-
+describe('RuleEmbed', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    embed = new EmbedBuilder();
   });
 
-  describe('buildSingleRuleEmbed', () => {
+  describe('single rule', () => {
     it('sets title from rule.name', () => {
       const rule = createMockRule();
-      RuleEmbedBuilder.buildSingleRuleEmbed(rule as any, embed);
+      const embed = new RuleEmbed(rule as any).build();
       expect(embed.data.title).toBe('Willpower');
     });
 
     it('adds paragraphs with prefix as field name', () => {
       const rule = createMockRule();
-      RuleEmbedBuilder.buildSingleRuleEmbed(rule as any, embed);
+      const embed = new RuleEmbed(rule as any)
+        .withParagraphs()
+        .build();
       const defField = embed.data.fields.find((f: any) => f.name === 'Definition');
       expect(defField).toBeDefined();
       expect(defField.value).toBe('Willpower is a measure of determination.');
@@ -61,7 +59,9 @@ describe('RuleEmbedBuilder', () => {
 
     it('adds example paragraphs with italic formatting', () => {
       const rule = createMockRule();
-      RuleEmbedBuilder.buildSingleRuleEmbed(rule as any, embed);
+      const embed = new RuleEmbed(rule as any)
+        .withParagraphs()
+        .build();
       const exField = embed.data.fields.find((f: any) => f.name === 'Example');
       expect(exField).toBeDefined();
       expect(exField.value).toBe('*Example: spending willpower.*');
@@ -69,7 +69,10 @@ describe('RuleEmbedBuilder', () => {
 
     it('adds Sources field', () => {
       const rule = createMockRule();
-      RuleEmbedBuilder.buildSingleRuleEmbed(rule as any, embed);
+      const embed = new RuleEmbed(rule as any)
+        .withParagraphs()
+        .withSources()
+        .build();
       const srcField = embed.data.fields.find((f: any) => f.name === 'Sources');
       expect(srcField).toBeDefined();
       expect(srcField.value).toBe('Core Rulebook p.50');
@@ -79,25 +82,37 @@ describe('RuleEmbedBuilder', () => {
       const rule = createMockRule({
         paragraphs: [{ text: 'A'.repeat(2500), prefix: 'Long', example: false }],
       });
-      RuleEmbedBuilder.buildSingleRuleEmbed(rule as any, embed);
+      const embed = new RuleEmbed(rule as any)
+        .withParagraphs()
+        .build();
       const longFields = embed.data.fields.filter((f: any) => f.name === 'Long');
       expect(longFields.length).toBe(3);
     });
+
+    it('supports fluent chaining', () => {
+      const rule = createMockRule();
+      const embed = new RuleEmbed(rule as any)
+        .withParagraphs()
+        .withSources()
+        .build();
+      expect(embed.data.title).toBe('Willpower');
+      expect(embed.data.fields.length).toBeGreaterThan(0);
+    });
   });
 
-  describe('buildMultipleRulesEmbed', () => {
+  describe('multiple rules', () => {
     it('sets title with Showing X of Y', () => {
       const rules = [
         createMockRule({ name: 'Rule One' }),
         createMockRule({ name: 'Rule Two' }),
       ];
-      RuleEmbedBuilder.buildMultipleRulesEmbed(rules as any, 'Rule', undefined, embed);
+      const embed = RuleEmbed.buildMultipleRules(rules as any, { name: 'Rule' });
       expect(embed.data.title).toBe('Showing 2 of 2');
     });
 
     it('adds search terms field', () => {
       const rules = [createMockRule({ name: 'Rule One' })];
-      RuleEmbedBuilder.buildMultipleRulesEmbed(rules as any, 'Rule', 'test', embed);
+      const embed = RuleEmbed.buildMultipleRules(rules as any, { name: 'Rule', search: 'test' });
       const searchField = embed.data.fields.find((f: any) => f.name === 'Search');
       expect(searchField).toBeDefined();
       expect(searchField.value).toContain('Name: Rule');
@@ -109,7 +124,7 @@ describe('RuleEmbedBuilder', () => {
         createMockRule({ name: 'Alpha' }),
         createMockRule({ name: 'Beta' }),
       ];
-      RuleEmbedBuilder.buildMultipleRulesEmbed(rules as any, undefined, undefined, embed);
+      const embed = RuleEmbed.buildMultipleRules(rules as any);
       const listField = embed.data.fields.find((f: any) => f.name.includes('Showing'));
       expect(listField.value).toContain('Alpha');
       expect(listField.value).toContain('Beta');

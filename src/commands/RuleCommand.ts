@@ -4,7 +4,7 @@ import { logger } from "../logger.js"
 import RuleProvider from "../data/RuleProvider"
 import { NwodSymbols } from "@nwod-angel/nwod-core"
 import AsciiTable from 'ascii-table'
-import { RuleEmbedBuilder } from "../embedBuilders/RuleEmbedBuilder.js"
+import { RuleEmbed } from "../embedBuilders/RuleEmbedBuilder.js"
 
 export const RuleCommand: Command = {
     name: "rule",
@@ -64,9 +64,14 @@ export const RuleCommand: Command = {
             })
         } else if (rules.length === 1) {
             let rule = rules[0]
-            RuleEmbedBuilder.buildSingleRuleEmbed(rule, embed)
+            embed = new RuleEmbed(rule)
+                .withParagraphs()
+                .withSources()
+                .build()
+                .setFooter({ text: interaction.id })
         } else {
-            RuleEmbedBuilder.buildMultipleRulesEmbed(rules, name, search, embed)
+            embed = RuleEmbed.buildMultipleRules(rules, { name, search })
+                .setFooter({ text: interaction.id })
         }
 
         logger.debug({

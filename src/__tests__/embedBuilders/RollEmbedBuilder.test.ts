@@ -23,7 +23,7 @@ vi.mock('discord.js', () => ({
   Colors: { Default: 0, NotQuiteBlack: 0x23272a, Yellow: 0xffff00, Red: 0xff0000, Green: 0x00ff00 },
 }));
 
-import { resultPresentation, buildRollEmbed } from '../../embedBuilders/RollEmbedBuilder.js';
+import { resultPresentation, RollEmbed } from '../../embedBuilders/RollEmbedBuilder.js';
 
 describe('RollEmbedBuilder', () => {
   beforeEach(() => {
@@ -52,9 +52,9 @@ describe('RollEmbedBuilder', () => {
     });
   });
 
-  describe('buildRollEmbed', () => {
+  describe('RollEmbed', () => {
     it('sets title with actionResult and description', () => {
-      const embed = buildRollEmbed({
+      const embed = new RollEmbed({
         actionResult: '✅ Success',
         description: '*Attack*',
         name: 'Alice',
@@ -63,12 +63,12 @@ describe('RollEmbedBuilder', () => {
         rollDescription: 'Rolled 5 dice',
         colour: 0x00ff00,
         footerText: 'test-footer',
-      });
+      }).build();
       expect(embed.data.title).toBe('✅ Success *Attack*');
     });
 
     it('sets footer text', () => {
-      const embed = buildRollEmbed({
+      const embed = new RollEmbed({
         actionResult: '🎲 Roll',
         description: '',
         name: 'Bob',
@@ -77,12 +77,12 @@ describe('RollEmbedBuilder', () => {
         rollDescription: 'Rolled 3 dice',
         colour: 0,
         footerText: 'my-footer',
-      });
+      }).build();
       expect(embed.data.footer.text).toBe('my-footer');
     });
 
-    it('sets thumbnail when thumbnailUrl provided', () => {
-      const embed = buildRollEmbed({
+    it('sets thumbnail when withThumbnail is called', () => {
+      const embed = new RollEmbed({
         actionResult: '🎲 Roll',
         description: '',
         name: 'Bob',
@@ -91,13 +91,14 @@ describe('RollEmbedBuilder', () => {
         rollDescription: 'Rolled 3 dice',
         colour: 0,
         footerText: 'f',
-        thumbnailUrl: 'https://example.com/portrait.png',
-      });
+      })
+        .withThumbnail('https://example.com/portrait.png')
+        .build();
       expect(embed.data.thumbnail).toBe('https://example.com/portrait.png');
     });
 
-    it('does not set thumbnail when thumbnailUrl is undefined', () => {
-      const embed = buildRollEmbed({
+    it('does not set thumbnail when withThumbnail is not called', () => {
+      const embed = new RollEmbed({
         actionResult: '🎲 Roll',
         description: '',
         name: 'Bob',
@@ -106,12 +107,12 @@ describe('RollEmbedBuilder', () => {
         rollDescription: 'Rolled 3 dice',
         colour: 0,
         footerText: 'f',
-      });
+      }).build();
       expect(embed.data.thumbnail).toBe('');
     });
 
     it('adds roll description chunks as fields', () => {
-      const embed = buildRollEmbed({
+      const embed = new RollEmbed({
         actionResult: '✅ Success',
         description: '',
         name: 'Alice',
@@ -120,14 +121,14 @@ describe('RollEmbedBuilder', () => {
         rollDescription: 'Rolled 5 dice: 8, 2, 7, 9, 3',
         colour: 0x00ff00,
         footerText: 'f',
-      });
+      }).build();
       expect(embed.data.fields.length).toBeGreaterThan(0);
       expect(embed.data.fields[0].name).toContain('Alice rolled 5 dice');
       expect(embed.data.fields[0].name).toContain('3 successes');
     });
 
     it('uses singular "success" for 1 success', () => {
-      const embed = buildRollEmbed({
+      const embed = new RollEmbed({
         actionResult: '✅ Success',
         description: '',
         name: 'Alice',
@@ -136,9 +137,26 @@ describe('RollEmbedBuilder', () => {
         rollDescription: 'Rolled 5 dice',
         colour: 0x00ff00,
         footerText: 'f',
-      });
+      }).build();
       expect(embed.data.fields[0].name).toContain('1 success');
       expect(embed.data.fields[0].name).not.toContain('1 successess');
+    });
+
+    it('supports fluent chaining', () => {
+      const embed = new RollEmbed({
+        actionResult: '✅ Success',
+        description: '',
+        name: 'Alice',
+        dicePool: 5,
+        successes: 3,
+        rollDescription: 'Rolled 5 dice',
+        colour: 0x00ff00,
+        footerText: 'f',
+      })
+        .withThumbnail('https://example.com/img.png')
+        .build();
+      expect(embed.data.title).toBeDefined();
+      expect(embed.data.thumbnail).toBe('https://example.com/img.png');
     });
   });
 });

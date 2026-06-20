@@ -2,29 +2,56 @@ import { Spell } from "@nwod-angel/nwod-core";
 import { EmbedBuilder } from "discord.js";
 import { chunkText } from "./chunkText.js";
 
-export const SpellEmbedBuilder = {
+/**
+ * Fluent builder for spell embeds.
+ *
+ * Usage:
+ *   new SpellEmbed(spell)
+ *     .withRequirements()
+ *     .withDetails()
+ *     .withDescription()
+ *     .withSources()
+ *     .build();
+ */
+export class SpellEmbed {
+    private embed = new EmbedBuilder();
 
-    buildSpellEmbed(spell: Spell, embed: EmbedBuilder) {
+    constructor(private spell: Spell) {
+        this.embed.setTitle(spell.titleString());
+    }
 
-        embed.setTitle(spell.titleString())
-
-        if (spell.requirements && spell.requirements.length > 0) {
-            embed.addFields({ name: 'Requirements', value: spell.requirementsString(), inline: false })
+    withRequirements(): this {
+        if (this.spell.requirements && this.spell.requirements.length > 0) {
+            this.embed.addFields({ name: 'Requirements', value: this.spell.requirementsString(), inline: false });
         }
+        return this;
+    }
 
-        embed.addFields(
-            { name: 'Practice', value: spell.practiceString(), inline: true },
-            { name: 'Action', value: spell.action, inline: true },
-            { name: 'Duration', value: spell.duration, inline: true },
-            { name: 'Aspect', value: spell.aspect, inline: true },
-            { name: 'Cost', value: spell.cost, inline: true },
-        )
+    withDetails(): this {
+        this.embed.addFields(
+            { name: 'Practice', value: this.spell.practiceString(), inline: true },
+            { name: 'Action', value: this.spell.action, inline: true },
+            { name: 'Duration', value: this.spell.duration, inline: true },
+            { name: 'Aspect', value: this.spell.aspect, inline: true },
+            { name: 'Cost', value: this.spell.cost, inline: true },
+        );
+        return this;
+    }
 
-        const descriptionChunks = chunkText(spell.description)
+    withDescription(): this {
+        const descriptionChunks = chunkText(this.spell.description);
         descriptionChunks.forEach((chunk: string, index: number) => {
-            embed.addFields({ name: `Effect (${index + 1}/${descriptionChunks.length})`, value: chunk, inline: false })
-        })
+            this.embed.addFields({ name: `Effect (${index + 1}/${descriptionChunks.length})`, value: chunk, inline: false });
+        });
+        return this;
+    }
 
-        embed.addFields({ name: 'Sources', value: spell.sourcesString(), inline: false })
+    withSources(): this {
+        this.embed.addFields({ name: 'Sources', value: this.spell.sourcesString(), inline: false });
+        return this;
+    }
+
+    build(): EmbedBuilder {
+        return this.embed;
     }
 }

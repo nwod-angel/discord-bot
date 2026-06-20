@@ -4,7 +4,7 @@ import { logger } from "../logger.js";
 import SpellProvider from "../data/SpellProvider.js";
 import arcanum from "../data/arcanum.js";
 import { Arcana, ArcanaType, Practice, PracticeType } from "@nwod-angel/nwod-core";
-import { SpellEmbedBuilder } from "../embedBuilders/SpellEmbedBuilder.js";
+import { SpellEmbed } from "../embedBuilders/SpellEmbedBuilder.js";
 
 export const SpellCommand: Command = {
     name: "spell",
@@ -88,11 +88,6 @@ export const SpellCommand: Command = {
         }
 
         let embeds = []
-        let embed = new EmbedBuilder()
-            .setFooter({ 
-                text: interaction.id, 
-                // iconURL: 'https://i.imgur.com/AfFp7pu.png'
-            })
 
         if(spells.length === 0) {
             await interaction.followUp({
@@ -101,7 +96,13 @@ export const SpellCommand: Command = {
             })
         } else if(spells.length === 1){
             let spell = spells[0]
-            SpellEmbedBuilder.buildSpellEmbed(spell, embed)
+            let embed = new SpellEmbed(spell)
+                .withRequirements()
+                .withDetails()
+                .withDescription()
+                .withSources()
+                .build()
+                .setFooter({ text: interaction.id })
             embeds.push(embed)
         } else {
             let parameters = []
@@ -178,7 +179,7 @@ export const SpellCommand: Command = {
             guild_id: interaction.guildId,
             endpoint: '/spell',
             interaction_id: interaction.id,
-            embed_title: embed.data.title,
+            embed_title: embeds[0]?.data.title,
         }, '/spell embed built');
         await interaction.followUp({
             ephemeral: true,

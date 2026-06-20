@@ -2,7 +2,7 @@ import { Interaction, Client, ApplicationCommandType, CommandInteraction, EmbedB
 import { Command } from "../Command.js"
 import { logger } from "../logger.js"
 import MeritProvider from "../data/MeritProvider.js"
-import { MeritEmbedBuilder } from "../embedBuilders/MeritEmbedBuilder.js"
+import { MeritEmbed } from "../embedBuilders/MeritEmbedBuilder.js"
 
 export const MeritCommand: Command = {
     name: "merit",
@@ -59,7 +59,13 @@ export const MeritCommand: Command = {
         } else if (merits.length === 1) { // One
             let merit = merits[0]
 
-            MeritEmbedBuilder.buildMeritEmbed(merit, embed)
+            embed = new MeritEmbed(merit)
+                .withRequirements()
+                .withDescription()
+                .withLevels()
+                .withSources()
+                .build()
+                .setFooter({ text: interaction.id })
 
         } else { // More than one
             let meritsToDisplay = merits.slice(0, 25)

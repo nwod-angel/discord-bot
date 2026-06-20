@@ -37,8 +37,7 @@ vi.mock('../../logger.js', () => ({
   },
 }));
 
-import { MeritEmbedBuilder } from '../../embedBuilders/MeritEmbedBuilder.js';
-import { EmbedBuilder } from 'discord.js';
+import { MeritEmbed } from '../../embedBuilders/MeritEmbedBuilder.js';
 
 function createMockMerit(overrides: any = {}) {
   return {
@@ -53,37 +52,40 @@ function createMockMerit(overrides: any = {}) {
   };
 }
 
-describe('MeritEmbedBuilder', () => {
-  let embed: EmbedBuilder;
-
+describe('MeritEmbed', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    embed = new EmbedBuilder();
   });
 
   it('sets title via merit.titleString()', () => {
     const merit = createMockMerit();
-    MeritEmbedBuilder.buildMeritEmbed(merit as any, embed);
+    const embed = new MeritEmbed(merit as any).build();
     expect(embed.data.title).toBe('Ambidextrous (•)');
   });
 
   it('adds Requirements field when merit has requirements', () => {
     const merit = createMockMerit({ hasRequirements: vi.fn().mockReturnValue(true) });
-    MeritEmbedBuilder.buildMeritEmbed(merit as any, embed);
+    const embed = new MeritEmbed(merit as any)
+      .withRequirements()
+      .build();
     const reqField = embed.data.fields.find((f: any) => f.name === 'Requirements');
     expect(reqField).toBeDefined();
   });
 
   it('does not add Requirements field when merit has no requirements', () => {
     const merit = createMockMerit({ hasRequirements: vi.fn().mockReturnValue(false) });
-    MeritEmbedBuilder.buildMeritEmbed(merit as any, embed);
+    const embed = new MeritEmbed(merit as any)
+      .withRequirements()
+      .build();
     const reqField = embed.data.fields.find((f: any) => f.name === 'Requirements');
     expect(reqField).toBeUndefined();
   });
 
   it('adds description as Effect field', () => {
     const merit = createMockMerit();
-    MeritEmbedBuilder.buildMeritEmbed(merit as any, embed);
+    const embed = new MeritEmbed(merit as any)
+      .withDescription()
+      .build();
     const effectField = embed.data.fields.find((f: any) => f.name.startsWith('Effect'));
     expect(effectField).toBeDefined();
     expect(effectField.value).toBe('You are ambidextrous.');
@@ -96,23 +98,41 @@ describe('MeritEmbedBuilder', () => {
         { name: 'Ambidextrous', level: 2, description: 'Use both hands better.' },
       ],
     });
-    MeritEmbedBuilder.buildMeritEmbed(merit as any, embed);
+    const embed = new MeritEmbed(merit as any)
+      .withLevels()
+      .build();
     const levelFields = embed.data.fields.filter((f: any) => f.name.includes('•'));
     expect(levelFields.length).toBe(2);
   });
 
   it('chunks long description', () => {
     const merit = createMockMerit({ description: 'A'.repeat(2500) });
-    MeritEmbedBuilder.buildMeritEmbed(merit as any, embed);
+    const embed = new MeritEmbed(merit as any)
+      .withDescription()
+      .build();
     const effectFields = embed.data.fields.filter((f: any) => f.name.startsWith('Effect'));
     expect(effectFields.length).toBe(3);
   });
 
   it('adds Sources field', () => {
     const merit = createMockMerit();
-    MeritEmbedBuilder.buildMeritEmbed(merit as any, embed);
+    const embed = new MeritEmbed(merit as any)
+      .withSources()
+      .build();
     const srcField = embed.data.fields.find((f: any) => f.name === 'Sources');
     expect(srcField).toBeDefined();
     expect(srcField.value).toBe('Core Rulebook p.48');
+  });
+
+  it('supports fluent chaining', () => {
+    const merit = createMockMerit();
+    const embed = new MeritEmbed(merit as any)
+      .withRequirements()
+      .withDescription()
+      .withLevels()
+      .withSources()
+      .build();
+    expect(embed.data.title).toBe('Ambidextrous (•)');
+    expect(embed.data.fields.length).toBeGreaterThan(0);
   });
 });

@@ -58,10 +58,34 @@ vi.mock('../../../data/SpellProvider.js', () => ({
   },
 }));
 
+const { SpellEmbed } = vi.hoisted(() => {
+  const mockEmbed = {
+    data: { fields: [], title: '', description: '', footer: { text: '' } },
+    setTitle: vi.fn(function (this: any, title: string) { this.data.title = title; return this; }),
+    setFooter: vi.fn(function (this: any, footer: any) { this.data.footer = footer; return this; }),
+    addFields: vi.fn(function (this: any, ...args: any[]) {
+      for (const field of args) {
+        if (Array.isArray(field)) { this.data.fields.push(...field); }
+        else { this.data.fields.push(field); }
+      }
+      return this;
+    }),
+  };
+  const chain: Record<string, any> = {
+    withRequirements: vi.fn(),
+    withDetails: vi.fn(),
+    withDescription: vi.fn(),
+    withSources: vi.fn(),
+    build: vi.fn().mockReturnValue(mockEmbed),
+  };
+  for (const key of ['withRequirements', 'withDetails', 'withDescription', 'withSources']) {
+    chain[key].mockReturnValue(chain);
+  }
+  return { SpellEmbed: vi.fn().mockImplementation(() => chain) };
+});
+
 vi.mock('../../../embedBuilders/SpellEmbedBuilder.js', () => ({
-  SpellEmbedBuilder: {
-    buildSpellEmbed: vi.fn(),
-  },
+  SpellEmbed,
 }));
 
 // ── Feature ────────────────────────────────────────────────────
@@ -102,13 +126,13 @@ describeFeature(feature, ({ Scenario }) => {
     });
 
     Then('it returns a single embed with the full spell details', async () => {
-      const { SpellEmbedBuilder } = await import('../../../embedBuilders/SpellEmbedBuilder.js');
-      expect(SpellEmbedBuilder.buildSpellEmbed).toHaveBeenCalled();
+      const { SpellEmbed } = await import('../../../embedBuilders/SpellEmbedBuilder.js');
+      expect(SpellEmbed).toHaveBeenCalled();
     });
 
     And('the embed includes Requirements, Practice, Action, Duration, Aspect, Cost, Effect, and Sources', async () => {
-      const { SpellEmbedBuilder } = await import('../../../embedBuilders/SpellEmbedBuilder.js');
-      const mockSpell = vi.mocked(SpellEmbedBuilder.buildSpellEmbed).mock.calls[0][0];
+      const { SpellEmbed } = await import('../../../embedBuilders/SpellEmbedBuilder.js');
+      const mockSpell = vi.mocked(SpellEmbed).mock.calls[0][0];
       expect(mockSpell.name).toBe('Forensic Gaze');
     });
   });

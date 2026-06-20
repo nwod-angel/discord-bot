@@ -1,35 +1,62 @@
 import { MeritDefinition, NwodSymbols } from "@nwod-angel/nwod-core";
 import { EmbedBuilder } from "discord.js";
-import { logger } from "../logger.js";
+import { chunkText } from "./chunkText.js";
 
-const symbols = new NwodSymbols()
+const symbols = new NwodSymbols();
 
-export const MeritEmbedBuilder = {
+/**
+ * Fluent builder for merit embeds.
+ *
+ * Usage:
+ *   new MeritEmbed(merit)
+ *     .withRequirements()
+ *     .withDescription()
+ *     .withLevels()
+ *     .withSources()
+ *     .build();
+ */
+export class MeritEmbed {
+    private embed = new EmbedBuilder();
 
-    buildMeritEmbed(merit: MeritDefinition, embed: EmbedBuilder) {
+    constructor(private merit: MeritDefinition) {
+        this.embed.setTitle(merit.titleString());
+    }
 
-        embed.setTitle(merit.titleString())
-
-        if (merit.hasRequirements()) {
-            embed.addFields({ name: 'Requirements', value: merit.requirementsString(), inline: false })
+    withRequirements(): this {
+        if (this.merit.hasRequirements()) {
+            this.embed.addFields({ name: 'Requirements', value: this.merit.requirementsString(), inline: false });
         }
+        return this;
+    }
 
-        let descriptionChunks = merit.description.match(/.{1,1000}/g) || []
+    withDescription(): this {
+        const descriptionChunks = chunkText(this.merit.description);
         descriptionChunks.forEach((chunk: string, index: number) => {
-            embed.addFields({ name: `Effect ${index > 0 ? ' (continued)' : ''}`, value: chunk, inline: false })
-        })
-        try {
-            merit.levels.forEach(level => {
-                let levelDescriptionChunks = level.description.match(/.{1,1000}/g) || []
-                levelDescriptionChunks.forEach((descriptionChunk: string, index: number) => {
-                    embed.addFields({ name: `${level.name || merit.name} ${symbols.MeritDot.repeat(level.level)} ${index > 0 ? ' (continued)' : ''}`, value: descriptionChunk, inline: false })
-                })
-            })
-        } catch (error) {
-            logger.error({ err: error, merit }, 'An error occurred while adding fields to the embed')
-        }
+            this.embed.addFields({ name: `Effect ${index > 0 ? ' (continued)' : ''}`, value: chunk, inline: false });
+        });
+        return this;
+    }
 
-        embed.addFields({ name: 'Sources', value: merit.sourcesString(), inline: false })
+    withLevels(): this {
+        this.merit.levels.forEach(level => {
+            const levelDescriptionChunks = chunkText(level.description);
+            levelDescriptionChunks.forEach((descriptionChunk: string, index: number) => {
+                this.embed.addFields({
+                    name: `${level.name || this.merit.name} ${symbols.MeritDot.repeat(level.level)} ${index > 0 ? ' (continued)' : ''}`,
+                    value: descriptionChunk,
+                    inline: false,
+                });
+            });
+        });
+        return this;
+    }
 
+    withSources(): this {
+        this.embed.addFields({ name: 'Sources', value: this.merit.sourcesString(), inline: false });
+        return this;
+    }
+
+    build(): EmbedBuilder {
+        return this.embed;
     }
 }

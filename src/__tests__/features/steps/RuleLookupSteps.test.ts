@@ -64,11 +64,34 @@ vi.mock('../../../data/RuleProvider.js', () => ({
   },
 }));
 
+const { RuleEmbed } = vi.hoisted(() => {
+  const mockEmbed = {
+    data: { fields: [], title: '', description: '', footer: { text: '' } },
+    setTitle: vi.fn(function (this: any, title: string) { this.data.title = title; return this; }),
+    setFooter: vi.fn(function (this: any, footer: any) { this.data.footer = footer; return this; }),
+    addFields: vi.fn(function (this: any, ...args: any[]) {
+      for (const field of args) {
+        if (Array.isArray(field)) { this.data.fields.push(...field); }
+        else { this.data.fields.push(field); }
+      }
+      return this;
+    }),
+  };
+  const chain: Record<string, any> = {
+    withParagraphs: vi.fn(),
+    withSources: vi.fn(),
+    build: vi.fn().mockReturnValue({ ...mockEmbed }),
+  };
+  for (const key of ['withParagraphs', 'withSources']) {
+    chain[key].mockReturnValue(chain);
+  }
+  const RuleEmbed = vi.fn().mockImplementation(() => ({ ...chain }));
+  RuleEmbed.buildMultipleRules = vi.fn().mockReturnValue({ ...mockEmbed });
+  return { RuleEmbed };
+});
+
 vi.mock('../../../embedBuilders/RuleEmbedBuilder.js', () => ({
-  RuleEmbedBuilder: {
-    buildSingleRuleEmbed: vi.fn(),
-    buildMultipleRulesEmbed: vi.fn(),
-  },
+  RuleEmbed,
 }));
 
 // ── Feature ────────────────────────────────────────────────────
@@ -101,13 +124,13 @@ describeFeature(feature, ({ Scenario }) => {
     });
 
     Then('it returns a single embed with the full rule text broken into paragraphs', async () => {
-      const { RuleEmbedBuilder } = await import('../../../embedBuilders/RuleEmbedBuilder.js');
-      expect(RuleEmbedBuilder.buildSingleRuleEmbed).toHaveBeenCalled();
+      const { RuleEmbed } = await import('../../../embedBuilders/RuleEmbedBuilder.js');
+      expect(RuleEmbed).toHaveBeenCalled();
     });
 
     And('it includes any examples and source references', async () => {
-      const { RuleEmbedBuilder } = await import('../../../embedBuilders/RuleEmbedBuilder.js');
-      const mockRule = vi.mocked(RuleEmbedBuilder.buildSingleRuleEmbed).mock.calls[0][0];
+      const { RuleEmbed } = await import('../../../embedBuilders/RuleEmbedBuilder.js');
+      const mockRule = vi.mocked(RuleEmbed).mock.calls[0][0];
       expect(mockRule.name).toBe('Defense');
     });
   });
@@ -199,8 +222,8 @@ describeFeature(feature, ({ Scenario }) => {
     });
 
     Then('it shows a summary list of up to 25 rule titles', async () => {
-      const { RuleEmbedBuilder } = await import('../../../embedBuilders/RuleEmbedBuilder.js');
-      expect(RuleEmbedBuilder.buildMultipleRulesEmbed).toHaveBeenCalled();
+      const { RuleEmbed } = await import('../../../embedBuilders/RuleEmbedBuilder.js');
+      expect(RuleEmbed.buildMultipleRules).toHaveBeenCalled();
     });
   });
 });

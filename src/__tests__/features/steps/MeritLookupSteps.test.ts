@@ -50,10 +50,34 @@ vi.mock('../../../data/MeritProvider.js', () => ({
   },
 }));
 
+const { MeritEmbed } = vi.hoisted(() => {
+  const mockEmbed = {
+    data: { fields: [], title: '', description: '', footer: { text: '' } },
+    setTitle: vi.fn(function (this: any, title: string) { this.data.title = title; return this; }),
+    setFooter: vi.fn(function (this: any, footer: any) { this.data.footer = footer; return this; }),
+    addFields: vi.fn(function (this: any, ...args: any[]) {
+      for (const field of args) {
+        if (Array.isArray(field)) { this.data.fields.push(...field); }
+        else { this.data.fields.push(field); }
+      }
+      return this;
+    }),
+  };
+  const chain: Record<string, any> = {
+    withRequirements: vi.fn(),
+    withDescription: vi.fn(),
+    withLevels: vi.fn(),
+    withSources: vi.fn(),
+    build: vi.fn().mockReturnValue({ ...mockEmbed }),
+  };
+  for (const key of ['withRequirements', 'withDescription', 'withLevels', 'withSources']) {
+    chain[key].mockReturnValue(chain);
+  }
+  return { MeritEmbed: vi.fn().mockImplementation(() => ({ ...chain })) };
+});
+
 vi.mock('../../../embedBuilders/MeritEmbedBuilder.js', () => ({
-  MeritEmbedBuilder: {
-    buildMeritEmbed: vi.fn(),
-  },
+  MeritEmbed,
 }));
 
 // ── Feature ────────────────────────────────────────────────────
@@ -84,13 +108,13 @@ describeFeature(feature, ({ Scenario }) => {
     });
 
     Then('it returns a single embed with the full merit details', async () => {
-      const { MeritEmbedBuilder } = await import('../../../embedBuilders/MeritEmbedBuilder.js');
-      expect(MeritEmbedBuilder.buildMeritEmbed).toHaveBeenCalled();
+      const { MeritEmbed } = await import('../../../embedBuilders/MeritEmbedBuilder.js');
+      expect(MeritEmbed).toHaveBeenCalled();
     });
 
     And('the embed includes Requirements, Effect, level-by-level breakdown, and Sources', async () => {
-      const { MeritEmbedBuilder } = await import('../../../embedBuilders/MeritEmbedBuilder.js');
-      const mockMerit = vi.mocked(MeritEmbedBuilder.buildMeritEmbed).mock.calls[0][0];
+      const { MeritEmbed } = await import('../../../embedBuilders/MeritEmbedBuilder.js');
+      const mockMerit = vi.mocked(MeritEmbed).mock.calls[0][0];
       expect(mockMerit.name).toBe('Architectural Attunement');
     });
   });
@@ -166,9 +190,9 @@ describeFeature(feature, ({ Scenario }) => {
     });
 
     Then('it shows only the exact match', async () => {
-      const { MeritEmbedBuilder } = await import('../../../embedBuilders/MeritEmbedBuilder.js');
-      expect(MeritEmbedBuilder.buildMeritEmbed).toHaveBeenCalled();
-      const mockMerit = vi.mocked(MeritEmbedBuilder.buildMeritEmbed).mock.calls[0][0];
+      const { MeritEmbed } = await import('../../../embedBuilders/MeritEmbedBuilder.js');
+      expect(MeritEmbed).toHaveBeenCalled();
+      const mockMerit = vi.mocked(MeritEmbed).mock.calls[0][0];
       expect(mockMerit.name).toBe('Atavism');
     });
   });
