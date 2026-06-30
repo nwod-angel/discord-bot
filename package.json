@@ -32,7 +32,8 @@
     "start": "node --import tsx/esm src/Bot.ts",
     "startnot": "tsc && node dist/Bot.js",
     "test": "vitest run",
-    "test:cov": "vitest run --coverage"
+    "test:cov": "vitest run --coverage",
+    "export-dice": "node scripts/export-dice.mjs"
   },
   "repository": {
     "type": "git",
@@ -52,6 +53,7 @@
   "homepage": "https://github.com/nwod-angel/discord-bot#readme",
   "devDependencies": {
     "@amiceli/vitest-cucumber": "^5.2.1",
+    "@resvg/resvg-js": "^2.6.2",
     "@types/node": "^22.10.2",
     "@vitest/coverage-v8": "^3.2.1",
     "vitest": "^3.2.1"

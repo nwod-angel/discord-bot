@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <style>
+      .die-top { fill: #bb2222; stroke: #000000; stroke-width:0.5; }
+      .die-side { fill: #991111; stroke: #000000; stroke-width:0.5; }
+      .die-bottom { fill: #660000; stroke: #000000; stroke-width:0.5; }
+      .die-shine { fill:#ffffff; opacity:0.08; }
+      .die-shadow { fill:#000000; fill-opacity:1; filter:url(#blur); }
+      .die-text { font-size:50px; font-weight:bold; font-family:'Lucida Sans Unicode','Lucida Grande',sans-serif; paint-order: stroke fill; fill: #f9f9f9; stroke: #000000; stroke-width:2; }
+    </style>
+    <filter style="color-interpolation-filters:sRGB;" id="blur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="10 5" result="blur" />
+    </filter>
+  </defs>
+  <path class="die-shadow" d="M 117.20424,104.5 A 53.204239,20.793842 0 0 1 64.007038,125.29384 53.204239,20.793842 0 0 1 10.795763,104.5055 53.204239,20.793842 0 0 1 63.978887,83.706159 53.204239,20.793842 0 0 1 117.20423,104.489 L 64,104.5 Z" />
+  <g id="die-body">
+    <path class="die-top" d="M 64,10.242176 37,77.533154 64,91 91,77.533154 Z" />
+    <path class="die-side" d="m 64,10 54,67.533154 H 91 Z" />
+    <path class="die-bottom" d="M 64,118 V 91 L 91,77.533154 h 27 z" />
+    <path class="die-bottom" d="M 64,118 V 91 L 37,77.533154 H 10 Z" />
+    <path class="die-side" d="M 64,10.121088 10,77.654242 h 27 z" />
+    <path class="die-shine" transform="translate(-2.3234932,20)" d="M 50.01722,53.146616 66.323493,-6.7500633 43.119311,55.501418 66.323493,68.968264 Z M 23.224752,57.533154 56.118898,7.3790472 16.660827,57.533154 66.323493,94.786815 Z" />
+    <text class="die-text" x="64" y="82" text-anchor="middle">N</text>
+  </g>
+  <use href="#die-body" />
+</svg>
